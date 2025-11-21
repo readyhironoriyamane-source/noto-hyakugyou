@@ -33,6 +33,7 @@ export interface Industry {
     link: string;
   }>;
   image: string;
+  gallery?: string[]; // 複数の写真を格納するギャラリー
 }
 
 export const industries: Industry[] = [
@@ -70,7 +71,12 @@ export const industries: Industry[] = [
       { type: "visit", label: "漁港を見学・体験", link: "#" },
       { type: "join", label: "弟子入り・アルバイト", link: "#" }
     ],
-    image: "/squid-fishing.jpg"
+    image: "/squid-fishing.jpg",
+    gallery: [
+      "/gallery/ika-1.jpg",
+      "/gallery/ika-2.jpg",
+      "/squid-fishing.jpg"
+    ]
   },
   {
     id: 2,
@@ -106,7 +112,13 @@ export const industries: Industry[] = [
       { type: "visit", label: "農園見学・いちご狩り", link: "#" },
       { type: "join", label: "援農ボランティア募集", link: "#" }
     ],
-    image: "/strawberry-farm.jpg"
+    image: "/strawberry-farm.jpg",
+    gallery: [
+      "/gallery/ichigo-1.jpg",
+      "/gallery/ichigo-2.jpg",
+      "/gallery/ichigo-3.jpg",
+      "/strawberry-farm.jpg"
+    ]
   },
   {
     id: 3,
@@ -141,7 +153,12 @@ export const industries: Industry[] = [
       { type: "visit", label: "蔵見学・発酵体験", link: "#" },
       { type: "join", label: "醸造アシスタント募集", link: "#" }
     ],
-    image: "/ishiri-new.jpg"
+    image: "/ishiri-new.jpg",
+    gallery: [
+      "/gallery/ishiri-1.jpg",
+      "/gallery/ishiri-2.jpg",
+      "/ishiri-new.jpg"
+    ]
   },
   {
     id: 4,

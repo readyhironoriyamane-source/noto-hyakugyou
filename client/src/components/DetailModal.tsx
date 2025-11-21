@@ -13,7 +13,7 @@ export default function DetailModal({ job, onClose }: DetailModalProps) {
   
   if (!job) return null;
 
-  const shareUrl = typeof window !== 'undefined' ? window.location.origin + '/?industry=' + job.id : '';
+  const shareUrl = typeof window !== 'undefined' ? window.location.origin + '/industry/' + job.id : '';
   const shareText = `${job.title} - 能登百業録`;
 
   const handleShare = (platform: 'x' | 'facebook' | 'line') => {

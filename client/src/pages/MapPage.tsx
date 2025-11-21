@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "wouter";
 import { MapView } from "@/components/Map";
 import { industries } from "@/data/industries";
 import DetailModal from "@/components/DetailModal";
@@ -6,6 +7,7 @@ import type { Industry } from "@/data/industries";
 import { ArrowUpRight } from "lucide-react";
 
 export default function MapPage() {
+  const [location, setLocation] = useLocation();
   const [selectedIndustry, setSelectedIndustry] = useState<Industry | null>(null);
   const [highlightedIndustry, setHighlightedIndustry] = useState<Industry | null>(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
@@ -15,6 +17,40 @@ export default function MapPage() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [mobileView, setMobileView] = useState<"map" | "list">("map");
   const cardRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+
+  // URLパラメータからフィルター状態を読み込む
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('category');
+    const search = params.get('search');
+    
+    if (category) {
+      setSelectedCategory(category);
+    }
+    if (search) {
+      setSearchQuery(search);
+    }
+  }, []);
+
+  // フィルター状態がURLに反映されるようにする
+  useEffect(() => {
+    const params = new URLSearchParams();
+    
+    if (selectedCategory !== "すべて") {
+      params.set('category', selectedCategory);
+    }
+    if (searchQuery) {
+      params.set('search', searchQuery);
+    }
+    
+    const newSearch = params.toString();
+    const newUrl = newSearch ? `/map?${newSearch}` : '/map';
+    
+    // URLを更新（履歴に追加せずに置き換え）
+    if (window.location.pathname + window.location.search !== newUrl) {
+      window.history.replaceState(null, '', newUrl);
+    }
+  }, [selectedCategory, searchQuery]);
 
   // カテゴリ別の色定義
   const categoryColors: Record<string, string> = {
