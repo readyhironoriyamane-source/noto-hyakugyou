@@ -180,9 +180,9 @@ export default function MapPage() {
       </div>
 
       {/* メインコンテンツ：左右分割（デスクトップ）/ 上下切り替え（モバイル） */}
-      <main className="flex flex-col md:flex-row">
+      <main className="flex flex-col md:flex-row pt-16 md:pt-0">
         {/* 左側：地図 */}
-        <div className={`w-full md:w-1/2 h-[calc(100vh-8rem)] md:h-screen md:fixed md:top-0 md:left-0 ${
+        <div className={`w-full md:w-1/2 h-[calc(100vh-4rem)] md:h-screen md:fixed md:top-0 md:left-0 ${
           mobileView === "list" ? "hidden md:block" : ""
         }`}>
           <MapView onMapReady={handleMapReady} />
