@@ -188,7 +188,7 @@ export default function MapPage() {
           <MapView onMapReady={handleMapReady} />
           
           {/* 凡例（地図の下部、右側カードと同じ幅） */}
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-6 hidden md:block">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-4 hidden md:block">
             <h3 className="text-sm font-bold mb-4 text-stone-900">カテゴリ凡例</h3>
             <div className="grid grid-cols-5 gap-x-6 gap-y-3">
               {Object.entries(categoryColors).map(([category, color]) => (
