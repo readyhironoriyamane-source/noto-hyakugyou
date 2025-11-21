@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRoute, useLocation } from "wouter";
 import { industries } from "@/data/industries";
 import type { Industry } from "@/data/industries";
-import { ArrowLeft, MapPin, Clock, Phone, Globe, Share2, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, MapPin, Clock, Phone, Globe, Share2, ChevronLeft, ChevronRight, ChevronRight as ChevronRightBreadcrumb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function IndustryDetailPage() {
@@ -25,8 +25,49 @@ export default function IndustryDetailPage() {
             .filter((i): i is Industry => i !== undefined);
           setRelatedIndustries(related);
         }
+        
+        // OGPメタタグを設定
+        const url = window.location.href;
+        const imageUrl = window.location.origin + foundIndustry.image;
+        
+        // タイトルを設定
+        document.title = `${foundIndustry.title} - 能登百業録`;
+        
+        // 既存のメタタグを削除
+        const existingMeta = document.querySelectorAll('meta[property^="og:"], meta[name="twitter:"], meta[name="description"]');
+        existingMeta.forEach(tag => tag.remove());
+        
+        // OGPメタタグを追加
+        const metaTags = [
+          { property: 'og:title', content: `${foundIndustry.title} - 能登百業録` },
+          { property: 'og:description', content: foundIndustry.summary },
+          { property: 'og:image', content: imageUrl },
+          { property: 'og:url', content: url },
+          { property: 'og:type', content: 'article' },
+          { property: 'og:site_name', content: '能登百業録' },
+          { name: 'twitter:card', content: 'summary_large_image' },
+          { name: 'twitter:title', content: `${foundIndustry.title} - 能登百業録` },
+          { name: 'twitter:description', content: foundIndustry.summary },
+          { name: 'twitter:image', content: imageUrl },
+          { name: 'description', content: foundIndustry.summary }
+        ];
+        
+        metaTags.forEach(({ property, name, content }) => {
+          const meta = document.createElement('meta');
+          if (property) meta.setAttribute('property', property);
+          if (name) meta.setAttribute('name', name);
+          meta.setAttribute('content', content);
+          document.head.appendChild(meta);
+        });
       }
     }
+    
+    // クリーンアップ関数
+    return () => {
+      document.title = '能登百業録';
+      const metaTags = document.querySelectorAll('meta[property^="og:"], meta[name="twitter:"]');
+      metaTags.forEach(tag => tag.remove());
+    };
   }, [params?.id]);
 
   if (!industry) {
@@ -87,14 +128,18 @@ export default function IndustryDetailPage() {
       {/* メインコンテンツ */}
       <main className="pt-20 pb-16">
         <div className="container max-w-4xl mx-auto px-4">
-          {/* 戻るボタン */}
-          <button
-            onClick={() => window.history.back()}
-            className="flex items-center gap-2 text-sm text-stone-600 hover:text-stone-900 transition-colors mb-8"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            戻る
-          </button>
+          {/* パンくずリスト */}
+          <nav className="flex items-center gap-2 text-sm text-stone-600 mb-8" aria-label="パンくずリスト">
+            <a href="/" className="hover:text-stone-900 transition-colors">
+              トップ
+            </a>
+            <ChevronRight className="w-3 h-3" />
+            <a href="/map" className="hover:text-stone-900 transition-colors">
+              地図から探す
+            </a>
+            <ChevronRight className="w-3 h-3" />
+            <span className="text-stone-900 font-medium">{industry.title}</span>
+          </nav>
 
           {/* ヒーロー画像（ギャラリー対応） */}
           <div className="relative w-full h-[400px] md:h-[500px] mb-8 rounded-lg overflow-hidden group">

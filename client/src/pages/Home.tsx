@@ -132,9 +132,9 @@ export default function Home() {
           {/* Editorial Layout Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
             {filteredIndustries.map((job) => (
-              <article 
+              <a 
                 key={job.id} 
-                onClick={() => setSelectedJob(job)}
+                href={`/industry/${job.id}`}
                 className="group cursor-pointer flex flex-col gap-6"
               >
                 {/* Image Container */}
@@ -168,7 +168,7 @@ export default function Home() {
                     </span>
                   </div>
                 </div>
-              </article>
+              </a>
             ))}
           </div>
           
