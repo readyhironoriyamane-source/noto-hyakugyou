@@ -19,7 +19,7 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const categories = ["すべて", "漁業", "農業", "醸造", "建築"];
+  const categories = ["すべて", "農業", "漁業", "林業", "食", "工芸", "伝統", "観光", "インフラ"];
   const filteredIndustries = filter === "すべて" 
     ? industries 
     : industries.filter(i => i.category === filter);
