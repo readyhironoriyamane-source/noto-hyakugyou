@@ -180,16 +180,16 @@ export default function MapPage() {
       </div>
 
       {/* メインコンテンツ：左右分割（デスクトップ）/ 上下切り替え（モバイル） */}
-      <main className="flex flex-col md:flex-row pt-16 md:pt-0">
-        {/* 左側：地図 */}
-        <div className={`w-full md:w-1/2 h-[calc(100vh-4rem)] md:h-screen md:fixed md:top-0 md:left-0 ${
+      <main className="pt-16 md:pt-0">
+        {/* 左側：地図（画面全体を占める） */}
+        <div className={`fixed top-0 left-0 w-full md:w-1/2 h-screen z-0 ${
           mobileView === "list" ? "hidden md:block" : ""
         }`}>
           <MapView onMapReady={handleMapReady} />
         </div>
 
         {/* 右側：産業カードリスト */}
-        <div className={`w-full md:w-1/2 min-h-screen overflow-y-auto bg-stone-50 pt-24 md:pt-20 p-4 md:p-8 md:ml-[50%] ${
+        <div className={`relative z-10 w-full md:w-1/2 min-h-screen overflow-y-auto bg-stone-50 pt-8 md:pt-20 p-4 md:p-8 md:ml-[50%] ${
           mobileView === "map" ? "hidden md:block" : ""
         }`}>
           <div className="max-w-2xl mx-auto">
