@@ -12,6 +12,7 @@ export default function MapPage() {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<Map<number, google.maps.Marker>>(new Map());
   const [selectedCategory, setSelectedCategory] = useState<string>("すべて");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [mobileView, setMobileView] = useState<"map" | "list">("map");
   const cardRefs = useRef<Map<number, HTMLDivElement>>(new Map());
 
@@ -33,9 +34,15 @@ export default function MapPage() {
   const categories = ["すべて", ...Object.keys(categoryColors)];
 
   // フィルタリングされた産業リスト
-  const filteredIndustries = selectedCategory === "すべて"
-    ? industries
-    : industries.filter(i => i.category === selectedCategory);
+  const filteredIndustries = industries.filter((industry) => {
+    const matchesCategory = selectedCategory === "すべて" || industry.category === selectedCategory;
+    const matchesSearch = searchQuery === "" || 
+      industry.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      industry.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      industry.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      industry.summary.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   const handleMapReady = (googleMap: google.maps.Map) => {
     setMap(googleMap);
@@ -188,7 +195,7 @@ export default function MapPage() {
           <MapView onMapReady={handleMapReady} />
           
           {/* 凡例（地図の下部、縦レイアウト） */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-4 hidden md:block">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-6 hidden md:block">
             <h3 className="text-sm font-bold mb-4 text-stone-900">カテゴリ凡例</h3>
             <div className="grid grid-cols-2 gap-x-8 gap-y-3">
               {Object.entries(categoryColors).map(([category, color]) => (
@@ -213,6 +220,17 @@ export default function MapPage() {
             <p className="text-sm text-stone-600 mb-6 tracking-wide">
               地図上のマーカーをクリックするか、下記のカードを選択してください
             </p>
+
+            {/* 検索バー */}
+            <div className="mb-6">
+              <input
+                type="text"
+                placeholder="産業名、地域名、キーワードで検索..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-3 text-sm border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent bg-white"
+              />
+            </div>
 
             {/* カテゴリフィルター */}
             <div className="mb-8 flex flex-wrap gap-2">
