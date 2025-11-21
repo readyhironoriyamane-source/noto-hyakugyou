@@ -134,20 +134,22 @@ export default function DetailModal({ job, onClose }: DetailModalProps) {
             </h3>
             <div className="space-y-10">
               <div>
-                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide">仕事の内容</h4>
-                <p className="text-sm leading-loose text-stone-600">{job.details.workContent}</p>
+                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide flex items-center gap-2">
+                  <span>👉</span> 過去
+                </h4>
+                <p className="text-sm leading-loose text-stone-600">{job.deepDive.past}</p>
               </div>
               <div>
-                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide">求められるスキル</h4>
-                <p className="text-sm leading-loose text-stone-600">{job.details.skills}</p>
+                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide flex items-center gap-2">
+                  <span>👉</span> 現在
+                </h4>
+                <p className="text-sm leading-loose text-stone-600">{job.deepDive.present}</p>
               </div>
               <div>
-                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide">課題とやりがい</h4>
-                <p className="text-sm leading-loose text-stone-600">{job.details.challenges}</p>
-              </div>
-              <div>
-                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide">得られるもの</h4>
-                <p className="text-sm leading-loose text-stone-600">{job.details.rewards}</p>
+                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide flex items-center gap-2">
+                  <span>👉</span> 未来
+                </h4>
+                <p className="text-sm leading-loose text-stone-600">{job.deepDive.future}</p>
               </div>
             </div>
           </section>
