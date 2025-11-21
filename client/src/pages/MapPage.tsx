@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { MapView } from "@/components/Map";
 import { industries } from "@/data/industries";
-import DetailModal from "@/components/DetailModal";
 import type { Industry } from "@/data/industries";
 import { ArrowUpRight } from "lucide-react";
 
@@ -10,7 +9,6 @@ export default function MapPage() {
   const [location, setLocation] = useLocation();
   const [selectedIndustry, setSelectedIndustry] = useState<Industry | null>(null);
   const [highlightedIndustry, setHighlightedIndustry] = useState<Industry | null>(null);
-  const [showDetailModal, setShowDetailModal] = useState(false);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<Map<number, google.maps.Marker>>(new Map());
   const [selectedCategory, setSelectedCategory] = useState<string>("すべて");
@@ -111,9 +109,8 @@ export default function MapPage() {
         });
 
         marker.addListener("click", () => {
-          setSelectedIndustry(industry);
-          setShowDetailModal(false);
-          setMobileView("list");
+          // 産業詳細ページに遷移
+          window.location.href = `/industry/${industry.id}`;
           
           // 右側のカードまでスクロール
           const cardElement = cardRefs.current.get(industry.id);
@@ -156,22 +153,12 @@ export default function MapPage() {
   }, [selectedIndustry, highlightedIndustry, markers, selectedCategory]);
 
   const handleCardClick = (industry: Industry) => {
-    setSelectedIndustry(industry);
-    setShowDetailModal(false);
-    
-    // 地図の中心を移動
-    if (map && industry.locationCoords) {
-      map.panTo(industry.locationCoords);
-      map.setZoom(13);
-    }
+    // 産業詳細ページに遷移
+    window.location.href = `/industry/${industry.id}`;
   };
 
   const handleCardHover = (industry: Industry | null) => {
     setHighlightedIndustry(industry);
-  };
-
-  const handleViewDetail = () => {
-    setShowDetailModal(true);
   };
 
   return (
@@ -342,22 +329,7 @@ export default function MapPage() {
                         {industry.summary}
                       </p>
 
-                      {/* 選択時のみ表示：詳細ボタン */}
-                      {selectedIndustry?.id === industry.id && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleViewDetail();
-                          }}
-                          className="w-full py-3 px-4 flex items-center justify-center gap-2 text-white transition-colors group/btn"
-                          style={{ backgroundColor: categoryColors[industry.category] || "#1a1a1a" }}
-                        >
-                          <span className="text-sm font-medium tracking-wider">
-                            詳しく見る
-                          </span>
-                          <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
-                        </button>
-                      )}
+
                     </div>
                   </div>
                 </div>
@@ -367,13 +339,7 @@ export default function MapPage() {
         </div>
       </main>
 
-      {/* 詳細モーダル */}
-      {showDetailModal && selectedIndustry && (
-        <DetailModal
-          job={selectedIndustry}
-          onClose={() => setShowDetailModal(false)}
-        />
-      )}
+
     </div>
   );
 }

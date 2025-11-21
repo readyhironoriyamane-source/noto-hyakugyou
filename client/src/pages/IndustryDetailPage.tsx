@@ -1,30 +1,20 @@
 import { useEffect, useState } from "react";
-import { useRoute, useLocation } from "wouter";
+import { useRoute } from "wouter";
 import { industries } from "@/data/industries";
 import type { Industry } from "@/data/industries";
-import { ArrowLeft, MapPin, Clock, Phone, Globe, Share2, ChevronLeft, ChevronRight, ChevronRight as ChevronRightBreadcrumb } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { X, Share2, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function IndustryDetailPage() {
   const [, params] = useRoute("/industry/:id");
-  const [, setLocation] = useLocation();
   const [industry, setIndustry] = useState<Industry | null>(null);
-  const [relatedIndustries, setRelatedIndustries] = useState<Industry[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showShareMenu, setShowShareMenu] = useState(false);
 
   useEffect(() => {
     if (params?.id) {
       const foundIndustry = industries.find(i => i.id === parseInt(params.id));
       if (foundIndustry) {
         setIndustry(foundIndustry);
-        
-        // 関連産業を取得
-        if (foundIndustry.relatedIndustries) {
-          const related = foundIndustry.relatedIndustries
-            .map(id => industries.find(i => i.id === id))
-            .filter((i): i is Industry => i !== undefined);
-          setRelatedIndustries(related);
-        }
         
         // OGPメタタグを設定
         const url = window.location.href;
@@ -75,7 +65,9 @@ export default function IndustryDetailPage() {
       <div className="min-h-screen flex items-center justify-center bg-stone-50">
         <div className="text-center">
           <h2 className="text-2xl font-serif font-bold mb-4">産業が見つかりません</h2>
-          <Button onClick={() => setLocation("/")}>トップページに戻る</Button>
+          <a href="/" className="text-sm text-stone-600 hover:text-stone-900 underline">
+            トップページに戻る
+          </a>
         </div>
       </div>
     );
@@ -99,306 +91,310 @@ export default function IndustryDetailPage() {
     }
     
     window.open(shareUrl, "_blank", "width=600,height=400");
+    setShowShareMenu(false);
   };
 
   return (
-    <div className="min-h-screen bg-stone-50">
-      {/* ヘッダー */}
-      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-stone-200/50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <a href="/" className="text-2xl font-serif font-bold">
-              能登百業録
-            </a>
-            <nav className="hidden md:flex gap-8">
-              <a href="/" className="text-sm hover:text-stone-600 transition-colors">
-                すべて
-              </a>
-              <a href="/map" className="text-sm hover:text-stone-600 transition-colors">
-                地図から探す
-              </a>
-              <a href="#" className="text-sm hover:text-stone-600 transition-colors">
-                特集
-              </a>
-            </nav>
+    <div className="fixed inset-0 z-[100] bg-white overflow-y-auto animate-in fade-in duration-300">
+      {/* Close Button & Share Button */}
+      <div className="fixed top-6 right-6 z-50 flex gap-2">
+        <div className="relative">
+          <button 
+            onClick={() => setShowShareMenu(!showShareMenu)}
+            className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-stone-100 transition-colors"
+          >
+            <Share2 className="w-6 h-6 text-stone-900" />
+          </button>
+          
+          {/* Share Menu */}
+          {showShareMenu && (
+            <div className="absolute top-12 right-0 bg-white rounded-lg shadow-xl border border-stone-200 overflow-hidden min-w-[160px]">
+              <button
+                onClick={() => handleShare('twitter')}
+                className="w-full px-4 py-3 text-left text-sm hover:bg-stone-50 transition-colors flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                Xでシェア
+              </button>
+              <button
+                onClick={() => handleShare('facebook')}
+                className="w-full px-4 py-3 text-left text-sm hover:bg-stone-50 transition-colors flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                Facebookでシェア
+              </button>
+              <button
+                onClick={() => handleShare('line')}
+                className="w-full px-4 py-3 text-left text-sm hover:bg-stone-50 transition-colors flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+                </svg>
+                LINEでシェア
+              </button>
+            </div>
+          )}
+        </div>
+        
+        <button 
+          onClick={() => window.history.back()}
+          className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-stone-100 transition-colors"
+        >
+          <X className="w-6 h-6 text-stone-900" />
+        </button>
+      </div>
+
+      {/* Hero Image (ギャラリー対応) */}
+      <div className="relative w-full h-[60vh] group">
+        <img 
+          src={industry.gallery && industry.gallery.length > 0 ? industry.gallery[currentImageIndex] : industry.image}
+          alt={industry.title}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/20"></div>
+        
+        {/* ギャラリーナビゲーション */}
+        {industry.gallery && industry.gallery.length > 1 && (
+          <>
+            <button
+              onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? industry.gallery!.length - 1 : prev - 1))}
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-all opacity-0 group-hover:opacity-100"
+            >
+              <ChevronLeft className="w-6 h-6 text-stone-900" />
+            </button>
+            <button
+              onClick={() => setCurrentImageIndex((prev) => (prev === industry.gallery!.length - 1 ? 0 : prev + 1))}
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-all opacity-0 group-hover:opacity-100"
+            >
+              <ChevronRight className="w-6 h-6 text-stone-900" />
+            </button>
+            
+            {/* インジケーター */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              {industry.gallery.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentImageIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentImageIndex
+                      ? "bg-white w-8"
+                      : "bg-white/50 hover:bg-white/75"
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+        
+        <div className="absolute bottom-0 left-0 p-6 md:p-12 w-full bg-gradient-to-t from-black/80 to-transparent">
+          <div className="max-w-5xl mx-auto text-white">
+            <p className="text-sm tracking-[0.2em] mb-2 font-light opacity-90">{industry.category} / {industry.location}</p>
+            <h2 className="text-4xl md:text-6xl font-serif font-medium tracking-wide mb-4">{industry.title}</h2>
+            <div className="flex gap-3">
+              {industry.tags.map(tag => (
+                <span key={tag} className="text-xs border border-white/40 px-3 py-1 tracking-wider">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
-      </header>
+      </div>
 
-      {/* メインコンテンツ */}
-      <main className="pt-20 pb-16">
-        <div className="container max-w-4xl mx-auto px-4">
-          {/* パンくずリスト */}
-          <nav className="flex items-center gap-2 text-sm text-stone-600 mb-8" aria-label="パンくずリスト">
-            <a href="/" className="hover:text-stone-900 transition-colors">
-              トップ
-            </a>
-            <ChevronRight className="w-3 h-3" />
-            <a href="/map" className="hover:text-stone-900 transition-colors">
-              地図から探す
-            </a>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-stone-900 font-medium">{industry.title}</span>
-          </nav>
-
-          {/* ヒーロー画像（ギャラリー対応） */}
-          <div className="relative w-full h-[400px] md:h-[500px] mb-8 rounded-lg overflow-hidden group">
-            <img
-              src={industry.gallery && industry.gallery.length > 0 ? industry.gallery[currentImageIndex] : industry.image}
-              alt={industry.title}
-              className="w-full h-full object-cover transition-opacity duration-300"
-            />
-            
-            {/* ギャラリーナビゲーション */}
-            {industry.gallery && industry.gallery.length > 1 && (
-              <>
-                <button
-                  onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? industry.gallery!.length - 1 : prev - 1))}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-all opacity-0 group-hover:opacity-100"
-                >
-                  <ChevronLeft className="w-6 h-6 text-stone-900" />
-                </button>
-                <button
-                  onClick={() => setCurrentImageIndex((prev) => (prev === industry.gallery!.length - 1 ? 0 : prev + 1))}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-all opacity-0 group-hover:opacity-100"
-                >
-                  <ChevronRight className="w-6 h-6 text-stone-900" />
-                </button>
-                
-                {/* インジケーター */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                  {industry.gallery.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        index === currentImageIndex
-                          ? "bg-white w-8"
-                          : "bg-white/50 hover:bg-white/75"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-            <div className="absolute top-4 left-4">
-              <span className="inline-block px-4 py-2 bg-white/90 backdrop-blur-sm text-xs font-medium rounded-full">
-                {industry.category}
-              </span>
-            </div>
-            <div className="absolute top-4 right-4 flex gap-2">
-              <button
-                onClick={() => handleShare("twitter")}
-                className="p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
-                title="Xでシェア"
-              >
-                <Share2 className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => handleShare("facebook")}
-                className="p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
-                title="Facebookでシェア"
-              >
-                <Share2 className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => handleShare("line")}
-                className="p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
-                title="LINEでシェア"
-              >
-                <Share2 className="w-4 h-4" />
-              </button>
-            </div>
+      {/* Content */}
+      <div className="max-w-5xl mx-auto px-6 py-16 md:py-24 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20">
+        
+        {/* Operator Info */}
+        <div className="md:col-span-3 md:sticky md:top-24 h-fit text-center md:text-left md:border-r border-stone-200 md:pr-8">
+          <div className="inline-block md:block mb-4">
+             <div className="w-24 h-24 bg-stone-100 rounded-full mx-auto md:mx-0 mb-4 flex items-center justify-center overflow-hidden grayscale">
+                <span className="font-serif text-3xl text-stone-400">{industry.operator.charAt(0)}</span>
+             </div>
           </div>
+          <div>
+            <p className="text-xs text-stone-500 mb-1 tracking-widest">事業者</p>
+            <p className="text-xl font-serif mb-1">{industry.operator}</p>
+            <p className="text-sm text-stone-500">{industry.role}</p>
+          </div>
+          <div className="mt-8 pt-8 border-t border-stone-200 hidden md:block">
+            <p className="text-xs text-stone-500 mb-2 tracking-widest">つながり</p>
+            <p className="text-sm font-serif text-stone-800 leading-relaxed">{industry.connections}</p>
+          </div>
+        </div>
 
-          {/* タイトルと基本情報 */}
-          <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">{industry.title}</h1>
-            <p className="text-sm text-stone-500 mb-6 flex items-center gap-2">
-              <MapPin className="w-4 h-4" />
-              {industry.location}
+        {/* Main Text */}
+        <div className="md:col-span-9 space-y-16">
+          
+          <section>
+            <h3 className="font-serif text-2xl mb-6 flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-stone-900"></span>
+              物語
+            </h3>
+            <p className="text-lg leading-[2.2] text-stone-800 font-serif text-justify">
+              {industry.summary}
             </p>
-            <p className="text-lg leading-relaxed text-stone-700">{industry.summary}</p>
-          </div>
-
-          {/* 必要性 */}
-          <section className="mb-12 p-8 bg-white rounded-lg shadow-sm">
-            <h2 className="text-2xl font-serif font-bold mb-4 border-b border-stone-200 pb-3">
-              なぜ必要か
-            </h2>
-            <p className="text-stone-700 leading-relaxed whitespace-pre-line">{industry.necessity}</p>
+            <div className="mt-8 p-6 bg-stone-50">
+              <h4 className="text-sm font-bold mb-2 text-stone-400 tracking-widest">なぜ必要か</h4>
+              <p className="text-base leading-loose text-stone-700">{industry.necessity}</p>
+            </div>
           </section>
 
-          {/* 歩みと展望 */}
-          <section className="mb-12 p-8 bg-white rounded-lg shadow-sm">
-            <h2 className="text-2xl font-serif font-bold mb-6 border-b border-stone-200 pb-3">
+          {/* Timeline - Clean Grid */}
+          <section>
+            <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-stone-900"></span>
               歩みと展望
-            </h2>
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-bold mb-2 text-stone-900">過去</h3>
-                <p className="text-stone-700 leading-relaxed whitespace-pre-line">{industry.timeline.past}</p>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="space-y-3">
+                <span className="block text-xs font-bold text-stone-300 tracking-widest flex items-center gap-2">
+                  <span className="text-lg">👉</span> 過去
+                </span>
+                <p className="text-sm leading-loose text-stone-600">{industry.timeline.past}</p>
               </div>
-              <div>
-                <h3 className="text-lg font-bold mb-2 text-stone-900">現在</h3>
-                <p className="text-stone-700 leading-relaxed whitespace-pre-line">{industry.timeline.present}</p>
+              <div className="space-y-3">
+                <span className="block text-xs font-bold text-stone-900 tracking-widest flex items-center gap-2">
+                  <span className="text-lg">👉</span> 現在
+                </span>
+                <p className="text-sm leading-loose text-stone-800 font-medium">{industry.timeline.present}</p>
               </div>
-              <div>
-                <h3 className="text-lg font-bold mb-2 text-stone-900">未来</h3>
-                <p className="text-stone-700 leading-relaxed whitespace-pre-line">{industry.timeline.future}</p>
+              <div className="space-y-3">
+                <span className="block text-xs font-bold text-stone-300 tracking-widest flex items-center gap-2">
+                  <span className="text-lg">👉</span> 未来
+                </span>
+                <p className="text-sm leading-loose text-stone-600">{industry.timeline.future}</p>
               </div>
             </div>
           </section>
 
-          {/* 仕事を深く知る */}
-          <section className="mb-12 p-8 bg-white rounded-lg shadow-sm">
-            <h2 className="text-2xl font-serif font-bold mb-6 border-b border-stone-200 pb-3">
+          {/* Deep Dive */}
+          <section className="pt-12 border-t border-stone-200">
+            <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-stone-900"></span>
               仕事を深く知る
-            </h2>
-            <div className="space-y-6">
+            </h3>
+            <div className="space-y-8">
               <div>
-                <h3 className="text-lg font-bold mb-2 text-stone-900">受け継がれてきたもの</h3>
-                <p className="text-stone-700 leading-relaxed whitespace-pre-line">{industry.deepDive.past}</p>
+                <h4 className="text-sm font-bold mb-3 text-stone-400 tracking-widest">受け継がれてきたもの</h4>
+                <p className="text-base leading-loose text-stone-700">{industry.deepDive.past}</p>
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-2 text-stone-900">今、取り組んでいること</h3>
-                <p className="text-stone-700 leading-relaxed whitespace-pre-line">{industry.deepDive.present}</p>
+                <h4 className="text-sm font-bold mb-3 text-stone-400 tracking-widest">今、取り組んでいること</h4>
+                <p className="text-base leading-loose text-stone-700">{industry.deepDive.present}</p>
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-2 text-stone-900">次の世代へ</h3>
-                <p className="text-stone-700 leading-relaxed whitespace-pre-line">{industry.deepDive.future}</p>
+                <h4 className="text-sm font-bold mb-3 text-stone-400 tracking-widest">次の世代へ</h4>
+                <p className="text-base leading-loose text-stone-700">{industry.deepDive.future}</p>
               </div>
             </div>
           </section>
-
-          {/* 訪問情報 */}
-          {industry.visitInfo && (
-            <section className="mb-12 p-8 bg-white rounded-lg shadow-sm">
-              <h2 className="text-2xl font-serif font-bold mb-6 border-b border-stone-200 pb-3">
-                訪問情報
-              </h2>
-              <div className="space-y-4">
-                {industry.visitInfo.hours && (
-                  <div className="flex gap-3">
-                    <Clock className="w-5 h-5 text-stone-500 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-sm font-medium text-stone-900 mb-1">営業時間</p>
-                      <p className="text-sm text-stone-700">{industry.visitInfo.hours}</p>
-                    </div>
-                  </div>
-                )}
-                {industry.visitInfo.access && (
-                  <div className="flex gap-3">
-                    <MapPin className="w-5 h-5 text-stone-500 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-sm font-medium text-stone-900 mb-1">アクセス</p>
-                      <p className="text-sm text-stone-700">{industry.visitInfo.access}</p>
-                    </div>
-                  </div>
-                )}
-                {industry.visitInfo.contact && (
-                  <div className="flex gap-3">
-                    <Phone className="w-5 h-5 text-stone-500 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-sm font-medium text-stone-900 mb-1">連絡先</p>
-                      <p className="text-sm text-stone-700">{industry.visitInfo.contact}</p>
-                    </div>
-                  </div>
-                )}
-                {industry.visitInfo.website && (
-                  <div className="flex gap-3">
-                    <Globe className="w-5 h-5 text-stone-500 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-sm font-medium text-stone-900 mb-1">ウェブサイト</p>
-                      <a
-                        href={industry.visitInfo.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-blue-600 hover:underline"
-                      >
-                        {industry.visitInfo.website}
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </section>
-          )}
 
           {/* 関連する産業 */}
-          {relatedIndustries.length > 0 && (
-            <section className="mb-12">
-              <h2 className="text-2xl font-serif font-bold mb-6">関連する産業</h2>
+          {industry.relatedIndustries && industry.relatedIndustries.length > 0 && (
+            <section className="pt-12 border-t border-stone-200">
+              <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
+                <span className="w-8 h-[1px] bg-stone-900"></span>
+                関連する産業
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {relatedIndustries.map((related) => (
-                  <a
-                    key={related.id}
-                    href={`/industry/${related.id}`}
-                    className="group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
-                  >
-                    <div className="relative h-48 overflow-hidden">
-                      <img
-                        src={related.image}
-                        alt={related.title}
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
-                      />
-                      <div className="absolute top-3 left-3">
-                        <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm text-xs font-medium rounded-full">
+                {industry.relatedIndustries.map(relatedId => {
+                  const related = industries.find(ind => ind.id === relatedId);
+                  if (!related) return null;
+                  return (
+                    <a
+                      key={related.id}
+                      href={`/industry/${related.id}`}
+                      className="group border border-stone-200 hover:border-stone-400 transition-all duration-300 overflow-hidden"
+                    >
+                      <div className="aspect-video relative overflow-hidden">
+                        <img
+                          src={related.image}
+                          alt={related.title}
+                          className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <span className="absolute top-3 left-3 text-xs bg-stone-900 text-white px-3 py-1 tracking-wider">
                           {related.category}
                         </span>
                       </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-lg font-serif font-bold mb-2">{related.title}</h3>
-                      <p className="text-xs text-stone-500 mb-2">{related.location}</p>
-                      <p className="text-sm text-stone-600 line-clamp-2">{related.summary}</p>
-                    </div>
-                  </a>
-                ))}
+                      <div className="p-4">
+                        <h4 className="font-serif text-lg mb-2 group-hover:text-stone-600 transition-colors">{related.title}</h4>
+                        <p className="text-xs text-stone-500 line-clamp-2">{related.summary}</p>
+                      </div>
+                    </a>
+                  );
+                })}
               </div>
             </section>
           )}
 
-          {/* CTA */}
-          <div className="text-center p-8 bg-stone-900 text-white rounded-lg">
-            <h2 className="text-2xl font-serif font-bold mb-4">この産業に関わりを持つ</h2>
-            <p className="text-sm mb-6 text-stone-300">
-              見学、体験、取材、協業など、さまざまな形で関わることができます
-            </p>
-            <Button
-              variant="outline"
-              className="bg-white text-stone-900 hover:bg-stone-100"
-              onClick={() => window.open("mailto:info@example.com", "_blank")}
-            >
-              お問い合わせ
-            </Button>
-          </div>
-        </div>
-      </main>
+          {/* 訪問情報 */}
+          {industry.visitInfo && (
+            <section className="pt-12 border-t border-stone-200">
+              <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
+                <span className="w-8 h-[1px] bg-stone-900"></span>
+                訪問情報
+              </h3>
+              <div className="bg-stone-50 p-6 space-y-4">
+                {industry.visitInfo.hours && (
+                  <div>
+                    <p className="text-xs text-stone-500 mb-1 tracking-widest">営業時間</p>
+                    <p className="text-sm text-stone-800">{industry.visitInfo.hours}</p>
+                  </div>
+                )}
+                {industry.visitInfo.access && (
+                  <div>
+                    <p className="text-xs text-stone-500 mb-1 tracking-widest">アクセス</p>
+                    <p className="text-sm text-stone-800">{industry.visitInfo.access}</p>
+                  </div>
+                )}
+                {industry.visitInfo.contact && (
+                  <div>
+                    <p className="text-xs text-stone-500 mb-1 tracking-widest">連絡先</p>
+                    <p className="text-sm text-stone-800">{industry.visitInfo.contact}</p>
+                  </div>
+                )}
+                {industry.visitInfo.website && (
+                  <div>
+                    <p className="text-xs text-stone-500 mb-1 tracking-widest">ウェブサイト</p>
+                    <a
+                      href={industry.visitInfo.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-blue-600 hover:underline"
+                    >
+                      {industry.visitInfo.website}
+                    </a>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
 
-      {/* フッター */}
-      <footer className="bg-stone-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-              <h3 className="text-xl font-serif font-bold mb-2">能登百業録</h3>
-              <p className="text-sm text-stone-400">〒927-0492</p>
-              <p className="text-sm text-stone-400">石川県鳳珠郡能登町</p>
+          {/* Actions */}
+          <section className="pt-12 border-t border-stone-200">
+            <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-stone-900"></span>
+              関わり方
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {industry.actions.map((action, index) => (
+                <a
+                  key={index}
+                  href={action.link}
+                  className="group border border-stone-300 hover:border-stone-900 hover:bg-stone-900 transition-all duration-300 p-6 text-center"
+                >
+                  <p className="text-sm font-serif group-hover:text-white transition-colors">{action.label}</p>
+                </a>
+              ))}
             </div>
-            <div className="flex flex-col md:flex-row gap-6 text-sm">
-              <a href="#" className="hover:text-stone-300 transition-colors">
-                地図から探す
-              </a>
-              <a href="#" className="hover:text-stone-300 transition-colors">
-                インスタグラム
-              </a>
-              <a href="#" className="hover:text-stone-300 transition-colors">
-                Twitter
-              </a>
-            </div>
-          </div>
+          </section>
+
         </div>
-      </footer>
+      </div>
     </div>
   );
 }
