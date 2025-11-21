@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import MapPage from "./pages/MapPage";
 import IndustryDetailPage from "./pages/IndustryDetailPage";
+import AboutPage from "./pages/AboutPage";
 
 function Router() {
   return (
@@ -14,6 +15,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/map"} component={MapPage} />
       <Route path={"/industry/:id"} component={IndustryDetailPage} />
+      <Route path={"/about"} component={AboutPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
