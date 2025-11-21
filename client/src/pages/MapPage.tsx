@@ -11,6 +11,8 @@ export default function MapPage() {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<Map<number, google.maps.Marker>>(new Map());
+  const [selectedCategory, setSelectedCategory] = useState<string>("すべて");
+  const [mobileView, setMobileView] = useState<"map" | "list">("map");
   const cardRefs = useRef<Map<number, HTMLDivElement>>(new Map());
 
   // カテゴリ別の色定義
@@ -19,13 +21,21 @@ export default function MapPage() {
     "農業": "#22c55e",
     "林業": "#84cc16",
     "食": "#f59e0b",
-    "醎造": "#a855f7",
+    "醸造": "#a855f7",
     "工芸": "#ec4899",
     "伝統": "#ef4444",
     "建築": "#6366f1",
     "観光": "#14b8a6",
     "インフラ": "#64748b",
   };
+
+  // カテゴリ一覧を取得
+  const categories = ["すべて", ...Object.keys(categoryColors)];
+
+  // フィルタリングされた産業リスト
+  const filteredIndustries = selectedCategory === "すべて"
+    ? industries
+    : industries.filter(i => i.category === selectedCategory);
 
   const handleMapReady = (googleMap: google.maps.Map) => {
     setMap(googleMap);
@@ -60,6 +70,7 @@ export default function MapPage() {
         marker.addListener("click", () => {
           setSelectedIndustry(industry);
           setShowDetailModal(false);
+          setMobileView("list");
           
           // 右側のカードまでスクロール
           const cardElement = cardRefs.current.get(industry.id);
@@ -74,26 +85,32 @@ export default function MapPage() {
     setMarkers(newMarkers);
   };
 
-  // マーカーのスタイルを更新
+  // マーカーの表示/非表示とスタイルを更新
   useEffect(() => {
     markers.forEach((marker, id) => {
       const industry = industries.find(i => i.id === id);
       if (!industry) return;
       
-      const isSelected = selectedIndustry?.id === id;
-      const isHighlighted = highlightedIndustry?.id === id;
-      const markerColor = categoryColors[industry.category] || "#1a1a1a";
+      // フィルタリング: 選択されたカテゴリに応じて表示/非表示
+      const shouldShow = selectedCategory === "すべて" || industry.category === selectedCategory;
+      marker.setVisible(shouldShow);
       
-      marker.setIcon({
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: isSelected || isHighlighted ? 14 : 10,
-        fillColor: isSelected ? "#dc2626" : markerColor,
-        fillOpacity: isSelected || isHighlighted ? 1 : 0.9,
-        strokeColor: "#ffffff",
-        strokeWeight: isSelected || isHighlighted ? 3 : 2,
-      });
+      if (shouldShow) {
+        const isSelected = selectedIndustry?.id === id;
+        const isHighlighted = highlightedIndustry?.id === id;
+        const markerColor = categoryColors[industry.category] || "#1a1a1a";
+        
+        marker.setIcon({
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: isSelected || isHighlighted ? 14 : 10,
+          fillColor: isSelected ? "#dc2626" : markerColor,
+          fillOpacity: isSelected || isHighlighted ? 1 : 0.9,
+          strokeColor: "#ffffff",
+          strokeWeight: isSelected || isHighlighted ? 3 : 2,
+        });
+      }
     });
-  }, [selectedIndustry, highlightedIndustry, markers]);
+  }, [selectedIndustry, highlightedIndustry, markers, selectedCategory]);
 
   const handleCardClick = (industry: Industry) => {
     setSelectedIndustry(industry);
@@ -123,7 +140,7 @@ export default function MapPage() {
             <a href="/" className="text-2xl font-serif font-bold">
               能登百業録
             </a>
-            <nav className="flex gap-8">
+            <nav className="hidden md:flex gap-8">
               <a href="/" className="text-sm hover:text-stone-600 transition-colors">
                 すべて
               </a>
@@ -138,23 +155,89 @@ export default function MapPage() {
         </div>
       </header>
 
-      {/* メインコンテンツ：左右分割 */}
-      <main className="flex">
+      {/* モバイル用タブ切り替え */}
+      <div className="md:hidden fixed top-16 left-0 right-0 bg-white border-b border-stone-200 z-40 flex">
+        <button
+          onClick={() => setMobileView("map")}
+          className={`flex-1 py-3 text-sm font-medium transition-colors ${
+            mobileView === "map"
+              ? "bg-stone-900 text-white"
+              : "bg-white text-stone-600 hover:bg-stone-50"
+          }`}
+        >
+          地図
+        </button>
+        <button
+          onClick={() => setMobileView("list")}
+          className={`flex-1 py-3 text-sm font-medium transition-colors ${
+            mobileView === "list"
+              ? "bg-stone-900 text-white"
+              : "bg-white text-stone-600 hover:bg-stone-50"
+          }`}
+        >
+          リスト
+        </button>
+      </div>
+
+      {/* メインコンテンツ：左右分割（デスクトップ）/ 上下切り替え（モバイル） */}
+      <main className="flex flex-col md:flex-row">
         {/* 左側：地図 */}
-        <div className="w-1/2 h-screen fixed top-0 left-0">
+        <div className={`w-full md:w-1/2 h-[calc(100vh-8rem)] md:h-screen md:fixed md:top-0 md:left-0 ${
+          mobileView === "list" ? "hidden md:block" : ""
+        }`}>
           <MapView onMapReady={handleMapReady} />
+          
+          {/* 凡例（地図の左下に配置） */}
+          <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-4 max-w-xs">
+            <h3 className="text-xs font-bold mb-3 text-stone-900">カテゴリ</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {Object.entries(categoryColors).map(([category, color]) => (
+                <div key={category} className="flex items-center gap-2">
+                  <div
+                    className="w-3 h-3 rounded-full border-2 border-white shadow-sm"
+                    style={{ backgroundColor: color }}
+                  />
+                  <span className="text-xs text-stone-700">{category}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* 右側：産業カードリスト */}
-        <div className="w-1/2 min-h-screen overflow-y-auto bg-stone-50 pt-20 p-8 ml-[50%]">
+        <div className={`w-full md:w-1/2 min-h-screen overflow-y-auto bg-stone-50 pt-24 md:pt-20 p-4 md:p-8 md:ml-[50%] ${
+          mobileView === "map" ? "hidden md:block" : ""
+        }`}>
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl font-serif font-bold mb-2">能登の生業</h2>
-            <p className="text-sm text-stone-600 mb-8 tracking-wide">
+            <p className="text-sm text-stone-600 mb-6 tracking-wide">
               地図上のマーカーをクリックするか、下記のカードを選択してください
             </p>
 
+            {/* カテゴリフィルター */}
+            <div className="mb-8 flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-4 py-2 text-xs font-medium rounded-full transition-all ${
+                    selectedCategory === category
+                      ? "bg-stone-900 text-white shadow-md"
+                      : "bg-white text-stone-600 hover:bg-stone-100 border border-stone-200"
+                  }`}
+                  style={
+                    selectedCategory === category && category !== "すべて"
+                      ? { backgroundColor: categoryColors[category], color: "white", borderColor: categoryColors[category] }
+                      : {}
+                  }
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
             <div className="space-y-6">
-              {industries.map((industry) => (
+              {filteredIndustries.map((industry) => (
                 <div
                   key={industry.id}
                   ref={(el) => {
@@ -162,9 +245,14 @@ export default function MapPage() {
                   }}
                   className={`group cursor-pointer transition-all duration-300 ${
                     selectedIndustry?.id === industry.id
-                      ? "ring-2 ring-stone-900 shadow-xl"
+                      ? "ring-2 shadow-xl"
                       : "hover:shadow-lg"
                   }`}
+                  style={
+                    selectedIndustry?.id === industry.id
+                      ? { boxShadow: `0 0 0 2px ${categoryColors[industry.category] || "#1a1a1a"}` }
+                      : {}
+                  }
                   onClick={() => handleCardClick(industry)}
                   onMouseEnter={() => handleCardHover(industry)}
                   onMouseLeave={() => handleCardHover(null)}
@@ -178,7 +266,10 @@ export default function MapPage() {
                         className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                       />
                       <div className="absolute top-4 left-4">
-                        <span className="bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-medium tracking-wider">
+                        <span
+                          className="px-3 py-1 text-xs font-medium tracking-wider text-white rounded"
+                          style={{ backgroundColor: categoryColors[industry.category] || "#1a1a1a" }}
+                        >
                           {industry.category}
                         </span>
                       </div>
@@ -204,7 +295,8 @@ export default function MapPage() {
                             e.stopPropagation();
                             handleViewDetail();
                           }}
-                          className="w-full bg-stone-900 text-white py-3 px-4 flex items-center justify-center gap-2 hover:bg-stone-700 transition-colors group/btn"
+                          className="w-full py-3 px-4 flex items-center justify-center gap-2 text-white transition-colors group/btn"
+                          style={{ backgroundColor: categoryColors[industry.category] || "#1a1a1a" }}
                         >
                           <span className="text-sm font-medium tracking-wider">
                             詳しく見る
