@@ -186,6 +186,22 @@ export default function MapPage() {
           mobileView === "list" ? "hidden md:block" : ""
         }`}>
           <MapView onMapReady={handleMapReady} />
+          
+          {/* 凡例（地図の左下に配置） */}
+          <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-4 max-w-xs hidden md:block">
+            <h3 className="text-xs font-bold mb-3 text-stone-900">カテゴリ凡例</h3>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+              {Object.entries(categoryColors).map(([category, color]) => (
+                <div key={category} className="flex items-center gap-2">
+                  <div
+                    className="w-3 h-3 rounded-full border-2 border-white shadow-sm flex-shrink-0"
+                    style={{ backgroundColor: color }}
+                  />
+                  <span className="text-xs text-stone-700">{category}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* 右側：産業カードリスト */}
@@ -199,7 +215,7 @@ export default function MapPage() {
             </p>
 
             {/* カテゴリフィルター */}
-            <div className="mb-6 flex flex-wrap gap-2">
+            <div className="mb-8 flex flex-wrap gap-2">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -218,22 +234,6 @@ export default function MapPage() {
                   {category}
                 </button>
               ))}
-            </div>
-
-            {/* 凡例 */}
-            <div className="mb-8 bg-white rounded-lg shadow-sm p-4 border border-stone-200">
-              <h3 className="text-xs font-bold mb-3 text-stone-900">カテゴリ凡例</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {Object.entries(categoryColors).map(([category, color]) => (
-                  <div key={category} className="flex items-center gap-2">
-                    <div
-                      className="w-3 h-3 rounded-full border-2 border-white shadow-sm"
-                      style={{ backgroundColor: color }}
-                    />
-                    <span className="text-xs text-stone-700">{category}</span>
-                  </div>
-                ))}
-              </div>
             </div>
 
             <div className="space-y-6">
