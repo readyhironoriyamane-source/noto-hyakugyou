@@ -5,6 +5,7 @@ export interface Industry {
   operator: string;
   role: string;
   location: string;
+  locationCoords?: { lat: number; lng: number };
   tags: string[];
   summary: string;
   necessity: string;
@@ -35,6 +36,7 @@ export const industries: Industry[] = [
     operator: "坂本 健太",
     role: "船団長",
     location: "能登町 小木港",
+    locationCoords: { lat: 37.2833, lng: 137.1167 },
     tags: ["伝統", "食文化", "後継者募集"],
     summary: "日本海有数のイカの水揚げ高を誇る小木港。凍てつく海と共に生きる仕事。最新の冷凍技術と、長年の勘が交差する最前線。",
     necessity: "小木のイカは日本の食文化を支える資源。燃料高騰と人手不足により船を出せない日が増えているが、この味と技術を絶やすことはできない。",
@@ -63,6 +65,7 @@ export const industries: Industry[] = [
     operator: "高橋 美咲",
     role: "農園主",
     location: "能登町 赤崎地区",
+    locationCoords: { lat: 37.3167, lng: 137.1333 },
     tags: ["観光農園", "Ｕターン"],
     summary: "日本海を見下ろす段々畑。太陽と潮風を浴びて育つ「赤崎いちご」。露地栽培にこだわり、甘みと酸味のバランスを追求する。",
     necessity: "市場に出回らない「幻のいちご」。希少な品種と美しい段々畑の景観を守ることは、地域の観光資源として不可欠。",
@@ -91,6 +94,7 @@ export const industries: Industry[] = [
     operator: "宮崎 誠",
     role: "醸造責任者",
     location: "能登町 各地",
+    locationCoords: { lat: 37.3, lng: 137.15 },
     tags: ["発酵文化", "伝統調味料"],
     summary: "イカの内臓を発酵させた魚醤「いしり」。独特の香りと旨味は、能登の食卓に欠かせない調味料。一年以上かけて熟成させる、時間と微生物の芸術。",
     necessity: "能登の発酵文化を象徴する調味料。近年は全国の料理人からも注目され、新たな可能性が広がっている。",
@@ -119,6 +123,7 @@ export const industries: Industry[] = [
     operator: "中村 大輔",
     role: "棟梁",
     location: "能登町 全域",
+    locationCoords: { lat: 37.31, lng: 137.14 },
     tags: ["伝統工芸", "震災復興"],
     summary: "1000年以上の歴史を持つ能登瓦。重厚で耐久性に優れ、能登の風土に適した屋根材。震災で傷んだ屋根を修復し、伝統を未来へつなぐ。",
     necessity: "能登の景観を形作る重要な要素。震災復興において、伝統的な屋根を復元することは地域のアイデンティティを守ること。",
@@ -147,6 +152,7 @@ export const industries: Industry[] = [
     operator: "田中 弘一",
     role: "米農家",
     location: "能登町 白米千枚田周辺",
+    locationCoords: { lat: 37.32, lng: 137.16 },
     tags: ["棚田", "世界農業遺産", "絶景"],
     summary: "日本海を見下ろす棚田で育つ能登米。潮風と寒暖差が生み出す粘りと甘み。世界農業遺産に認定された里山の知恵。",
     necessity: "棚田は能登の景観を形作る重要な要素。農業を続けることが、美しい景観と文化を守ることにつながる。",
@@ -175,6 +181,7 @@ export const industries: Industry[] = [
     operator: "山田 誠",
     role: "漁師",
     location: "能登町 各漁港",
+    locationCoords: { lat: 37.29, lng: 137.12 },
     tags: ["伝統漁法", "持続可能"],
     summary: "海に網を張り、魚が入るのを待つ伝統漁法。自然のリズムと共に生きる、持続可能な漁業の形。",
     necessity: "定置網漁は資源を枯渇させない持続可能な漁法。能登の海を守り、次世代に繋ぐために不可欠。",
@@ -203,6 +210,7 @@ export const industries: Industry[] = [
     operator: "佐藤 大樹",
     role: "林業従事者",
     location: "能登町 山間部",
+    locationCoords: { lat: 37.33, lng: 137.13 },
     tags: ["能登ヒバ", "木材", "森林保全"],
     summary: "能登ヒバ（アテ）は能登の森を代表する高級木材。耐久性と美しい木目が特徴で、建築材として重宝される。",
     necessity: "能登ヒバは能登の建築文化を支える重要な資源。森林を守り、持続可能な林業を続けることが地域の未来を守る。",
@@ -231,6 +239,7 @@ export const industries: Industry[] = [
     operator: "角花 千代",
     role: "塩田職人",
     location: "珠洲市 仙崎浜",
+    locationCoords: { lat: 37.48, lng: 137.25 },
     tags: ["伝統製法", "無形文化財"],
     summary: "日本唯一の揚げ浜式製塩法。海水を汲み、天日で乾燥させ、釜で炊く。500年以上続く伝統の塩作り。",
     necessity: "揚げ浜式製塩法は日本唯一の伝統製法。この技術を守ることは、日本の食文化を守ることである。",
@@ -259,6 +268,7 @@ export const industries: Industry[] = [
     operator: "木村 美智子",
     role: "漆芸家",
     location: "輪島市",
+    locationCoords: { lat: 37.39, lng: 136.90 },
     tags: ["伝統工芸", "漆器", "震災復興"],
     summary: "400年以上の歴史を持つ輪島塗。124の工程を経て完成する豪華な漆器。震災からの復興を目指す職人たち。",
     necessity: "輪島塗は日本を代表する伝統工芸。震災からの復興は、日本の文化を守ることである。",
@@ -287,6 +297,7 @@ export const industries: Industry[] = [
     operator: "高澤 優子",
     role: "ろうそく職人",
     location: "七尾市",
+    locationCoords: { lat: 37.04, lng: 136.97 },
     tags: ["伝統工芸", "和ろうそく"],
     summary: "米ぬかとハゼの木で作る七尾和ろうそく。穂芯構造が生み出す美しい炎。手作業で一本一本丁寧に作る。",
     necessity: "七尾和ろうそくは能登の伝統工芸。手作業の温かみと美しい炎を守ることは、日本の文化を守ることである。",
@@ -315,6 +326,7 @@ export const industries: Industry[] = [
     operator: "松本 一郎",
     role: "民宿経営者",
     location: "能登町 各地",
+    locationCoords: { lat: 37.30, lng: 137.17 },
     tags: ["里山里海", "体験型観光"],
     summary: "能登の里山里海を体験できる民宿。地元の食材を使った料理と、温かいおもてなしで迎える。",
     necessity: "民宿は能登の観光を支える重要な要素。地域の魅力を伝え、交流を生み出す場所である。",
@@ -343,6 +355,7 @@ export const industries: Industry[] = [
     operator: "井上 弘二",
     role: "港湾管理者",
     location: "能登町 小木港",
+    locationCoords: { lat: 37.2833, lng: 137.1167 },
     tags: ["漁港", "震災復興", "インフラ"],
     summary: "小木港は能登の漁業を支える重要な漁港。港湾施設の維持管理と、漁師たちの安全を守る仕事。",
     necessity: "港湾インフラは漁業を支える基盤。震災からの復興と、持続可能な漁業のために不可欠。",
