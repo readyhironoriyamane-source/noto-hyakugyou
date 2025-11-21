@@ -36,15 +36,24 @@ export default function Home() {
           
           <div className="flex items-center gap-8">
             <nav className="hidden md:flex items-center gap-8 text-sm tracking-widest font-medium">
-              {["百業について", "地図から探す", "特集"].map(item => (
-                <a 
-                  key={item} 
-                  href="#" 
-                  className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-white md:text-stone-900 hover:text-stone-600'}`}
-                >
-                  {item}
-                </a>
-              ))}
+              <a 
+                href="#" 
+                className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-white md:text-stone-900 hover:text-stone-600'}`}
+              >
+                百業について
+              </a>
+              <a 
+                href="/map" 
+                className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-white md:text-stone-900 hover:text-stone-600'}`}
+              >
+                地図から探す
+              </a>
+              <a 
+                href="#" 
+                className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-white md:text-stone-900 hover:text-stone-600'}`}
+              >
+                特集
+              </a>
             </nav>
             <button 
               className={`flex items-center gap-2 px-0 py-2 text-xs tracking-widest uppercase font-bold border-b ${isScrolled ? 'border-stone-900 text-stone-900' : 'border-white text-white md:border-stone-900 md:text-stone-900'}`}
