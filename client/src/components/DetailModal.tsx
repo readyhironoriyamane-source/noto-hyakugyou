@@ -1,5 +1,6 @@
-import { X, ArrowRight } from 'lucide-react';
+import { X, ArrowRight, MapPin, Clock, Phone, Globe } from 'lucide-react';
 import type { Industry } from '@/data/industries';
+import { industries } from '@/data/industries';
 
 interface DetailModalProps {
   job: Industry | null;
@@ -107,6 +108,102 @@ export default function DetailModal({ job, onClose }: DetailModalProps) {
               </div>
             </div>
           </section>
+
+          {/* 関連する産業 */}
+          {job.relatedIndustries && job.relatedIndustries.length > 0 && (
+            <section className="pt-12 border-t border-stone-200">
+              <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
+                <span className="w-8 h-[1px] bg-stone-900"></span>
+                関連する産業
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {job.relatedIndustries.map(relatedId => {
+                  const related = industries.find(ind => ind.id === relatedId);
+                  if (!related) return null;
+                  return (
+                    <a
+                      key={related.id}
+                      href={`#job-${related.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onClose();
+                        setTimeout(() => {
+                          const element = document.getElementById(`job-${related.id}`);
+                          element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 100);
+                      }}
+                      className="group border border-stone-200 hover:border-stone-400 transition-all duration-300 overflow-hidden"
+                    >
+                      <div className="aspect-video relative overflow-hidden">
+                        <img
+                          src={related.image}
+                          alt={related.title}
+                          className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <span className="absolute top-3 left-3 text-xs bg-stone-900 text-white px-3 py-1 tracking-wider">
+                          {related.category}
+                        </span>
+                      </div>
+                      <div className="p-4">
+                        <h4 className="font-serif text-lg mb-2 group-hover:text-stone-600 transition-colors">{related.title}</h4>
+                        <p className="text-xs text-stone-500 line-clamp-2">{related.summary}</p>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* 訪問情報 */}
+          {job.visitInfo && (
+            <section className="pt-12 border-t border-stone-200">
+              <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
+                <span className="w-8 h-[1px] bg-stone-900"></span>
+                訪問情報
+              </h3>
+              <div className="bg-stone-50 p-6 md:p-8 space-y-6">
+                {job.visitInfo.hours && (
+                  <div className="flex gap-4">
+                    <Clock className="w-5 h-5 text-stone-400 flex-shrink-0 mt-1" />
+                    <div>
+                      <p className="text-xs text-stone-500 mb-1 tracking-widest">営業時間・見学時間</p>
+                      <p className="text-sm text-stone-800">{job.visitInfo.hours}</p>
+                    </div>
+                  </div>
+                )}
+                {job.visitInfo.access && (
+                  <div className="flex gap-4">
+                    <MapPin className="w-5 h-5 text-stone-400 flex-shrink-0 mt-1" />
+                    <div>
+                      <p className="text-xs text-stone-500 mb-1 tracking-widest">アクセス</p>
+                      <p className="text-sm text-stone-800">{job.visitInfo.access}</p>
+                    </div>
+                  </div>
+                )}
+                {job.visitInfo.contact && (
+                  <div className="flex gap-4">
+                    <Phone className="w-5 h-5 text-stone-400 flex-shrink-0 mt-1" />
+                    <div>
+                      <p className="text-xs text-stone-500 mb-1 tracking-widest">連絡先</p>
+                      <p className="text-sm text-stone-800">{job.visitInfo.contact}</p>
+                    </div>
+                  </div>
+                )}
+                {job.visitInfo.website && (
+                  <div className="flex gap-4">
+                    <Globe className="w-5 h-5 text-stone-400 flex-shrink-0 mt-1" />
+                    <div>
+                      <p className="text-xs text-stone-500 mb-1 tracking-widest">ウェブサイト</p>
+                      <a href={job.visitInfo.website} target="_blank" rel="noopener noreferrer" className="text-sm text-stone-800 hover:text-stone-600 underline">
+                        {job.visitInfo.website}
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
 
           {/* Actions - First CTA */}
           <section className="pt-12 border-t border-stone-200">

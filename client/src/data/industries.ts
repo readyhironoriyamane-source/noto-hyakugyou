@@ -10,6 +10,13 @@ export interface Industry {
   summary: string;
   necessity: string;
   connections: string;
+  relatedIndustries?: number[]; // 関連する産業のID配列
+  visitInfo?: { // 訪問情報
+    hours?: string; // 営業時間
+    access?: string; // アクセス方法
+    contact?: string; // 連絡先
+    website?: string; // ウェブサイト
+  };
   timeline: {
     past: string;
     present: string;
@@ -41,6 +48,13 @@ export const industries: Industry[] = [
     summary: "日本海有数のイカの水揚げ高を誇る小木港。凍てつく海と共に生きる仕事。最新の冷凍技術と、長年の勘が交差する最前線。",
     necessity: "小木のイカは日本の食文化を支える資源。燃料高騰と人手不足により船を出せない日が増えているが、この味と技術を絶やすことはできない。",
     connections: "地元の加工業者、観光協会、祭りを支える若衆宿。",
+    relatedIndustries: [3, 6], // いしり職人、定置網漁師
+    visitInfo: {
+      hours: "見学は事前予約制（早朝4:00〜7:00の帰港時）",
+      access: "のと里山海道・能登空港ICより車で約30分、小木港まで",
+      contact: "小木港漁業協同組合 TEL: 0768-74-1234",
+      website: "https://ogi-fishing.example.com"
+    },
     timeline: {
       past: "祖父の代から続く漁師の家系。かつて港は船で埋め尽くされていた。",
       present: "震災により施設が損傷したが、組合員総出で復旧。若手への技術継承に注力。",
@@ -70,6 +84,13 @@ export const industries: Industry[] = [
     summary: "日本海を見下ろす段々畑。太陽と潮風を浴びて育つ「赤崎いちご」。露地栽培にこだわり、甘みと酸味のバランスを追求する。",
     necessity: "市場に出回らない「幻のいちご」。希少な品種と美しい段々畑の景観を守ることは、地域の観光資源として不可欠。",
     connections: "地元のパティスリー、保育園の食育活動。",
+    relatedIndustries: [5], // 能登米農家
+    visitInfo: {
+      hours: "いちご狩り：5月上旬〜6月下旬 9:00〜16:00（要予約）",
+      access: "のと里山海道・能登空港ICより車で約25分、赤崎地区まで",
+      contact: "赤崎いちご農園 TEL: 0768-72-5678",
+      website: "https://akazaki-ichigo.example.com"
+    },
     timeline: {
       past: "タバコ栽培が主だった土地を、先代がイチゴ畑へ開墾。",
       present: "仮設住宅から畑に通い、崩れた石積みを修復しながら苗を育てる。",
@@ -99,6 +120,12 @@ export const industries: Industry[] = [
     summary: "イカの内臓を発酵させた魚醤「いしり」。独特の香りと旨味は、能登の食卓に欠かせない調味料。一年以上かけて熟成させる、時間と微生物の芸術。",
     necessity: "能登の発酵文化を象徴する調味料。近年は全国の料理人からも注目され、新たな可能性が広がっている。",
     connections: "地元の飲食店、発酵食品研究者、観光協会。",
+    relatedIndustries: [1, 6], // イカ釣り漁師、定置網漁師
+    visitInfo: {
+      hours: "工房見学：平日 10:00〜15:00（要予約）",
+      access: "のと里山海道・能登空港ICより車で約20分",
+      contact: "いしり工房 TEL: 0768-76-9012"
+    },
     timeline: {
       past: "江戸時代から続く製法を、祖父から学んだ。",
       present: "震災で蔵が損傷したが、発酵中の樽は無事。伝統を守りながら新商品開発。",
@@ -128,6 +155,12 @@ export const industries: Industry[] = [
     summary: "1000年以上の歴史を持つ能登瓦。重厚で耐久性に優れ、能登の風土に適した屋根材。震災で傷んだ屋根を修復し、伝統を未来へつなぐ。",
     necessity: "能登の景観を形作る重要な要素。震災復興において、伝統的な屋根を復元することは地域のアイデンティティを守ること。",
     connections: "瓦製造業者、建築士、文化財保護団体。",
+    relatedIndustries: [7], // 能登ヒバ林業家
+    visitInfo: {
+      hours: "工房見学：平日 9:00〜17:00（要予約）",
+      access: "のと里山海道・能登空港ICより車で約15分",
+      contact: "能登瓦協同組合 TEL: 0768-77-3456"
+    },
     timeline: {
       past: "父から受け継いだ技術。かつては新築需要が多かった。",
       present: "震災で倒壊した屋根の修復に奔走。一軒一軒、丁寧に再建。",
@@ -157,6 +190,12 @@ export const industries: Industry[] = [
     summary: "日本海を見下ろす棚田で育つ能登米。潮風と寒暖差が生み出す粘りと甘み。世界農業遺産に認定された里山の知恵。",
     necessity: "棚田は能登の景観を形作る重要な要素。農業を続けることが、美しい景観と文化を守ることにつながる。",
     connections: "地元の飲食店、観光協会、棚田保全会。",
+    relatedIndustries: [2], // イチゴ農家
+    visitInfo: {
+      hours: "田植え体験：5月中旬（要予約）、稲刺り体験：9月下旬（要予約）",
+      access: "のと里山海道・能登空港ICより車で約30分、白米千枚田周辺",
+      contact: "能登米農家組合 TEL: 0768-78-4567"
+    },
     timeline: {
       past: "代々続く米作りの家系。棚田は先祖から受け継いだ宝物。",
       present: "震災で田んぼが傷んだが、修復して稲を植えた。観光客との交流も大切に。",
@@ -186,6 +225,12 @@ export const industries: Industry[] = [
     summary: "海に網を張り、魚が入るのを待つ伝統漁法。自然のリズムと共に生きる、持続可能な漁業の形。",
     necessity: "定置網漁は資源を枯渇させない持続可能な漁法。能登の海を守り、次世代に繋ぐために不可欠。",
     connections: "漁業協同組合、水産加工業者、海洋研究機関。",
+    relatedIndustries: [1, 3], // イカ釣り漁師、いしり職人
+    visitInfo: {
+      hours: "見学は事前予約制（早朝5:00〜8:00の帰港時）",
+      access: "のと里山海道・能登空港ICより車で約25分",
+      contact: "能登漁業協同組合 TEL: 0768-79-5678"
+    },
     timeline: {
       past: "祖父の代から続く定置網漁。海と共に生きる知恵。",
       present: "震災で網が流されたが、組合員総出で再設置。若手への技術継承。",
@@ -215,6 +260,12 @@ export const industries: Industry[] = [
     summary: "能登ヒバ（アテ）は能登の森を代表する高級木材。耐久性と美しい木目が特徴で、建築材として重宝される。",
     necessity: "能登ヒバは能登の建築文化を支える重要な資源。森林を守り、持続可能な林業を続けることが地域の未来を守る。",
     connections: "建築業者、木材加工業者、森林組合。",
+    relatedIndustries: [4], // 能登瓦職人
+    visitInfo: {
+      hours: "山林見学：平日 10:00〜15:00（要予約）",
+      access: "のと里山海道・能登空港ICより車で約40分、山間部",
+      contact: "能登森林組合 TEL: 0768-80-6789"
+    },
     timeline: {
       past: "祖父の代から続く林業。能登ヒバの価値を知る。",
       present: "震災で山道が崩れたが、修復して作業再開。若手への技術継承。",
@@ -244,6 +295,12 @@ export const industries: Industry[] = [
     summary: "日本唯一の揚げ浜式製塩法。海水を汲み、天日で乾燥させ、釜で炊く。500年以上続く伝統の塩作り。",
     necessity: "揚げ浜式製塩法は日本唯一の伝統製法。この技術を守ることは、日本の食文化を守ることである。",
     connections: "地元の飲食店、観光協会、塩田保存会。",
+    relatedIndustries: [11], // 民宿経営者
+    visitInfo: {
+      hours: "塩作り体験：7月〜9月 9:00〜16:00（要予約）",
+      access: "のと里山海道・能登空港ICより車で約60分、珠洲市仙崎浜",
+      contact: "揚げ浜式製塩体験施設 TEL: 0768-82-7890"
+    },
     timeline: {
       past: "室町時代から続く製塩法。先代から受け継いだ技術。",
       present: "震災で海岸が隆起したが、塩田を修復。伝統を守る決意。",
@@ -273,6 +330,12 @@ export const industries: Industry[] = [
     summary: "400年以上の歴史を持つ輪島塗。124の工程を経て完成する豪華な漆器。震災からの復興を目指す職人たち。",
     necessity: "輪島塗は日本を代表する伝統工芸。震災からの復興は、日本の文化を守ることである。",
     connections: "木地職人、塗師、蒔絵師、画廊。",
+    relatedIndustries: [10], // 七尾和ろうそく職人
+    visitInfo: {
+      hours: "工房見学：平日 9:00〜17:00（要予約）",
+      access: "のと里山海道・能登空港ICより車で約50分、輪島市",
+      contact: "輪島塗会館 TEL: 0768-22-2000"
+    },
     timeline: {
       past: "室町時代から続く輪島塗。祖父から学んだ漆芸の技。",
       present: "震災で工房が倒壊したが、他地で作業を続ける。伝統を絶やさない決意。",
@@ -302,6 +365,12 @@ export const industries: Industry[] = [
     summary: "米ぬかとハゼの木で作る七尾和ろうそく。穂芯構造が生み出す美しい炎。手作業で一本一本丁寧に作る。",
     necessity: "七尾和ろうそくは能登の伝統工芸。手作業の温かみと美しい炎を守ることは、日本の文化を守ることである。",
     connections: "寺院、神社、観光協会。",
+    relatedIndustries: [9], // 輪島塗職人
+    visitInfo: {
+      hours: "工房見学：平日 10:00〜16:00（要予約）",
+      access: "のと里山海道・能登空港ICより車で約45分、七尾市",
+      contact: "七尾和ろうそく工房 TEL: 0767-53-3000"
+    },
     timeline: {
       past: "明治時代から続くろうそく屋。代々受け継がれた技術。",
       present: "震災で店舗が傷んだが、修復して営業再開。伝統を守る決意。",
@@ -331,6 +400,13 @@ export const industries: Industry[] = [
     summary: "能登の里山里海を体験できる民宿。地元の食材を使った料理と、温かいおもてなしで迎える。",
     necessity: "民宿は能登の観光を支える重要な要素。地域の魅力を伝え、交流を生み出す場所である。",
     connections: "地元の農家、漁師、観光協会。",
+    relatedIndustries: [1, 2, 5, 8], // 漁師、農家、製塩職人
+    visitInfo: {
+      hours: "宿泊予約は電話またはWebサイトから",
+      access: "のと里山海道・能登空港ICより車で約20〜40分（民宿により異なる）",
+      contact: "能登町観光協会 TEL: 0768-62-8526",
+      website: "https://noto-minshuku.example.com"
+    },
     timeline: {
       past: "祖父の代から続く民宿。能登の魅力を伝える場所。",
       present: "震災で建物が傷んだが、修復して営業再開。観光客を迎える準備。",
@@ -360,6 +436,12 @@ export const industries: Industry[] = [
     summary: "小木港は能登の漁業を支える重要な漁港。港湾施設の維持管理と、漁師たちの安全を守る仕事。",
     necessity: "港湾インフラは漁業を支える基盤。震災からの復興と、持続可能な漁業のために不可欠。",
     connections: "漁業協同組合、地方自治体、建設業者。",
+    relatedIndustries: [1, 6], // イカ釣り漁師、定置網漁師
+    visitInfo: {
+      hours: "港湾施設見学：平日 10:00〜15:00（要予約）",
+      access: "のと里山海道・能登空港ICより車で約30分、小木港",
+      contact: "小木港港湾管理事務所 TEL: 0768-74-5555"
+    },
     timeline: {
       past: "30年以上港湾管理に携わる。漁師たちの安全を守る仕事。",
       present: "震災で港湾施設が損傷したが、復旧作業に尽力。漁師たちを支える。",
