@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRoute } from "wouter";
 import { industries } from "@/data/industries";
 import type { Industry } from "@/data/industries";
@@ -9,6 +9,7 @@ export default function IndustryDetailPage() {
   const [industry, setIndustry] = useState<Industry | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showShareMenu, setShowShareMenu] = useState(false);
+  const sectionsRef = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
     if (params?.id) {
@@ -59,6 +60,33 @@ export default function IndustryDetailPage() {
       metaTags.forEach(tag => tag.remove());
     };
   }, [params?.id]);
+  
+  // スクロールアニメーション
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    sectionsRef.current.forEach((section) => {
+      if (section) {
+        section.classList.add('opacity-0');
+        observer.observe(section);
+      }
+    });
+
+    return () => {
+      sectionsRef.current.forEach((section) => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, [industry]);
 
   if (!industry) {
     return (
@@ -141,7 +169,15 @@ export default function IndustryDetailPage() {
         </div>
         
         <button 
-          onClick={() => window.history.back()}
+          onClick={() => {
+            // 遷移元を確認して適切なページに戻る
+            const referrer = document.referrer;
+            if (referrer && (referrer.includes('/map') || referrer.includes(window.location.origin))) {
+              window.history.back();
+            } else {
+              window.location.href = '/';
+            }
+          }}
           className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-stone-100 transition-colors"
         >
           <X className="w-6 h-6 text-stone-900" />
@@ -229,7 +265,7 @@ export default function IndustryDetailPage() {
         {/* Main Text */}
         <div className="md:col-span-9 space-y-16">
           
-          <section>
+          <section ref={(el) => { sectionsRef.current[0] = el; }}>
             <h3 className="font-serif text-2xl mb-6 flex items-center gap-4">
               <span className="w-8 h-[1px] bg-stone-900"></span>
               物語
@@ -244,7 +280,7 @@ export default function IndustryDetailPage() {
           </section>
 
           {/* Timeline - Clean Grid */}
-          <section>
+          <section ref={(el) => { sectionsRef.current[1] = el; }}>
             <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
               <span className="w-8 h-[1px] bg-stone-900"></span>
               歩みと展望
@@ -272,7 +308,7 @@ export default function IndustryDetailPage() {
           </section>
 
           {/* Deep Dive */}
-          <section className="pt-12 border-t border-stone-200">
+          <section ref={(el) => { sectionsRef.current[2] = el; }} className="pt-12 border-t border-stone-200">
             <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
               <span className="w-8 h-[1px] bg-stone-900"></span>
               仕事を深く知る
@@ -295,7 +331,7 @@ export default function IndustryDetailPage() {
 
           {/* 関連する産業 */}
           {industry.relatedIndustries && industry.relatedIndustries.length > 0 && (
-            <section className="pt-12 border-t border-stone-200">
+            <section ref={(el) => { sectionsRef.current[3] = el; }} className="pt-12 border-t border-stone-200">
               <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
                 <span className="w-8 h-[1px] bg-stone-900"></span>
                 関連する産業
@@ -333,7 +369,7 @@ export default function IndustryDetailPage() {
 
           {/* 訪問情報 */}
           {industry.visitInfo && (
-            <section className="pt-12 border-t border-stone-200">
+            <section ref={(el) => { sectionsRef.current[4] = el; }} className="pt-12 border-t border-stone-200">
               <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
                 <span className="w-8 h-[1px] bg-stone-900"></span>
                 訪問情報
@@ -374,22 +410,27 @@ export default function IndustryDetailPage() {
             </section>
           )}
 
-          {/* Actions */}
-          <section className="pt-12 border-t border-stone-200">
-            <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-stone-900"></span>
-              関わり方
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {industry.actions.map((action, index) => (
-                <a
-                  key={index}
-                  href={action.link}
-                  className="group border border-stone-300 hover:border-stone-900 hover:bg-stone-900 transition-all duration-300 p-6 text-center"
-                >
-                  <p className="text-sm font-serif group-hover:text-white transition-colors">{action.label}</p>
-                </a>
-              ))}
+          {/* Actions - CTA */}
+          <section ref={(el) => { sectionsRef.current[5] = el; }} className="pt-12 border-t border-stone-200">
+            <div className="bg-stone-900 text-white p-8 md:p-12">
+              <div className="md:flex items-baseline justify-between mb-8">
+                <h3 className="font-serif text-3xl mb-2 md:mb-0">関わりを持つ</h3>
+                <p className="text-stone-400 text-sm">この生業を未来へつなぐために</p>
+              </div>
+              <div className="grid gap-4">
+                {industry.actions.map((action, index) => (
+                  <a
+                    key={index}
+                    href={action.link}
+                    className="group flex items-center justify-between border-b border-stone-700 py-4 hover:bg-stone-800 hover:px-4 transition-all duration-300"
+                  >
+                    <span className="font-serif text-lg">{action.label}</span>
+                    <svg className="w-5 h-5 text-stone-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                ))}
+              </div>
             </div>
           </section>
 
