@@ -13,13 +13,27 @@ export default function MapPage() {
   const [markers, setMarkers] = useState<Map<number, google.maps.Marker>>(new Map());
   const cardRefs = useRef<Map<number, HTMLDivElement>>(new Map());
 
+  // カテゴリ別の色定義
+  const categoryColors: Record<string, string> = {
+    "漁業": "#0ea5e9",
+    "農業": "#22c55e",
+    "林業": "#84cc16",
+    "食": "#f59e0b",
+    "醎造": "#a855f7",
+    "工芸": "#ec4899",
+    "伝統": "#ef4444",
+    "建築": "#6366f1",
+    "観光": "#14b8a6",
+    "インフラ": "#64748b",
+  };
+
   const handleMapReady = (googleMap: google.maps.Map) => {
     setMap(googleMap);
 
-    // 能登町の中心座標
-    const notoCenter = { lat: 37.3, lng: 137.15 };
+    // 能登半島全体が見渡せるように調整
+    const notoCenter = { lat: 37.35, lng: 137.0 };
     googleMap.setCenter(notoCenter);
-    googleMap.setZoom(11);
+    googleMap.setZoom(10);
 
     // 各産業のマーカーを配置
     const newMarkers = new Map<number, google.maps.Marker>();
@@ -27,6 +41,8 @@ export default function MapPage() {
     industries
       .filter(industry => industry.locationCoords)
       .forEach(industry => {
+        const markerColor = categoryColors[industry.category] || "#1a1a1a";
+        
         const marker = new google.maps.Marker({
           position: industry.locationCoords!,
           map: googleMap,
@@ -34,8 +50,8 @@ export default function MapPage() {
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 10,
-            fillColor: "#1a1a1a",
-            fillOpacity: 0.8,
+            fillColor: markerColor,
+            fillOpacity: 0.9,
             strokeColor: "#ffffff",
             strokeWeight: 2,
           },
@@ -61,14 +77,18 @@ export default function MapPage() {
   // マーカーのスタイルを更新
   useEffect(() => {
     markers.forEach((marker, id) => {
+      const industry = industries.find(i => i.id === id);
+      if (!industry) return;
+      
       const isSelected = selectedIndustry?.id === id;
       const isHighlighted = highlightedIndustry?.id === id;
+      const markerColor = categoryColors[industry.category] || "#1a1a1a";
       
       marker.setIcon({
         path: google.maps.SymbolPath.CIRCLE,
         scale: isSelected || isHighlighted ? 14 : 10,
-        fillColor: isSelected ? "#dc2626" : "#1a1a1a",
-        fillOpacity: isSelected || isHighlighted ? 1 : 0.8,
+        fillColor: isSelected ? "#dc2626" : markerColor,
+        fillOpacity: isSelected || isHighlighted ? 1 : 0.9,
         strokeColor: "#ffffff",
         strokeWeight: isSelected || isHighlighted ? 3 : 2,
       });
@@ -97,7 +117,7 @@ export default function MapPage() {
   return (
     <div className="min-h-screen flex flex-col bg-stone-50">
       {/* ヘッダー */}
-      <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-40 border-b border-stone-200">
+      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-stone-200/50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <a href="/" className="text-2xl font-serif font-bold">
@@ -119,14 +139,14 @@ export default function MapPage() {
       </header>
 
       {/* メインコンテンツ：左右分割 */}
-      <main className="flex-1 flex">
+      <main className="flex">
         {/* 左側：地図 */}
-        <div className="w-1/2 h-screen sticky top-0">
+        <div className="w-1/2 h-screen fixed top-0 left-0">
           <MapView onMapReady={handleMapReady} />
         </div>
 
         {/* 右側：産業カードリスト */}
-        <div className="w-1/2 min-h-screen overflow-y-auto bg-stone-50 pt-20 p-8">
+        <div className="w-1/2 min-h-screen overflow-y-auto bg-stone-50 pt-20 p-8 ml-[50%]">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl font-serif font-bold mb-2">能登の生業</h2>
             <p className="text-sm text-stone-600 mb-8 tracking-wide">
