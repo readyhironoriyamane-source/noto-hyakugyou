@@ -119,6 +119,16 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .font-serif {
+    font-family: 'Noto Serif JP', serif;
+  }
+  .writing-vertical-rl {
+    writing-mode: vertical-rl;
+  }
+  .text-orientation-upright {
+    text-orientation: upright;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -158,6 +168,12 @@
   .flex {
     min-height: 0;
     min-width: 0;
+  }
+
+  /* Selection color */
+  ::selection {
+    background-color: oklch(0.3 0.1 20);
+    color: oklch(1 0 0);
   }
 
   @media (min-width: 640px) {
