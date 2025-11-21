@@ -53,12 +53,12 @@ export default function DetailModal({ job, onClose }: DetailModalProps) {
              </div>
           </div>
           <div>
-            <p className="text-xs text-stone-500 mb-1 tracking-widest uppercase">Operator</p>
+            <p className="text-xs text-stone-500 mb-1 tracking-widest">事業者</p>
             <p className="text-xl font-serif mb-1">{job.operator}</p>
             <p className="text-sm text-stone-500">{job.role}</p>
           </div>
           <div className="mt-8 pt-8 border-t border-stone-200 hidden md:block">
-            <p className="text-xs text-stone-500 mb-2 tracking-widest uppercase">Connections</p>
+            <p className="text-xs text-stone-500 mb-2 tracking-widest">つながり</p>
             <p className="text-sm font-serif text-stone-800 leading-relaxed">{job.connections}</p>
           </div>
         </div>
@@ -75,7 +75,7 @@ export default function DetailModal({ job, onClose }: DetailModalProps) {
               {job.summary}
             </p>
             <div className="mt-8 p-6 bg-stone-50">
-              <h4 className="text-sm font-bold mb-2 text-stone-400 tracking-widest">NECESSITY</h4>
+              <h4 className="text-sm font-bold mb-2 text-stone-400 tracking-widest">なぜ必要か</h4>
               <p className="text-base leading-loose text-stone-700">{job.necessity}</p>
             </div>
           </section>
@@ -88,26 +88,76 @@ export default function DetailModal({ job, onClose }: DetailModalProps) {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="space-y-3">
-                <span className="block text-xs font-bold text-stone-300 tracking-widest">PAST</span>
+                <span className="block text-xs font-bold text-stone-300 tracking-widest flex items-center gap-2">
+                  <span className="text-lg">👉</span> 過去
+                </span>
                 <p className="text-sm leading-loose text-stone-600">{job.timeline.past}</p>
               </div>
               <div className="space-y-3">
-                <span className="block text-xs font-bold text-stone-900 tracking-widest">PRESENT</span>
+                <span className="block text-xs font-bold text-stone-900 tracking-widest flex items-center gap-2">
+                  <span className="text-lg">👉</span> 現在
+                </span>
                 <p className="text-sm leading-loose text-stone-800 font-medium">{job.timeline.present}</p>
               </div>
               <div className="space-y-3">
-                <span className="block text-xs font-bold text-stone-300 tracking-widest">FUTURE</span>
+                <span className="block text-xs font-bold text-stone-300 tracking-widest flex items-center gap-2">
+                  <span className="text-lg">👉</span> 未来
+                </span>
                 <p className="text-sm leading-loose text-stone-600">{job.timeline.future}</p>
               </div>
             </div>
           </section>
 
-          {/* Actions - Minimalist */}
+          {/* Actions - First CTA */}
           <section className="pt-12 border-t border-stone-200">
             <div className="bg-stone-900 text-white p-8 md:p-12">
               <div className="md:flex items-baseline justify-between mb-8">
                 <h3 className="font-serif text-3xl mb-2 md:mb-0">関わりを持つ</h3>
                 <p className="text-stone-400 text-sm">この生業を未来へつなぐために</p>
+              </div>
+              <div className="grid gap-4">
+                {job.actions.map((action, idx) => (
+                  <a key={idx} href={action.link} className="group flex items-center justify-between border-b border-stone-700 py-4 hover:bg-stone-800 hover:px-4 transition-all duration-300">
+                    <span className="font-serif text-lg">{action.label}</span>
+                    <ArrowRight className="w-5 h-5 text-stone-500 group-hover:text-white transition-colors" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Job Details - New Section */}
+          <section>
+            <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-stone-900"></span>
+              仕事を深く知る
+            </h3>
+            <div className="space-y-10">
+              <div>
+                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide">仕事の内容</h4>
+                <p className="text-sm leading-loose text-stone-600">{job.details.workContent}</p>
+              </div>
+              <div>
+                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide">求められるスキル</h4>
+                <p className="text-sm leading-loose text-stone-600">{job.details.skills}</p>
+              </div>
+              <div>
+                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide">課題とやりがい</h4>
+                <p className="text-sm leading-loose text-stone-600">{job.details.challenges}</p>
+              </div>
+              <div>
+                <h4 className="text-base font-bold mb-4 text-stone-700 tracking-wide">得られるもの</h4>
+                <p className="text-sm leading-loose text-stone-600">{job.details.rewards}</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Actions - Second CTA */}
+          <section className="pt-12 border-t border-stone-200">
+            <div className="bg-stone-900 text-white p-8 md:p-12">
+              <div className="md:flex items-baseline justify-between mb-8">
+                <h3 className="font-serif text-3xl mb-2 md:mb-0">関わりを持つ</h3>
+                <p className="text-stone-400 text-sm">あなたの一歩が、能登の未来を変える</p>
               </div>
               <div className="grid gap-4">
                 {job.actions.map((action, idx) => (
