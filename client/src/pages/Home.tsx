@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { 
   ArrowUpRight,
-  ChevronDown
+  ChevronDown,
+  Menu,
+  X
 } from 'lucide-react';
 import { industries } from '@/data/industries';
 import DetailModal from '@/components/DetailModal';
@@ -109,22 +111,63 @@ export default function Home() {
               >
                 地図から探す
               </a>
-              <a 
-                href="#" 
-                className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-white md:text-stone-900 hover:text-stone-600'}`}
-              >
-                特集
-              </a>
             </nav>
             <button 
-              className={`flex items-center gap-2 px-0 py-2 text-xs tracking-widest uppercase font-bold border-b ${isScrolled ? 'border-stone-900 text-stone-900' : 'border-white text-white md:border-stone-900 md:text-stone-900'}`}
+              className={`md:hidden ${isScrolled ? 'text-stone-900' : 'text-white'}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="メニュー"
             >
-              Menu
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </header>
+
+      {/* モバイルメニュー */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          {/* 背景オーバーレイ */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setIsMenuOpen(false)}
+          />
+          
+          {/* メニューパネル */}
+          <div className="absolute top-0 right-0 w-64 h-full bg-stone-50 shadow-2xl">
+            <div className="flex flex-col h-full">
+              {/* ヘッダー */}
+              <div className="flex justify-between items-center p-6 border-b border-stone-200">
+                <h2 className="font-serif text-xl tracking-widest">メニュー</h2>
+                <button 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-stone-900"
+                  aria-label="閉じる"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              
+              {/* ナビゲーション */}
+              <nav className="flex flex-col p-6 space-y-6">
+                <a 
+                  href="/about" 
+                  className="text-lg tracking-widest text-stone-900 hover:text-stone-600 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  百業について
+                </a>
+                <a 
+                  href="/map" 
+                  className="text-lg tracking-widest text-stone-900 hover:text-stone-600 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  地図から探す
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section: Magazine Cover Style */}
       <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[#1a1a1a]">
