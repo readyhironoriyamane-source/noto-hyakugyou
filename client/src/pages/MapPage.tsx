@@ -109,11 +109,11 @@ export default function MapPage() {
         
         marker.setIcon({
           path: google.maps.SymbolPath.CIRCLE,
-          scale: isSelected || isHighlighted ? 14 : 10,
-          fillColor: isSelected ? "#dc2626" : markerColor,
+          scale: isSelected ? 15 : (isHighlighted ? 12 : 10),
+          fillColor: markerColor,
           fillOpacity: isSelected || isHighlighted ? 1 : 0.9,
           strokeColor: "#ffffff",
-          strokeWeight: isSelected || isHighlighted ? 3 : 2,
+          strokeWeight: isSelected ? 4 : (isHighlighted ? 3 : 2),
         });
       }
     });
