@@ -119,14 +119,14 @@ export default function MapPage() {
       </header>
 
       {/* メインコンテンツ：左右分割 */}
-      <main className="flex-1 pt-20 flex">
+      <main className="flex-1 flex">
         {/* 左側：地図 */}
-        <div className="w-1/2 h-[calc(100vh-5rem)] sticky top-20">
+        <div className="w-1/2 h-screen sticky top-0">
           <MapView onMapReady={handleMapReady} />
         </div>
 
         {/* 右側：産業カードリスト */}
-        <div className="w-1/2 h-[calc(100vh-5rem)] overflow-y-auto bg-stone-50 p-8">
+        <div className="w-1/2 min-h-screen overflow-y-auto bg-stone-50 pt-20 p-8">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl font-serif font-bold mb-2">能登の生業</h2>
             <p className="text-sm text-stone-600 mb-8 tracking-wide">
