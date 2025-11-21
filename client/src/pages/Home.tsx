@@ -60,7 +60,7 @@ export default function Home() {
       <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[#1a1a1a]">
          {/* Dynamic Background Image */}
          <div className="absolute inset-0 opacity-60">
-            <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?q=80&w=2000&auto=format&fit=crop" className="w-full h-full object-cover grayscale" alt="能登の海" />
+            <img src="/fukuzushi.jpg" className="w-full h-full object-cover grayscale" alt="小木地区の福寿司" />
          </div>
          
          <div className="relative z-10 w-full max-w-screen-2xl mx-auto px-6 md:px-12 h-full flex flex-col justify-center">
