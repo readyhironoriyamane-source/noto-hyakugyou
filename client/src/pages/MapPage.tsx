@@ -212,7 +212,7 @@ export default function MapPage() {
         </div>
 
         {/* 右側：産業カードリスト */}
-        <div className={`relative z-10 w-full md:w-1/2 min-h-screen overflow-y-auto bg-stone-50 pt-8 md:pt-20 p-4 md:p-8 md:ml-[50%] ${
+        <div className={`relative z-10 w-full md:w-1/2 min-h-screen overflow-y-auto bg-stone-50 pt-32 md:pt-20 p-4 md:p-8 md:ml-[50%] ${
           mobileView === "map" ? "hidden md:block" : ""
         }`}>
           <div className="max-w-2xl mx-auto">
