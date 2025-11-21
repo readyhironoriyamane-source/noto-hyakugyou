@@ -110,7 +110,7 @@ export const industries: Industry[] = [
       { type: "visit", label: "蔵見学・発酵体験", link: "#" },
       { type: "join", label: "醸造アシスタント募集", link: "#" }
     ],
-    image: "/ishiri-sauce.jpg"
+    image: "/ishiri-new.jpg"
   },
   {
     id: 4,
@@ -166,7 +166,7 @@ export const industries: Industry[] = [
       { type: "visit", label: "棚田見学・田植え体験", link: "#" },
       { type: "join", label: "援農ボランティア募集", link: "#" }
     ],
-    image: "/noto-rice.jpg"
+    image: "/noto-rice.webp"
   },
   {
     id: 6,
@@ -194,7 +194,7 @@ export const industries: Industry[] = [
       { type: "visit", label: "定置網漁体験", link: "#" },
       { type: "join", label: "漁師見習い募集", link: "#" }
     ],
-    image: "/fixed-net-fishing.jpg"
+    image: "/teichi-ami.jpg"
   },
   {
     id: 7,
@@ -222,7 +222,7 @@ export const industries: Industry[] = [
       { type: "visit", label: "森林見学・体験", link: "#" },
       { type: "join", label: "林業見習い募集", link: "#" }
     ],
-    image: "/noto-hiba.jpg"
+    image: "/forestry.jpg"
   },
   {
     id: 8,
@@ -250,7 +250,7 @@ export const industries: Industry[] = [
       { type: "visit", label: "塩田見学・体験", link: "#" },
       { type: "join", label: "塩田アシスタント募集", link: "#" }
     ],
-    image: "/agehama-salt.jpg"
+    image: "/salt.jpg"
   },
   {
     id: 9,
@@ -306,7 +306,7 @@ export const industries: Industry[] = [
       { type: "visit", label: "工房見学・体験", link: "#" },
       { type: "join", label: "見習い募集", link: "#" }
     ],
-    image: "/nanao-candle.jpg"
+    image: "/warosoku.avif"
   },
   {
     id: 11,
@@ -362,6 +362,6 @@ export const industries: Industry[] = [
       { type: "visit", label: "港見学ツアー", link: "#" },
       { type: "join", label: "港湾管理スタッフ募集", link: "#" }
     ],
-    image: "/ogi-port.jpg"
+    image: "/port-manager.jpg"
   }
 ];
