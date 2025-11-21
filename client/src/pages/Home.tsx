@@ -37,7 +37,7 @@ export default function Home() {
           <div className="flex items-center gap-8">
             <nav className="hidden md:flex items-center gap-8 text-sm tracking-widest font-medium">
               <a 
-                href="#" 
+                href="/about" 
                 className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-white md:text-stone-900 hover:text-stone-600'}`}
               >
                 百業について
