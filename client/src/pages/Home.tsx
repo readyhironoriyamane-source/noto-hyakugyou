@@ -7,6 +7,67 @@ import { industries } from '@/data/industries';
 import DetailModal from '@/components/DetailModal';
 import type { Industry } from '@/data/industries';
 
+function SeasonalPickup() {
+  const currentMonth = new Date().getMonth() + 1; // 1-12月
+  const seasonal = industries.filter(i => 
+    i.seasonalMonths?.includes(currentMonth)
+  );
+  const picked = seasonal.length > 0 
+    ? seasonal.slice(0, 3) 
+    : industries.slice(0, 3); // 該当なしの場合は最初の3件
+  
+  return (
+    <section className="mb-32">
+      <div className="flex items-center gap-4 mb-12">
+        <span className="w-12 h-[2px] bg-stone-900"></span>
+        <h2 className="font-serif text-3xl md:text-4xl tracking-wider">今月のピックアップ</h2>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
+        {picked.map((job) => (
+          <a 
+            key={job.id} 
+            href={`/industry/${job.id}`}
+            className="group cursor-pointer flex flex-col gap-6"
+          >
+            <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden bg-stone-200">
+              <img 
+                src={job.image} 
+                alt={job.title} 
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 grayscale group-hover:grayscale-0"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+              <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="bg-white text-stone-900 p-3 rounded-full">
+                  <ArrowUpRight className="w-5 h-5" />
+                </div>
+              </div>
+              {/* 旬バッジ */}
+              {job.seasonalMonths?.includes(currentMonth) && (
+                <div className="absolute top-4 left-4 bg-red-900 text-white px-3 py-1 text-xs tracking-widest">
+                  旬
+                </div>
+              )}
+            </div>
+            <div className="relative pl-4 md:pl-0">
+              <div className="flex justify-between items-start border-t border-stone-200 pt-4">
+                <div className="space-y-2">
+                  <p className="text-xs tracking-widest text-stone-500 uppercase font-medium">{job.category} - {job.location}</p>
+                  <h3 className="text-xl md:text-2xl font-serif font-medium text-stone-900 leading-snug group-hover:text-red-900 transition-colors">
+                    {job.title}
+                  </h3>
+                </div>
+                <span className="font-serif text-3xl text-stone-200 font-light leading-none">
+                  {String(job.id).padStart(2, '0')}
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [selectedJob, setSelectedJob] = useState<Industry | null>(null);
   const [filter, setFilter] = useState("すべて");
@@ -111,6 +172,9 @@ export default function Home() {
       <main className="relative z-20 bg-stone-50 pt-24 pb-32 min-h-screen">
         
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
+          
+          {/* 今月のピックアップ */}
+          <SeasonalPickup />
           
           {/* Minimal Filter */}
           <div className="flex flex-wrap gap-8 md:gap-12 mb-20 justify-center md:justify-start border-b border-stone-200 pb-8">

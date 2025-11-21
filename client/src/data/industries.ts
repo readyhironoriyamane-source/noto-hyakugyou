@@ -34,6 +34,7 @@ export interface Industry {
   }>;
   image: string;
   gallery?: string[]; // 複数の写真を格納するギャラリー
+  seasonalMonths?: number[]; // 旬の時期（1-12月）
 }
 
 export const industries: Industry[] = [
@@ -76,7 +77,8 @@ export const industries: Industry[] = [
       "/gallery/ika-1.jpg",
       "/gallery/ika-2.jpg",
       "/squid-fishing.jpg"
-    ]
+    ],
+    seasonalMonths: [6, 7, 8, 9, 10, 11] // イカ釣りのシーズン（6-11月）
   },
   {
     id: 2,
@@ -118,7 +120,8 @@ export const industries: Industry[] = [
       "/gallery/ichigo-2.jpg",
       "/gallery/ichigo-3.jpg",
       "/strawberry-farm.jpg"
-    ]
+    ],
+    seasonalMonths: [5, 6] // いちご狩りのシーズン（5-6月）
   },
   {
     id: 3,
@@ -158,7 +161,8 @@ export const industries: Industry[] = [
       "/gallery/ishiri-1.jpg",
       "/gallery/ishiri-2.jpg",
       "/ishiri-new.jpg"
-    ]
+    ],
+    seasonalMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] // 通年
   },
   {
     id: 4,
