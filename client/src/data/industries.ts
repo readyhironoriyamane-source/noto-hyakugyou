@@ -44,7 +44,7 @@ export const industries: Industry[] = [
       { type: "visit", label: "漁港を見学・体験", link: "#" },
       { type: "join", label: "弟子入り・アルバイト", link: "#" }
     ],
-    image: "https://images.unsplash.com/photo-1534234828563-0db5c4525d08?q=80&w=1600&auto=format&fit=crop"
+    image: "/squid-fishing.jpg"
   },
   {
     id: 2,
@@ -66,7 +66,7 @@ export const industries: Industry[] = [
       { type: "visit", label: "いちご狩りに行く", link: "#" },
       { type: "join", label: "石積み修復ボランティア", link: "#" }
     ],
-    image: "https://images.unsplash.com/photo-1602961860862-63d488929a9b?q=80&w=1600&auto=format&fit=crop"
+    image: "/strawberry-farm.jpg"
   },
   {
     id: 3,
@@ -88,7 +88,7 @@ export const industries: Industry[] = [
       { type: "buy", label: "いしりを購入する", link: "#" },
       { type: "visit", label: "蔵見学・試食会", link: "#" }
     ],
-    image: "https://images.unsplash.com/photo-1516594798947-e65505dbb29d?q=80&w=1600&auto=format&fit=crop"
+    image: "/ishiri-brewery.jpg"
   },
   {
     id: 4,
@@ -110,6 +110,6 @@ export const industries: Industry[] = [
       { type: "join", label: "見習い職人に応募", link: "#" },
       { type: "visit", label: "相談会に参加", link: "#" }
     ],
-    image: "https://images.unsplash.com/photo-1502005229766-358559e25897?q=80&w=1600&auto=format&fit=crop"
+    image: "/kawara-craftsman.jpg"
   }
 ];
