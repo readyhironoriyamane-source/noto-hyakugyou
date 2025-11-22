@@ -1,8 +1,10 @@
-import { Link } from "wouter";
+import React from 'react';
+import Header from '@/components/Header';
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-stone-50">
+      <Header />
       {/* Hero Section */}
       <section className="relative bg-stone-900 text-white py-24 md:py-32">
         <div className="container">
@@ -87,14 +89,12 @@ export default function AboutPage() {
                   能登を訪れ、実際に産業の現場を見学したり、商品を購入したりすることで、
                   直接的な支援につながります。各産業の詳細ページには訪問情報を掲載しています。
                 </p>
-                <Link href="/map">
-                  <a className="inline-flex items-center gap-2 text-white border-b border-white hover:border-stone-400 hover:text-stone-400 transition-colors">
-                    地図から探す
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                </Link>
+                <a href="/map" className="inline-flex items-center gap-2 text-white border-b border-white hover:border-stone-400 hover:text-stone-400 transition-colors">
+                  地図から探す
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
@@ -161,11 +161,9 @@ export default function AboutPage() {
                 一つひとつの産業が、能登の暮らしと文化を支えています。<br />
                 あなたも、能登の生業を未来へつなぐ一員になりませんか。
               </p>
-              <Link href="/">
-                <a className="inline-block bg-white text-stone-900 px-8 py-4 font-serif text-lg hover:bg-stone-100 transition-colors">
-                  産業を見る
-                </a>
-              </Link>
+              <a href="/" className="inline-block bg-white text-stone-900 px-8 py-4 font-serif text-lg hover:bg-stone-100 transition-colors">
+                産業を見る
+              </a>
             </div>
           </section>
 

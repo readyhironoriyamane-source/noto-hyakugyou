@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { MapView } from "@/components/Map";
+import Header from "@/components/Header";
 import { industries } from "@/data/industries";
 import type { Industry } from "@/data/industries";
 import { ArrowUpRight } from "lucide-react";
@@ -172,27 +173,7 @@ export default function MapPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-stone-50">
-      {/* ヘッダー */}
-      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-stone-200/50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <a href="/" className="text-2xl font-serif font-bold">
-              能登百業録
-            </a>
-            <nav className="hidden md:flex gap-8">
-              <a href="/" className="text-sm hover:text-stone-600 transition-colors">
-                すべて
-              </a>
-              <a href="/map" className="text-sm font-bold border-b-2 border-black">
-                地図から探す
-              </a>
-              <a href="#" className="text-sm hover:text-stone-600 transition-colors">
-                特集
-              </a>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* モバイル用タブ切り替え */}
       <div className="md:hidden fixed top-16 left-0 right-0 bg-white border-b border-stone-200 z-40 flex">
