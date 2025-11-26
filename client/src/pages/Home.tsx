@@ -18,12 +18,31 @@ function SeasonalPickup() {
     ? seasonal.slice(0, 3) 
     : industries.slice(0, 3); // 該当なしの場合は最初の3件
   
+  // 月ごとの能登の特徴
+  const seasonalDescriptions: Record<number, string> = {
+    1: "寒風の中、冬の旬を迎える能登。寒ブリやカニが最も美味しい季節です。",
+    2: "雪解けの兆しが見え始める能登。漁師たちは春の漁に備え、農家は種まきの準備を始めます。",
+    3: "春の訪れとともに、新たな生命が芽吹く能登。山菜や春野菜が旬を迎えます。",
+    4: "桜が舞い、海も穏やかになる能登。春の風物詩とともに、新しい季節が始まります。",
+    5: "新緑が輝く能登。田植えが始まり、海ではイカ釣りのシーズンが到来します。",
+    6: "梅雨の季節、湿润を帯びた風が吹く能登。稲がすくすくと育ち、海ではイカが豊漁を迎えます。",
+    7: "夏の太陽が燦めく能登。海水浴と夏祭り、そして旬の魚介を楽しむ季節です。",
+    8: "真夏の熱気の中、生命力に溢れる能登。夏野菜が豊作を迎え、祭りが各地で開かれます。",
+    9: "秋の気配が漂い始める能登。稲穂が金色に色づき、収穫の時期が近づきます。",
+    10: "実りの秋、収穫の喜びに満ちた能登。新米、キノコ、秋鮭など、秋の味覚が楽しめます。",
+    11: "紅葉が山々を彩る能登。冬の備えを始める一方、カニ漁が解禁を迎えます。",
+    12: "本格的な冬が訪れる能登。雪景色の中、冬の味覚であるカニやブリが旬を迎えます。"
+  };
+  
   return (
     <section className="mb-32">
-      <div className="flex items-center gap-4 mb-12">
+      <div className="flex items-center gap-4 mb-6">
         <span className="w-12 h-[2px] bg-stone-900"></span>
         <h2 className="font-serif text-3xl md:text-4xl tracking-wider">今月のピックアップ</h2>
       </div>
+      <p className="text-stone-600 leading-relaxed mb-12 pl-16">
+        {seasonalDescriptions[currentMonth]}
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
         {picked.map((job) => (
           <a 
@@ -219,21 +238,38 @@ export default function Home() {
           {/* 今月のピックアップ */}
           <SeasonalPickup />
           
+          {/* すべてセクション */}
+          <div className="mb-12">
+            <div className="flex items-center gap-4 mb-6">
+              <span className="w-12 h-[2px] bg-stone-900"></span>
+              <h2 className="font-serif text-3xl md:text-4xl tracking-wider">すべて</h2>
+            </div>
+            <p className="text-stone-600 leading-relaxed mb-8 pl-16">
+              能登半島に根付くさまざまな生業をご紹介します。
+            </p>
+          </div>
+          
           {/* Minimal Filter */}
           <div className="flex flex-wrap gap-8 md:gap-12 mb-20 justify-center md:justify-start border-b border-stone-200 pb-8">
-            {categories.map(cat => (
-              <button 
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`text-sm md:text-base tracking-widest font-serif transition-all relative py-1 ${
-                  filter === cat 
-                  ? 'text-stone-900 font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-red-800' 
-                  : 'text-stone-400 hover:text-stone-600'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+            {categories.map(cat => {
+              const count = cat === 'すべて' 
+                ? industries.length 
+                : industries.filter(i => i.category === cat).length;
+              return (
+                <button 
+                  key={cat}
+                  onClick={() => setFilter(cat)}
+                  className={`text-sm md:text-base tracking-widest font-serif transition-all relative py-1 ${
+                    filter === cat 
+                    ? 'text-stone-900 font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-red-800' 
+                    : 'text-stone-400 hover:text-stone-600'
+                  }`}
+                >
+                  {cat}
+                  <span className="ml-2 text-xs text-stone-400">({count})</span>
+                </button>
+              );
+            })}
           </div>
 
           {/* Editorial Layout Grid */}
