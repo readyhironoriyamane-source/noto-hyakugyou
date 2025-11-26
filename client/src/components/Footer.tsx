@@ -20,8 +20,7 @@ export default function Footer() {
             <div className="text-xs leading-relaxed text-stone-400 space-y-1">
               <p>法人番号 5000020174637</p>
               <p>〒927-0492　石川県鳳珠郡能登町宇出津ト字50番地1</p>
-              <p>電話番号：0768-62-1000 (代表)</p>
-              <p>ファックス：0768-62-4506 (代表)</p>
+
               <p className="mt-2">開庁時間：8時30分から17時15分</p>
               <p>(土曜日・日曜日・祝日、年末年始を除く)</p>
               <p>窓口延長：能登町役場のみ毎週木曜日17時15分から18時30分(祝日は除く)</p>
@@ -67,12 +66,6 @@ export default function Footer() {
               >
                 <Mail className="w-4 h-4" />
                 お問い合わせフォーム
-              </a>
-              <a 
-                href="/privacy" 
-                className="block text-sm text-stone-400 hover:text-white transition-colors mt-6"
-              >
-                プライバシーポリシー
               </a>
             </div>
           </div>
