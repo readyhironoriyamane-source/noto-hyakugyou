@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Home, Map } from "lucide-react";
 
 export default function NotFound() {
@@ -56,6 +57,8 @@ export default function NotFound() {
           </div>
         </div>
       </main>
+      
+      <Footer />
     </div>
   );
 }

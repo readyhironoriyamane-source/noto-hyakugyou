@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRoute } from "wouter";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { industries } from "@/data/industries";
 import type { Industry } from "@/data/industries";
 import { X, Share2, ChevronLeft, ChevronRight } from "lucide-react";
@@ -438,6 +439,8 @@ export default function IndustryDetailPage() {
 
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 }

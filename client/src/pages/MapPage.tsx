@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { MapView } from "@/components/Map";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { industries } from "@/data/industries";
 import type { Industry } from "@/data/industries";
 import { ArrowUpRight } from "lucide-react";
@@ -344,7 +345,7 @@ export default function MapPage() {
         </div>
       </main>
 
-
+      <Footer />
     </div>
   );
 }

@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react';
-import { 
-  ArrowUpRight,
-  ChevronDown,
-  Menu,
-  X
-} from 'lucide-react';
+import { ArrowUpRight, Menu, X, ChevronDown } from 'lucide-react';
 import { industries } from '@/data/industries';
 import DetailModal from '@/components/DetailModal';
+import Footer from '@/components/Footer';
 import type { Industry } from '@/data/industries';
 
 function SeasonalPickup() {
@@ -318,31 +314,7 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Minimal Footer */}
-      <footer className="bg-stone-900 text-stone-400 py-24 border-t border-stone-800">
-         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-start gap-12">
-            <div>
-               <h2 className="text-white font-serif text-3xl tracking-widest mb-8">能登百業録</h2>
-               <div className="space-y-2 text-sm font-light">
-                  <p>〒927-0492</p>
-                  <p>石川県鳳珠郡能登町</p>
-                  <p className="mt-4 opacity-50">Provided by Noto Town Project</p>
-               </div>
-            </div>
-            
-            <div className="flex gap-16 text-sm tracking-widest">
-               <ul className="space-y-4">
-                  <li><a href="#" className="hover:text-white transition-colors">物語一覧</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">インタビュアー</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">寄稿・編集</a></li>
-               </ul>
-               <ul className="space-y-4">
-                  <li><a href="#" className="hover:text-white transition-colors">Instagram</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Twitter</a></li>
-               </ul>
-            </div>
-         </div>
-      </footer>
+      <Footer />
 
       {/* Detail Modal Portal */}
       {selectedJob && (
