@@ -5,15 +5,20 @@ export default function Footer() {
     <footer className="bg-stone-900 text-stone-300">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-          {/* About Section */}
+          {/* Noto Town Hall Info */}
           <div>
             <h3 className="font-serif text-xl text-white mb-4 tracking-wider">
-              能登百業録
+              能登町役場
             </h3>
-            <p className="text-sm leading-relaxed text-stone-400">
-              能登半島に根付く多様な生業を記録し、<br />
-              次世代へ継承するプロジェクト
-            </p>
+            <div className="text-sm leading-relaxed text-stone-400 space-y-1">
+              <p>法人番号 5000020174637</p>
+              <p>〒927-0492　石川県鳳珠郡能登町宇出津ト字50番地1</p>
+              <p>電話番号：0768-62-1000 (代表)</p>
+              <p>ファックス：0768-62-4506 (代表)</p>
+              <p className="mt-2">開庁時間：8時30分から17時15分</p>
+              <p className="text-xs">(土曜日・日曜日・祝日、年末年始を除く)</p>
+              <p className="text-xs">窓口延長：能登町役場のみ毎週木曜日17時15分から18時30分(祝日は除く)</p>
+            </div>
           </div>
 
           {/* Navigation Links */}
@@ -50,11 +55,11 @@ export default function Footer() {
             </h4>
             <div className="space-y-3">
               <a 
-                href="mailto:info@noto-hyakugyou.example.com" 
+                href="/contact" 
                 className="flex items-center gap-2 text-sm text-stone-400 hover:text-white transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                info@noto-hyakugyou.example.com
+                お問い合わせフォーム
               </a>
               <a 
                 href="/privacy" 
