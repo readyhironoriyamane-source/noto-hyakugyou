@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRoute } from "wouter";
+import Header from "@/components/Header";
 import { industries } from "@/data/industries";
 import type { Industry } from "@/data/industries";
 import { X, Share2, ChevronLeft, ChevronRight } from "lucide-react";
@@ -124,6 +125,7 @@ export default function IndustryDetailPage() {
 
   return (
     <div className="fixed inset-0 z-[100] bg-white overflow-y-auto animate-in fade-in duration-300">
+      <Header />
       {/* Close Button & Share Button */}
       <div className="fixed top-6 right-6 z-50 flex gap-2">
         <div className="relative">
