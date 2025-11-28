@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { industries } from "@/data/industries";
 import type { Industry } from "@/data/industries";
 import { X, Share2, ChevronLeft, ChevronRight } from "lucide-react";
+import { highlightPhrases } from "@/lib/textHighlight";
 
 export default function IndustryDetailPage() {
   const [, params] = useRoute("/industry/:id");
@@ -274,11 +275,13 @@ export default function IndustryDetailPage() {
               物語
             </h3>
             <p className="text-lg leading-[2.2] text-stone-800 font-serif text-justify">
-              {industry.summary}
+              {industry.highlightPhrases ? highlightPhrases(industry.summary, industry.highlightPhrases) : industry.summary}
             </p>
             <div className="mt-8 p-6 bg-stone-50">
               <h4 className="text-sm font-bold mb-2 text-stone-400 tracking-widest">なぜ必要か</h4>
-              <p className="text-base leading-loose text-stone-700">{industry.necessity}</p>
+              <p className="text-base leading-loose text-stone-700">
+                {industry.highlightPhrases ? highlightPhrases(industry.necessity, industry.highlightPhrases) : industry.necessity}
+              </p>
             </div>
           </section>
 
@@ -293,19 +296,25 @@ export default function IndustryDetailPage() {
                 <span className="block text-xs font-bold text-stone-300 tracking-widest flex items-center gap-2">
                   <span className="text-lg">👉</span> 過去
                 </span>
-                <p className="text-sm leading-loose text-stone-600">{industry.timeline.past}</p>
+                <p className="text-sm leading-loose text-stone-600">
+                  {industry.highlightPhrases ? highlightPhrases(industry.timeline.past, industry.highlightPhrases) : industry.timeline.past}
+                </p>
               </div>
               <div className="space-y-3">
                 <span className="block text-xs font-bold text-stone-900 tracking-widest flex items-center gap-2">
                   <span className="text-lg">👉</span> 現在
                 </span>
-                <p className="text-sm leading-loose text-stone-800 font-medium">{industry.timeline.present}</p>
+                <p className="text-sm leading-loose text-stone-800 font-medium">
+                  {industry.highlightPhrases ? highlightPhrases(industry.timeline.present, industry.highlightPhrases) : industry.timeline.present}
+                </p>
               </div>
               <div className="space-y-3">
                 <span className="block text-xs font-bold text-stone-300 tracking-widest flex items-center gap-2">
                   <span className="text-lg">👉</span> 未来
                 </span>
-                <p className="text-sm leading-loose text-stone-600">{industry.timeline.future}</p>
+                <p className="text-sm leading-loose text-stone-600">
+                  {industry.highlightPhrases ? highlightPhrases(industry.timeline.future, industry.highlightPhrases) : industry.timeline.future}
+                </p>
               </div>
             </div>
           </section>
@@ -319,15 +328,21 @@ export default function IndustryDetailPage() {
             <div className="space-y-8">
               <div>
                 <h4 className="text-sm font-bold mb-3 text-stone-400 tracking-widest">受け継がれてきたもの</h4>
-                <p className="text-base leading-loose text-stone-700">{industry.deepDive.past}</p>
+                <p className="text-base leading-loose text-stone-700">
+                  {industry.highlightPhrases ? highlightPhrases(industry.deepDive.past, industry.highlightPhrases) : industry.deepDive.past}
+                </p>
               </div>
               <div>
                 <h4 className="text-sm font-bold mb-3 text-stone-400 tracking-widest">今、取り組んでいること</h4>
-                <p className="text-base leading-loose text-stone-700">{industry.deepDive.present}</p>
+                <p className="text-base leading-loose text-stone-700">
+                  {industry.highlightPhrases ? highlightPhrases(industry.deepDive.present, industry.highlightPhrases) : industry.deepDive.present}
+                </p>
               </div>
               <div>
                 <h4 className="text-sm font-bold mb-3 text-stone-400 tracking-widest">次の世代へ</h4>
-                <p className="text-base leading-loose text-stone-700">{industry.deepDive.future}</p>
+                <p className="text-base leading-loose text-stone-700">
+                  {industry.highlightPhrases ? highlightPhrases(industry.deepDive.future, industry.highlightPhrases) : industry.deepDive.future}
+                </p>
               </div>
             </div>
           </section>

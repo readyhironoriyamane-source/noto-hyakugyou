@@ -35,6 +35,7 @@ export interface Industry {
   image: string;
   gallery?: string[]; // 複数の写真を格納するギャラリー
   seasonalMonths?: number[]; // 旬の時期（1-12月）
+  highlightPhrases?: string[]; // ハイライトするキーフレーズ
 }
 
 export const industries: Industry[] = [
@@ -522,6 +523,18 @@ export const industries: Industry[] = [
       "/notojisou-1.jpg",
       "/notojisou-2.jpg"
     ],
-    seasonalMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    seasonalMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    highlightPhrases: [
+      "尖ったビジョン",
+      "物売りではなく、繋がりを売る",
+      "変革の主体",
+      "カラーを変えていく",
+      "チャレンジショップ",
+      "多様な主体が活躍できるプラットフォーム",
+      "町の将来に不可欠な産業",
+      "一過性の復興支援ではなく、リピーターを生む持続可能な事業",
+      "差別化戦略",
+      "自動運転専用レーンを設けるくらいの先進的な発想"
+    ]
   }
 ];
