@@ -515,9 +515,12 @@ export const industries: Industry[] = [
       { type: "join", label: "採用情報・チャレンジショップ", link: "http://www.notono.jp/" },
       { type: "support", label: "課題解決に協力する", link: "#" }
     ],
-    image: "/fureai-kousha.jpg",
+    image: "/tsukumall.jpg",
     gallery: [
-      "/fureai-kousha.jpg"
+      "/tsukumall.jpg",
+      "/blueberry.jpg",
+      "/notojisou-1.jpg",
+      "/notojisou-2.jpg"
     ],
     seasonalMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   }
