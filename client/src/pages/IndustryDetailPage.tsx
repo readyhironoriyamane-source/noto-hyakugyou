@@ -279,9 +279,36 @@ export default function IndustryDetailPage() {
             </p>
             <div className="mt-8 p-6 bg-stone-50">
               <h4 className="text-sm font-bold mb-2 text-stone-400 tracking-widest">なぜ必要か</h4>
-              <p className="text-base leading-loose text-stone-700">
-                {industry.highlightPhrases ? highlightPhrases(industry.necessity, industry.highlightPhrases) : industry.necessity}
-              </p>
+              <div className="text-base leading-loose text-stone-700 space-y-4">
+                {industry.necessity.split('\n\n').map((paragraph, idx) => {
+                  // 3つの特徴セクションを検出
+                  if (paragraph.startsWith('3つの特徴')) {
+                    const lines = paragraph.split('\n');
+                    const title = lines[0];
+                    const features = lines.slice(1);
+                    return (
+                      <div key={idx} className="mt-6">
+                        <h5 className="text-sm font-medium mb-4 text-stone-500">{title}</h5>
+                        <div className="space-y-3">
+                          {features.map((feature, fIdx) => {
+                            if (!feature.trim()) return null;
+                            return (
+                              <p key={fIdx} className="text-sm leading-relaxed">
+                                {industry.highlightPhrases ? highlightPhrases(feature, industry.highlightPhrases) : feature}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  }
+                  return (
+                    <p key={idx}>
+                      {industry.highlightPhrases ? highlightPhrases(paragraph, industry.highlightPhrases) : paragraph}
+                    </p>
+                  );
+                })}
+              </div>
             </div>
           </section>
 
@@ -296,25 +323,55 @@ export default function IndustryDetailPage() {
                 <span className="block text-xs font-bold text-stone-300 tracking-widest flex items-center gap-2">
                   <span className="text-lg">👉</span> 過去
                 </span>
-                <p className="text-sm leading-loose text-stone-600">
-                  {industry.highlightPhrases ? highlightPhrases(industry.timeline.past, industry.highlightPhrases) : industry.timeline.past}
-                </p>
+                {(() => {
+                  const parts = industry.timeline.past.split(' ');
+                  const title = parts[0];
+                  const content = parts.slice(1).join(' ');
+                  return (
+                    <>
+                      <p className="text-base font-bold text-stone-900 mb-2">{title}</p>
+                      <p className="text-sm leading-loose text-stone-600">
+                        {industry.highlightPhrases ? highlightPhrases(content, industry.highlightPhrases) : content}
+                      </p>
+                    </>
+                  );
+                })()}
               </div>
               <div className="space-y-3">
                 <span className="block text-xs font-bold text-stone-900 tracking-widest flex items-center gap-2">
                   <span className="text-lg">👉</span> 現在
                 </span>
-                <p className="text-sm leading-loose text-stone-800 font-medium">
-                  {industry.highlightPhrases ? highlightPhrases(industry.timeline.present, industry.highlightPhrases) : industry.timeline.present}
-                </p>
+                {(() => {
+                  const parts = industry.timeline.present.split(' ');
+                  const title = parts[0];
+                  const content = parts.slice(1).join(' ');
+                  return (
+                    <>
+                      <p className="text-base font-bold text-stone-900 mb-2">{title}</p>
+                      <p className="text-sm leading-loose text-stone-800 font-medium">
+                        {industry.highlightPhrases ? highlightPhrases(content, industry.highlightPhrases) : content}
+                      </p>
+                    </>
+                  );
+                })()}
               </div>
               <div className="space-y-3">
                 <span className="block text-xs font-bold text-stone-300 tracking-widest flex items-center gap-2">
                   <span className="text-lg">👉</span> 未来
                 </span>
-                <p className="text-sm leading-loose text-stone-600">
-                  {industry.highlightPhrases ? highlightPhrases(industry.timeline.future, industry.highlightPhrases) : industry.timeline.future}
-                </p>
+                {(() => {
+                  const parts = industry.timeline.future.split(' ');
+                  const title = parts[0];
+                  const content = parts.slice(1).join(' ');
+                  return (
+                    <>
+                      <p className="text-base font-bold text-stone-900 mb-2">{title}</p>
+                      <p className="text-sm leading-loose text-stone-600">
+                        {industry.highlightPhrases ? highlightPhrases(content, industry.highlightPhrases) : content}
+                      </p>
+                    </>
+                  );
+                })()}
               </div>
             </div>
           </section>
