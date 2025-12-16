@@ -33,10 +33,10 @@ function SeasonalPickup() {
   return (
     <section className="mb-32">
       <div className="flex items-center gap-4 mb-6">
-        <span className="w-12 h-[2px] bg-stone-900"></span>
+        <span className="w-12 h-[2px] bg-slate-900"></span>
         <h2 className="font-serif text-3xl md:text-4xl tracking-wider">今月のピックアップ</h2>
       </div>
-      <p className="text-stone-600 leading-relaxed mb-12 pl-16">
+      <p className="text-slate-600 leading-relaxed mb-12 pl-16">
         {seasonalDescriptions[currentMonth]}
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
@@ -46,34 +46,34 @@ function SeasonalPickup() {
             href={`/industry/${job.id}`}
             className="group cursor-pointer flex flex-col gap-6"
           >
-            <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden bg-stone-200">
+            <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden bg-slate-200">
               <img 
                 src={job.image} 
                 alt={job.title} 
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 grayscale group-hover:grayscale-0"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
               <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="bg-white text-stone-900 p-3 rounded-full">
+                <div className="bg-white text-slate-900 p-3 rounded-full">
                   <ArrowUpRight className="w-5 h-5" />
                 </div>
               </div>
               {/* 旬バッジ */}
               {job.seasonalMonths?.includes(currentMonth) && (
-                <div className="absolute top-4 left-4 bg-red-900 text-white px-3 py-1 text-xs tracking-widest">
+                <div className="absolute top-4 left-4 bg-blue-700 text-white px-3 py-1 text-xs tracking-widest">
                   旬
                 </div>
               )}
             </div>
             <div className="relative pl-4 md:pl-0">
-              <div className="flex justify-between items-start border-t border-stone-200 pt-4">
+              <div className="flex justify-between items-start border-t border-slate-200 pt-4">
                 <div className="space-y-2">
-                  <p className="text-xs tracking-widest text-stone-500 uppercase font-medium">{job.category} - {job.location}</p>
-                  <h3 className="text-xl md:text-2xl font-serif font-medium text-stone-900 leading-snug group-hover:text-red-900 transition-colors">
+                  <p className="text-xs tracking-widest text-slate-500 uppercase font-medium">{job.category} - {job.location}</p>
+                  <h3 className="text-xl md:text-2xl font-serif font-medium text-slate-900 leading-snug group-hover:text-blue-700 transition-colors">
                     {job.title}
                   </h3>
                 </div>
-                <span className="font-serif text-3xl text-stone-200 font-light leading-none">
+                <span className="font-serif text-3xl text-slate-200 font-light leading-none">
                   {String(job.id).padStart(2, '0')}
                 </span>
               </div>
@@ -103,32 +103,32 @@ export default function Home() {
     : industries.filter(i => i.category === filter);
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       
       {/* Fixed Navigation */}
-      <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled ? 'bg-stone-50/90 backdrop-blur-sm py-4 border-b border-stone-200' : 'bg-transparent py-8'}`}>
+      <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled ? 'bg-slate-50/90 backdrop-blur-sm py-4 border-b border-slate-200' : 'bg-transparent py-8'}`}>
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 flex justify-between items-center">
           <div className="flex items-center gap-4 z-50">
-             <h1 className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-stone-900' : 'text-white md:text-stone-900'}`}>能登百業録</h1>
+             <h1 className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-slate-900' : 'text-white md:text-slate-900'}`}>能登百業録</h1>
           </div>
           
           <div className="flex items-center gap-8">
             <nav className="hidden md:flex items-center gap-8 text-sm tracking-widest font-medium">
               <a 
                 href="/about" 
-                className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-white md:text-stone-900 hover:text-stone-600'}`}
+                className={`transition-colors ${isScrolled ? 'text-slate-900 hover:text-slate-600' : 'text-white md:text-slate-900 hover:text-slate-600'}`}
               >
                 百業について
               </a>
               <a 
                 href="/map" 
-                className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-white md:text-stone-900 hover:text-stone-600'}`}
+                className={`transition-colors ${isScrolled ? 'text-slate-900 hover:text-slate-600' : 'text-white md:text-slate-900 hover:text-slate-600'}`}
               >
                 地図から探す
               </a>
             </nav>
             <button 
-              className={`md:hidden ${isScrolled ? 'text-stone-900' : 'text-white'}`}
+              className={`md:hidden ${isScrolled ? 'text-slate-900' : 'text-white'}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="メニュー"
             >
@@ -148,14 +148,14 @@ export default function Home() {
           />
           
           {/* メニューパネル */}
-          <div className="absolute top-0 right-0 w-64 h-full bg-stone-50 shadow-2xl">
+          <div className="absolute top-0 right-0 w-64 h-full bg-slate-50 shadow-2xl">
             <div className="flex flex-col h-full">
               {/* ヘッダー */}
-              <div className="flex justify-between items-center p-6 border-b border-stone-200">
+              <div className="flex justify-between items-center p-6 border-b border-slate-200">
                 <h2 className="font-serif text-xl tracking-widest">メニュー</h2>
                 <button 
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-stone-900"
+                  className="text-slate-900"
                   aria-label="閉じる"
                 >
                   <X className="w-6 h-6" />
@@ -166,14 +166,14 @@ export default function Home() {
               <nav className="flex flex-col p-6 space-y-6">
                 <a 
                   href="/about" 
-                  className="text-lg tracking-widest text-stone-900 hover:text-stone-600 transition-colors"
+                  className="text-lg tracking-widest text-slate-900 hover:text-slate-600 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   百業について
                 </a>
                 <a 
                   href="/map" 
-                  className="text-lg tracking-widest text-stone-900 hover:text-stone-600 transition-colors"
+                  className="text-lg tracking-widest text-slate-900 hover:text-slate-600 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   地図から探す
@@ -185,10 +185,19 @@ export default function Home() {
       )}
 
       {/* Hero Section: Magazine Cover Style */}
-      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[#1a1a1a]">
-         {/* Dynamic Background Image */}
-         <div className="absolute inset-0 opacity-60">
-            <img src="/fukuzushi.jpg" className="w-full h-full object-cover grayscale" alt="小木地区の福寿司" />
+      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[#0a1929]">
+         {/* Dynamic Background Video */}
+         <div className="absolute inset-0 opacity-50">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src="/noto-sea.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0a1929]/60 via-transparent to-[#0a1929]/80"></div>
          </div>
          
          <div className="relative z-10 w-full max-w-screen-2xl mx-auto px-6 md:px-12 h-full flex flex-col justify-center">
@@ -227,7 +236,7 @@ export default function Home() {
       </section>
 
       {/* Main Content */}
-      <main className="relative z-20 bg-stone-50 pt-24 pb-32 min-h-screen">
+      <main className="relative z-20 bg-slate-50 pt-24 pb-32 min-h-screen">
         
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
           
@@ -237,16 +246,16 @@ export default function Home() {
           {/* すべてセクション */}
           <div className="mb-12">
             <div className="flex items-center gap-4 mb-6">
-              <span className="w-12 h-[2px] bg-stone-900"></span>
+              <span className="w-12 h-[2px] bg-slate-900"></span>
               <h2 className="font-serif text-3xl md:text-4xl tracking-wider">すべて</h2>
             </div>
-            <p className="text-stone-600 leading-relaxed mb-8 pl-16">
+            <p className="text-slate-600 leading-relaxed mb-8 pl-16">
               能登半島に根付くさまざまな生業をご紹介します。
             </p>
           </div>
           
           {/* Minimal Filter */}
-          <div className="flex flex-wrap gap-8 md:gap-12 mb-20 justify-center md:justify-start border-b border-stone-200 pb-8">
+          <div className="flex flex-wrap gap-8 md:gap-12 mb-20 justify-center md:justify-start border-b border-slate-200 pb-8">
             {categories.map(cat => {
               const count = cat === 'すべて' 
                 ? industries.length 
@@ -257,12 +266,12 @@ export default function Home() {
                   onClick={() => setFilter(cat)}
                   className={`text-sm md:text-base tracking-widest font-serif transition-all relative py-1 ${
                     filter === cat 
-                    ? 'text-stone-900 font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-red-800' 
-                    : 'text-stone-400 hover:text-stone-600'
+                    ? 'text-slate-900 font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-blue-700' 
+                    : 'text-slate-400 hover:text-slate-600'
                   }`}
                 >
                   {cat}
-                  <span className="ml-2 text-xs text-stone-400">({count})</span>
+                  <span className="ml-2 text-xs text-slate-400">({count})</span>
                 </button>
               );
             })}
@@ -277,16 +286,16 @@ export default function Home() {
                 className="group cursor-pointer flex flex-col gap-6"
               >
                 {/* Image Container */}
-                <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden bg-stone-200">
+                <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden bg-slate-200">
                   <img 
                     src={job.image} 
                     alt={job.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 grayscale group-hover:grayscale-0"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   {/* Overlay Text on Hover */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
                   <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="bg-white text-stone-900 p-3 rounded-full">
+                    <div className="bg-white text-slate-900 p-3 rounded-full">
                       <ArrowUpRight className="w-5 h-5" />
                     </div>
                   </div>
@@ -294,15 +303,15 @@ export default function Home() {
 
                 {/* Text Content - Minimal & Vertical */}
                 <div className="relative pl-4 md:pl-0">
-                  <div className="flex justify-between items-start border-t border-stone-200 pt-4">
+                  <div className="flex justify-between items-start border-t border-slate-200 pt-4">
                     <div className="space-y-2">
-                      <p className="text-xs tracking-widest text-stone-500 uppercase font-medium">{job.category} - {job.location}</p>
-                      <h3 className="text-xl md:text-2xl font-serif font-medium text-stone-900 leading-snug group-hover:text-red-900 transition-colors">
+                      <p className="text-xs tracking-widest text-slate-500 uppercase font-medium">{job.category} - {job.location}</p>
+                      <h3 className="text-xl md:text-2xl font-serif font-medium text-slate-900 leading-snug group-hover:text-blue-700 transition-colors">
                         {job.title}
                       </h3>
                     </div>
                     {/* Vertical Decorative Number */}
-                    <span className="font-serif text-3xl text-stone-200 font-light leading-none">
+                    <span className="font-serif text-3xl text-slate-200 font-light leading-none">
                       {String(job.id).padStart(2, '0')}
                     </span>
                   </div>
