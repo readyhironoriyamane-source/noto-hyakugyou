@@ -425,7 +425,7 @@ export default function IndustryDetailPage() {
                         <img
                           src={related.image}
                           alt={related.title}
-                          className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                         <span className="absolute top-3 left-3 text-xs bg-slate-900 text-white px-3 py-1 tracking-wider">
                           {related.category}
