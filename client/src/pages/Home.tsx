@@ -109,20 +109,20 @@ export default function Home() {
       <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled ? 'bg-slate-50/90 backdrop-blur-sm py-4 border-b border-slate-200' : 'bg-transparent py-8'}`}>
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 flex justify-between items-center">
           <div className="flex items-center gap-4 z-50">
-             <h1 className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-slate-900' : 'text-white md:text-slate-900'}`}>能登百業録</h1>
+             <h1 className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-slate-900' : 'text-white drop-shadow-lg'}`}>能登百業録</h1>
           </div>
           
           <div className="flex items-center gap-8">
             <nav className="hidden md:flex items-center gap-8 text-sm tracking-widest font-medium">
               <a 
                 href="/about" 
-                className={`transition-colors ${isScrolled ? 'text-slate-900 hover:text-slate-600' : 'text-white md:text-slate-900 hover:text-slate-600'}`}
+                className={`transition-colors ${isScrolled ? 'text-slate-900 hover:text-slate-600' : 'text-white hover:text-white/80 drop-shadow-lg'}`}
               >
                 百業について
               </a>
               <a 
                 href="/map" 
-                className={`transition-colors ${isScrolled ? 'text-slate-900 hover:text-slate-600' : 'text-white md:text-slate-900 hover:text-slate-600'}`}
+                className={`transition-colors ${isScrolled ? 'text-slate-900 hover:text-slate-600' : 'text-white hover:text-white/80 drop-shadow-lg'}`}
               >
                 地図から探す
               </a>
@@ -204,11 +204,11 @@ export default function Home() {
             <div className="flex flex-row-reverse md:flex-row justify-between items-start h-[60%]">
                
                {/* Vertical Title */}
-               <div className="h-full flex flex-col items-center justify-center md:items-start md:justify-start md:order-last pt-12">
-                  <h1 className="writing-vertical-rl text-6xl md:text-9xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl">
+               <div className="h-full flex flex-col items-center justify-center md:items-start md:justify-start md:order-last pt-12 pr-4 md:pr-8">
+                  <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl">
                      能登百業
                   </h1>
-                  <p className="writing-vertical-rl text-white/80 mt-8 text-sm tracking-[0.3em] font-light hidden md:block">
+                  <p className="writing-vertical-rl text-white/80 mt-6 md:mt-8 text-xs md:text-sm tracking-[0.3em] font-light hidden md:block">
                      受け継がれる生業の記録
                   </p>
                </div>
@@ -239,6 +239,18 @@ export default function Home() {
       <main className="relative z-20 bg-slate-50 pt-24 pb-32 min-h-screen">
         
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
+          
+          {/* イントロダクション（スマホのみ） */}
+          <section className="md:hidden mb-20 py-12 border-y border-slate-200">
+            <p className="text-xs tracking-[0.4em] mb-8 border-l-2 border-slate-300 pl-4 text-slate-500">EST. 2025 NOTO ISHIKAWA</p>
+            <p className="text-base font-serif leading-loose text-slate-700 text-justify">
+              能登には、海と共に、山と共に生きる<br/>
+              百の仕事がある。<br/>
+              その一つ一つに、<br/>
+              守り抜かれた技術と、<br/>
+              復興へ向かう物語がある。
+            </p>
+          </section>
           
           {/* 今月のピックアップ */}
           <SeasonalPickup />
