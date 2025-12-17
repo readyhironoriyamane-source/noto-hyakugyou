@@ -3,27 +3,27 @@ import Footer from "@/components/Footer";
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-slate-50">
       <Header />
       
       <main className="max-w-4xl mx-auto px-6 py-24">
         {/* Title */}
         <div className="mb-16">
           <div className="flex items-center gap-4 mb-6">
-            <span className="w-12 h-[2px] bg-stone-900"></span>
-            <h1 className="font-serif text-4xl md:text-5xl tracking-wider text-stone-900">
+            <span className="w-12 h-[2px] bg-slate-900"></span>
+            <h1 className="font-serif text-4xl md:text-5xl tracking-wider text-slate-900">
               プライバシーポリシー
             </h1>
           </div>
-          <p className="text-stone-600 leading-relaxed pl-16">
+          <p className="text-slate-600 leading-relaxed pl-16">
             能登百業録（以下「当サイト」）における個人情報の取り扱いについて、以下のとおりプライバシーポリシーを定めます。
           </p>
         </div>
 
         {/* Content */}
-        <div className="space-y-12 text-stone-700 leading-relaxed">
+        <div className="space-y-12 text-slate-700 leading-relaxed">
           <section>
-            <h2 className="font-serif text-2xl text-stone-900 mb-4 tracking-wider">
+            <h2 className="font-serif text-2xl text-slate-900 mb-4 tracking-wider">
               個人情報の収集について
             </h2>
             <p>
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-serif text-2xl text-stone-900 mb-4 tracking-wider">
+            <h2 className="font-serif text-2xl text-slate-900 mb-4 tracking-wider">
               個人情報の管理
             </h2>
             <p>
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-serif text-2xl text-stone-900 mb-4 tracking-wider">
+            <h2 className="font-serif text-2xl text-slate-900 mb-4 tracking-wider">
               個人情報の第三者への開示・提供の禁止
             </h2>
             <p>
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-serif text-2xl text-stone-900 mb-4 tracking-wider">
+            <h2 className="font-serif text-2xl text-slate-900 mb-4 tracking-wider">
               アクセス解析ツールについて
             </h2>
             <p>
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-serif text-2xl text-stone-900 mb-4 tracking-wider">
+            <h2 className="font-serif text-2xl text-slate-900 mb-4 tracking-wider">
               免責事項
             </h2>
             <p>
@@ -82,7 +82,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-serif text-2xl text-stone-900 mb-4 tracking-wider">
+            <h2 className="font-serif text-2xl text-slate-900 mb-4 tracking-wider">
               プライバシーポリシーの変更について
             </h2>
             <p>
@@ -92,8 +92,8 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          <section className="pt-8 border-t border-stone-200">
-            <p className="text-stone-600">
+          <section className="pt-8 border-t border-slate-200">
+            <p className="text-slate-600">
               制定日：2024年11月26日
             </p>
           </section>

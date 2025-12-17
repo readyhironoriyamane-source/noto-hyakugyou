@@ -173,17 +173,17 @@ export default function MapPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50">
+    <div className="min-h-screen flex flex-col bg-slate-50">
       <Header />
 
       {/* モバイル用タブ切り替え */}
-      <div className="md:hidden fixed top-16 left-0 right-0 bg-white border-b border-stone-200 z-40 flex">
+      <div className="md:hidden fixed top-16 left-0 right-0 bg-white border-b border-slate-200 z-40 flex">
         <button
           onClick={() => setMobileView("map")}
           className={`flex-1 py-3 text-sm font-medium transition-colors ${
             mobileView === "map"
-              ? "bg-stone-900 text-white"
-              : "bg-white text-stone-600 hover:bg-stone-50"
+              ? "bg-slate-900 text-white"
+              : "bg-white text-slate-600 hover:bg-slate-50"
           }`}
         >
           地図
@@ -192,8 +192,8 @@ export default function MapPage() {
           onClick={() => setMobileView("list")}
           className={`flex-1 py-3 text-sm font-medium transition-colors ${
             mobileView === "list"
-              ? "bg-stone-900 text-white"
-              : "bg-white text-stone-600 hover:bg-stone-50"
+              ? "bg-slate-900 text-white"
+              : "bg-white text-slate-600 hover:bg-slate-50"
           }`}
         >
           リスト
@@ -210,7 +210,7 @@ export default function MapPage() {
           
           {/* 凡例（地図の下部、縦レイアウト） */}
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-6 hidden md:block">
-            <h3 className="text-sm font-bold mb-4 text-stone-900">カテゴリ凡例</h3>
+            <h3 className="text-sm font-bold mb-4 text-slate-900">カテゴリ凡例</h3>
             <div className="grid grid-cols-2 gap-x-8 gap-y-3">
               {Object.entries(categoryColors).map(([category, color]) => (
                 <div key={category} className="flex items-center gap-2">
@@ -218,7 +218,7 @@ export default function MapPage() {
                     className="w-3 h-3 rounded-full border-2 border-white shadow-sm flex-shrink-0"
                     style={{ backgroundColor: color }}
                   />
-                  <span className="text-xs text-stone-700">{category}</span>
+                  <span className="text-xs text-slate-700">{category}</span>
                 </div>
               ))}
             </div>
@@ -226,12 +226,12 @@ export default function MapPage() {
         </div>
 
         {/* 右側：産業カードリスト */}
-        <div className={`relative z-10 w-full md:w-1/2 min-h-screen overflow-y-auto bg-stone-50 pt-32 md:pt-20 p-4 md:p-8 md:ml-[50%] ${
+        <div className={`relative z-10 w-full md:w-1/2 min-h-screen overflow-y-auto bg-slate-50 pt-32 md:pt-20 p-4 md:p-8 md:ml-[50%] ${
           mobileView === "map" ? "hidden md:block" : ""
         }`}>
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl font-serif font-bold mb-2">能登の生業</h2>
-            <p className="text-sm text-stone-600 mb-6 tracking-wide">
+            <p className="text-sm text-slate-600 mb-6 tracking-wide">
               地図上のマーカーをクリックするか、下記のカードを選択してください
             </p>
 
@@ -242,7 +242,7 @@ export default function MapPage() {
                 placeholder="産業名、地域名、キーワードで検索..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 text-sm border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent bg-white"
+                className="w-full px-4 py-3 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent bg-white"
               />
             </div>
 
@@ -254,8 +254,8 @@ export default function MapPage() {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 text-xs font-medium rounded-full transition-all ${
                     selectedCategory === category
-                      ? "bg-stone-900 text-white shadow-md"
-                      : "bg-white text-stone-600 hover:bg-stone-100 border border-stone-200"
+                      ? "bg-slate-900 text-white shadow-md"
+                      : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
                   }`}
                   style={
                     selectedCategory === category && category !== "すべて"
@@ -312,11 +312,11 @@ export default function MapPage() {
                       <h3 className="text-xl font-serif font-bold mb-2">
                         {industry.title}
                       </h3>
-                      <p className="text-sm text-stone-600 mb-3 flex items-center gap-2">
+                      <p className="text-sm text-slate-600 mb-3 flex items-center gap-2">
                         <span>📍</span>
                         <span>{industry.location}</span>
                       </p>
-                      <p className="text-sm text-stone-700 leading-relaxed mb-4">
+                      <p className="text-sm text-slate-700 leading-relaxed mb-4">
                         {industry.summary}
                       </p>
 

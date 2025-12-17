@@ -93,10 +93,10 @@ export default function IndustryDetailPage() {
 
   if (!industry) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-stone-50">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <div className="text-center">
           <h2 className="text-2xl font-serif font-bold mb-4">産業が見つかりません</h2>
-          <a href="/" className="text-sm text-stone-600 hover:text-stone-900 underline">
+          <a href="/" className="text-sm text-slate-600 hover:text-slate-900 underline">
             トップページに戻る
           </a>
         </div>
@@ -133,17 +133,17 @@ export default function IndustryDetailPage() {
         <div className="relative">
           <button 
             onClick={() => setShowShareMenu(!showShareMenu)}
-            className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-stone-100 transition-colors"
+            className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-slate-100 transition-colors"
           >
-            <Share2 className="w-6 h-6 text-stone-900" />
+            <Share2 className="w-6 h-6 text-slate-900" />
           </button>
           
           {/* Share Menu */}
           {showShareMenu && (
-            <div className="absolute top-12 right-0 bg-white rounded-lg shadow-xl border border-stone-200 overflow-hidden min-w-[160px]">
+            <div className="absolute top-12 right-0 bg-white rounded-lg shadow-xl border border-slate-200 overflow-hidden min-w-[160px]">
               <button
                 onClick={() => handleShare('twitter')}
-                className="w-full px-4 py-3 text-left text-sm hover:bg-stone-50 transition-colors flex items-center gap-2"
+                className="w-full px-4 py-3 text-left text-sm hover:bg-slate-50 transition-colors flex items-center gap-2"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -152,7 +152,7 @@ export default function IndustryDetailPage() {
               </button>
               <button
                 onClick={() => handleShare('facebook')}
-                className="w-full px-4 py-3 text-left text-sm hover:bg-stone-50 transition-colors flex items-center gap-2"
+                className="w-full px-4 py-3 text-left text-sm hover:bg-slate-50 transition-colors flex items-center gap-2"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -161,7 +161,7 @@ export default function IndustryDetailPage() {
               </button>
               <button
                 onClick={() => handleShare('line')}
-                className="w-full px-4 py-3 text-left text-sm hover:bg-stone-50 transition-colors flex items-center gap-2"
+                className="w-full px-4 py-3 text-left text-sm hover:bg-slate-50 transition-colors flex items-center gap-2"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
@@ -182,9 +182,9 @@ export default function IndustryDetailPage() {
               window.location.href = '/';
             }
           }}
-          className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-stone-100 transition-colors"
+          className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-slate-100 transition-colors"
         >
-          <X className="w-6 h-6 text-stone-900" />
+          <X className="w-6 h-6 text-slate-900" />
         </button>
       </div>
 
@@ -204,13 +204,13 @@ export default function IndustryDetailPage() {
               onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? industry.gallery!.length - 1 : prev - 1))}
               className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-all opacity-0 group-hover:opacity-100"
             >
-              <ChevronLeft className="w-6 h-6 text-stone-900" />
+              <ChevronLeft className="w-6 h-6 text-slate-900" />
             </button>
             <button
               onClick={() => setCurrentImageIndex((prev) => (prev === industry.gallery!.length - 1 ? 0 : prev + 1))}
               className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-all opacity-0 group-hover:opacity-100"
             >
-              <ChevronRight className="w-6 h-6 text-stone-900" />
+              <ChevronRight className="w-6 h-6 text-slate-900" />
             </button>
             
             {/* インジケーター */}
@@ -249,20 +249,20 @@ export default function IndustryDetailPage() {
       <div className="max-w-5xl mx-auto px-6 py-16 md:py-24 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20">
         
         {/* Operator Info */}
-        <div className="md:col-span-3 md:sticky md:top-24 h-fit text-center md:text-left md:border-r border-stone-200 md:pr-8">
+        <div className="md:col-span-3 md:sticky md:top-24 h-fit text-center md:text-left md:border-r border-slate-200 md:pr-8">
           <div className="inline-block md:block mb-4">
-             <div className="w-24 h-24 bg-stone-100 rounded-full mx-auto md:mx-0 mb-4 flex items-center justify-center overflow-hidden grayscale">
-                <span className="font-serif text-3xl text-stone-400">{industry.operator.charAt(0)}</span>
+             <div className="w-24 h-24 bg-slate-100 rounded-full mx-auto md:mx-0 mb-4 flex items-center justify-center overflow-hidden grayscale">
+                <span className="font-serif text-3xl text-slate-400">{industry.operator.charAt(0)}</span>
              </div>
           </div>
           <div>
-            <p className="text-xs text-stone-500 mb-1 tracking-widest">事業者</p>
+            <p className="text-xs text-slate-500 mb-1 tracking-widest">事業者</p>
             <p className="text-xl font-serif mb-1">{industry.operator}</p>
-            <p className="text-sm text-stone-500">{industry.role}</p>
+            <p className="text-sm text-slate-500">{industry.role}</p>
           </div>
-          <div className="mt-8 pt-8 border-t border-stone-200 hidden md:block">
-            <p className="text-xs text-stone-500 mb-2 tracking-widest">つながり</p>
-            <p className="text-sm font-serif text-stone-800 leading-relaxed">{industry.connections}</p>
+          <div className="mt-8 pt-8 border-t border-slate-200 hidden md:block">
+            <p className="text-xs text-slate-500 mb-2 tracking-widest">つながり</p>
+            <p className="text-sm font-serif text-slate-800 leading-relaxed">{industry.connections}</p>
           </div>
         </div>
 
@@ -271,15 +271,15 @@ export default function IndustryDetailPage() {
           
           <section ref={(el) => { sectionsRef.current[0] = el; }}>
             <h3 className="font-serif text-2xl mb-6 flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-stone-900"></span>
+              <span className="w-8 h-[1px] bg-slate-900"></span>
               物語
             </h3>
-            <p className="text-lg leading-[2.2] text-stone-800 font-serif text-justify">
+            <p className="text-lg leading-[2.2] text-slate-800 font-serif text-justify">
               {industry.highlightPhrases ? highlightPhrases(industry.summary, industry.highlightPhrases) : industry.summary}
             </p>
-            <div className="mt-8 p-6 bg-stone-50">
-              <h4 className="text-sm font-bold mb-2 text-stone-400 tracking-widest">なぜ必要か</h4>
-              <div className="text-base leading-loose text-stone-700 space-y-4">
+            <div className="mt-8 p-6 bg-slate-50">
+              <h4 className="text-sm font-bold mb-2 text-slate-400 tracking-widest">なぜ必要か</h4>
+              <div className="text-base leading-loose text-slate-700 space-y-4">
                 {industry.necessity.split('\n\n').map((paragraph, idx) => {
                   // 3つの特徴セクションを検出
                   if (paragraph.startsWith('3つの特徴')) {
@@ -288,7 +288,7 @@ export default function IndustryDetailPage() {
                     const features = lines.slice(1);
                     return (
                       <div key={idx} className="mt-6">
-                        <h5 className="text-sm font-medium mb-4 text-stone-500">{title}</h5>
+                        <h5 className="text-sm font-medium mb-4 text-slate-500">{title}</h5>
                         <div className="space-y-3">
                           {features.map((feature, fIdx) => {
                             if (!feature.trim()) return null;
@@ -315,12 +315,12 @@ export default function IndustryDetailPage() {
           {/* Timeline - Clean Grid */}
           <section ref={(el) => { sectionsRef.current[1] = el; }}>
             <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-stone-900"></span>
+              <span className="w-8 h-[1px] bg-slate-900"></span>
               歩みと展望
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="space-y-3">
-                <span className="block text-xs font-bold text-stone-300 tracking-widest flex items-center gap-2">
+                <span className="block text-xs font-bold text-slate-300 tracking-widest flex items-center gap-2">
                   <span className="text-lg">👉</span> 過去
                 </span>
                 {(() => {
@@ -329,8 +329,8 @@ export default function IndustryDetailPage() {
                   const content = parts.slice(1).join(' ');
                   return (
                     <>
-                      <p className="text-base font-bold text-stone-900 mb-2">{title}</p>
-                      <p className="text-sm leading-loose text-stone-600">
+                      <p className="text-base font-bold text-slate-900 mb-2">{title}</p>
+                      <p className="text-sm leading-loose text-slate-600">
                         {industry.highlightPhrases ? highlightPhrases(content, industry.highlightPhrases) : content}
                       </p>
                     </>
@@ -338,7 +338,7 @@ export default function IndustryDetailPage() {
                 })()}
               </div>
               <div className="space-y-3">
-                <span className="block text-xs font-bold text-stone-900 tracking-widest flex items-center gap-2">
+                <span className="block text-xs font-bold text-slate-900 tracking-widest flex items-center gap-2">
                   <span className="text-lg">👉</span> 現在
                 </span>
                 {(() => {
@@ -347,8 +347,8 @@ export default function IndustryDetailPage() {
                   const content = parts.slice(1).join(' ');
                   return (
                     <>
-                      <p className="text-base font-bold text-stone-900 mb-2">{title}</p>
-                      <p className="text-sm leading-loose text-stone-800 font-medium">
+                      <p className="text-base font-bold text-slate-900 mb-2">{title}</p>
+                      <p className="text-sm leading-loose text-slate-800 font-medium">
                         {industry.highlightPhrases ? highlightPhrases(content, industry.highlightPhrases) : content}
                       </p>
                     </>
@@ -356,7 +356,7 @@ export default function IndustryDetailPage() {
                 })()}
               </div>
               <div className="space-y-3">
-                <span className="block text-xs font-bold text-stone-300 tracking-widest flex items-center gap-2">
+                <span className="block text-xs font-bold text-slate-300 tracking-widest flex items-center gap-2">
                   <span className="text-lg">👉</span> 未来
                 </span>
                 {(() => {
@@ -365,8 +365,8 @@ export default function IndustryDetailPage() {
                   const content = parts.slice(1).join(' ');
                   return (
                     <>
-                      <p className="text-base font-bold text-stone-900 mb-2">{title}</p>
-                      <p className="text-sm leading-loose text-stone-600">
+                      <p className="text-base font-bold text-slate-900 mb-2">{title}</p>
+                      <p className="text-sm leading-loose text-slate-600">
                         {industry.highlightPhrases ? highlightPhrases(content, industry.highlightPhrases) : content}
                       </p>
                     </>
@@ -377,27 +377,27 @@ export default function IndustryDetailPage() {
           </section>
 
           {/* Deep Dive */}
-          <section ref={(el) => { sectionsRef.current[2] = el; }} className="pt-12 border-t border-stone-200">
+          <section ref={(el) => { sectionsRef.current[2] = el; }} className="pt-12 border-t border-slate-200">
             <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-stone-900"></span>
+              <span className="w-8 h-[1px] bg-slate-900"></span>
               仕事を深く知る
             </h3>
             <div className="space-y-8">
               <div>
-                <h4 className="text-sm font-bold mb-3 text-stone-400 tracking-widest">受け継がれてきたもの</h4>
-                <p className="text-base leading-loose text-stone-700">
+                <h4 className="text-sm font-bold mb-3 text-slate-400 tracking-widest">受け継がれてきたもの</h4>
+                <p className="text-base leading-loose text-slate-700">
                   {industry.highlightPhrases ? highlightPhrases(industry.deepDive.past, industry.highlightPhrases) : industry.deepDive.past}
                 </p>
               </div>
               <div>
-                <h4 className="text-sm font-bold mb-3 text-stone-400 tracking-widest">今、取り組んでいること</h4>
-                <p className="text-base leading-loose text-stone-700">
+                <h4 className="text-sm font-bold mb-3 text-slate-400 tracking-widest">今、取り組んでいること</h4>
+                <p className="text-base leading-loose text-slate-700">
                   {industry.highlightPhrases ? highlightPhrases(industry.deepDive.present, industry.highlightPhrases) : industry.deepDive.present}
                 </p>
               </div>
               <div>
-                <h4 className="text-sm font-bold mb-3 text-stone-400 tracking-widest">次の世代へ</h4>
-                <p className="text-base leading-loose text-stone-700">
+                <h4 className="text-sm font-bold mb-3 text-slate-400 tracking-widest">次の世代へ</h4>
+                <p className="text-base leading-loose text-slate-700">
                   {industry.highlightPhrases ? highlightPhrases(industry.deepDive.future, industry.highlightPhrases) : industry.deepDive.future}
                 </p>
               </div>
@@ -406,9 +406,9 @@ export default function IndustryDetailPage() {
 
           {/* 関連する産業 */}
           {industry.relatedIndustries && industry.relatedIndustries.length > 0 && (
-            <section ref={(el) => { sectionsRef.current[3] = el; }} className="pt-12 border-t border-stone-200">
+            <section ref={(el) => { sectionsRef.current[3] = el; }} className="pt-12 border-t border-slate-200">
               <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-stone-900"></span>
+                <span className="w-8 h-[1px] bg-slate-900"></span>
                 関連する産業
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -419,7 +419,7 @@ export default function IndustryDetailPage() {
                     <a
                       key={related.id}
                       href={`/industry/${related.id}`}
-                      className="group border border-stone-200 hover:border-stone-400 transition-all duration-300 overflow-hidden"
+                      className="group border border-slate-200 hover:border-slate-400 transition-all duration-300 overflow-hidden"
                     >
                       <div className="aspect-video relative overflow-hidden">
                         <img
@@ -427,13 +427,13 @@ export default function IndustryDetailPage() {
                           alt={related.title}
                           className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500"
                         />
-                        <span className="absolute top-3 left-3 text-xs bg-stone-900 text-white px-3 py-1 tracking-wider">
+                        <span className="absolute top-3 left-3 text-xs bg-slate-900 text-white px-3 py-1 tracking-wider">
                           {related.category}
                         </span>
                       </div>
                       <div className="p-4">
-                        <h4 className="font-serif text-lg mb-2 group-hover:text-stone-600 transition-colors">{related.title}</h4>
-                        <p className="text-xs text-stone-500 line-clamp-2">{related.summary}</p>
+                        <h4 className="font-serif text-lg mb-2 group-hover:text-slate-600 transition-colors">{related.title}</h4>
+                        <p className="text-xs text-slate-500 line-clamp-2">{related.summary}</p>
                       </div>
                     </a>
                   );
@@ -444,33 +444,33 @@ export default function IndustryDetailPage() {
 
           {/* 訪問情報 */}
           {industry.visitInfo && (
-            <section ref={(el) => { sectionsRef.current[4] = el; }} className="pt-12 border-t border-stone-200">
+            <section ref={(el) => { sectionsRef.current[4] = el; }} className="pt-12 border-t border-slate-200">
               <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-stone-900"></span>
+                <span className="w-8 h-[1px] bg-slate-900"></span>
                 訪問情報
               </h3>
-              <div className="bg-stone-50 p-6 space-y-4">
+              <div className="bg-slate-50 p-6 space-y-4">
                 {industry.visitInfo.hours && (
                   <div>
-                    <p className="text-xs text-stone-500 mb-1 tracking-widest">営業時間</p>
-                    <p className="text-sm text-stone-800">{industry.visitInfo.hours}</p>
+                    <p className="text-xs text-slate-500 mb-1 tracking-widest">営業時間</p>
+                    <p className="text-sm text-slate-800">{industry.visitInfo.hours}</p>
                   </div>
                 )}
                 {industry.visitInfo.access && (
                   <div>
-                    <p className="text-xs text-stone-500 mb-1 tracking-widest">アクセス</p>
-                    <p className="text-sm text-stone-800">{industry.visitInfo.access}</p>
+                    <p className="text-xs text-slate-500 mb-1 tracking-widest">アクセス</p>
+                    <p className="text-sm text-slate-800">{industry.visitInfo.access}</p>
                   </div>
                 )}
                 {industry.visitInfo.contact && (
                   <div>
-                    <p className="text-xs text-stone-500 mb-1 tracking-widest">連絡先</p>
-                    <p className="text-sm text-stone-800">{industry.visitInfo.contact}</p>
+                    <p className="text-xs text-slate-500 mb-1 tracking-widest">連絡先</p>
+                    <p className="text-sm text-slate-800">{industry.visitInfo.contact}</p>
                   </div>
                 )}
                 {industry.visitInfo.website && (
                   <div>
-                    <p className="text-xs text-stone-500 mb-1 tracking-widest">ウェブサイト</p>
+                    <p className="text-xs text-slate-500 mb-1 tracking-widest">ウェブサイト</p>
                     <a
                       href={industry.visitInfo.website}
                       target="_blank"
@@ -486,21 +486,21 @@ export default function IndustryDetailPage() {
           )}
 
           {/* Actions - CTA */}
-          <section ref={(el) => { sectionsRef.current[5] = el; }} className="pt-12 border-t border-stone-200">
-            <div className="bg-stone-900 text-white p-8 md:p-12">
+          <section ref={(el) => { sectionsRef.current[5] = el; }} className="pt-12 border-t border-slate-200">
+            <div className="bg-slate-900 text-white p-8 md:p-12">
               <div className="md:flex items-baseline justify-between mb-8">
                 <h3 className="font-serif text-3xl mb-2 md:mb-0">関わりを持つ</h3>
-                <p className="text-stone-400 text-sm">この生業を未来へつなぐために</p>
+                <p className="text-slate-400 text-sm">この生業を未来へつなぐために</p>
               </div>
               <div className="grid gap-4">
                 {industry.actions.map((action, index) => (
                   <a
                     key={index}
                     href={action.link}
-                    className="group flex items-center justify-between border-b border-stone-700 py-4 hover:bg-stone-800 hover:px-4 transition-all duration-300"
+                    className="group flex items-center justify-between border-b border-slate-700 py-4 hover:bg-slate-800 hover:px-4 transition-all duration-300"
                   >
                     <span className="font-serif text-lg">{action.label}</span>
-                    <svg className="w-5 h-5 text-stone-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 text-slate-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>

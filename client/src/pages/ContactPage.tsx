@@ -41,7 +41,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-slate-50">
       <Header />
       
       <main className="pt-24 pb-16">
@@ -51,7 +51,7 @@ export default function ContactPage() {
             <h1 className="font-serif text-4xl md:text-5xl mb-4 tracking-wider">
               お問い合わせ
             </h1>
-            <p className="text-stone-600 leading-relaxed">
+            <p className="text-slate-600 leading-relaxed">
               能登百業録に関するお問い合わせは、こちらのフォームからお送りください。
             </p>
           </div>
@@ -61,7 +61,7 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name */}
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-stone-700 mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
                   お名前 <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -78,7 +78,7 @@ export default function ContactPage() {
 
               {/* Email */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-stone-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                   メールアドレス <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -95,7 +95,7 @@ export default function ContactPage() {
 
               {/* Subject */}
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-stone-700 mb-2">
+                <label htmlFor="subject" className="block text-sm font-medium text-slate-700 mb-2">
                   件名 <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -112,7 +112,7 @@ export default function ContactPage() {
 
               {/* Message */}
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-stone-700 mb-2">
+                <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
                   お問い合わせ内容 <span className="text-red-500">*</span>
                 </label>
                 <Textarea
@@ -131,7 +131,7 @@ export default function ContactPage() {
               <div className="pt-4">
                 <Button
                   type="submit"
-                  className="w-full bg-stone-900 hover:bg-stone-800 text-white py-6 text-lg"
+                  className="w-full bg-slate-900 hover:bg-slate-800 text-white py-6 text-lg"
                 >
                   送信する
                 </Button>
@@ -140,8 +140,8 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Info */}
-          <div className="mt-12 p-6 bg-stone-100 text-sm text-stone-600 leading-relaxed">
-            <h2 className="font-serif text-lg mb-3 text-stone-900">お問い合わせ先</h2>
+          <div className="mt-12 p-6 bg-slate-100 text-sm text-slate-600 leading-relaxed">
+            <h2 className="font-serif text-lg mb-3 text-slate-900">お問い合わせ先</h2>
             <div className="space-y-1">
               <p>能登町役場</p>
               <p>〒927-0492　石川県鳳珠郡能登町宇出津ト字50番地1</p>

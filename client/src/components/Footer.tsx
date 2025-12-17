@@ -2,7 +2,7 @@ import { Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-stone-900 text-stone-300">
+    <footer className="bg-slate-900 text-slate-300">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* About & Noto Town Hall Info */}
@@ -10,14 +10,14 @@ export default function Footer() {
             <h3 className="font-serif text-xl text-white mb-4 tracking-wider">
               能登百業録
             </h3>
-            <p className="text-sm leading-relaxed text-stone-400 mb-6">
+            <p className="text-sm leading-relaxed text-slate-400 mb-6">
               能登半島に根付く多様な生業を記録し、<br />
               次世代へ継承するプロジェクト
             </p>
             <h4 className="font-serif text-base text-white mb-2 tracking-wider">
               能登町役場
             </h4>
-            <div className="text-xs leading-relaxed text-stone-400 space-y-1">
+            <div className="text-xs leading-relaxed text-slate-400 space-y-1">
               <p>法人番号 5000020174637</p>
               <p>〒927-0492　石川県鳳珠郡能登町宇出津ト字50番地1</p>
 
@@ -35,19 +35,19 @@ export default function Footer() {
             <nav className="space-y-3">
               <a 
                 href="/" 
-                className="block text-sm text-stone-400 hover:text-white transition-colors"
+                className="block text-sm text-slate-400 hover:text-white transition-colors"
               >
                 トップページ
               </a>
               <a 
                 href="/map" 
-                className="block text-sm text-stone-400 hover:text-white transition-colors"
+                className="block text-sm text-slate-400 hover:text-white transition-colors"
               >
                 地図から探す
               </a>
               <a 
                 href="/about" 
-                className="block text-sm text-stone-400 hover:text-white transition-colors"
+                className="block text-sm text-slate-400 hover:text-white transition-colors"
               >
                 百業について
               </a>
@@ -62,7 +62,7 @@ export default function Footer() {
             <div className="space-y-3">
               <a 
                 href="/contact" 
-                className="flex items-center gap-2 text-sm text-stone-400 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 お問い合わせフォーム
@@ -72,8 +72,8 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="pt-8 border-t border-stone-800 text-center">
-          <p className="text-sm text-stone-500">
+        <div className="pt-8 border-t border-slate-800 text-center">
+          <p className="text-sm text-slate-500">
             © 2026 能登百業録. All rights reserved.
           </p>
         </div>
