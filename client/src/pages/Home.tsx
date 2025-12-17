@@ -204,8 +204,8 @@ export default function Home() {
             <div className="flex flex-row-reverse md:flex-row justify-between items-start h-[60%]">
                
                {/* Vertical Title */}
-               <div className="h-full flex flex-col items-center justify-center md:items-start md:justify-start md:order-last pt-12 pr-4 md:pr-8">
-                  <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl">
+               <div className="h-full flex flex-col items-center justify-center md:items-end md:justify-start md:order-last pt-12 pr-8 md:pr-16 lg:pr-24">
+                  <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl">
                      能登百業
                   </h1>
                   <p className="writing-vertical-rl text-white/80 mt-6 md:mt-8 text-xs md:text-sm tracking-[0.3em] font-light hidden md:block">
