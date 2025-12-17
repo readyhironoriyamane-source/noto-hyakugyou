@@ -208,7 +208,7 @@ export default function Home() {
                   <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl whitespace-nowrap">
                      能登百業
                   </h1>
-                  <p className="writing-vertical-rl text-white/80 mt-6 md:mt-8 text-xs md:text-sm tracking-[0.3em] font-light hidden md:block">
+                  <p className="writing-vertical-rl text-white/80 mt-6 md:mt-8 text-xs md:text-sm tracking-[0.3em] font-light hidden md:block whitespace-nowrap">
                      受け継がれる生業の記録
                   </p>
                </div>
