@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { industries } from "@/data/industries";
 import type { Industry } from "@/data/industries";
-import { X, Share2, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, Share2, ChevronLeft, ChevronRight, ExternalLink, CheckCircle2, ArrowRight, AlertCircle, HelpCircle, Lightbulb } from "lucide-react";
 import { highlightPhrases } from "@/lib/textHighlight";
 
 export default function IndustryDetailPage() {
@@ -24,14 +24,11 @@ export default function IndustryDetailPage() {
         const url = window.location.href;
         const imageUrl = window.location.origin + foundIndustry.image;
         
-        // タイトルを設定
         document.title = `${foundIndustry.title} - 能登百業録`;
         
-        // 既存のメタタグを削除
         const existingMeta = document.querySelectorAll('meta[property^="og:"], meta[name="twitter:"], meta[name="description"]');
         existingMeta.forEach(tag => tag.remove());
         
-        // OGPメタタグを追加
         const metaTags = [
           { property: 'og:title', content: `${foundIndustry.title} - 能登百業録` },
           { property: 'og:description', content: foundIndustry.summary },
@@ -56,7 +53,6 @@ export default function IndustryDetailPage() {
       }
     }
     
-    // クリーンアップ関数
     return () => {
       document.title = '能登百業録';
       const metaTags = document.querySelectorAll('meta[property^="og:"], meta[name="twitter:"]');
@@ -125,17 +121,21 @@ export default function IndustryDetailPage() {
     setShowShareMenu(false);
   };
 
+  // 新しい構成かどうかの判定
+  const isNewFormat = !!industry.challengeCard;
+
   return (
-    <div className="fixed inset-0 z-[100] bg-white overflow-y-auto animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-[100] bg-white overflow-y-auto animate-in fade-in duration-300 font-sans text-slate-800">
       <Header />
+      
       {/* Close Button & Share Button */}
       <div className="fixed top-6 right-6 z-50 flex gap-2">
         <div className="relative">
           <button 
             onClick={() => setShowShareMenu(!showShareMenu)}
-            className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-slate-100 transition-colors"
+            className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-slate-100 transition-colors shadow-sm border border-slate-200"
           >
-            <Share2 className="w-6 h-6 text-slate-900" />
+            <Share2 className="w-5 h-5 text-slate-700" />
           </button>
           
           {/* Share Menu */}
@@ -174,7 +174,6 @@ export default function IndustryDetailPage() {
         
         <button 
           onClick={() => {
-            // 遷移元を確認して適切なページに戻る
             const referrer = document.referrer;
             if (referrer && (referrer.includes('/map') || referrer.includes(window.location.origin))) {
               window.history.back();
@@ -182,46 +181,45 @@ export default function IndustryDetailPage() {
               window.location.href = '/';
             }
           }}
-          className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-slate-100 transition-colors"
+          className="p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-slate-100 transition-colors shadow-sm border border-slate-200"
         >
-          <X className="w-6 h-6 text-slate-900" />
+          <X className="w-5 h-5 text-slate-700" />
         </button>
       </div>
 
-      {/* Hero Image (ギャラリー対応) */}
-      <div className="relative w-full h-[60vh] group">
+      {/* Hero Section */}
+      <div className="relative w-full h-[50vh] md:h-[60vh] group">
         <img 
           src={industry.gallery && industry.gallery.length > 0 ? industry.gallery[currentImageIndex] : industry.image}
           alt={industry.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-slate-900/90"></div>
         
         {/* ギャラリーナビゲーション */}
         {industry.gallery && industry.gallery.length > 1 && (
           <>
             <button
               onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? industry.gallery!.length - 1 : prev - 1))}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-all opacity-0 group-hover:opacity-100"
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/40 transition-all text-white"
             >
-              <ChevronLeft className="w-6 h-6 text-slate-900" />
+              <ChevronLeft className="w-6 h-6" />
             </button>
             <button
               onClick={() => setCurrentImageIndex((prev) => (prev === industry.gallery!.length - 1 ? 0 : prev + 1))}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-all opacity-0 group-hover:opacity-100"
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/40 transition-all text-white"
             >
-              <ChevronRight className="w-6 h-6 text-slate-900" />
+              <ChevronRight className="w-6 h-6" />
             </button>
             
-            {/* インジケーター */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
               {industry.gallery.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
                   className={`w-2 h-2 rounded-full transition-all ${
                     index === currentImageIndex
-                      ? "bg-white w-8"
+                      ? "bg-white w-6"
                       : "bg-white/50 hover:bg-white/75"
                   }`}
                 />
@@ -229,286 +227,312 @@ export default function IndustryDetailPage() {
             </div>
           </>
         )}
-        
-        <div className="absolute bottom-0 left-0 p-6 md:p-12 w-full bg-gradient-to-t from-black/80 to-transparent">
-          <div className="max-w-5xl mx-auto text-white">
-            <p className="text-sm tracking-[0.2em] mb-2 font-light opacity-90">{industry.category} / {industry.location}</p>
-            <h2 className="text-4xl md:text-6xl font-serif font-medium tracking-wide mb-4">{industry.title}</h2>
-            <div className="flex gap-3">
-              {industry.tags.map(tag => (
-                <span key={tag} className="text-xs border border-white/40 px-3 py-1 tracking-wider">
-                  {tag}
-                </span>
-              ))}
+
+        <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 text-white">
+          <div className="container mx-auto max-w-4xl">
+            {isNewFormat && industry.challengeCard && (
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-600/90 text-white text-sm font-medium mb-4 backdrop-blur-sm border border-blue-400/30">
+                <AlertCircle className="w-4 h-4" />
+                {industry.challengeCard}
+              </div>
+            )}
+            <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4 leading-tight drop-shadow-lg">
+              {industry.title}
+            </h1>
+            <div className="flex flex-wrap gap-4 text-sm md:text-base text-slate-200 font-serif">
+              <span className="flex items-center gap-1">
+                <span className="opacity-70">事業者:</span> {industry.operator}
+              </span>
+              <span className="w-px h-4 bg-slate-400/50 my-auto"></span>
+              <span className="flex items-center gap-1">
+                <span className="opacity-70">地域:</span> {industry.location}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-5xl mx-auto px-6 py-16 md:py-24 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20">
-        
-        {/* Operator Info */}
-        <div className="md:col-span-3 md:sticky md:top-24 h-fit text-center md:text-left md:border-r border-slate-200 md:pr-8">
-          <div className="inline-block md:block mb-4">
-             <div className="w-24 h-24 bg-slate-100 rounded-full mx-auto md:mx-0 mb-4 flex items-center justify-center overflow-hidden grayscale">
-                <span className="font-serif text-3xl text-slate-400">{industry.operator.charAt(0)}</span>
-             </div>
-          </div>
-          <div>
-            <p className="text-xs text-slate-500 mb-1 tracking-widest">事業者</p>
-            <p className="text-xl font-serif mb-1">{industry.operator}</p>
-            <p className="text-sm text-slate-500">{industry.role}</p>
-          </div>
-          <div className="mt-8 pt-8 border-t border-slate-200 hidden md:block">
-            <p className="text-xs text-slate-500 mb-2 tracking-widest">つながり</p>
-            <p className="text-sm font-serif text-slate-800 leading-relaxed">{industry.connections}</p>
-          </div>
-        </div>
-
-        {/* Main Text */}
-        <div className="md:col-span-9 space-y-16">
+      {/* Main Content */}
+      <div className="bg-slate-50 min-h-screen pb-20">
+        <div className="container mx-auto max-w-4xl px-4 md:px-8 -mt-8 relative z-10">
           
-          <section ref={(el) => { sectionsRef.current[0] = el; }}>
-            <h3 className="font-serif text-2xl mb-6 flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-slate-900"></span>
-              物語
-            </h3>
-            <p className="text-lg leading-[2.2] text-slate-800 font-serif text-justify">
-              {industry.highlightPhrases ? highlightPhrases(industry.summary, industry.highlightPhrases) : industry.summary}
-            </p>
-            <div className="mt-8 p-6 bg-slate-50">
-              <h4 className="text-sm font-bold mb-2 text-slate-400 tracking-widest">なぜ必要か</h4>
-              <div className="text-base leading-loose text-slate-700 space-y-4">
-                {industry.necessity.split('\n\n').map((paragraph, idx) => {
-                  // 3つの特徴セクションを検出
-                  if (paragraph.startsWith('3つの特徴')) {
-                    const lines = paragraph.split('\n');
-                    const title = lines[0];
-                    const features = lines.slice(1);
-                    return (
-                      <div key={idx} className="mt-6">
-                        <h5 className="text-sm font-medium mb-4 text-slate-500">{title}</h5>
-                        <div className="space-y-3">
-                          {features.map((feature, fIdx) => {
-                            if (!feature.trim()) return null;
-                            return (
-                              <p key={fIdx} className="text-sm leading-relaxed">
-                                {industry.highlightPhrases ? highlightPhrases(feature, industry.highlightPhrases) : feature}
-                              </p>
-                            );
-                          })}
-                        </div>
+          {/* Key Points Card */}
+          {isNewFormat && industry.keyPoints && (
+            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8 border-t-4 border-blue-600">
+              <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-blue-600" />
+                この事例の要点
+              </h2>
+              <ul className="space-y-3">
+                {industry.keyPoints.map((point, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-slate-700">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 shrink-0"></span>
+                    <span className="leading-relaxed">{point}</span>
+                  </li>
+                ))}
+              </ul>
+              
+              {industry.selectedSupport && (
+                <div className="mt-6 pt-6 border-t border-slate-100">
+                  <p className="text-sm text-slate-500 mb-2">活用した支援メニュー</p>
+                  <a 
+                    href={industry.selectedSupport.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-lg p-4 transition-all"
+                  >
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <h3 className="font-bold text-blue-700 group-hover:text-blue-800 mb-1">
+                          {industry.selectedSupport.name}
+                        </h3>
+                        <p className="text-sm text-slate-600 line-clamp-1">
+                          {industry.selectedSupport.description}
+                        </p>
                       </div>
-                    );
-                  }
-                  return (
-                    <p key={idx}>
-                      {industry.highlightPhrases ? highlightPhrases(paragraph, industry.highlightPhrases) : paragraph}
-                    </p>
-                  );
-                })}
-              </div>
+                      <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-blue-500" />
+                    </div>
+                  </a>
+                </div>
+              )}
             </div>
-          </section>
+          )}
 
-          {/* Timeline - Clean Grid */}
-          <section ref={(el) => { sectionsRef.current[1] = el; }}>
-            <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-slate-900"></span>
-              歩みと展望
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="space-y-3">
-                <span className="block text-xs font-bold text-slate-300 tracking-widest flex items-center gap-2">
-                  <span className="text-lg">👉</span> 過去
-                </span>
-                {(() => {
-                  const parts = industry.timeline.past.split(' ');
-                  const title = parts[0];
-                  const content = parts.slice(1).join(' ');
-                  return (
-                    <>
-                      <p className="text-base font-bold text-slate-900 mb-2">{title}</p>
-                      <p className="text-sm leading-loose text-slate-600">
-                        {industry.highlightPhrases ? highlightPhrases(content, industry.highlightPhrases) : content}
-                      </p>
-                    </>
-                  );
-                })()}
-              </div>
-              <div className="space-y-3">
-                <span className="block text-xs font-bold text-slate-900 tracking-widest flex items-center gap-2">
-                  <span className="text-lg">👉</span> 現在
-                </span>
-                {(() => {
-                  const parts = industry.timeline.present.split(' ');
-                  const title = parts[0];
-                  const content = parts.slice(1).join(' ');
-                  return (
-                    <>
-                      <p className="text-base font-bold text-slate-900 mb-2">{title}</p>
-                      <p className="text-sm leading-loose text-slate-800 font-medium">
-                        {industry.highlightPhrases ? highlightPhrases(content, industry.highlightPhrases) : content}
-                      </p>
-                    </>
-                  );
-                })()}
-              </div>
-              <div className="space-y-3">
-                <span className="block text-xs font-bold text-slate-300 tracking-widest flex items-center gap-2">
-                  <span className="text-lg">👉</span> 未来
-                </span>
-                {(() => {
-                  const parts = industry.timeline.future.split(' ');
-                  const title = parts[0];
-                  const content = parts.slice(1).join(' ');
-                  return (
-                    <>
-                      <p className="text-base font-bold text-slate-900 mb-2">{title}</p>
-                      <p className="text-sm leading-loose text-slate-600">
-                        {industry.highlightPhrases ? highlightPhrases(content, industry.highlightPhrases) : content}
-                      </p>
-                    </>
-                  );
-                })()}
-              </div>
-            </div>
-          </section>
-
-          {/* Deep Dive */}
-          <section ref={(el) => { sectionsRef.current[2] = el; }} className="pt-12 border-t border-slate-200">
-            <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-slate-900"></span>
-              仕事を深く知る
-            </h3>
-            <div className="space-y-8">
-              <div>
-                <h4 className="text-sm font-bold mb-3 text-slate-400 tracking-widest">受け継がれてきたもの</h4>
-                <p className="text-base leading-loose text-slate-700">
-                  {industry.highlightPhrases ? highlightPhrases(industry.deepDive.past, industry.highlightPhrases) : industry.deepDive.past}
-                </p>
-              </div>
-              <div>
-                <h4 className="text-sm font-bold mb-3 text-slate-400 tracking-widest">今、取り組んでいること</h4>
-                <p className="text-base leading-loose text-slate-700">
-                  {industry.highlightPhrases ? highlightPhrases(industry.deepDive.present, industry.highlightPhrases) : industry.deepDive.present}
-                </p>
-              </div>
-              <div>
-                <h4 className="text-sm font-bold mb-3 text-slate-400 tracking-widest">次の世代へ</h4>
-                <p className="text-base leading-loose text-slate-700">
-                  {industry.highlightPhrases ? highlightPhrases(industry.deepDive.future, industry.highlightPhrases) : industry.deepDive.future}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* 関連する産業 */}
-          {industry.relatedIndustries && industry.relatedIndustries.length > 0 && (
-            <section ref={(el) => { sectionsRef.current[3] = el; }} className="pt-12 border-t border-slate-200">
-              <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-slate-900"></span>
-                関連する産業
+          {/* Context Section */}
+          <div className="grid md:grid-cols-2 gap-6 mb-12">
+            <div className="bg-white rounded-xl shadow-sm p-6 md:p-8">
+              <h3 className="font-serif font-bold text-xl text-slate-900 mb-4 pb-2 border-b border-slate-100">
+                どんな仕事なのか
               </h3>
+              <p className="text-slate-700 leading-relaxed">
+                {isNewFormat ? industry.jobDescription : industry.summary}
+              </p>
+            </div>
+            <div className="bg-white rounded-xl shadow-sm p-6 md:p-8">
+              <h3 className="font-serif font-bold text-xl text-slate-900 mb-4 pb-2 border-b border-slate-100">
+                どんな課題があったのか
+              </h3>
+              <p className="text-slate-700 leading-relaxed">
+                {isNewFormat ? industry.challengeDescription : industry.necessity}
+              </p>
+            </div>
+          </div>
+
+          {/* Decision Process */}
+          {isNewFormat && (
+            <div className="bg-white rounded-xl shadow-sm p-6 md:p-8 mb-12">
+              <h2 className="text-2xl font-serif font-bold text-slate-900 mb-8 text-center">
+                支援活用のプロセス
+              </h2>
+              
+              <div className="space-y-8 relative before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
+                {/* Step 1: Options */}
+                <div className="relative pl-12">
+                  <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-slate-100 border-2 border-slate-300 flex items-center justify-center text-slate-500 font-bold">
+                    1
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 mb-3">検討した選択肢</h3>
+                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-100">
+                    <ul className="space-y-2">
+                      {industry.supportOptions?.map((opt, idx) => (
+                        <li key={idx} className="flex items-center gap-2 text-slate-700 text-sm">
+                          <HelpCircle className="w-4 h-4 text-slate-400" />
+                          {opt}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Step 2: Decision */}
+                <div className="relative pl-12">
+                  <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-blue-100 border-2 border-blue-300 flex items-center justify-center text-blue-600 font-bold">
+                    2
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 mb-3">なぜその支援を選んだか</h3>
+                  <p className="text-slate-700 leading-relaxed bg-blue-50/50 p-4 rounded-lg border border-blue-100">
+                    {industry.reasonForSelection}
+                  </p>
+                </div>
+
+                {/* Step 3: Action */}
+                <div className="relative pl-12">
+                  <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-slate-100 border-2 border-slate-300 flex items-center justify-center text-slate-500 font-bold">
+                    3
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 mb-3">具体的なアクション</h3>
+                  <p className="text-slate-700 leading-relaxed">
+                    {industry.actionTaken}
+                  </p>
+                </div>
+
+                {/* Step 4: Result */}
+                <div className="relative pl-12">
+                  <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-green-100 border-2 border-green-300 flex items-center justify-center text-green-600 font-bold">
+                    4
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 mb-3">現在の変化</h3>
+                  <p className="text-slate-700 leading-relaxed">
+                    {industry.changes}
+                  </p>
+                </div>
+              </div>
+
+              {industry.futureSupport && (
+                <div className="mt-8 pt-8 border-t border-slate-100">
+                  <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                    <Lightbulb className="w-4 h-4 text-amber-500" />
+                    今後検討していること
+                  </h4>
+                  <p className="text-slate-600 text-sm">
+                    {industry.futureSupport}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Writer's Comment & Recommendations */}
+          {isNewFormat && (
+            <div className="grid md:grid-cols-3 gap-6 mb-12">
+              <div className="md:col-span-2 bg-slate-800 text-slate-100 rounded-xl shadow-sm p-6 md:p-8 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+                <h3 className="font-serif font-bold text-xl mb-4 flex items-center gap-2">
+                  <span className="w-8 h-[1px] bg-slate-400"></span>
+                  編集部より
+                </h3>
+                <p className="leading-relaxed text-slate-300">
+                  {industry.writerComment}
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+                <h3 className="font-bold text-slate-900 mb-4 text-sm uppercase tracking-wider text-slate-500">
+                  おすすめの支援
+                </h3>
+                <div className="space-y-4">
+                  {industry.recommendedSupports?.map((rec, idx) => (
+                    <a 
+                      key={idx}
+                      href={rec.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block group"
+                    >
+                      <h4 className="font-bold text-blue-600 group-hover:underline text-sm mb-1">
+                        {rec.name}
+                      </h4>
+                      <p className="text-xs text-slate-500 line-clamp-2">
+                        {rec.description}
+                      </p>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Original Content (Timeline & Deep Dive) - Only show if not new format or if desired to keep */}
+          {!isNewFormat && (
+            <>
+              {/* Timeline */}
+              <div className="bg-white rounded-xl shadow-sm p-6 md:p-8 mb-8">
+                <h2 className="text-2xl font-serif font-bold text-slate-900 mb-6">歩みと未来</h2>
+                <div className="space-y-6">
+                  <div className="flex gap-4">
+                    <div className="w-20 shrink-0 font-bold text-slate-400">過去</div>
+                    <p className="text-slate-700">{industry.timeline.past}</p>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="w-20 shrink-0 font-bold text-slate-900">現在</div>
+                    <p className="text-slate-900 font-medium">{industry.timeline.present}</p>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="w-20 shrink-0 font-bold text-blue-600">未来</div>
+                    <p className="text-slate-700">{industry.timeline.future}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Deep Dive */}
+              <div className="prose prose-slate max-w-none bg-white rounded-xl shadow-sm p-6 md:p-8 mb-8">
+                <h2 className="font-serif text-2xl font-bold text-slate-900 mb-6">詳細レポート</h2>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-800 mb-2">歴史と伝統</h3>
+                    <p className="text-slate-700 leading-relaxed">{industry.deepDive.past}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-800 mb-2">現在の取り組み</h3>
+                    <p className="text-slate-700 leading-relaxed">{industry.deepDive.present}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-800 mb-2">未来への展望</h3>
+                    <p className="text-slate-700 leading-relaxed">{industry.deepDive.future}</p>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Action Buttons */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+            {industry.actions.map((action, index) => (
+              <a
+                key={index}
+                href={action.link}
+                className={`
+                  flex items-center justify-center gap-2 p-4 rounded-lg font-bold transition-all
+                  ${index === 0 
+                    ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg" 
+                    : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300"
+                  }
+                `}
+              >
+                {action.label}
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            ))}
+          </div>
+
+          {/* Related Industries */}
+          {industry.relatedIndustries && industry.relatedIndustries.length > 0 && (
+            <div className="border-t border-slate-200 pt-12">
+              <h2 className="text-2xl font-serif font-bold text-slate-900 mb-6 text-center">
+                関連する事例
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {industry.relatedIndustries.map(relatedId => {
-                  const related = industries.find(ind => ind.id === relatedId);
+                {industry.relatedIndustries.map(id => {
+                  const related = industries.find(i => i.id === id);
                   if (!related) return null;
                   return (
-                    <a
-                      key={related.id}
-                      href={`/industry/${related.id}`}
-                      className="group border border-slate-200 hover:border-slate-400 transition-all duration-300 overflow-hidden"
+                    <a 
+                      key={id}
+                      href={`/industry/${id}`}
+                      className="group flex gap-4 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all border border-slate-100"
                     >
-                      <div className="aspect-video relative overflow-hidden">
-                        <img
-                          src={related.image}
+                      <div className="w-24 h-24 shrink-0 rounded-md overflow-hidden">
+                        <img 
+                          src={related.image} 
                           alt={related.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                        <span className="absolute top-3 left-3 text-xs bg-slate-900 text-white px-3 py-1 tracking-wider">
-                          {related.category}
-                        </span>
                       </div>
-                      <div className="p-4">
-                        <h4 className="font-serif text-lg mb-2 group-hover:text-slate-600 transition-colors">{related.title}</h4>
-                        <p className="text-xs text-slate-500 line-clamp-2">{related.summary}</p>
+                      <div>
+                        <h3 className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-1">
+                          {related.title}
+                        </h3>
+                        <p className="text-xs text-slate-500 mb-2">{related.category} / {related.location}</p>
+                        <p className="text-sm text-slate-600 line-clamp-2">
+                          {related.summary}
+                        </p>
                       </div>
                     </a>
                   );
                 })}
               </div>
-            </section>
-          )}
-
-          {/* 訪問情報 */}
-          {industry.visitInfo && (
-            <section ref={(el) => { sectionsRef.current[4] = el; }} className="pt-12 border-t border-slate-200">
-              <h3 className="font-serif text-2xl mb-8 flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-slate-900"></span>
-                訪問情報
-              </h3>
-              <div className="bg-slate-50 p-6 space-y-4">
-                {industry.visitInfo.hours && (
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1 tracking-widest">営業時間</p>
-                    <p className="text-sm text-slate-800">{industry.visitInfo.hours}</p>
-                  </div>
-                )}
-                {industry.visitInfo.access && (
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1 tracking-widest">アクセス</p>
-                    <p className="text-sm text-slate-800">{industry.visitInfo.access}</p>
-                  </div>
-                )}
-                {industry.visitInfo.contact && (
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1 tracking-widest">連絡先</p>
-                    <p className="text-sm text-slate-800">{industry.visitInfo.contact}</p>
-                  </div>
-                )}
-                {industry.visitInfo.website && (
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1 tracking-widest">ウェブサイト</p>
-                    <a
-                      href={industry.visitInfo.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-blue-600 hover:underline"
-                    >
-                      {industry.visitInfo.website}
-                    </a>
-                  </div>
-                )}
-              </div>
-            </section>
-          )}
-
-          {/* Actions - CTA */}
-          <section ref={(el) => { sectionsRef.current[5] = el; }} className="pt-12 border-t border-slate-200">
-            <div className="bg-slate-900 text-white p-8 md:p-12">
-              <div className="md:flex items-baseline justify-between mb-8">
-                <h3 className="font-serif text-3xl mb-2 md:mb-0">関わりを持つ</h3>
-                <p className="text-slate-400 text-sm">この生業を未来へつなぐために</p>
-              </div>
-              <div className="grid gap-4">
-                {industry.actions.map((action, index) => (
-                  <a
-                    key={index}
-                    href={action.link}
-                    className="group flex items-center justify-between border-b border-slate-700 py-4 hover:bg-slate-800 hover:px-4 transition-all duration-300"
-                  >
-                    <span className="font-serif text-lg">{action.label}</span>
-                    <svg className="w-5 h-5 text-slate-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                ))}
-              </div>
             </div>
-          </section>
-
+          )}
         </div>
       </div>
       

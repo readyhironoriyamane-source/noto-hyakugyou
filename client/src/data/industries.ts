@@ -36,6 +36,28 @@ export interface Industry {
   gallery?: string[]; // 複数の写真を格納するギャラリー
   seasonalMonths?: number[]; // 旬の時期（1-12月）
   highlightPhrases?: string[]; // ハイライトするキーフレーズ
+  
+  // 新しい構成のためのフィールド
+  challengeCard?: string; // 対応する課題カード
+  keyPoints?: string[]; // 要点
+  selectedSupport?: { // 選んだ支援メニュー
+    name: string;
+    description: string;
+    link: string;
+  };
+  jobDescription?: string; // どんな仕事なのか
+  challengeDescription?: string; // どんな課題があったのか
+  supportOptions?: string[]; // どんな支援メニューの選択肢があったのか
+  reasonForSelection?: string; // なぜその支援メニューを選んだのか
+  actionTaken?: string; // 支援メニューを活用して何をしたのか
+  changes?: string; // 支援メニューを活用した現在、どんな変化があったか
+  futureSupport?: string; // いま検討している支援メニューがあれば
+  writerComment?: string; // ライターからの一言コメント
+  recommendedSupports?: Array<{ // ライターがおすすめするその他の支援メニュー
+    name: string;
+    description: string;
+    link: string;
+  }>;
 }
 
 export const industries: Industry[] = [
