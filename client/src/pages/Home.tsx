@@ -206,22 +206,22 @@ export default function Home() {
                {/* Vertical Title */}
                <div className="h-full flex flex-row items-center justify-center md:justify-start md:order-last pt-12 pr-8 md:pr-16 lg:pr-24 gap-6 md:gap-8">
                   <p className="writing-vertical-rl text-white/80 text-xs md:text-sm tracking-[0.3em] font-light hidden md:block whitespace-nowrap drop-shadow-lg">
-                     受け継がれる生業の記録
+                     事業を次代へつなぐ
                   </p>
                   <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl whitespace-nowrap">
-                     能登百業
+                     能登支援録
                   </h1>
                </div>
 
                {/* Intro Text */}
                <div className="text-white max-w-md pt-24 md:pt-0 hidden md:block">
-                  <p className="text-xs tracking-[0.4em] mb-8 border-l border-white/30 pl-4 text-white/70">EST. 2025 NOTO ISHIKAWA</p>
+                  <p className="text-xs tracking-[0.4em] mb-8 border-l border-white/30 pl-4 text-white/70">SUPPORT FOR NOTO BUSINESS</p>
                   <p className="text-lg font-serif leading-loose mb-8 text-justify">
-                     能登には、海と共に、山と共に生きる<br/>
-                     百の仕事がある。<br/>
-                     その一つ一つに、<br/>
-                     守り抜かれた技術と、<br/>
-                     復興へ向かう物語がある。
+                     能登の事業者の皆様へ。<br/>
+                     一人ひとりの悩みに寄り添い、<br/>
+                     最適な支援をご案内します。<br/>
+                     ここには、明日を切り拓くための<br/>
+                     確かな道筋があります。
                   </p>
                   <div className="w-12 h-[1px] bg-white/50"></div>
                </div>
@@ -267,13 +267,13 @@ export default function Home() {
           
           {/* イントロダクション（スマホのみ） */}
           <section className="md:hidden mb-20 py-12 border-y border-slate-200">
-            <p className="text-xs tracking-[0.4em] mb-8 border-l-2 border-slate-300 pl-4 text-slate-500">EST. 2025 NOTO ISHIKAWA</p>
+            <p className="text-xs tracking-[0.4em] mb-8 border-l-2 border-slate-300 pl-4 text-slate-500">SUPPORT FOR NOTO BUSINESS</p>
             <p className="text-base font-serif leading-loose text-slate-700 text-justify">
-              能登には、海と共に、山と共に生きる<br/>
-              百の仕事がある。<br/>
-              その一つ一つに、<br/>
-              守り抜かれた技術と、<br/>
-              復興へ向かう物語がある。
+               能登の事業者の皆様へ。<br/>
+               一人ひとりの悩みに寄り添い、<br/>
+               最適な支援をご案内します。<br/>
+               ここには、明日を切り拓くための<br/>
+               確かな道筋があります。
             </p>
           </section>
           
