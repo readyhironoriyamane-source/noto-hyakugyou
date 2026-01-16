@@ -206,10 +206,10 @@ export default function Home() {
                {/* Vertical Title */}
                <div className="h-full flex flex-row items-center justify-center md:justify-start md:order-last pt-12 pr-8 md:pr-16 lg:pr-24 gap-6 md:gap-8">
                   <p className="writing-vertical-rl text-white/80 text-xs md:text-sm tracking-[0.3em] font-light hidden md:block whitespace-nowrap drop-shadow-lg">
-                     事業を次代へつなぐ
+                     明日の商いを、共に創る
                   </p>
                   <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl whitespace-nowrap">
-                     能登支援録
+                     能登百業
                   </h1>
                </div>
 
