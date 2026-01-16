@@ -259,7 +259,7 @@ export const industries: Industry[] = [
       { type: "buy", label: "棚田米を購入", link: "#" },
       { type: "join", label: "田植えボランティア", link: "#" }
     ],
-    image: "/noto-rice.webp",
+    image: "/noto-rice.jpg",
     seasonalMonths: [5, 9]
   },
   {
