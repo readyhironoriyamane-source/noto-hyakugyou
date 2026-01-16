@@ -4,11 +4,11 @@ import type { Industry } from '@/data/industries';
 import { industries } from '@/data/industries';
 
 interface DetailModalProps {
-  job: Industry | null;
+  industry: Industry | null;
   onClose: () => void;
 }
 
-export default function DetailModal({ job, onClose }: DetailModalProps) {
+export default function DetailModal({ industry: job, onClose }: DetailModalProps) {
   const [showShareMenu, setShowShareMenu] = useState(false);
   
   if (!job) return null;

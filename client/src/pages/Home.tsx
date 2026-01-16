@@ -5,86 +5,6 @@ import DetailModal from '@/components/DetailModal';
 import Footer from '@/components/Footer';
 import type { Industry } from '@/data/industries';
 
-function SeasonalPickup() {
-  const currentMonth = new Date().getMonth() + 1; // 1-12月
-  const seasonal = industries.filter(i => 
-    i.seasonalMonths?.includes(currentMonth)
-  );
-  const picked = seasonal.length > 0 
-    ? seasonal.slice(0, 3) 
-    : industries.slice(0, 3); // 該当なしの場合は最初の3件
-  
-  // 月ごとの能登の特徴
-  const seasonalDescriptions: Record<number, string> = {
-    1: "寒風の中、冬の旬を迎える能登。寒ブリやカニが最も美味しい季節です。",
-    2: "雪解けの兆しが見え始める能登。漁師たちは春の漁に備え、農家は種まきの準備を始めます。",
-    3: "春の訪れとともに、新たな生命が芽吹く能登。山菜や春野菜が旬を迎えます。",
-    4: "桜が舞い、海も穏やかになる能登。春の風物詩とともに、新しい季節が始まります。",
-    5: "新緑が輝く能登。田植えが始まり、海ではイカ釣りのシーズンが到来します。",
-    6: "梅雨の季節、湿润を帯びた風が吹く能登。稲がすくすくと育ち、海ではイカが豊漁を迎えます。",
-    7: "夏の太陽が燦めく能登。海水浴と夏祭り、そして旬の魚介を楽しむ季節です。",
-    8: "真夏の熱気の中、生命力に溢れる能登。夏野菜が豊作を迎え、祭りが各地で開かれます。",
-    9: "秋の気配が漂い始める能登。稲穂が金色に色づき、収穫の時期が近づきます。",
-    10: "実りの秋、収穫の喜びに満ちた能登。新米、キノコ、秋鮭など、秋の味覚が楽しめます。",
-    11: "紅葉が山々を彩る能登。冬の備えを始める一方、カニ漁が解禁を迎えます。",
-    12: "本格的な冬が訪れる能登。雪景色の中、冬の味覚であるカニやブリが旬を迎えます。"
-  };
-  
-  return (
-    <section className="mb-32">
-      <div className="flex items-center gap-4 mb-6">
-        <span className="w-12 h-[2px] bg-slate-900"></span>
-        <h2 className="font-serif text-3xl md:text-4xl tracking-wider">今月のピックアップ</h2>
-      </div>
-      <p className="text-slate-600 leading-relaxed mb-12 pl-16">
-        {seasonalDescriptions[currentMonth]}
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
-        {picked.map((job) => (
-          <a 
-            key={job.id} 
-            href={`/industry/${job.id}`}
-            className="group cursor-pointer flex flex-col gap-6"
-          >
-            <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden bg-slate-200">
-              <img 
-                src={job.image} 
-                alt={job.title} 
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
-              <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="bg-white text-slate-900 p-3 rounded-full">
-                  <ArrowUpRight className="w-5 h-5" />
-                </div>
-              </div>
-              {/* 旬バッジ */}
-              {job.seasonalMonths?.includes(currentMonth) && (
-                <div className="absolute top-4 left-4 bg-blue-700 text-white px-3 py-1 text-xs tracking-widest">
-                  旬
-                </div>
-              )}
-            </div>
-            <div className="relative pl-4 md:pl-0">
-              <div className="flex justify-between items-start border-t border-slate-200 pt-4">
-                <div className="space-y-2">
-                  <p className="text-xs tracking-widest text-slate-500 uppercase font-medium">{job.category} - {job.location}</p>
-                  <h3 className="text-xl md:text-2xl font-serif font-medium text-slate-900 leading-snug group-hover:text-blue-700 transition-colors">
-                    {job.title}
-                  </h3>
-                </div>
-                <span className="font-serif text-3xl text-slate-200 font-light leading-none">
-                  {String(job.id).padStart(2, '0')}
-                </span>
-              </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 export default function Home() {
   const [selectedJob, setSelectedJob] = useState<Industry | null>(null);
   const [filter, setFilter] = useState("すべて");
@@ -98,9 +18,14 @@ export default function Home() {
   }, []);
 
   const categories = ["すべて", "農業", "漁業", "林業", "食", "工芸", "伝統", "観光", "インフラ"];
-  const filteredIndustries = filter === "すべて" 
-    ? industries 
-    : industries.filter(i => i.category === filter);
+  
+  // 通常の記事（isCaseStudyがfalseまたは未定義）のみを表示
+  const filteredIndustries = industries
+    .filter(i => !i.isCaseStudy)
+    .filter(i => filter === "すべて" || i.category === filter);
+
+  // 活用事例記事（isCaseStudyがtrue）のみを取得
+  const caseStudies = industries.filter(i => i.isCaseStudy);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-serif">
@@ -243,15 +168,10 @@ export default function Home() {
                      ].map((item, index) => (
                         <button 
                            key={index}
-                           className="group relative overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-4 md:p-6 text-center hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-white/40"
+                           className="bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/20 text-white p-4 rounded-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center gap-2 group"
                         >
-                           <div className="text-2xl md:text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
-                           <p className="text-white text-xs md:text-sm font-medium tracking-wider leading-relaxed whitespace-pre-line">
-                              {item.label}
-                           </p>
-                           <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <ArrowUpRight className="w-4 h-4 text-white/70" />
-                           </div>
+                           <span className="text-2xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                           <span className="text-sm font-medium whitespace-pre-line leading-tight">{item.label}</span>
                         </button>
                      ))}
                   </div>
@@ -260,180 +180,139 @@ export default function Home() {
          </div>
       </section>
 
-      {/* Main Content */}
-      <main className="relative z-20 bg-slate-50 pt-24 pb-32 min-h-screen">
+      <main className="max-w-screen-2xl mx-auto px-6 md:px-12 py-24">
         
-        <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
-          
-          {/* イントロダクション（スマホのみ） */}
-          <section className="md:hidden mb-20 py-12 border-y border-slate-200">
-            <p className="text-xs tracking-[0.4em] mb-8 border-l-2 border-slate-300 pl-4 text-slate-500">SUPPORT FOR NOTO BUSINESS</p>
-            <p className="text-base font-serif leading-loose text-slate-700 text-justify">
-               能登の事業者の皆様へ。<br/>
-               一人ひとりの悩みに寄り添い、<br/>
-               最適な支援をご案内します。<br/>
-               ここには、明日を切り拓くための<br/>
-               確かな道筋があります。
-            </p>
-          </section>
-          
-          {/* 活用事例（同じ悩みを持つ事業者の声） */}
-          <section className="mb-32">
-             <div className="text-center mb-16">
-                <p className="text-slate-500 tracking-widest text-sm mb-4">CASE STUDY</p>
-                <h2 className="font-serif text-3xl md:text-4xl tracking-wider mb-6">活用事例</h2>
-                <p className="text-slate-600">同じ悩みを持っていた事業者の声</p>
-             </div>
-
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                   {
-                      id: 1,
-                      name: "田中 田中さん",
-                      role: "陶芸家",
-                      category: "能登事業者支援",
-                      image: "/images/pottery.jpg",
-                      quote: "「後継者問題に悩んでいましたが、専門家の紹介でスムーズに承継が進みました。」",
-                      tags: ["後継者問題", "事業承継"]
-                   },
-                   {
-                      id: 2,
-                      name: "田中 田中さん",
-                      role: "産業",
-                      category: "能登事業者支援",
-                      image: "/images/fishery.jpg",
-                      quote: "「後継者問題に悩んでいましたが、専門家の紹介でスムーズに承継が進みました。」",
-                      tags: ["後継者問題", "事業承継"]
-                   },
-                   {
-                      id: 3,
-                      name: "大切家 宣之さん",
-                      role: "漁業",
-                      category: "能登事業者支援",
-                      image: "/images/agriculture.jpg",
-                      quote: "「後継者問題に悩んでいましたが、専門家の紹介でスムーズに承継が進みました。」",
-                      tags: ["後継者問題", "事業承継"]
-                   }
-                ].map((item) => (
-                   <div key={item.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-slate-100">
-                      <div className="p-6 flex items-start gap-4">
-                         <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-slate-200">
-                            {/* Placeholder for user image */}
-                            <div className="w-full h-full bg-slate-300"></div>
-                         </div>
-                         <div>
-                            <h3 className="font-serif text-lg font-bold mb-1">{item.name}</h3>
-                            <p className="text-xs text-slate-500 mb-1">{item.role}</p>
-                            <p className="text-xs text-slate-400">{item.category}</p>
-                         </div>
-                      </div>
-                      <div className="px-6 pb-6">
-                         <p className="text-slate-700 text-sm leading-relaxed mb-4 font-medium">
-                            {item.quote}
-                         </p>
-                         <div className="flex flex-wrap gap-2">
-                            {item.tags.map((tag, i) => (
-                               <span key={i} className="text-[10px] bg-slate-100 text-slate-600 px-2 py-1 rounded-full">
-                                  #{tag}
-                               </span>
-                            ))}
-                         </div>
-                      </div>
-                   </div>
-                ))}
-             </div>
-          </section>
-
-          {/* 今月のピックアップ */}
-          <SeasonalPickup />
-          
-          {/* すべてセクション */}
-          <div className="mb-12">
-            <div className="flex items-center gap-4 mb-6">
-              <span className="w-12 h-[2px] bg-slate-900"></span>
-              <h2 className="font-serif text-3xl md:text-4xl tracking-wider">すべて</h2>
-            </div>
-            <p className="text-slate-600 leading-relaxed mb-8 pl-16">
-              能登半島に根付くさまざまな生業をご紹介します。
-            </p>
+        {/* 活用事例セクション */}
+        <section className="mb-32">
+          <div className="flex items-center gap-4 mb-6">
+            <span className="w-12 h-[2px] bg-slate-900"></span>
+            <h2 className="font-serif text-3xl md:text-4xl tracking-wider">活用事例</h2>
           </div>
+          <p className="text-slate-600 leading-relaxed mb-12 pl-16">
+            困難を乗り越え、新たな一歩を踏み出した事業者の物語をご紹介します。
+          </p>
           
-          {/* Minimal Filter */}
-          <div className="flex flex-wrap gap-8 md:gap-12 mb-20 justify-center md:justify-start border-b border-slate-200 pb-8">
-            {categories.map(cat => {
-              const count = cat === 'すべて' 
-                ? industries.length 
-                : industries.filter(i => i.category === cat).length;
-              return (
-                <button 
-                  key={cat}
-                  onClick={() => setFilter(cat)}
-                  className={`text-sm md:text-base tracking-widest font-serif transition-all relative py-1 ${
-                    filter === cat 
-                    ? 'text-slate-900 font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-blue-700' 
-                    : 'text-slate-400 hover:text-slate-600'
-                  }`}
-                >
-                  {cat}
-                  <span className="ml-2 text-xs text-slate-400">({count})</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Editorial Layout Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
-            {filteredIndustries.map((job) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {caseStudies.map((study) => (
               <a 
-                key={job.id} 
-                href={`/industry/${job.id}`}
-                className="group cursor-pointer flex flex-col gap-6"
+                key={study.id}
+                href={`/industry/${study.id}`}
+                className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100"
               >
-                {/* Image Container */}
-                <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden bg-slate-200">
+                <div className="relative h-48 overflow-hidden">
                   <img 
-                    src={job.image} 
-                    alt={job.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    src={study.image} 
+                    alt={study.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  {/* Overlay Text on Hover */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
-                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="bg-white text-slate-900 p-3 rounded-full">
-                      <ArrowUpRight className="w-5 h-5" />
+                  {study.challengeCard && (
+                    <div className="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                      {study.challengeCard}
                     </div>
-                  </div>
+                  )}
                 </div>
-
-                {/* Text Content - Minimal & Vertical */}
-                <div className="relative pl-4 md:pl-0">
-                  <div className="flex justify-between items-start border-t border-slate-200 pt-4">
-                    <div className="space-y-2">
-                      <p className="text-xs tracking-widest text-slate-500 uppercase font-medium">{job.category} - {job.location}</p>
-                      <h3 className="text-xl md:text-2xl font-serif font-medium text-slate-900 leading-snug group-hover:text-blue-700 transition-colors">
-                        {job.title}
-                      </h3>
-                    </div>
-                    {/* Vertical Decorative Number */}
-                    <span className="font-serif text-3xl text-slate-200 font-light leading-none">
-                      {String(job.id).padStart(2, '0')}
-                    </span>
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">{study.category}</span>
+                    <span className="text-xs text-slate-400">{study.location}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-800 transition-colors line-clamp-2">
+                    {study.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 line-clamp-2 mb-4">
+                    {study.summary}
+                  </p>
+                  <div className="flex items-center text-blue-600 text-sm font-bold group-hover:translate-x-1 transition-transform">
+                    続きを読む <ArrowUpRight className="w-4 h-4 ml-1" />
                   </div>
                 </div>
               </a>
             ))}
+            
+            {/* 事例が少ない場合のプレースホルダー（必要に応じて削除可） */}
+            {caseStudies.length === 0 && (
+              <div className="col-span-full text-center py-12 bg-slate-50 rounded-xl border border-dashed border-slate-300">
+                <p className="text-slate-500">現在、公開準備中の事例があります。</p>
+              </div>
+            )}
           </div>
-          
-        </div>
+        </section>
+
+        {/* 能登の仕事図鑑（一覧） */}
+        <section>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <span className="w-12 h-[2px] bg-slate-900"></span>
+                <h2 className="font-serif text-3xl md:text-4xl tracking-wider">
+                  {filter}
+                </h2>
+              </div>
+              <p className="text-slate-600 leading-relaxed pl-16">
+                能登半島に根付くさまざまな生業をご紹介します。
+              </p>
+            </div>
+            
+            {/* Filter */}
+            <div className="flex flex-wrap gap-2 justify-end">
+              {categories.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setFilter(cat)}
+                  className={`px-4 py-2 text-sm tracking-wider transition-all rounded-full ${
+                    filter === cat 
+                      ? 'bg-slate-900 text-white' 
+                      : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            {filteredIndustries.map((job) => (
+              <div 
+                key={job.id} 
+                onClick={() => setSelectedJob(job)}
+                className="group cursor-pointer flex flex-col gap-4"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-slate-200 rounded-sm">
+                  <img 
+                    src={job.image} 
+                    alt={job.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 grayscale group-hover:grayscale-0"
+                  />
+                  <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors duration-500" />
+                </div>
+                
+                <div className="border-t border-slate-200 pt-4 group-hover:border-slate-400 transition-colors">
+                  <div className="flex justify-between items-baseline mb-2">
+                    <p className="text-xs tracking-widest text-slate-500 uppercase font-medium">{job.category} | {job.location}</p>
+                    <span className="font-serif text-xl text-slate-300 group-hover:text-slate-400 transition-colors">
+                      {String(job.id).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-serif font-medium text-slate-900 group-hover:text-blue-800 transition-colors">
+                    {job.title}
+                  </h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
 
       <Footer />
 
-      {/* Detail Modal Portal */}
+      {/* Detail Modal (通常記事用) */}
       {selectedJob && (
-        <DetailModal job={selectedJob} onClose={() => setSelectedJob(null)} />
+        <DetailModal 
+          industry={selectedJob} 
+          onClose={() => setSelectedJob(null)} 
+        />
       )}
-
     </div>
   );
 }
