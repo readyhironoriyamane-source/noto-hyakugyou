@@ -277,6 +277,73 @@ export default function Home() {
             </p>
           </section>
           
+          {/* 活用事例（同じ悩みを持つ事業者の声） */}
+          <section className="mb-32">
+             <div className="text-center mb-16">
+                <p className="text-slate-500 tracking-widest text-sm mb-4">CASE STUDY</p>
+                <h2 className="font-serif text-3xl md:text-4xl tracking-wider mb-6">活用事例</h2>
+                <p className="text-slate-600">同じ悩みを持っていた事業者の声</p>
+             </div>
+
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[
+                   {
+                      id: 1,
+                      name: "田中 田中さん",
+                      role: "陶芸家",
+                      category: "能登事業者支援",
+                      image: "/images/pottery.jpg",
+                      quote: "「後継者問題に悩んでいましたが、専門家の紹介でスムーズに承継が進みました。」",
+                      tags: ["後継者問題", "事業承継"]
+                   },
+                   {
+                      id: 2,
+                      name: "田中 田中さん",
+                      role: "産業",
+                      category: "能登事業者支援",
+                      image: "/images/fishery.jpg",
+                      quote: "「後継者問題に悩んでいましたが、専門家の紹介でスムーズに承継が進みました。」",
+                      tags: ["後継者問題", "事業承継"]
+                   },
+                   {
+                      id: 3,
+                      name: "大切家 宣之さん",
+                      role: "漁業",
+                      category: "能登事業者支援",
+                      image: "/images/agriculture.jpg",
+                      quote: "「後継者問題に悩んでいましたが、専門家の紹介でスムーズに承継が進みました。」",
+                      tags: ["後継者問題", "事業承継"]
+                   }
+                ].map((item) => (
+                   <div key={item.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-slate-100">
+                      <div className="p-6 flex items-start gap-4">
+                         <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-slate-200">
+                            {/* Placeholder for user image */}
+                            <div className="w-full h-full bg-slate-300"></div>
+                         </div>
+                         <div>
+                            <h3 className="font-serif text-lg font-bold mb-1">{item.name}</h3>
+                            <p className="text-xs text-slate-500 mb-1">{item.role}</p>
+                            <p className="text-xs text-slate-400">{item.category}</p>
+                         </div>
+                      </div>
+                      <div className="px-6 pb-6">
+                         <p className="text-slate-700 text-sm leading-relaxed mb-4 font-medium">
+                            {item.quote}
+                         </p>
+                         <div className="flex flex-wrap gap-2">
+                            {item.tags.map((tag, i) => (
+                               <span key={i} className="text-[10px] bg-slate-100 text-slate-600 px-2 py-1 rounded-full">
+                                  #{tag}
+                               </span>
+                            ))}
+                         </div>
+                      </div>
+                   </div>
+                ))}
+             </div>
+          </section>
+
           {/* 今月のピックアップ */}
           <SeasonalPickup />
           
