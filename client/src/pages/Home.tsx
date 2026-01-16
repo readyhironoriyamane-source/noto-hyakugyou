@@ -227,10 +227,35 @@ export default function Home() {
                </div>
             </div>
 
-            {/* Scroll Indicator */}
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white/50 flex flex-col items-center gap-2 animate-bounce duration-[2000ms]">
-               <span className="text-[10px] tracking-widest uppercase">Scroll</span>
-               <ChevronDown className="w-4 h-4" />
+            {/* 課題選択エリア */}
+            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-[#0a1929] to-transparent pt-20 pb-12 px-6 md:px-12">
+               <div className="max-w-screen-2xl mx-auto">
+                  <h2 className="text-white text-center font-serif text-xl md:text-2xl mb-8 tracking-widest drop-shadow-lg">
+                     今、どんなことでお困りですか？
+                  </h2>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                     {[
+                        { icon: "💰", label: "資金繰りが\n厳しい" },
+                        { icon: "👥", label: "後継者が\nいない" },
+                        { icon: "📈", label: "売上を\n伸ばしたい" },
+                        { icon: "🚪", label: "事業を\nたたみたい" },
+                        { icon: "❓", label: "何から始めれば\nいいかわからない" }
+                     ].map((item, index) => (
+                        <button 
+                           key={index}
+                           className="group relative overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-4 md:p-6 text-center hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-white/40"
+                        >
+                           <div className="text-2xl md:text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
+                           <p className="text-white text-xs md:text-sm font-medium tracking-wider leading-relaxed whitespace-pre-line">
+                              {item.label}
+                           </p>
+                           <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                              <ArrowUpRight className="w-4 h-4 text-white/70" />
+                           </div>
+                        </button>
+                     ))}
+                  </div>
+               </div>
             </div>
          </div>
       </section>
