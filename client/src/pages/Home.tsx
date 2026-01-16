@@ -207,7 +207,7 @@ export default function Home() {
                   />
                   {study.challengeCard && (
                     <div className="absolute top-4 left-4 bg-red-800/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 tracking-wider border border-red-700/50">
-                      {study.challengeCard}
+                      {study.challengeCard.label}
                     </div>
                   )}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
