@@ -17,7 +17,7 @@ export default function Home() {
       <Header />
 
       {/* Hero Section: Magazine Cover Style */}
-      <section className="relative w-full h-[100vh] md:h-auto md:min-h-screen flex flex-col overflow-x-hidden bg-primary">
+      <section className="relative w-full h-[100vh] md:h-auto md:min-h-[600px] flex flex-col overflow-x-hidden bg-primary">
          {/* Dynamic Background Video */}
          <div className="absolute inset-0 opacity-60">
             <video 
@@ -64,7 +64,7 @@ export default function Home() {
             </div>
 
             {/* Lower Zone: Navigation (Question & Cards) */}
-            <div className="hidden md:block w-full pb-32">
+            <div className="hidden md:block w-full pb-24">
                <div className="container">
                   {/* 問いかけテキスト */}
                   <div className="text-center mb-10">
