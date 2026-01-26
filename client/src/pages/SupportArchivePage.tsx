@@ -1,13 +1,13 @@
 import React from 'react';
 
 // ----------------------------------------------------------------------
-// データ定義（全24件：メリット翻訳＆スペック入力済み）
+// データ定義（全24件：変更なし）
 // ----------------------------------------------------------------------
 
 type SupportItem = {
   id: number;
   badge: string;
-  badgeColor: string; // Tailwind class like 'bg-[#...]'
+  badgeColor: string;
   mainTitle: string;
   subTitle: string;
   description: string;
@@ -16,7 +16,8 @@ type SupportItem = {
 };
 
 const SUPPORT_ITEMS: SupportItem[] = [
-  // --- カテゴリ：設備・再建・資金 (Priority High) ---
+  // ... (データリストは以前と同じなので省略せず、そのまま実装してください) ...
+  // ※ここではコードの長さ節約のためデータ部分は省略しません。以前のデータリストをそのまま使います。
   {
     id: 11,
     badge: '石川県',
@@ -97,8 +98,6 @@ const SUPPORT_ITEMS: SupportItem[] = [
     specAmount: '個別相談',
     specCondition: '再生計画の策定が必要',
   },
-
-  // --- カテゴリ：承継・人材 (HR) ---
   {
     id: 1,
     badge: '中小機構',
@@ -199,8 +198,6 @@ const SUPPORT_ITEMS: SupportItem[] = [
     specAmount: '相談無料',
     specCondition: '専門家派遣',
   },
-
-  // --- カテゴリ：販路・EC (Sales) ---
   {
     id: 19,
     badge: 'ISICO',
@@ -267,7 +264,7 @@ const SUPPORT_ITEMS: SupportItem[] = [
 // コンポーネント実装
 // ----------------------------------------------------------------------
 
-export default function SupportArchivePage() {
+const SupportArchive = () => {
   return (
     <section className="bg-[#F9F8F4] py-20">
       <div className="max-w-[1140px] mx-auto px-6">
@@ -295,17 +292,17 @@ export default function SupportArchivePage() {
                 {item.badge}
               </span>
 
-              {/* タイトル：高さ固定 (min-h-[56px]) */}
+              {/* タイトル */}
               <h3 className="text-xl font-bold text-[#1D3A52] mb-2 leading-snug font-serif min-h-[56px] flex items-end whitespace-pre-wrap">
                 {item.mainTitle}
               </h3>
 
-              {/* 制度名：高さ固定 (min-h-[40px]) */}
+              {/* 制度名 */}
               <p className="text-sm text-gray-500 mb-6 min-h-[40px]">
                 {item.subTitle}
               </p>
 
-              {/* 支援内容ブロック */}
+              {/* 支援内容 */}
               <div className="mb-6 flex-grow">
                 <h4 className="text-xs font-bold text-gray-500 mb-2">支援内容</h4>
                 <p className="text-sm text-gray-700 leading-relaxed">
@@ -313,28 +310,32 @@ export default function SupportArchivePage() {
                 </p>
               </div>
 
-              {/* スペックBOX（TOPページ完全再現） */}
-              <div className="bg-[#FAF9F6] rounded-lg p-5 mb-8 space-y-4">
-                {/* 行1：金額 */}
+              {/* スペックBOX（ここを修正：ゆとり確保） */}
+              <div className="bg-[#FAF9F6] rounded-lg p-6 mb-8 space-y-5"> {/* Padding増量(p-6)、行間拡大(space-y-5) */}
+                
+                {/* 行1：金額・条件 */}
                 <div className="flex items-start">
-                  <div className="flex items-center w-24 shrink-0 mt-0.5">
-                    <span className="text-[#B33E28] mr-2">💰</span>
+                  {/* ラベル幅拡張 (w-24 -> w-32) + ギャップ追加 */}
+                  <div className="flex items-center w-32 shrink-0 mt-0.5 gap-2"> 
+                    <span className="text-[#B33E28] text-sm">💰</span>
                     <span className="text-xs font-bold text-[#B33E28]">金額・条件</span>
                   </div>
                   <div className="text-[15px] font-bold text-[#1D3A52] flex-1">
                     {item.specAmount}
                   </div>
                 </div>
-                {/* 行2：条件（詳細） */}
+
+                {/* 行2：備考 */}
                 <div className="flex items-start">
-                  <div className="flex items-center w-24 shrink-0 mt-0.5">
-                    <span className="text-[#1D3A52] mr-2">📄</span>
+                  <div className="flex items-center w-32 shrink-0 mt-0.5 gap-2">
+                    <span className="text-[#1D3A52] text-sm">📄</span>
                     <span className="text-xs font-bold text-[#1D3A52]">備考</span>
                   </div>
                   <div className="text-sm text-gray-700 flex-1 leading-snug">
                     {item.specCondition}
                   </div>
                 </div>
+
               </div>
 
               {/* ボタン */}
@@ -349,3 +350,5 @@ export default function SupportArchivePage() {
     </section>
   );
 };
+
+export default SupportArchive;
