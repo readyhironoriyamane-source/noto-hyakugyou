@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ConsultationCTA from '@/components/ConsultationCTA';
 
 // ----------------------------------------------------------------------
 // データ定義（フィルタリング用のタグ category / providerType を追加）
@@ -502,6 +503,8 @@ const SupportArchive = () => {
 
           </div>
         </section>
+        
+        <ConsultationCTA />
       </main>
 
       <Footer />
