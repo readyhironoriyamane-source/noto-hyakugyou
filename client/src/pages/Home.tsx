@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'wouter';
 import { ArrowUpRight, Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, FileText } from 'lucide-react';
 import { industries } from '@/data/industries';
 import Footer from '@/components/Footer';
@@ -68,15 +69,16 @@ export default function Home() {
                   </h2>
                   <div className="grid grid-cols-5 gap-6">
                      {[
-                        { icon: Users, label: "後継者が\nいない" },
-                        { icon: Handshake, label: "人材を\n確保したい" },
-                        { icon: Construction, label: "設備の復旧・\n改修がしたい" },
-                        { icon: Coins, label: "資金繰りが\n厳しい" },
-                        { icon: TrendingUp, label: "売上を\n伸ばしたい" }
+                        { icon: Users, label: "後継者が\nいない", category: "hr" },
+                        { icon: Handshake, label: "人材を\n確保したい", category: "hr" },
+                        { icon: Construction, label: "設備の復旧・\n改修がしたい", category: "reconstruction" },
+                        { icon: Coins, label: "資金繰りが\n厳しい", category: "finance" },
+                        { icon: TrendingUp, label: "売上を\n伸ばしたい", category: "sales" }
                      ].map((item, index) => (
-                        <button 
+                        <Link 
                            key={index}
-                           className="bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/30 text-white p-6 rounded-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center gap-4 group focus:outline-none focus:ring-4 focus:ring-accent/50 relative overflow-hidden"
+                           href={`/supports?category=${item.category}`}
+                           className="bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/30 text-white p-6 rounded-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center gap-4 group focus:outline-none focus:ring-4 focus:ring-accent/50 relative overflow-hidden cursor-pointer"
                            aria-label={item.label.replace('\n', '')}
                         >
                            <item.icon className="w-10 h-10 text-white stroke-[1.5]" />
@@ -87,7 +89,7 @@ export default function Home() {
                            <div className="mt-2 flex items-center text-xs tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
                               詳しく見る <ArrowRight className="w-3 h-3 ml-1" />
                            </div>
-                        </button>
+                        </Link>
                      ))}
                   </div>
                </div>
@@ -121,20 +123,21 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-2 gap-4">
                {[
-                  { icon: Users, label: "後継者が\nいない" },
-                  { icon: Handshake, label: "人材を\n確保したい" },
-                  { icon: Construction, label: "設備の復旧・\n改修がしたい" },
-                  { icon: Coins, label: "資金繰りが\n厳しい" },
-                  { icon: TrendingUp, label: "売上を\n伸ばしたい" }
+                  { icon: Users, label: "後継者が\nいない", category: "hr" },
+                  { icon: Handshake, label: "人材を\n確保したい", category: "hr" },
+                  { icon: Construction, label: "設備の復旧・\n改修がしたい", category: "reconstruction" },
+                  { icon: Coins, label: "資金繰りが\n厳しい", category: "finance" },
+                  { icon: TrendingUp, label: "売上を\n伸ばしたい", category: "sales" }
                ].map((item, index) => (
-                  <button 
+                  <Link 
                      key={index}
-                     className={`bg-white hover:bg-accent/10 border border-primary/20 text-primary p-4 rounded-lg transition-all active:scale-95 flex flex-col items-center text-center gap-2 shadow-sm ${index === 4 ? 'col-span-2' : ''}`}
+                     href={`/supports?category=${item.category}`}
+                     className={`bg-white hover:bg-accent/10 border border-primary/20 text-primary p-4 rounded-lg transition-all active:scale-95 flex flex-col items-center text-center gap-2 shadow-sm cursor-pointer ${index === 4 ? 'col-span-2' : ''}`}
                      aria-label={item.label.replace('\n', '')}
                   >
                      <item.icon className="w-8 h-8 stroke-[1.5]" />
                      <span className="text-sm font-bold whitespace-pre-line leading-snug font-sans">{item.label}</span>
-                  </button>
+                  </Link>
                ))}
             </div>
           </div>
@@ -152,12 +155,12 @@ export default function Home() {
                 今すぐ申請できる、<br className="block md:hidden" />復興・事業継続のための主な制度です。
               </p>
             </div>
-            <a 
+            <Link 
               href="/supports" 
-              className="inline-flex items-center gap-2 text-primary font-bold border-b-2 border-primary pb-1 hover:text-accent hover:border-accent transition-colors self-start md:self-end mb-2"
+              className="inline-flex items-center gap-2 text-primary font-bold border-b-2 border-primary pb-1 hover:text-accent hover:border-accent transition-colors self-start md:self-end mb-2 cursor-pointer"
             >
               全ての制度を見る <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

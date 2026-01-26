@@ -1,12 +1,22 @@
-import { useState, useMemo } from 'react';
-import { Link } from 'wouter';
+import { useState, useMemo, useEffect } from 'react';
+import { Link, useSearch } from 'wouter';
 import { ArrowUpRight, Search, Phone, MessageCircle, AlertCircle, Calendar, Building2, Wallet, Users, TrendingUp } from 'lucide-react';
 import { supports, CATEGORIES, PROVIDERS, SupportSystem } from '@/data/supports';
 import Footer from '@/components/Footer';
 
 export default function SupportArchivePage() {
+  const searchString = useSearch();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedProvider, setSelectedProvider] = useState<string>('all');
+
+  // URLパラメータから初期フィルタを設定
+  useEffect(() => {
+    const params = new URLSearchParams(searchString);
+    const category = params.get('category');
+    if (category && CATEGORIES.some(c => c.id === category)) {
+      setSelectedCategory(category);
+    }
+  }, [searchString]);
 
   // フィルタリングロジック
   const filteredSupports = useMemo(() => {
