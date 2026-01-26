@@ -9,11 +9,20 @@ export interface SupportSystem {
   category: SupportCategory;
   tags: string[];
   badge: string;
+  badgeColor?: string; // バッジの背景色（Tailwindクラスではなくカラーコード推奨）
   description?: string;
   deadline?: string; // YYYY-MM-DD format or specific text
   link?: string;
   icon?: LucideIcon;
 }
+
+// バッジカラー定義
+const BADGE_COLORS = {
+  PREF: "#1D3A52", // 石川県 (深藍)
+  TOWN: "#B33E28", // 能登町 (弁柄色)
+  GOV: "#2B2B2B",  // 国 (濃グレー)
+  OTHER: "#555555" // 民間/その他 (グレー)
+};
 
 export const supportSystems: SupportSystem[] = [
   // A. 設備の復旧・再建 (Category: 設備)
@@ -24,6 +33,7 @@ export const supportSystems: SupportSystem[] = [
     category: "reconstruction",
     tags: ["🏗 設備投資"],
     badge: "【県】",
+    badgeColor: BADGE_COLORS.PREF,
     description: "工場・店舗などの施設、生産機械などの設備の復旧費用を補助します。（上限15億円、補助率3/4〜定額）",
     deadline: "2026-03-31",
     icon: Construction
@@ -35,6 +45,7 @@ export const supportSystems: SupportSystem[] = [
     category: "reconstruction",
     tags: ["💰 上乗せ支援"],
     badge: "【能登町】",
+    badgeColor: BADGE_COLORS.TOWN,
     description: "県のなりわい再建支援補助金の自己負担分をさらに軽減するための町独自の上乗せ補助です。",
     icon: Building2
   },
@@ -45,6 +56,7 @@ export const supportSystems: SupportSystem[] = [
     category: "reconstruction",
     tags: ["🏗 設備・販路"],
     badge: "【国】",
+    badgeColor: BADGE_COLORS.GOV,
     description: "被災した設備の復旧や、販路開拓のためのチラシ作成・HP制作などを支援します。（上限200万円）",
     icon: TrendingUp
   },
@@ -55,6 +67,7 @@ export const supportSystems: SupportSystem[] = [
     category: "reconstruction",
     tags: ["💰 上乗せ支援"],
     badge: "【県】",
+    badgeColor: BADGE_COLORS.PREF,
     description: "国の小規模事業者持続化補助金（災害支援枠）の上乗せとして、最大100万円を補助します。",
     icon: Wallet
   },
@@ -65,6 +78,7 @@ export const supportSystems: SupportSystem[] = [
     category: "reconstruction",
     tags: ["💰 上乗せ支援"],
     badge: "【能登町】",
+    badgeColor: BADGE_COLORS.TOWN,
     description: "国の小規模事業者持続化補助金（災害支援枠）の自己負担分を軽減します。（上限100万円）",
     icon: Wallet
   },
@@ -75,6 +89,7 @@ export const supportSystems: SupportSystem[] = [
     category: "reconstruction",
     tags: ["⛺️ 仮設・再開"],
     badge: "【能登町商工会】",
+    badgeColor: BADGE_COLORS.TOWN,
     description: "店舗の改装や備品の購入、広告宣伝など、営業再開に必要な幅広い経費を補助します。（上限300万円）",
     icon: Store
   },
@@ -87,6 +102,7 @@ export const supportSystems: SupportSystem[] = [
     category: "sales",
     tags: ["🤝 マッチング"],
     badge: "【ISICO】",
+    badgeColor: BADGE_COLORS.PREF,
     description: "販路拡大を目指す企業に、アドバイザーが新たな取引先やパートナー企業を紹介・あっせんします。",
     icon: Handshake
   },
@@ -97,6 +113,7 @@ export const supportSystems: SupportSystem[] = [
     category: "sales",
     tags: ["📦 新商品"],
     badge: "【中小機構】",
+    badgeColor: BADGE_COLORS.GOV,
     description: "新商品開発や販路開拓に関するアドバイス、ビジネスマッチングなどの支援を行います。",
     icon: TrendingUp
   },
@@ -107,6 +124,7 @@ export const supportSystems: SupportSystem[] = [
     category: "sales",
     tags: ["📢 展示会"],
     badge: "【中小機構】",
+    badgeColor: BADGE_COLORS.GOV,
     description: "新製品や新技術を展示紹介する場の提供や、マッチング機会の創出を支援します。",
     icon: Presentation
   },
@@ -117,6 +135,7 @@ export const supportSystems: SupportSystem[] = [
     category: "sales",
     tags: ["📦 ネット販売"],
     badge: "【中小機構】",
+    badgeColor: BADGE_COLORS.GOV,
     description: "オンライン講座による情報提供や、ワークショップによる実践講座、民間EC支援事業者とのマッチングを行います。",
     icon: Laptop
   },
@@ -127,6 +146,7 @@ export const supportSystems: SupportSystem[] = [
     category: "sales",
     tags: ["📦 ネット販売"],
     badge: "【能登町商工会】",
+    badgeColor: BADGE_COLORS.TOWN,
     description: "セミナーやワークショップを開催し、ネットショップの開設や運営をサポートします。",
     icon: Truck
   },
@@ -137,6 +157,7 @@ export const supportSystems: SupportSystem[] = [
     category: "sales",
     tags: ["📢 展示会"],
     badge: "【能登町商工会】",
+    badgeColor: BADGE_COLORS.TOWN,
     description: "物産展や商談会への出展にかかる経費の一部を支援します。",
     icon: Store
   },
@@ -149,6 +170,7 @@ export const supportSystems: SupportSystem[] = [
     category: "hr",
     tags: ["🤝 承継相談"],
     badge: "【中小機構】",
+    badgeColor: BADGE_COLORS.GOV,
     description: "事業承継診断の実施や、課題解決のための専門家派遣を無料で行います。",
     icon: Handshake
   },
@@ -159,6 +181,7 @@ export const supportSystems: SupportSystem[] = [
     category: "hr",
     tags: ["🗣 無料相談"],
     badge: "【能登町商工会】",
+    badgeColor: BADGE_COLORS.TOWN,
     description: "石川県商工会連合会が委嘱した税理士による、事業承継に関する無料相談を受けられます。",
     icon: Users
   },
@@ -169,6 +192,7 @@ export const supportSystems: SupportSystem[] = [
     category: "hr",
     tags: ["👨‍👩‍👧‍👦 親族承継"],
     badge: "【承継センター】",
+    badgeColor: BADGE_COLORS.PREF,
     description: "事業承継診断や承継計画の策定支援、専門家派遣など、親族内承継に伴走支援を行います。",
     icon: Users
   },
@@ -179,6 +203,7 @@ export const supportSystems: SupportSystem[] = [
     category: "hr",
     tags: ["🤝 M&A"],
     badge: "【承継センター】",
+    badgeColor: BADGE_COLORS.PREF,
     description: "後継者不在の事業者に対し、M&Aや第三者への事業譲渡に向けたマッチングや支援を行います。",
     icon: Handshake
   },
@@ -189,6 +214,7 @@ export const supportSystems: SupportSystem[] = [
     category: "hr",
     tags: ["🤝 マッチング"],
     badge: "【承継センター】",
+    badgeColor: BADGE_COLORS.PREF,
     description: "創業希望者（後継者候補）と後継者不在の事業者を引き合わせるマッチング支援です。",
     icon: Users
   },
@@ -199,6 +225,7 @@ export const supportSystems: SupportSystem[] = [
     category: "hr",
     tags: ["👥 人手不足"],
     badge: "【復興センター】",
+    badgeColor: BADGE_COLORS.OTHER,
     description: "スキマバイトアプリ「タイミー」を活用し、繁忙期や急な欠員時の人材確保を支援します。",
     icon: Phone
   },
@@ -209,6 +236,7 @@ export const supportSystems: SupportSystem[] = [
     category: "hr",
     tags: ["💻 技術支援"],
     badge: "【復興センター】",
+    badgeColor: BADGE_COLORS.OTHER,
     description: "LINEヤフーやNECなどの加盟企業社員による、ボランティアでの技術支援を受けられます。",
     icon: Laptop
   },
@@ -219,6 +247,7 @@ export const supportSystems: SupportSystem[] = [
     category: "hr",
     tags: ["👥 複業人材"],
     badge: "【復興センター】",
+    badgeColor: BADGE_COLORS.OTHER,
     description: "事業課題を聞き取り、解決できるスキルを持った複業人材につなぎます。",
     icon: Users
   },
@@ -229,6 +258,7 @@ export const supportSystems: SupportSystem[] = [
     category: "hr",
     tags: ["🏠 移住採用"],
     badge: "【ILAC】",
+    badgeColor: BADGE_COLORS.PREF,
     description: "UIターン就職希望者向けの求人サイト「イシカワノオト」への掲載やマッチングを支援します。",
     icon: GraduationCap
   },
@@ -239,6 +269,7 @@ export const supportSystems: SupportSystem[] = [
     category: "hr",
     tags: ["🗣 採用相談"],
     badge: "【ISICO】",
+    badgeColor: BADGE_COLORS.PREF,
     description: "ISICOの人材アドバイザーが、専門的見地から採用に関する個別アドバイスを行います。",
     icon: Phone
   },
@@ -251,6 +282,7 @@ export const supportSystems: SupportSystem[] = [
     category: "finance",
     tags: ["💴 公庫融資"],
     badge: "【公庫】",
+    badgeColor: BADGE_COLORS.GOV,
     description: "震災により被害を受けた事業者を対象とした、日本政策金融公庫による低利・長期の特別融資です。",
     icon: Wallet
   },
@@ -261,6 +293,7 @@ export const supportSystems: SupportSystem[] = [
     category: "finance",
     tags: ["🏦 債務整理"],
     badge: "【復興相談センター】",
+    badgeColor: BADGE_COLORS.PREF,
     description: "被災した建物等の再建に新たな借入が必要な場合に、既往借入債権を買取り、追加融資を受けやすくします。",
     icon: Building2
   }
