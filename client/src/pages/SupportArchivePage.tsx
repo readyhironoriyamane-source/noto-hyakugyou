@@ -72,6 +72,15 @@ const SupportArchive = () => {
   const { savedIds, toggleSave } = useSavedItems();
   const [location] = useLocation();
 
+  // URLパラメータからカテゴリを初期設定
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const categoryParam = params.get('category');
+    if (categoryParam) {
+      setFilterCategory(categoryParam);
+    }
+  }, []);
+
   // 共有URL生成
   const generateShareUrl = () => {
     if (savedIds.length === 0) return '';
