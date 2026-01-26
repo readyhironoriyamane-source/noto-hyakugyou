@@ -7,8 +7,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
           {/* About & Noto Town Hall Info */}
           <div className="flex flex-row items-start gap-6">
-            {/* ロゴ画像（白い座布団付き） */}
-            <div className="bg-white p-3 rounded-lg shadow-md shrink-0 mt-1">
+            {/* ロゴ画像（背景なし） */}
+            <div className="shrink-0 mt-1">
               <div className="relative h-24 w-20">
                 <img 
                   src="/images/logo.png" 
@@ -28,7 +28,7 @@ export default function Footer() {
               <h4 className="font-serif text-base text-white mb-2 tracking-wider">
                 能登町役場
               </h4>
-              <div className="text-xs leading-relaxed text-slate-400 space-y-1">
+              <div className="text-xs leading-relaxed text-slate-400 space-y-1 mb-6">
                 <p>法人番号 5000020174637</p>
                 <p>〒927-0492　石川県鳳珠郡能登町宇出津ト字50番地1</p>
 
@@ -36,23 +36,26 @@ export default function Footer() {
                 <p>(土曜日・日曜日・祝日、年末年始を除く)</p>
                 <p>窓口延長：能登町役場のみ毎週木曜日17時15分から18時30分(祝日は除く)</p>
               </div>
+
+              {/* Contact Info Moved Here */}
+              <h4 className="font-serif text-base text-white mb-2 tracking-wider">
+                お問い合わせ
+              </h4>
+              <div className="space-y-3">
+                <a 
+                  href="/contact" 
+                  className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors no-underline"
+                >
+                  <Mail className="w-4 h-4" />
+                  お問い合わせフォーム
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Contact & Legal */}
+          {/* Right Column (Empty for now as Contact moved to left) */}
           <div className="md:text-right">
-            <h4 className="font-serif text-lg text-white mb-4 tracking-wider">
-              お問い合わせ
-            </h4>
-            <div className="space-y-3 md:flex md:flex-col md:items-end">
-              <a 
-                href="/contact" 
-                className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
-              >
-                <Mail className="w-4 h-4" />
-                お問い合わせフォーム
-              </a>
-            </div>
+            {/* Future content can go here */}
           </div>
         </div>
 
