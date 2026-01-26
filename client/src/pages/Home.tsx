@@ -20,7 +20,7 @@ export default function Home() {
       
       {/* Fixed Navigation */}
       <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled ? 'bg-background/95 backdrop-blur-sm py-4 border-b border-border shadow-sm' : 'bg-transparent py-8'}`}>
-        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 flex justify-between items-center">
+        <div className="container flex justify-between items-center">
           <div className="flex items-center gap-4 z-50">
              <h1 className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-primary' : 'text-white drop-shadow-lg'}`}>能登百業録</h1>
           </div>
@@ -44,7 +44,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/40 to-primary/90"></div>
          </div>
          
-         <div className="relative z-10 w-full max-w-screen-2xl mx-auto px-6 md:px-12 h-full flex flex-col justify-center">
+         <div className="relative z-10 container h-full flex flex-col justify-center">
             <div className="flex flex-row-reverse md:flex-row justify-between items-start h-[60%]">
                
                {/* Vertical Title */}
@@ -61,7 +61,7 @@ export default function Home() {
                <div className="text-white max-w-md pt-24 md:pt-0 hidden md:block">
                   <p className="text-sm tracking-[0.3em] mb-8 border-l-2 border-accent pl-4 text-white/90 font-bold">SUPPORT FOR NOTO BUSINESS</p>
                   {/* UD対応: 行間を広げ、文字サイズを大きく */}
-                  <p className="text-xl font-serif leading-loose mb-8 text-justify drop-shadow-md">
+                  <p className="text-lg md:text-xl font-serif leading-loose mb-8 text-justify drop-shadow-md">
                      能登の事業者の皆様へ。<br/>
                      一人ひとりの悩みに寄り添い、<br/>
                      最適な支援をご案内します。<br/>
@@ -73,8 +73,8 @@ export default function Home() {
             </div>
 
             {/* 課題選択エリア */}
-            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-primary to-transparent pt-24 pb-16 px-6 md:px-12">
-               <div className="max-w-screen-2xl mx-auto">
+            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-primary to-transparent pt-24 pb-16">
+               <div className="container">
                   <h2 className="text-white text-center font-serif text-2xl md:text-3xl mb-10 tracking-widest drop-shadow-lg font-bold">
                      今、どんなことでお困りですか？
                   </h2>
@@ -93,7 +93,7 @@ export default function Home() {
                         >
                            <span className="text-4xl group-hover:scale-110 transition-transform drop-shadow-md">{item.icon}</span>
                            {/* UD対応: 文字サイズを大きく、太字に */}
-                           <span className="text-lg font-bold whitespace-pre-line leading-snug font-sans">{item.label}</span>
+                           <span className="text-base md:text-lg font-bold whitespace-pre-line leading-snug font-sans">{item.label}</span>
                         </button>
                      ))}
                   </div>
@@ -102,15 +102,15 @@ export default function Home() {
          </div>
       </section>
 
-      <main className="max-w-screen-2xl mx-auto px-6 md:px-12 py-32">
+      <main className="container py-32">
         
         {/* 活用事例セクション */}
         <section className="mb-32">
           <div className="flex items-center gap-6 mb-8">
             <span className="w-16 h-[4px] bg-primary"></span>
-            <h2 className="font-serif text-4xl md:text-5xl tracking-wider font-bold text-primary">活用事例</h2>
+            <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary">活用事例</h2>
           </div>
-          <p className="text-foreground/80 text-lg leading-loose mb-16 pl-20 max-w-3xl font-sans">
+          <p className="text-foreground/80 text-base md:text-lg leading-loose mb-16 pl-4 md:pl-20 max-w-3xl font-sans">
             困難を乗り越え、新たな一歩を踏み出した事業者の物語をご紹介します。<br/>
             同じ悩みを抱える方のヒントになれば幸いです。
           </p>
@@ -144,7 +144,7 @@ export default function Home() {
                     </span>
                   </div>
                   {/* UD対応: 見出しの行間を広げ、視認性を向上 */}
-                  <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors line-clamp-2 font-serif leading-normal">
+                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors line-clamp-2 font-serif leading-normal">
                     {study.title}
                   </h3>
                   {/* UD対応: 本文の文字サイズと行間を確保 */}
@@ -161,7 +161,7 @@ export default function Home() {
             {/* 事例が少ない場合のプレースホルダー */}
             {caseStudies.length === 0 && (
               <div className="col-span-full text-center py-20 bg-muted/30 rounded-xl border-2 border-dashed border-muted-foreground/30">
-                <p className="text-xl text-muted-foreground font-bold">現在、公開準備中の事例があります。</p>
+                <p className="text-lg md:text-xl text-muted-foreground font-bold">現在、公開準備中の事例があります。</p>
               </div>
             )}
           </div>

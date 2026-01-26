@@ -122,18 +122,36 @@
   }
   
   html {
-    /* UD基準: 本文サイズ18px */
-    font-size: 18px;
+    /* 
+      UD基準: 単位設定 (Unit)
+      pxを使用せず、ルート相対単位remを使用する。
+      ブラウザのデフォルトフォントサイズ（通常16px）を基準とするため、
+      html要素への固定px指定は行わない。
+    */
   }
 
   body {
     @apply bg-background text-foreground;
     /* UD基準: 本文フォント BIZ UDPGothic */
     font-family: "BIZ UDPGothic", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-    /* UD基準: 行間 1.8-2.0 */
-    line-height: 1.9;
+    
+    /* 
+      UD基準: 文字サイズ (Font-Size) & 行間 (line-height)
+      Mobile: 1rem (16px), line-height 1.7
+      Desktop: 1.125rem (18px), line-height 1.9
+    */
+    font-size: 1rem;
+    line-height: 1.7;
+    
     /* UD基準: 文字色 #2B2B2B */
     color: var(--foreground);
+  }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 1.125rem; /* 18px */
+      line-height: 1.9;
+    }
   }
 
   /* 見出しフォント設定 */
@@ -178,8 +196,13 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    
+    /* 
+      UD基準: 行長 (Line Length)
+      スマホ表示時、左右に必ず padding: 1rem (16px) 以上の余白を設ける
+    */
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .flex {

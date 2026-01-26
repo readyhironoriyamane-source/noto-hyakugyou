@@ -233,7 +233,7 @@ export default function IndustryDetailPage() {
         )}
 
         <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 text-white">
-          <div className="max-w-4xl mx-auto">
+          <div className="container">
             {isCaseStudy && industry.challengeCard && (
               <div className="inline-flex items-center gap-2 px-5 py-2 bg-accent text-white text-base font-bold rounded-full mb-6 backdrop-blur-sm shadow-lg">
                 <AlertCircle className="w-5 h-5" />
@@ -257,7 +257,7 @@ export default function IndustryDetailPage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 py-16 md:py-24">
+      <div className="container py-16 md:py-24">
         {isCaseStudy ? (
           // 活用事例用のレイアウト（新構成）
           <div className="space-y-24">
@@ -271,7 +271,7 @@ export default function IndustryDetailPage() {
                 </h3>
                 <ul className="space-y-6 m-0 p-0 list-none">
                   {industry.keyPoints?.map((point, i) => (
-                    <li key={i} className="flex items-start gap-4 text-foreground text-xl leading-loose">
+                    <li key={i} className="flex items-start gap-4 text-foreground text-lg md:text-xl leading-loose">
                       <span className="w-2 h-2 bg-primary rounded-full mt-3 shrink-0" />
                       {point}
                     </li>
@@ -282,11 +282,11 @@ export default function IndustryDetailPage() {
               <div className="grid md:grid-cols-2 gap-16 mb-16">
                 <div>
                   <h3 className="text-xl font-bold font-serif mb-6 text-primary border-b-2 border-primary/20 pb-3">どんな仕事？</h3>
-                  <p className="text-foreground leading-loose text-lg font-sans">{industry.jobDescription}</p>
+                  <p className="text-foreground leading-loose text-base md:text-lg font-sans">{industry.jobDescription}</p>
                 </div>
                 <div>
                   <h3 className="text-xl font-bold font-serif mb-6 text-primary border-b-2 border-primary/20 pb-3">直面した課題</h3>
-                  <p className="text-foreground leading-loose text-lg font-sans">{industry.challengeDetail}</p>
+                  <p className="text-foreground leading-loose text-base md:text-lg font-sans">{industry.challengeDetail}</p>
                 </div>
               </div>
             </section>
@@ -322,7 +322,7 @@ export default function IndustryDetailPage() {
                     </div>
                     <div className="flex flex-wrap gap-4">
                       {industry.decisionProcess?.options.map((option, i) => (
-                        <span key={i} className="px-5 py-3 bg-white border border-border text-foreground text-lg rounded-md shadow-sm">
+                        <span key={i} className="px-5 py-3 bg-white border border-border text-foreground text-base md:text-lg rounded-md shadow-sm">
                           {option}
                         </span>
                       ))}
@@ -345,7 +345,7 @@ export default function IndustryDetailPage() {
                       <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 02</span>
                       <h3 className="text-2xl font-bold font-serif mt-2 text-foreground">なぜこれを選んだ？</h3>
                     </div>
-                    <p className="text-foreground leading-loose text-lg mb-10 font-sans">
+                    <p className="text-foreground leading-loose text-base md:text-lg mb-10 font-sans">
                       {industry.decisionProcess?.reason}
                     </p>
 
@@ -383,7 +383,7 @@ export default function IndustryDetailPage() {
                       <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 03</span>
                       <h3 className="text-2xl font-bold font-serif mt-2 text-foreground">実行したアクション</h3>
                     </div>
-                    <p className="text-foreground leading-loose text-lg font-sans">
+                    <p className="text-foreground leading-loose text-base md:text-lg font-sans">
                       {industry.decisionProcess?.action}
                     </p>
                   </div>
@@ -404,7 +404,7 @@ export default function IndustryDetailPage() {
                       <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 04</span>
                       <h3 className="text-2xl font-bold font-serif mt-2 text-foreground">変化と現在</h3>
                     </div>
-                    <p className="text-foreground leading-loose text-lg font-sans">
+                    <p className="text-foreground leading-loose text-base md:text-lg font-sans">
                       {industry.decisionProcess?.outcome}
                     </p>
                   </div>
@@ -421,7 +421,7 @@ export default function IndustryDetailPage() {
                 <div className="bg-card p-8 rounded-xl shadow-sm relative flex-1 border border-border">
                   <div className="absolute top-6 -left-3 w-6 h-6 bg-card transform rotate-45 border-l border-b border-border"></div>
                   <h3 className="text-sm font-bold text-muted-foreground mb-4 tracking-widest">EDITOR'S NOTE</h3>
-                  <p className="text-foreground leading-loose text-lg font-sans">
+                  <p className="text-foreground leading-loose text-base md:text-lg font-sans">
                     {industry.editorComment}
                   </p>
                 </div>
@@ -454,7 +454,7 @@ export default function IndustryDetailPage() {
         ) : (
           // 通常記事（百業録）用のレイアウト
           <div className="prose prose-stone prose-lg max-w-none">
-            <p className="text-xl leading-loose mb-12 font-serif text-foreground border-l-4 border-primary pl-6 py-2 bg-secondary/10">
+            <p className="text-lg md:text-xl leading-loose mb-12 font-serif text-foreground border-l-4 border-primary pl-6 py-2 bg-secondary/10">
               {industry.description}
             </p>
             
@@ -464,7 +464,7 @@ export default function IndustryDetailPage() {
                   <AlertCircle className="w-6 h-6" />
                   なぜ必要か
                 </h3>
-                <p className="text-foreground leading-loose font-sans">{industry.necessity}</p>
+                <p className="text-foreground leading-loose font-sans text-base md:text-lg">{industry.necessity}</p>
               </div>
               <div className="bg-card p-8 rounded-lg border border-border shadow-sm">
                 <h3 className="text-xl font-bold font-serif mb-4 text-primary flex items-center gap-2">
@@ -473,7 +473,7 @@ export default function IndustryDetailPage() {
                 </h3>
                 <ul className="space-y-3 list-none pl-0">
                   {industry.details.map((detail, i) => (
-                    <li key={i} className="flex items-start gap-3 text-foreground leading-relaxed">
+                    <li key={i} className="flex items-start gap-3 text-foreground leading-relaxed text-base md:text-lg">
                       <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2.5 shrink-0" />
                       {detail}
                     </li>
