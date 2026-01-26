@@ -1,7 +1,8 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useSearch } from 'wouter';
-import { ArrowUpRight, Search, Phone, MessageCircle, AlertCircle, Calendar, Construction, TrendingUp, Users, Wallet } from 'lucide-react';
-import { supportSystems, SupportCategory, SupportSystem } from '@/lib/supports';
+import { Search, Phone, MessageCircle, Construction, TrendingUp, Users, Wallet } from 'lucide-react';
+import { supportSystems, SupportCategory } from '@/lib/supports';
+import SupportCard from '@/components/SupportCard';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 
@@ -58,7 +59,7 @@ export default function SupportsPage() {
     <div className="min-h-screen bg-[#F9F8F4] font-sans text-gray-900">
       <Header />
 
-      <main className="container mx-auto px-4 py-12 md:py-16 max-w-6xl">
+      <main className="container mx-auto px-4 py-12 md:py-16 max-w-[1200px]">
         {/* ページタイトルエリア */}
         <div className="text-center mb-16">
           <h1 className="text-3xl md:text-4xl font-serif font-bold text-[#1D3A52] mb-6 tracking-tight">
@@ -94,15 +95,15 @@ export default function SupportsPage() {
           </div>
         </div>
 
-        {/* 制度カードリスト */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+        {/* 制度カードリスト (New Grid Layout) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {filteredSupports.length > 0 ? (
             filteredSupports.map((support) => (
               <SupportCard 
                 key={support.id} 
                 support={support} 
-                isClosingSoon={isClosingSoon}
-                isExpired={isExpired}
+                isClosingSoon={isClosingSoon(support.deadline)}
+                isExpired={isExpired(support.deadline)}
               />
             ))
           ) : (
@@ -146,98 +147,6 @@ export default function SupportsPage() {
       </main>
 
       <Footer />
-    </div>
-  );
-}
-
-// 制度カードコンポーネント (Strict White & Navy Style)
-function SupportCard({ support, isClosingSoon, isExpired }: { support: SupportSystem, isClosingSoon: (d?: string) => boolean, isExpired: (d?: string) => boolean }) {
-  const closing = isClosingSoon(support.deadline);
-  const expired = isExpired(support.deadline);
-  
-  // バッジカラーの決定 (Strict Rules)
-  const badgeColor = support.badgeColor || '#555555';
-
-  return (
-    <div 
-      className={`
-        bg-white rounded-lg border border-gray-200 shadow-[0_4px_6px_rgba(0,0,0,0.05)] 
-        hover:shadow-[0_10px_15px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300
-        flex flex-col h-full group relative overflow-hidden
-        ${expired ? 'opacity-60 grayscale' : ''}
-      `}
-    >
-      
-      {/* 左上バッジ (Strict Badge Style) */}
-      <div className="absolute top-5 left-5 z-10">
-        <span 
-          className="text-white px-3 py-1 rounded text-xs font-bold tracking-wider shadow-sm"
-          style={{ backgroundColor: badgeColor }}
-        >
-          {support.badge}
-        </span>
-      </div>
-
-      {/* コンテンツエリア */}
-      <div className="p-6 pt-16 flex-grow flex flex-col">
-        
-        {/* メインタイトル（目的） - 20px Bold #1D3A52 */}
-        <h3 className="text-[20px] font-bold text-[#1D3A52] mb-3 leading-snug">
-          {support.title}
-        </h3>
-
-        {/* 制度名（正式名称） - 14px Normal #666666 */}
-        <p className="text-[14px] font-normal text-[#666666] mb-5 pb-5 border-b border-gray-100">
-          {support.officialName}
-        </p>
-
-        {/* タグリスト */}
-        <div className="flex flex-wrap gap-2 mb-5">
-          {support.tags.map((tag, index) => (
-            <span key={index} className="text-xs font-medium text-[#1D3A52] bg-gray-100 px-2 py-1 rounded">
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* 説明文 */}
-        <p className="text-sm text-gray-600 mb-6 leading-relaxed flex-grow">
-          {support.description}
-        </p>
-
-        {/* 期限表示 */}
-        {support.deadline && !expired && (
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-            <Calendar className="w-4 h-4" />
-            <span>申請期限: <span className={`font-bold ${closing ? 'text-red-600' : ''}`}>{support.deadline}</span> まで</span>
-          </div>
-        )}
-        
-        {/* 締切間近アラート */}
-        {closing && !expired && (
-          <div className="mb-2">
-            <span className="text-xs font-bold text-red-600 flex items-center gap-1 animate-pulse">
-              <AlertCircle className="w-3 h-3" /> 締切間近
-            </span>
-          </div>
-        )}
-      </div>
-
-      {/* アクションエリア (Strict Button Style) */}
-      <div className="p-6 pt-0 mt-auto">
-        {expired ? (
-          <div className="w-full py-3 text-center text-sm font-bold text-gray-400 bg-gray-50 rounded border border-gray-200 cursor-not-allowed">
-            受付終了
-          </div>
-        ) : (
-          <a 
-            href={support.link || "#"}
-            className="flex items-center justify-center w-full py-3 text-sm font-bold text-[#1D3A52] bg-white border border-gray-200 rounded hover:bg-gray-50 hover:border-[#1D3A52] transition-all no-underline group-hover:shadow-sm"
-          >
-            詳細・相談先を見る <ArrowUpRight className="w-4 h-4 ml-2" />
-          </a>
-        )}
-      </div>
     </div>
   );
 }

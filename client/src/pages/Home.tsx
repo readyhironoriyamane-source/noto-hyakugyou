@@ -2,13 +2,18 @@ import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, ArrowUpRight, FileText } from 'lucide-react';
 import { industries } from '@/data/industries';
-// import DetailModal from '@/components/DetailModal'; // Removed unused import
+import SupportCard from '@/components/SupportCard';
+import { supportSystems } from '@/lib/supports';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 
 export default function Home() {
   // 活用事例記事（isCaseStudyがtrue）のみを取得
   const caseStudies = industries.filter(i => i.isCaseStudy);
+
+  // TOPページに表示する主要な支援制度を抽出（IDで指定）
+  const featuredSupportIds = ["nariwai-reconstruction", "small-business-sustainability-disaster", "noto-nariwai-addon"];
+  const featuredSupports = supportSystems.filter(s => featuredSupportIds.includes(s.id));
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -319,99 +324,12 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {[
-              {
-                id: "support-nariwai",
-                badge: "石川県",
-                badgeColor: "bg-[#1D3A52]",
-                title: "なりわい再建支援補助金",
-                catch: "工場・店舗の再建、\n機械設備の復旧に",
-                content: "施設・設備の復旧費用を補助（中堅企業等も対象）",
-                amount: "上限 15億円",
-                condition: "補助率 3/4（中堅は1/2）",
-                link: "#"
-              },
-              {
-                id: "support-jizoku",
-                badge: "国",
-                badgeColor: "bg-[#2B2B2B]",
-                title: "小規模事業者持続化補助金\n（災害支援枠）",
-                catch: "販路開拓や、\n業務効率化の取り組みに",
-                content: "機械装置等費、広報費、ウェブサイト関連費など",
-                amount: "上限 200万円",
-                condition: "売上減少の間接被害の場合は100万円",
-                link: "#"
-              },
-              {
-                id: "support-noto-nariwai",
-                badge: "能登町",
-                badgeColor: "bg-[#B33E28]",
-                title: "能登町なりわい再建\n支援補助金",
-                catch: "県の補助金に対する\n「自己負担」を軽減",
-                content: "「なりわい再建支援補助金」の対象経費から交付決定額を引いた額を補助",
-                amount: "補助率 3/5",
-                condition: "町への申請が必要",
-                link: "#"
-              }
-            ].map((item, index) => (
-              <div id={item.id} key={index} className="bg-white rounded-lg border border-[#E2E8F0] shadow-[0_4px_6px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_15px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group scroll-mt-32 relative">
-                
-                {/* 左上バッジ (Strict Badge Style) */}
-                <div className="absolute top-5 left-5 z-10">
-                  <span className={`${item.badgeColor} text-white px-3 py-1 rounded text-xs font-bold tracking-wider shadow-sm`}>
-                    {item.badge}
-                  </span>
-                </div>
-                
-                <div className="p-6 pt-16 flex flex-col flex-grow">
-                  {/* メインタイトル（目的） - 20px Bold #1D3A52 */}
-                  <h3 className="text-[20px] font-bold text-[#1D3A52] mb-2 leading-snug whitespace-pre-line">
-                    {item.catch}
-                  </h3>
-                  
-                  {/* 制度名（正式名称） - 14px Normal #666666 */}
-                  <p className="text-[14px] font-normal text-[#666666] mb-6 whitespace-pre-line leading-snug">
-                    {item.title}
-                  </p>
-
-                  {/* 支援内容 */}
-                  <div className="mb-6 flex-grow">
-                    <p className="text-sm text-muted-foreground mb-2 font-bold">支援内容</p>
-                    <p className="text-sm text-foreground/80 leading-relaxed">
-                      {item.content}
-                    </p>
-                  </div>
-
-                  {/* 金額・条件 */}
-                  <div className="bg-muted/30 rounded-lg p-4 space-y-3 mb-6">
-                    <div className="flex items-start gap-3">
-                      <Coins className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-xs font-bold text-muted-foreground block mb-0.5">金額</span>
-                        <span className="text-base font-bold text-foreground">{item.amount}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <FileText className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-xs font-bold text-muted-foreground block mb-0.5">条件など</span>
-                        <span className="text-sm font-medium text-foreground">{item.condition}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 詳しく見るリンク (No Underline, Button Style) */}
-                  <div className="mt-auto">
-                    <a 
-                      href={item.link} 
-                      className="flex items-center justify-center w-full py-3 text-sm font-bold text-[#1D3A52] bg-white border border-gray-300 rounded hover:bg-gray-50 transition-all no-underline"
-                    >
-                      詳細・相談先を見る <ArrowUpRight className="w-4 h-4 ml-2" />
-                    </a>
-                  </div>
-                </div>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {featuredSupports.map((support) => (
+              <SupportCard 
+                key={support.id} 
+                support={support} 
+              />
             ))}
           </div>
 
