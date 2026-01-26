@@ -214,9 +214,45 @@ export default function Home() {
                             {block.label}
                           </span>
                           <ul className="list-disc list-inside text-gray-600 pl-1">
-                            {block.items.map((item, i) => (
-                              <li key={i} className="leading-[1.8] mb-[8px] last:mb-0">{item}</li>
-                            ))}
+                            {block.items.map((item, i) => {
+                              // 支援制度へのリンクマッピング
+                              let linkTarget = "";
+                              if (item.includes("なりわい再建支援補助金") && !item.includes("能登町")) {
+                                linkTarget = "#support-nariwai";
+                              } else if (item.includes("小規模事業者持続化補助金")) {
+                                linkTarget = "#support-jizoku";
+                              } else if (item.includes("能登町なりわい再建支援補助金")) {
+                                linkTarget = "#support-noto-nariwai";
+                              }
+
+                              return (
+                                <li key={i} className="leading-[1.8] mb-[8px] last:mb-0">
+                                  {linkTarget ? (
+                                    // ネストされたaタグを避けるため、objectタグでラップするか、イベント伝播を止める
+                                    <object>
+                                      <a 
+                                        href={linkTarget} 
+                                        className="text-primary hover:text-accent hover:underline decoration-1 underline-offset-2 font-medium transition-colors cursor-pointer"
+                                        onClick={(e) => {
+                                          // 親のカードリンクへの遷移を防止
+                                          e.stopPropagation();
+                                          // スムーズスクロール
+                                          const target = document.querySelector(linkTarget);
+                                          if (target) {
+                                            e.preventDefault();
+                                            target.scrollIntoView({ behavior: 'smooth' });
+                                          }
+                                        }}
+                                      >
+                                        {item}
+                                      </a>
+                                    </object>
+                                  ) : (
+                                    item
+                                  )}
+                                </li>
+                              );
+                            })}
                           </ul>
                         </div>
                       ))}
@@ -255,6 +291,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {[
               {
+                id: "support-nariwai",
                 badge: "石川県",
                 badgeColor: "bg-[#1D3A52]",
                 title: "なりわい再建支援補助金",
@@ -265,6 +302,7 @@ export default function Home() {
                 link: "#"
               },
               {
+                id: "support-jizoku",
                 badge: "国",
                 badgeColor: "bg-[#2B2B2B]",
                 title: "小規模事業者持続化補助金\n（災害支援枠）",
@@ -275,6 +313,7 @@ export default function Home() {
                 link: "#"
               },
               {
+                id: "support-noto-nariwai",
                 badge: "能登町",
                 badgeColor: "bg-[#B33E28]",
                 title: "能登町なりわい再建\n支援補助金",
@@ -285,7 +324,7 @@ export default function Home() {
                 link: "#"
               }
             ].map((item, index) => (
-              <div key={index} className="bg-white rounded-xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col overflow-hidden group">
+              <div id={item.id} key={index} className="bg-white rounded-xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col overflow-hidden group scroll-mt-32">
                 {/* ヘッダーバッジ */}
                 <div className={`${item.badgeColor} text-white px-6 py-3 font-bold tracking-widest text-sm flex items-center justify-between`}>
                   <span>【 {item.badge} 】</span>
