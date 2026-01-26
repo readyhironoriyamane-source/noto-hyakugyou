@@ -8,6 +8,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import ContactPage from "./pages/ContactPage";
 import Home from "./pages/Home";
 import IndustryDetailPage from "./pages/IndustryDetailPage";
+import SupportArchivePage from "./pages/SupportArchivePage";
 
 import PrivacyPage from "./pages/PrivacyPage";
 
@@ -19,6 +20,7 @@ function Router() {
       <Route path={"/privacy"} component={PrivacyPage} />
       <Route path={"/contact"} component={ContactPage} />
       <Route path={"/industry/:id"} component={IndustryDetailPage} />
+      <Route path={"/supports"} component={SupportArchivePage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

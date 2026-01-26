@@ -145,11 +145,19 @@ export default function Home() {
         
         {/* 活用事例セクション */}
         <section className="mb-32">
-          <div className="mb-16">
-            <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary mb-6">商いの道しるべ</h2>
-            <p className="text-foreground/80 text-base md:text-lg leading-loose font-sans">
-              支援制度を活かし、新たな一歩を踏み出した<br className="block md:hidden" />能登の事業者をご紹介します。
-            </p>
+          <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary mb-6">使える支援制度</h2>
+              <p className="text-foreground/80 text-base md:text-lg leading-loose font-sans">
+                今すぐ申請できる、<br className="block md:hidden" />復興・事業継続のための主な制度です。
+              </p>
+            </div>
+            <a 
+              href="/supports" 
+              className="inline-flex items-center gap-2 text-primary font-bold border-b-2 border-primary pb-1 hover:text-accent hover:border-accent transition-colors self-start md:self-end mb-2"
+            >
+              全ての制度を見る <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
