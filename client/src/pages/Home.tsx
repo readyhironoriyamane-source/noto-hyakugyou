@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
-import { Users, Handshake, Construction, Coins, TrendingUp, ArrowRight } from 'lucide-react';
+import { Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { industries } from '@/data/industries';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
