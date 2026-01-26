@@ -16,7 +16,7 @@ export default function Home() {
       <Header />
 
       {/* Hero Section: Magazine Cover Style */}
-      <section className="relative w-full h-[100vh] md:h-auto md:min-h-[120vh] flex items-center justify-center overflow-hidden bg-primary">
+      <section className="relative w-full h-[100vh] md:h-auto md:min-h-screen flex flex-col overflow-x-hidden bg-primary">
          {/* Dynamic Background Video */}
          <div className="absolute inset-0 opacity-60">
             <video 
@@ -32,8 +32,9 @@ export default function Home() {
             <div className="absolute inset-0 bg-[#1D3A52]/70"></div>
          </div>
          
-         <div className="relative z-10 container h-full flex flex-col justify-center md:justify-start md:pt-32">
-            <div className="flex flex-row-reverse md:flex-row justify-between items-start h-full md:h-auto pb-20 md:pb-0">
+         <div className="relative z-10 container h-full flex flex-col justify-center md:justify-start md:pt-24">
+            {/* Upper Zone: Branding (Logo & Copy) */}
+            <div className="flex flex-row-reverse md:flex-row justify-between items-start h-full md:h-auto pb-20 md:pb-0 md:mb-32">
                
                {/* Vertical Title - PC: Right side, SP: Center */}
                <div className="h-full flex flex-row items-center justify-center md:justify-start md:order-last pt-12 pr-4 md:pr-16 lg:pr-24 gap-4 md:gap-8">
@@ -61,16 +62,18 @@ export default function Home() {
                </div>
             </div>
 
-            {/* 課題選択エリア - PC Only (Absolute Position) */}
-            <div className="hidden md:block absolute bottom-0 left-0 w-full bg-gradient-to-t from-[#1D3A52] to-transparent pt-24 pb-40 lg:pb-52">
+            {/* Lower Zone: Navigation (Question & Cards) */}
+            <div className="hidden md:block w-full pb-32">
                <div className="container">
-                  <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-14 relative mt-20">
-                     <h2 className="text-white text-center font-serif text-2xl md:text-3xl tracking-widest drop-shadow-lg font-bold">
+                  {/* 問いかけテキスト */}
+                  <div className="text-center mb-10">
+                     <h2 className="text-white font-serif text-2xl md:text-3xl tracking-widest drop-shadow-lg font-bold">
                         今、どんなことでお困りですか？
                      </h2>
-                     
                   </div>
-                  <div className="grid grid-cols-5 gap-6 mb-16">
+                  
+                  {/* カードグリッド (margin-top: 40px from text is handled by mb-10 above) */}
+                  <div className="grid grid-cols-5 gap-6">
                      {[
                         { icon: Users, label: "後継者が\nいない", category: "hr" },
                         { icon: Handshake, label: "人材を\n確保したい", category: "hr" },
@@ -96,8 +99,8 @@ export default function Home() {
                      ))}
                   </div>
                   
-                  {/* 支援制度一覧を見るボタン（カード群の下へ移動） */}
-                  <div className="text-center mt-16">
+                  {/* 支援制度一覧を見るボタン (margin-top: 56px) */}
+                  <div className="text-center mt-14">
                      <Link href="/supports" className="inline-flex items-center gap-2 text-white border border-white/80 hover:bg-white/10 hover:border-white px-8 py-3 rounded-full transition-all text-sm tracking-wider font-medium no-underline">
                         支援制度一覧を見る <ArrowRight className="w-4 h-4" />
                      </Link>
