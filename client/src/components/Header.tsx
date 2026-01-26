@@ -1,67 +1,97 @@
-import { useState, useEffect, useRef } from 'react';
-import { Menu, X, Search } from 'lucide-react';
+'use client'; // useStateを使用するため必須
+
+import { useState } from 'react';
+import { Link, useLocation } from 'wouter';
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const lastScrollY = useRef(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [location] = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // スクロール方向による表示制御
-      // 下スクロールで隠す、上スクロールで表示
-      // ただし、最上部付近では常に表示
-      if (currentScrollY < 50) {
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-        // 下スクロール（かつ一定以上スクロールしている場合）
-        setIsVisible(false);
-      } else if (currentScrollY < lastScrollY.current) {
-        // 上スクロール
-        setIsVisible(true);
-      }
-      
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <>
-      {/* Fixed Navigation */}
-      <header 
-        className={`fixed top-0 left-0 w-full z-40 transition-transform duration-300 ease-in-out bg-background/95 backdrop-blur-sm border-b border-border shadow-sm
-          ${isVisible ? 'translate-y-0' : '-translate-y-full'}
-          /* スマホ横持ちなど高さが低い場合は固定解除（CSSメディアクエリの代用としてクラスで制御は難しいが、JS制御と併用） */
-          max-h-[60px] flex items-center
-        `}
-        style={{ height: '60px' }}
-      >
-        <div className="container flex justify-between items-center h-full">
-          <div className="flex items-center gap-4 z-50">
-             {/* UD対応: ロゴリンクは下線なし（no-underline-link） */}
-             <a href="/" className="no-underline-link font-serif font-bold text-xl md:text-2xl tracking-widest text-foreground hover:opacity-80 transition-opacity flex items-center gap-3 group">
-               {/* ロゴ画像（アイコン的に配置） */}
-               <div className="relative h-10 w-10 shrink-0"> 
-                 <img 
-                   src="/images/logo.png" 
-                   alt="能登百業録ロゴ"
-                   className="w-full h-full object-contain"
-                 />
-               </div>
-               <span className="mt-1">能登百業録</span>
-             </a>
+    <header className="bg-[#F9F8F4] border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-[1140px] mx-auto px-6 h-20 flex items-center justify-between">
+        
+        {/* --- ロゴエリア (既存維持) --- */}
+        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity z-50 relative cursor-pointer">
+          <div className="relative h-10 w-10 mr-3 shrink-0"> 
+            <img 
+              src="/images/logo.png" 
+              alt="ロゴ"
+              className="w-full h-full object-contain"
+            />
           </div>
-          
-          <div className="flex items-center gap-4 md:gap-8">
-            {/* 将来的なナビゲーション拡張エリア */}
-          </div>
+          <h1 className="text-2xl font-bold text-[#1D3A52] font-serif leading-none mt-1">
+            能登百業録
+          </h1>
+        </Link>
+
+        {/* --- PC用ナビゲーション (md以上で表示) --- */}
+        <nav className="hidden md:flex items-center gap-8 text-sm font-bold text-[#1D3A52]">
+          <a href="/#guidepost" className="hover:text-[#B33E28] transition-colors cursor-pointer">
+            商いの道しるべ
+          </a>
+          <Link href="/supports" className="hover:text-[#B33E28] transition-colors cursor-pointer">
+            支援制度一覧
+          </Link>
+          <Link href="/contact" className="px-5 py-2 bg-[#1D3A52] text-white rounded-full hover:bg-[#2c5270] transition-colors cursor-pointer">
+            お問い合わせ
+          </Link>
+        </nav>
+
+        {/* --- スマホ用ハンバーガーボタン (md以下で表示) --- */}
+        <button 
+          onClick={toggleMenu}
+          className="md:hidden z-50 p-2 text-[#1D3A52] focus:outline-none"
+          aria-label="メニューを開く"
+        >
+          {isOpen ? (
+            // 閉じるアイコン (×)
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            // ハンバーガーアイコン (三)
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
+
+        {/* --- スマホ用全画面メニュー (オーバーレイ) --- */}
+        <div className={`
+          fixed inset-0 bg-[#F9F8F4] z-40 flex flex-col items-center justify-center transition-opacity duration-300
+          ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
+        `}>
+          <nav className="flex flex-col items-center gap-8 text-[#1D3A52]">
+            <a 
+              href="/#guidepost" 
+              onClick={() => setIsOpen(false)}
+              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer"
+            >
+              商いの道しるべ
+            </a>
+            <Link 
+              href="/supports" 
+              onClick={() => setIsOpen(false)}
+              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer"
+            >
+              支援制度一覧
+            </Link>
+            <Link 
+              href="/contact" 
+              onClick={() => setIsOpen(false)}
+              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer"
+            >
+              お問い合わせ
+            </Link>
+          </nav>
         </div>
-      </header>
-    </>
+
+      </div>
+    </header>
   );
-}
+};
