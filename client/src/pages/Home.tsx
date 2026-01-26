@@ -209,7 +209,7 @@ export default function Home() {
                   {/* ① 課題ラベル（最優先情報） */}
                   {study.challengeCard && (
                     <div className="mb-4">
-                      <span className="inline-block bg-[#B33E28] text-white text-[13px] font-bold px-3 py-1 rounded-sm tracking-wide">
+                      <span className="inline-block bg-[#B33E28] text-white text-sm font-bold px-3 py-1 rounded tracking-wider">
                         {study.challengeCard.label}
                       </span>
                     </div>
@@ -355,26 +355,25 @@ export default function Home() {
                 link: "#"
               }
             ].map((item, index) => (
-              <div id={item.id} key={index} className="bg-white rounded-xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col overflow-hidden group scroll-mt-32">
-                {/* ヘッダーバッジ */}
-                <div className={`${item.badgeColor} text-white px-6 py-3 font-bold tracking-widest text-sm flex items-center justify-between`}>
-                  <span>【 {item.badge} 】</span>
-                  <ArrowUpRight className="w-4 h-4 opacity-70" />
+              <div id={item.id} key={index} className="bg-white rounded-xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col overflow-hidden group scroll-mt-32 relative">
+                
+                {/* 左上バッジ (Badge Style) */}
+                <div className="absolute top-6 left-6 z-10">
+                  <span className={`${item.badgeColor} text-white px-3 py-1 rounded font-bold text-xs tracking-wider shadow-sm`}>
+                    {item.badge}
+                  </span>
                 </div>
                 
-                <div className="p-8 flex flex-col flex-grow">
-                  {/* キャッチコピー */}
-                  <h3 className="text-lg font-bold text-primary mb-4 leading-relaxed whitespace-pre-line min-h-[3.5em]">
+                <div className="p-8 pt-16 flex flex-col flex-grow">
+                  {/* メインタイトル（目的） - 20px Bold #1D3A52 */}
+                  <h3 className="text-[20px] font-bold text-[#1D3A52] mb-2 leading-snug whitespace-pre-line">
                     {item.catch}
                   </h3>
                   
-                  {/* 制度名 */}
-                  <div className="mb-6 pb-6 border-b border-dashed border-gray-200">
-                    <p className="text-sm text-muted-foreground mb-1 font-bold">制度名</p>
-                    <p className="text-xl font-bold text-foreground whitespace-pre-line leading-snug">
-                      {item.title}
-                    </p>
-                  </div>
+                  {/* 制度名（正式名称） - 14px Normal #666666 */}
+                  <p className="text-[14px] font-normal text-[#666666] mb-6 whitespace-pre-line leading-snug">
+                    {item.title}
+                  </p>
 
                   {/* 支援内容 */}
                   <div className="mb-6 flex-grow">
@@ -402,9 +401,9 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* 詳しく見るリンク */}
+                  {/* 詳しく見るリンク (No Underline) */}
                   <div className="mt-auto text-right">
-                    <a href={item.link} className="inline-flex items-center text-sm font-bold text-primary hover:text-accent transition-colors group-hover:underline decoration-2 underline-offset-4">
+                    <a href={item.link} className="inline-flex items-center text-sm font-bold text-primary hover:text-accent transition-colors no-underline">
                       詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
                     </a>
                   </div>
@@ -413,9 +412,9 @@ export default function Home() {
             ))}
           </div>
 
-          {/* 一覧ボタン */}
+          {/* 一覧ボタン (No Underline) */}
           <div className="text-center">
-            <Link href="/supports" className="inline-flex items-center justify-center gap-3 bg-primary text-white px-10 py-4 rounded-full font-bold tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl group">
+            <Link href="/supports" className="inline-flex items-center justify-center gap-3 bg-primary text-white px-10 py-4 rounded-full font-bold tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl group no-underline">
               支援制度一覧を見る
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
