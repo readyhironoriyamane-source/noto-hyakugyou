@@ -48,6 +48,11 @@ export interface Industry {
     description: string; // 追加: 課題の詳細説明
     solutions: { title: string; detail: string }[]; // 追加: 解決策のリスト
     color?: string;
+    // 新設: 構造化データブロック（カード表示用）
+    structuredBlock?: {
+      label: string;
+      items: string[];
+    }[];
   };
   keyPoints?: string[];
   decisionProcess?: {
@@ -155,6 +160,10 @@ export const industries: Industry[] = [
         { title: "自社の強みの再定義", detail: "「醤油」ではなく「糀（こうじ）」の技術に注目し、市場ニーズとの接点を探った。" },
         { title: "外部専門家の活用", detail: "中小企業診断士やデザイナーと連携し、客観的な視点を取り入れた。" },
         { title: "新ブランドの立ち上げ", detail: "伝統を感じさせつつ、現代のライフスタイルに馴染むデザインと商品設計を行った。" }
+      ],
+      structuredBlock: [
+        { label: "活用した支援", items: ["事業承継・引継ぎ補助金", "よろず支援拠点"] },
+        { label: "成果", items: ["新商品「糀ディップ」が大ヒット", "売上がV字回復"] }
       ]
     },
     supportSystem: [
@@ -212,6 +221,10 @@ export const industries: Industry[] = [
         { title: "事業再構築補助金の活用", detail: "大規模なリノベーション費用の一部を補助金で賄い、財務負担を軽減した。" },
         { title: "ターゲットの明確化", detail: "「団体」から「個人・インバウンド」へ大胆にシフトし、高単価化を実現した。" },
         { title: "Webマーケティングの強化", detail: "多言語対応の予約サイトを開設し、海外への情報発信を強化した。" }
+      ],
+      structuredBlock: [
+        { label: "活用した支援", items: ["事業再構築補助金", "マル経融資"] },
+        { label: "成果", items: ["稼働率90%超え", "インバウンド客の増加"] }
       ]
     },
     supportSystem: [
@@ -270,6 +283,10 @@ export const industries: Industry[] = [
         { title: "JAPANブランド育成支援等事業の活用", detail: "海外展開に向けた商品開発や展示会出展の費用を補助する制度を活用した。" },
         { title: "外部デザイナーとの協業", detail: "プロダクトデザイナーと組み、現代の食卓に合うデザインを取り入れた。" },
         { title: "ストーリーの言語化", detail: "職人の技や想いを英語で発信し、製品の背景にある物語を伝えた。" }
+      ],
+      structuredBlock: [
+        { label: "活用した支援", items: ["JAPANブランド育成支援等事業", "ISICO専門家派遣"] },
+        { label: "成果", items: ["欧州見本市で高評価", "新規取引先獲得"] }
       ]
     },
     supportSystem: [

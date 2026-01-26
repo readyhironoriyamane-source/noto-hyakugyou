@@ -159,9 +159,10 @@ export default function Home() {
               <a 
                 key={study.id}
                 href={`/industry/${study.id}`}
-                className="group cursor-pointer bg-card rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-border focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline hover:border-primary/50"
+                className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline flex flex-col h-full"
               >
-                <div className="relative h-64 overflow-hidden bg-muted">
+                {/* 1. ヘッダー画像エリア（リンク切れ修正済み） */}
+                <div className="relative aspect-[3/2] overflow-hidden bg-muted">
                   <img 
                     src={study.image} 
                     alt={`${study.title}のイメージ画像`} 
@@ -170,31 +171,65 @@ export default function Home() {
                       e.currentTarget.src = "https://placehold.co/600x400/e2e8f0/1e293b?text=No+Image";
                     }}
                   />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
+                </div>
+
+                {/* 2. 情報エリア（白背景、余白広め） */}
+                <div className="p-6 md:p-8 flex flex-col flex-grow bg-white">
+                  
+                  {/* ① 課題ラベル（最優先情報） */}
                   {study.challengeCard && (
-                    <div className="absolute top-4 left-4 bg-accent text-white text-[13px] font-bold px-5 py-2 tracking-wider shadow-md rounded-sm">
-                      {study.challengeCard.label}
+                    <div className="mb-4">
+                      <span className="inline-block bg-[#B33E28] text-white text-[13px] font-bold px-3 py-1 rounded-sm tracking-wide">
+                        {study.challengeCard.label}
+                      </span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500" />
-                </div>
-                <div className="p-8">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-sm font-bold text-primary bg-[#E0E0E0] px-3 py-1 rounded-full tracking-wider">{study.category}</span>
-                    <span className="text-sm text-[#555555] font-medium tracking-widest flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-[#555555]/50"></span>
+
+                  {/* ② 属性データ（コントラスト改善） */}
+                  <div className="flex flex-wrap items-center gap-3 mb-4">
+                    <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
+                      {study.category}
+                    </span>
+                    <span className="text-xs text-[#444] font-medium tracking-widest flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#666]"></span>
                       {study.location}
                     </span>
                   </div>
-                  {/* UD対応: 見出しの行間を広げ、視認性を向上 */}
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors line-clamp-2 font-serif leading-normal no-underline">
+
+                  {/* ③ タイトル（下線削除・ゴシック化） */}
+                  <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors">
                     {study.title}
                   </h3>
-                  {/* UD対応: 本文の文字サイズと行間を確保 */}
-                  <p className="text-base text-foreground/80 line-clamp-3 mb-8 leading-loose font-sans no-underline">
+
+                  {/* ④ 本文リード文（下線削除・ゴシック化） */}
+                  <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3 flex-grow">
                     {study.summary}
                   </p>
-                  <div className="flex items-center text-primary text-sm font-bold tracking-widest group-hover:translate-x-2 transition-transform uppercase btn-ud w-fit -ml-6 pl-6 underline decoration-2 underline-offset-4">
-                    詳しく見る <ArrowUpRight className="w-5 h-5 ml-2" />
+
+                  {/* ⑤ 構造化データブロック（新設） */}
+                  {study.challengeCard?.structuredBlock && (
+                    <div className="mb-6 space-y-3 bg-gray-50 p-4 rounded border border-gray-100">
+                      {study.challengeCard.structuredBlock.map((block, idx) => (
+                        <div key={idx} className="text-sm">
+                          <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-1">
+                            {block.label}
+                          </span>
+                          <ul className="list-disc list-inside text-gray-600 pl-1 space-y-0.5">
+                            {block.items.map((item, i) => (
+                              <li key={i} className="leading-snug">{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* ⑥ ボタン */}
+                  <div className="mt-auto pt-4 border-t border-gray-100">
+                    <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
+                      詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
+                    </div>
                   </div>
                 </div>
               </a>
