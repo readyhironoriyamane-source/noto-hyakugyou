@@ -7,9 +7,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
           {/* About & Noto Town Hall Info */}
           <div className="flex flex-row items-start gap-6">
-            {/* ロゴ画像（背景なし） */}
+            {/* ロゴ画像（背景なし・サイズ拡大） */}
             <div className="shrink-0 mt-1">
-              <div className="relative h-24 w-20">
+              <div className="relative h-32 w-28">
                 <img 
                   src="/images/logo.png" 
                   alt="能登百業録ロゴ" 
