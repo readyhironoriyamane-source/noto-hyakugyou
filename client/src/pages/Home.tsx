@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowUpRight, Users, Handshake, Construction, Coins, TrendingUp, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, FileText } from 'lucide-react';
 import { industries } from '@/data/industries';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -207,7 +207,7 @@ export default function Home() {
 
                   {/* ⑤ 構造化データブロック（新設） */}
                   {study.challengeCard?.structuredBlock && (
-                    <div className="mb-6 space-y-6 bg-gray-50 p-6 rounded border border-gray-100">
+                    <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
                       {study.challengeCard.structuredBlock.map((block, idx) => (
                         <div key={idx} className="text-sm">
                           <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-1">
@@ -215,7 +215,7 @@ export default function Home() {
                           </span>
                           <ul className="list-disc list-inside text-gray-600 pl-1">
                             {block.items.map((item, i) => (
-                              <li key={i} className="leading-[1.7] mb-2 last:mb-0">{item}</li>
+                              <li key={i} className="leading-[1.8] mb-[8px] last:mb-0">{item}</li>
                             ))}
                           </ul>
                         </div>
@@ -315,7 +315,7 @@ export default function Home() {
                   </div>
 
                   {/* 金額・条件 */}
-                  <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+                  <div className="bg-muted/30 rounded-lg p-4 space-y-3 mb-6">
                     <div className="flex items-start gap-3">
                       <Coins className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                       <div>
@@ -324,12 +324,19 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <Construction className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                      <FileText className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                       <div>
                         <span className="text-xs font-bold text-muted-foreground block mb-0.5">条件など</span>
                         <span className="text-sm font-medium text-foreground">{item.condition}</span>
                       </div>
                     </div>
+                  </div>
+
+                  {/* 詳しく見るリンク */}
+                  <div className="mt-auto text-right">
+                    <a href={item.link} className="inline-flex items-center text-sm font-bold text-primary hover:text-accent transition-colors group-hover:underline decoration-2 underline-offset-4">
+                      詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
+                    </a>
                   </div>
                 </div>
               </div>
