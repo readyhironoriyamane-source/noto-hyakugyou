@@ -5,10 +5,11 @@ export default function SupportSection() {
     <section className="mb-32 bg-[#F9F8F4] py-16 -mx-4 md:-mx-8 lg:-mx-16 px-4 md:px-8 lg:px-16">
       <div className="container mx-auto">
         {/* A. セクションヘッダー（左揃え） */}
-        <h2 className="text-3xl font-bold text-[#1D3A52] text-left mb-4">
+        {/* 修正1: タイトルサイズ・スタイルをGuidepostSectionに合わせる (text-3xl md:text-5xl font-serif tracking-wider) */}
+        <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-[#1D3A52] text-left mb-6">
           使える支援制度
         </h2>
-        <p className="text-gray-600 text-left mb-12">
+        <p className="text-gray-600 text-left mb-12 text-base md:text-lg leading-loose">
           復旧・復興に向けた、国や自治体の支援制度をご案内します。あなたの状況に合わせてご活用ください。
         </p>
 
@@ -21,26 +22,35 @@ export default function SupportSection() {
             <h3 className="text-xl font-bold text-[#1D3A52] mb-1">
               工場・店舗の再建、<br />機械設備の復旧に
             </h3>
-            <p className="text-sm text-gray-500 mb-4">なりわい再建支援補助金</p>
+            <p className="text-sm text-gray-500 mb-6">なりわい再建支援補助金</p>
+            
+            {/* 修正3: 「支援内容」見出しの追加 */}
+            <h4 className="text-xs font-bold text-gray-500 mb-2">支援内容</h4>
             <p className="text-sm text-gray-700 mb-6 min-h-[40px]">
               施設・設備の復旧費用を補助（中堅企業等も対象）
             </p>
             
-            {/* C. スペック情報エリア（薄いグレーの箱） */}
-            <div className="bg-[#F9F9F9] rounded p-4 mb-6 mt-auto">
-              <div className="flex items-center mb-2">
-                <div className="flex items-center w-24 shrink-0">
-                  <Coins className="w-4 h-4 text-[#B33E28] mr-1.5" />
-                  <span className="text-xs text-[#B33E28] font-bold">金額</span>
+            {/* C. スペック情報エリア（修正4: 縦積みレイアウト） */}
+            <div className="bg-[#FAF9F6] rounded-lg p-5 mb-6 mt-auto">
+              {/* ブロック1：金額 */}
+              <div className="mb-4">
+                <div className="flex items-center mb-1">
+                  <Coins className="w-4 h-4 text-[#B33E28] mr-2" />
+                  <span className="text-xs font-bold text-[#B33E28]">金額</span>
                 </div>
-                <span className="text-base font-bold text-[#1D3A52]">上限 15億円</span>
+                <p className="text-base font-bold text-[#1D3A52] ml-1">
+                  上限 15億円
+                </p>
               </div>
-              <div className="flex items-start">
-                <div className="flex items-center w-24 shrink-0 mt-0.5">
-                  <FileText className="w-4 h-4 text-[#1D3A52] mr-1.5" />
-                  <span className="text-xs text-[#1D3A52] font-bold">条件など</span>
+              {/* ブロック2：条件など */}
+              <div>
+                <div className="flex items-center mb-1">
+                  <FileText className="w-4 h-4 text-[#1D3A52] mr-2" />
+                  <span className="text-xs font-bold text-[#1D3A52]">条件など</span>
                 </div>
-                <span className="text-sm text-gray-700">補助率 3/4 (中堅は1/2)</span>
+                <p className="text-sm text-gray-700 ml-1 leading-snug">
+                  補助率 3/4 (中堅は1/2)
+                </p>
               </div>
             </div>
 
@@ -58,26 +68,35 @@ export default function SupportSection() {
             <h3 className="text-xl font-bold text-[#1D3A52] mb-1">
               販路開拓や、<br />業務効率化の取り組みに
             </h3>
-            <p className="text-sm text-gray-500 mb-4">小規模事業者持続化補助金<br />(災害支援枠)</p>
+            <p className="text-sm text-gray-500 mb-6">小規模事業者持続化補助金<br />(災害支援枠)</p>
+            
+            {/* 修正3: 「支援内容」見出しの追加 */}
+            <h4 className="text-xs font-bold text-gray-500 mb-2">支援内容</h4>
             <p className="text-sm text-gray-700 mb-6 min-h-[40px]">
               機械装置等費、広報費、ウェブサイト関連費など
             </p>
 
-            {/* C. スペック情報エリア（薄いグレーの箱） */}
-            <div className="bg-[#F9F9F9] rounded p-4 mb-6 mt-auto">
-              <div className="flex items-center mb-2">
-                <div className="flex items-center w-24 shrink-0">
-                  <Coins className="w-4 h-4 text-[#B33E28] mr-1.5" />
-                  <span className="text-xs text-[#B33E28] font-bold">金額</span>
+            {/* C. スペック情報エリア（修正4: 縦積みレイアウト） */}
+            <div className="bg-[#FAF9F6] rounded-lg p-5 mb-6 mt-auto">
+              {/* ブロック1：金額 */}
+              <div className="mb-4">
+                <div className="flex items-center mb-1">
+                  <Coins className="w-4 h-4 text-[#B33E28] mr-2" />
+                  <span className="text-xs font-bold text-[#B33E28]">金額</span>
                 </div>
-                <span className="text-base font-bold text-[#1D3A52]">上限 200万円</span>
+                <p className="text-base font-bold text-[#1D3A52] ml-1">
+                  上限 200万円
+                </p>
               </div>
-              <div className="flex items-start">
-                <div className="flex items-center w-24 shrink-0 mt-0.5">
-                  <FileText className="w-4 h-4 text-[#1D3A52] mr-1.5" />
-                  <span className="text-xs text-[#1D3A52] font-bold">条件など</span>
+              {/* ブロック2：条件など */}
+              <div>
+                <div className="flex items-center mb-1">
+                  <FileText className="w-4 h-4 text-[#1D3A52] mr-2" />
+                  <span className="text-xs font-bold text-[#1D3A52]">条件など</span>
                 </div>
-                <span className="text-sm text-gray-700">売上減少の間接被害の場合は100万円</span>
+                <p className="text-sm text-gray-700 ml-1 leading-snug">
+                  売上減少の間接被害の場合は100万円
+                </p>
               </div>
             </div>
 
@@ -95,26 +114,35 @@ export default function SupportSection() {
             <h3 className="text-xl font-bold text-[#1D3A52] mb-1">
               県の補助金に対する<br />「自己負担」を軽減
             </h3>
-            <p className="text-sm text-gray-500 mb-4">能登町なりわい再建<br />支援補助金</p>
+            <p className="text-sm text-gray-500 mb-6">能登町なりわい再建<br />支援補助金</p>
+            
+            {/* 修正3: 「支援内容」見出しの追加 */}
+            <h4 className="text-xs font-bold text-gray-500 mb-2">支援内容</h4>
             <p className="text-sm text-gray-700 mb-6 min-h-[40px]">
               「なりわい再建支援補助金」の対象経費から交付決定額を引いた額を補助
             </p>
 
-            {/* C. スペック情報エリア（薄いグレーの箱） */}
-            <div className="bg-[#F9F9F9] rounded p-4 mb-6 mt-auto">
-              <div className="flex items-center mb-2">
-                <div className="flex items-center w-24 shrink-0">
-                  <Coins className="w-4 h-4 text-[#B33E28] mr-1.5" />
-                  <span className="text-xs text-[#B33E28] font-bold">金額</span>
+            {/* C. スペック情報エリア（修正4: 縦積みレイアウト） */}
+            <div className="bg-[#FAF9F6] rounded-lg p-5 mb-6 mt-auto">
+              {/* ブロック1：金額 */}
+              <div className="mb-4">
+                <div className="flex items-center mb-1">
+                  <Coins className="w-4 h-4 text-[#B33E28] mr-2" />
+                  <span className="text-xs font-bold text-[#B33E28]">金額</span>
                 </div>
-                <span className="text-base font-bold text-[#1D3A52]">補助率 3/5</span>
+                <p className="text-base font-bold text-[#1D3A52] ml-1">
+                  補助率 3/5
+                </p>
               </div>
-              <div className="flex items-start">
-                <div className="flex items-center w-24 shrink-0 mt-0.5">
-                  <FileText className="w-4 h-4 text-[#1D3A52] mr-1.5" />
-                  <span className="text-xs text-[#1D3A52] font-bold">条件など</span>
+              {/* ブロック2：条件など */}
+              <div>
+                <div className="flex items-center mb-1">
+                  <FileText className="w-4 h-4 text-[#1D3A52] mr-2" />
+                  <span className="text-xs font-bold text-[#1D3A52]">条件など</span>
                 </div>
-                <span className="text-sm text-gray-700">町への申請が必要</span>
+                <p className="text-sm text-gray-700 ml-1 leading-snug">
+                  町への申請が必要
+                </p>
               </div>
             </div>
 
