@@ -4,7 +4,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ConsultationCTA from '@/components/ConsultationCTA';
 import { SUPPORT_ITEMS } from '@/data/supportData';
-import { Search, Heart, FolderOpen } from 'lucide-react';
+import { Search, Heart, FolderOpen, Share2, Printer, X } from 'lucide-react';
+import { useLocation } from 'wouter';
 
 // ----------------------------------------------------------------------
 // カスタムフック: 保存機能 (Local Storage)
@@ -17,6 +18,28 @@ const useSavedItems = () => {
     const saved = localStorage.getItem('noto_saved_items');
     if (saved) {
       setSavedIds(JSON.parse(saved));
+    }
+  }, []);
+
+  // URLパラメータから保存リストを復元（共有機能用）
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sharedIds = params.get('ids');
+    if (sharedIds) {
+      const ids = sharedIds.split(',').map(Number).filter(n => !isNaN(n));
+      if (ids.length > 0) {
+        // 既存の保存リストとマージするか、共有されたリストで上書きするか
+        // ここでは、共有されたリストを一時的に表示するのではなく、
+        // ユーザーの保存リストに追加する挙動とする（または確認ダイアログを出すのが丁寧だが、今回はシンプルに追加）
+        setSavedIds(prev => {
+          const newIds = Array.from(new Set([...prev, ...ids]));
+          localStorage.setItem('noto_saved_items', JSON.stringify(newIds));
+          return newIds;
+        });
+        
+        // URLパラメータをクリアして、通常の表示に戻す
+        window.history.replaceState({}, '', window.location.pathname);
+      }
     }
   }, []);
 
@@ -43,9 +66,28 @@ const SupportArchive = () => {
   const [filterProvider, setFilterProvider] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>(''); // ★検索クエリ
   const [showSavedOnly, setShowSavedOnly] = useState<boolean>(false); // ★保存のみ表示モード
+  const [showShareModal, setShowShareModal] = useState<boolean>(false); // ★共有モーダル表示
 
   // Hook
   const { savedIds, toggleSave } = useSavedItems();
+  const [location] = useLocation();
+
+  // 共有URL生成
+  const generateShareUrl = () => {
+    if (savedIds.length === 0) return '';
+    const baseUrl = window.location.origin + location;
+    const params = new URLSearchParams();
+    params.set('ids', savedIds.join(','));
+    return `${baseUrl}?${params.toString()}`;
+  };
+
+  const copyToClipboard = () => {
+    const url = generateShareUrl();
+    navigator.clipboard.writeText(url).then(() => {
+      alert('共有URLをコピーしました');
+      setShowShareModal(false);
+    });
+  };
 
   // Filtering Logic
   const filteredItems = useMemo(() => {
@@ -198,13 +240,33 @@ const SupportArchive = () => {
               </div>
             )}
 
-            {/* 検索結果カウント & ステータス */}
-            <div className="mb-6 flex justify-between items-end border-b border-gray-200 pb-2">
+            {/* 検索結果カウント & ステータス & アクションボタン */}
+            <div className="mb-6 flex flex-col md:flex-row justify-between items-end border-b border-gray-200 pb-2 gap-4">
               <div className="text-gray-500 text-sm">
                 <span className="font-bold text-[#1D3A52] text-lg mr-1">{filteredItems.length}</span>
                 件の制度を表示中
                 {showSavedOnly && <span className="ml-2 text-[#B33E28] font-bold">（保存した制度のみ）</span>}
               </div>
+
+              {/* 保存リスト表示時のみ表示するアクションボタン */}
+              {showSavedOnly && savedIds.length > 0 && (
+                <div className="flex gap-2 no-print">
+                  <button
+                    onClick={() => setShowShareModal(true)}
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-[#1D3A52] bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <Share2 className="w-4 h-4" />
+                    リストを共有
+                  </button>
+                  <button
+                    onClick={() => window.print()}
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-[#1D3A52] rounded-lg hover:bg-[#152a3d] transition-colors"
+                  >
+                    <Printer className="w-4 h-4" />
+                    リストを印刷
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* -------------------------------------------------- */}
@@ -305,6 +367,54 @@ const SupportArchive = () => {
       </main>
 
       <Footer />
+
+      {/* 共有モーダル */}
+      {showShareModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 relative animate-fade-in-up">
+            <button 
+              onClick={() => setShowShareModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            
+            <h3 className="text-xl font-bold text-[#1D3A52] mb-4 flex items-center gap-2">
+              <Share2 className="w-5 h-5" />
+              保存リストを共有
+            </h3>
+            
+            <p className="text-sm text-gray-600 mb-4">
+              以下のURLをコピーして、メールやチャットで共有してください。<br/>
+              受け取った人がこのURLを開くと、現在の保存リストが反映されます。
+            </p>
+            
+            <div className="flex gap-2 mb-6">
+              <input 
+                type="text" 
+                readOnly 
+                value={generateShareUrl()} 
+                className="flex-1 bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 outline-none"
+              />
+              <button 
+                onClick={copyToClipboard}
+                className="bg-[#1D3A52] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#152a3d] transition-colors whitespace-nowrap"
+              >
+                コピー
+              </button>
+            </div>
+            
+            <div className="text-center">
+              <button 
+                onClick={() => setShowShareModal(false)}
+                className="text-gray-500 text-sm hover:text-gray-800 underline"
+              >
+                閉じる
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { SUPPORT_ITEMS } from '@/data/supportData';
-import { ChevronRight, Download, ExternalLink, CheckCircle2, Calendar, User, FileText, Phone, Clock } from 'lucide-react';
+import { ChevronRight, Download, ExternalLink, CheckCircle2, Calendar, User, FileText, Phone, Clock, Printer } from 'lucide-react';
 import NotFound from './NotFound';
 
 interface SupportDetailPageProps {
@@ -188,6 +188,14 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                   >
                     申請書類をダウンロード
                     <Download className="w-4 h-4" />
+                  </button>
+
+                  <button 
+                    className="flex items-center justify-center gap-2 w-full bg-white text-slate-700 font-bold py-3 px-6 rounded-lg border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-colors shadow-sm no-print"
+                    onClick={() => window.print()}
+                  >
+                    このページを印刷する
+                    <Printer className="w-4 h-4" />
                   </button>
                 </div>
                 
