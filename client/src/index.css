@@ -27,6 +27,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-focus: var(--focus);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -43,7 +44,8 @@
 }
 
 :root {
-  /* Noto Hyakugyo Theme Colors */
+  /* Noto Hyakugyo Theme Colors (UD Compliant) */
+  
   /* 勝色 (Kachiiro) - Deep Indigo: #1D3A52 -> oklch(0.32 0.06 250) */
   --primary: oklch(0.32 0.06 250);
   --primary-foreground: oklch(0.98 0.01 85);
@@ -56,6 +58,9 @@
   --background: oklch(0.98 0.01 85);
   /* 墨色 (Sumi) - Charcoal: #2B2B2B -> oklch(0.25 0 0) */
   --foreground: oklch(0.25 0 0);
+
+  /* Focus Indicator (Digital Agency Spec): #FFD700 -> oklch(0.85 0.2 85) */
+  --focus: oklch(0.85 0.2 85);
 
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.25 0 0);
@@ -114,34 +119,40 @@
   --border: oklch(0.3 0.02 250);
   --input: oklch(0.3 0.02 250);
   --ring: oklch(0.4 0.08 250);
+  --focus: oklch(0.85 0.2 85);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
+  }
+  
+  /* UD基準: フォーカスインジケーター (Focus Indicator) */
+  /* キーボード操作やタップ時のアクセシビリティを確保 */
+  *:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
   }
   
   html {
     /* 
       UD基準: 単位設定 (Unit)
       pxを使用せず、ルート相対単位remを使用する。
-      ブラウザのデフォルトフォントサイズ（通常16px）を基準とするため、
-      html要素への固定px指定は行わない。
     */
   }
 
   body {
     @apply bg-background text-foreground;
-    /* UD基準: 本文フォント BIZ UDPGothic */
-    font-family: "BIZ UDPGothic", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    /* UD基準: 本文フォント Noto Sans JP */
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
     
     /* 
       UD基準: 文字サイズ (Font-Size) & 行間 (line-height)
-      Mobile: 1rem (16px), line-height 1.7
-      Desktop: 1.125rem (18px), line-height 1.9
+      Mobile: 1rem (16px), line-height 1.8
+      Desktop: 1.125rem (18px), line-height 2.0
     */
     font-size: 1rem;
-    line-height: 1.7;
+    line-height: 1.8;
     
     /* UD基準: 文字色 #2B2B2B */
     color: var(--foreground);
@@ -150,24 +161,41 @@
   @media (min-width: 768px) {
     body {
       font-size: 1.125rem; /* 18px */
-      line-height: 1.9;
+      line-height: 2.0;
     }
   }
 
-  /* 見出しフォント設定 */
+  /* 見出しフォント設定: Noto Serif JP */
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+    font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
     font-weight: 700;
     line-height: 1.5;
   }
 
+  /* リンクの視認性強化 (Link Decoration) */
+  a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+  }
+  
+  a:hover {
+    opacity: 0.8;
+  }
+  
+  /* ナビゲーションやボタンなど、下線が不要な場合のクラス */
+  .no-underline-link {
+    text-decoration: none;
+  }
+
   /* ユーティリティクラス */
   .font-serif {
-    font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+    font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
   }
   
   .font-sans {
-    font-family: "BIZ UDPGothic", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
   }
 
   .writing-vertical-rl {

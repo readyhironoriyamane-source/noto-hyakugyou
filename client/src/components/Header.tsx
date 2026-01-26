@@ -43,7 +43,8 @@ export default function Header() {
       >
         <div className="container flex justify-between items-center h-full">
           <div className="flex items-center gap-4 z-50">
-             <a href="/" className="font-serif font-bold text-xl md:text-2xl tracking-widest text-foreground hover:opacity-80 transition-opacity flex items-center gap-2">
+             {/* UD対応: ロゴリンクは下線なし（no-underline-link） */}
+             <a href="/" className="no-underline-link font-serif font-bold text-xl md:text-2xl tracking-widest text-foreground hover:opacity-80 transition-opacity flex items-center gap-2">
                {/* ロゴがあれば表示 */}
                {/* <img src="/logo.svg" alt="" className="h-8 w-auto hidden" /> */}
                能登百業録
