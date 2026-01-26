@@ -4,11 +4,11 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import AboutPage from "./pages/AboutPage";
+
 import ContactPage from "./pages/ContactPage";
 import Home from "./pages/Home";
 import IndustryDetailPage from "./pages/IndustryDetailPage";
-import MapPage from "./pages/MapPage";
+
 import PrivacyPage from "./pages/PrivacyPage";
 
 function Router() {
