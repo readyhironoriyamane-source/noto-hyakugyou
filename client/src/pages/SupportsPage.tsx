@@ -118,25 +118,25 @@ export default function SupportsPage() {
           )}
         </div>
 
-        {/* 相談誘導エリア (Consultation CTA) */}
-        <div className="bg-[#E8F5E9] rounded-2xl p-8 md:p-12 text-center border border-[#C8E6C9]">
-          <h2 className="text-xl md:text-2xl font-bold text-[#2E7D32] mb-4">
+        {/* 相談誘導エリア (Consultation CTA) - 脱・緑色 */}
+        <div className="bg-[#F9F8F4] rounded-2xl p-8 md:p-12 text-center border border-[#1D3A52]">
+          <h2 className="text-xl md:text-2xl font-bold text-[#1D3A52] mb-4">
             どの制度を使えばいいか分からない方へ
           </h2>
-          <p className="text-[#1B5E20] mb-8 font-medium">
+          <p className="text-[#1D3A52] mb-8 font-medium">
             専門の相談員が、あなたの状況に合わせて最適な制度をご案内します。<br className="hidden md:block" />
             まずはお近くの商工会へお電話ください。
           </p>
           <div className="flex flex-col md:flex-row justify-center gap-4">
             <a 
               href="tel:0768-62-0181" 
-              className="flex items-center justify-center gap-3 bg-[#2E7D32] text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:bg-[#1B5E20] transition-colors active:scale-95 no-underline"
+              className="flex items-center justify-center gap-3 bg-[#1D3A52] text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:bg-[#1D3A52]/90 transition-colors active:scale-95 no-underline"
             >
               <Phone className="w-6 h-6" />
               商工会に電話で相談する
             </a>
             <Link href="/contact">
-              <a className="flex items-center justify-center gap-3 bg-white text-[#2E7D32] font-bold py-4 px-8 rounded-xl shadow border-2 border-[#2E7D32] hover:bg-[#F1F8E9] transition-colors active:scale-95 no-underline">
+              <a className="flex items-center justify-center gap-3 bg-white text-[#1D3A52] font-bold py-4 px-8 rounded-xl shadow border-2 border-[#1D3A52] hover:bg-gray-50 transition-colors active:scale-95 no-underline">
                 <MessageCircle className="w-6 h-6" />
                 相談窓口の一覧を見る
               </a>
@@ -159,7 +159,10 @@ function SupportCard({ support, isClosingSoon, isExpired }: { support: SupportSy
   const badgeColor = support.badgeColor || '#2B2B2B';
 
   return (
-    <div className={`bg-white rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col h-full group relative overflow-hidden ${expired ? 'opacity-60 grayscale' : ''}`}>
+    <div 
+      className={`bg-white rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col h-full group relative overflow-hidden ${expired ? 'opacity-60 grayscale' : ''}`}
+      style={{ borderLeft: 'none' }} // 左ボーダー強制削除
+    >
       
       {/* 左上バッジ (Badge Style) */}
       <div className="absolute top-6 left-6 z-10">
@@ -226,6 +229,7 @@ function SupportCard({ support, isClosingSoon, isExpired }: { support: SupportSy
           <a 
             href={support.link || "#"}
             className="inline-flex items-center text-sm font-bold text-primary hover:text-accent transition-colors no-underline"
+            style={{ textDecoration: 'none' }} // 下線強制削除
           >
             詳細・相談先を見る <ArrowUpRight className="w-4 h-4 ml-1" />
           </a>
