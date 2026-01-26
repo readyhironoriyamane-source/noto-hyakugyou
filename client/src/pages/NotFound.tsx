@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Home, Map } from "lucide-react";
+import { Home, List } from "lucide-react";
 
 export default function NotFound() {
   return (
@@ -37,17 +37,17 @@ export default function NotFound() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="/"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 transition-colors tracking-widest text-sm"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white hover:bg-slate-800 transition-colors tracking-widest text-sm no-underline"
             >
               <Home className="w-4 h-4" />
               トップに戻る
             </a>
             <a 
-              href="/map"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white transition-colors tracking-widest text-sm"
+              href="/supports"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white transition-colors tracking-widest text-sm no-underline"
             >
-              <Map className="w-4 h-4" />
-              地図から探す
+              <List className="w-4 h-4" />
+              支援制度一覧に戻る
             </a>
           </div>
           

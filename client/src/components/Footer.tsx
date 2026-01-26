@@ -6,18 +6,18 @@ export default function Footer() {
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
           {/* About & Noto Town Hall Info */}
-          <div className="flex flex-row items-start gap-6">
-            {/* ロゴ画像（背景なし・サイズ拡大） */}
-            <div className="shrink-0 mt-1">
-              <div className="relative h-32 w-28">
+          <div className="flex flex-row items-start gap-12">
+            {/* ロゴ画像（背景なし・サイズ2倍拡大） */}
+            <div className="shrink-0">
+              <div className="relative h-64 w-56">
                 <img 
                   src="/images/logo.png" 
                   alt="能登百業録ロゴ" 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain object-top"
                 />
               </div>
             </div>
-            <div>
+            <div className="pt-2">
               <h3 className="font-serif text-xl text-white mb-4 tracking-wider">
                 能登百業録
               </h3>
