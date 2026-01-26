@@ -2,13 +2,22 @@ import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, ArrowUpRight, FileText } from 'lucide-react';
 import { industries } from '@/data/industries';
-// import DetailModal from '@/components/DetailModal'; // Removed unused import
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import SupportCard from '@/components/SupportCard';
+import ConsultationCTA from '@/components/ConsultationCTA';
+import { supportSystems } from '@/lib/supports';
 
 export default function Home() {
   // 活用事例記事（isCaseStudyがtrue）のみを取得
   const caseStudies = industries.filter(i => i.isCaseStudy);
+
+  // TOPページに表示する「使える支援制度」3選（固定）
+  const featuredSupports = [
+    supportSystems.find(s => s.id === 'nariwai-ishikawa'), // 大規模再建（県）
+    supportSystems.find(s => s.id === 'jizokuka-national'), // 販路・汎用（国）
+    supportSystems.find(s => s.id === 'nariwai-noto'), // 上乗せ支援（町）
+  ].filter(Boolean); // undefinedを除外
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -209,216 +218,75 @@ export default function Home() {
                   {/* ① 課題ラベル（最優先情報） */}
                   {study.challengeCard && (
                     <div className="mb-4">
-                      <span className="inline-block bg-[#B33E28] text-white text-sm font-bold px-3 py-1 rounded tracking-wider">
+                      <span className="inline-block bg-accent/10 text-accent font-bold text-sm px-3 py-1 rounded-full tracking-wide">
                         {study.challengeCard.label}
                       </span>
                     </div>
                   )}
 
-                  {/* ② 属性データ（コントラスト改善） */}
-                  <div className="flex flex-wrap items-center gap-3 mb-4">
-                    <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
-                      {study.category}
-                    </span>
-                    <span className="text-xs text-[#444] font-medium tracking-widest flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#666]"></span>
-                      {study.location}
-                    </span>
-                  </div>
-
-                  {/* ③ タイトル（下線削除・ゴシック化） */}
-                  <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors">
+                  {/* ② タイトル（明朝体で大きく） */}
+                  <h3 className="font-serif text-2xl font-bold text-primary mb-4 leading-tight group-hover:text-accent transition-colors">
                     {study.title}
                   </h3>
 
-                  {/* ④ 本文リード文（下線削除・ゴシック化） */}
-                  <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3 flex-grow">
+                  {/* ③ リード文（ゴシック体、行間広め） */}
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
                     {study.summary}
                   </p>
 
-                  {/* ⑤ 構造化データブロック（新設） */}
-                  {study.challengeCard?.structuredBlock && (
-                    <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
-                      {study.challengeCard.structuredBlock.map((block, idx) => (
-                        <div key={idx} className="text-sm">
-                          <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
-                            {block.label}
-                          </span>
-                          <ul className="list-disc list-inside text-gray-600 pl-1">
-                            {block.items.map((item, i) => {
-                              // 支援制度へのリンクマッピング
-                              let linkTarget = "";
-                              if (item.includes("なりわい再建支援補助金") && !item.includes("能登町")) {
-                                linkTarget = "#support-nariwai";
-                              } else if (item.includes("小規模事業者持続化補助金")) {
-                                linkTarget = "#support-jizoku";
-                              } else if (item.includes("能登町なりわい再建支援補助金")) {
-                                linkTarget = "#support-noto-nariwai";
-                              }
-
-                              return (
-                                <li key={i} className="leading-[1.8] mb-[8px] last:mb-0">
-                                  {linkTarget ? (
-                                    // ネストされたaタグを避けるため、objectタグでラップするか、イベント伝播を止める
-                                    <object>
-                                      <a 
-                                        href={linkTarget} 
-                                        className="text-primary hover:text-accent hover:underline decoration-1 underline-offset-2 font-medium transition-colors cursor-pointer"
-                                        onClick={(e) => {
-                                          // 親のカードリンクへの遷移を防止
-                                          e.stopPropagation();
-                                          // スムーズスクロール
-                                          const target = document.querySelector(linkTarget);
-                                          if (target) {
-                                            e.preventDefault();
-                                            target.scrollIntoView({ behavior: 'smooth' });
-                                          }
-                                        }}
-                                      >
-                                        {item}
-                                      </a>
-                                    </object>
-                                  ) : (
-                                    item
-                                  )}
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* ⑥ ボタン */}
-                  <div className="mt-auto pt-4 border-t border-gray-100">
-                    <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
-                      詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
-                    </div>
+                  {/* ④ フッター情報（業種・地域） */}
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground border-t border-border/50 pt-4 mt-auto">
+                    <span className="flex items-center gap-1">
+                      <Construction className="w-3 h-3" />
+                      {study.category}
+                    </span>
+                    <span className="w-[1px] h-3 bg-border"></span>
+                    <span>{study.location}</span>
                   </div>
                 </div>
               </a>
             ))}
-            
-            {/* 事例が少ない場合のプレースホルダー */}
-            {caseStudies.length === 0 && (
-              <div className="col-span-full text-center py-20 bg-muted/30 rounded-xl border-2 border-dashed border-muted-foreground/30">
-                <p className="text-lg md:text-xl text-muted-foreground font-bold">現在、公開準備中の事例があります。</p>
-              </div>
-            )}
           </div>
         </section>
 
-        {/* 支援制度セクション */}
+        {/* 使える支援制度セクション (Strict Style) */}
         <section className="mb-32">
-          <div className="mb-16">
-            <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary mb-6">使える支援制度</h2>
-            <p className="text-foreground/80 text-base md:text-lg leading-loose font-sans">
-              復旧・復興に向けた、国や自治体の支援制度をご案内します。<br className="block md:hidden" />
-              あなたの状況に合わせてご活用ください。
-            </p>
+          <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary mb-6">使える支援制度</h2>
+              <p className="text-foreground/80 text-base md:text-lg leading-loose font-sans">
+                復旧・再建から、販路開拓まで。<br className="block md:hidden" />
+                今すぐ使える制度を厳選しました。
+              </p>
+            </div>
+            <Link href="/supports">
+              <a className="hidden md:inline-flex items-center gap-2 text-primary font-bold hover:text-accent transition-colors border-b-2 border-primary/20 hover:border-accent pb-1 no-underline">
+                すべての制度を見る <ArrowRight className="w-4 h-4" />
+              </a>
+            </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {[
-              {
-                id: "support-nariwai",
-                badge: "石川県",
-                badgeColor: "bg-[#1D3A52]",
-                title: "なりわい再建支援補助金",
-                catch: "工場・店舗の再建、\n機械設備の復旧に",
-                content: "施設・設備の復旧費用を補助（中堅企業等も対象）",
-                amount: "上限 15億円",
-                condition: "補助率 3/4（中堅は1/2）",
-                link: "#"
-              },
-              {
-                id: "support-jizoku",
-                badge: "国",
-                badgeColor: "bg-[#2B2B2B]",
-                title: "小規模事業者持続化補助金\n（災害支援枠）",
-                catch: "販路開拓や、\n業務効率化の取り組みに",
-                content: "機械装置等費、広報費、ウェブサイト関連費など",
-                amount: "上限 200万円",
-                condition: "売上減少の間接被害の場合は100万円",
-                link: "#"
-              },
-              {
-                id: "support-noto-nariwai",
-                badge: "能登町",
-                badgeColor: "bg-[#B33E28]",
-                title: "能登町なりわい再建\n支援補助金",
-                catch: "県の補助金に対する\n「自己負担」を軽減",
-                content: "「なりわい再建支援補助金」の対象経費から交付決定額を引いた額を補助",
-                amount: "補助率 3/5",
-                condition: "町への申請が必要",
-                link: "#"
-              }
-            ].map((item, index) => (
-              <div id={item.id} key={index} className="bg-white rounded-xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col overflow-hidden group scroll-mt-32 relative">
-                
-                {/* 左上バッジ (Badge Style) */}
-                <div className="absolute top-6 left-6 z-10">
-                  <span className={`${item.badgeColor} text-white px-3 py-1 rounded font-bold text-xs tracking-wider shadow-sm`}>
-                    {item.badge}
-                  </span>
-                </div>
-                
-                <div className="p-8 pt-16 flex flex-col flex-grow">
-                  {/* メインタイトル（目的） - 20px Bold #1D3A52 */}
-                  <h3 className="text-[20px] font-bold text-[#1D3A52] mb-2 leading-snug whitespace-pre-line">
-                    {item.catch}
-                  </h3>
-                  
-                  {/* 制度名（正式名称） - 14px Normal #666666 */}
-                  <p className="text-[14px] font-normal text-[#666666] mb-6 whitespace-pre-line leading-snug">
-                    {item.title}
-                  </p>
-
-                  {/* 支援内容 */}
-                  <div className="mb-6 flex-grow">
-                    <p className="text-sm text-muted-foreground mb-2 font-bold">支援内容</p>
-                    <p className="text-sm text-foreground/80 leading-relaxed">
-                      {item.content}
-                    </p>
-                  </div>
-
-                  {/* 金額・条件 */}
-                  <div className="bg-muted/30 rounded-lg p-4 space-y-3 mb-6">
-                    <div className="flex items-start gap-3">
-                      <Coins className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-xs font-bold text-muted-foreground block mb-0.5">金額</span>
-                        <span className="text-base font-bold text-foreground">{item.amount}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <FileText className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-xs font-bold text-muted-foreground block mb-0.5">条件など</span>
-                        <span className="text-sm font-medium text-foreground">{item.condition}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 詳しく見るリンク (No Underline) */}
-                  <div className="mt-auto text-right">
-                    <a href={item.link} className="inline-flex items-center text-sm font-bold text-primary hover:text-accent transition-colors no-underline">
-                      詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
-                    </a>
-                  </div>
-                </div>
+          {/* 厳選3カード (Strict SupportCard) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredSupports.map((support) => (
+              <div key={support?.id} className="h-full">
+                {support && <SupportCard support={support} />}
               </div>
             ))}
           </div>
 
-          {/* 一覧ボタン (No Underline) */}
-          <div className="text-center">
-            <Link href="/supports" className="inline-flex items-center justify-center gap-3 bg-primary text-white px-10 py-4 rounded-full font-bold tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl group no-underline">
-              支援制度一覧を見る
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          <div className="mt-12 text-center md:hidden">
+            <Link href="/supports">
+              <a className="inline-flex items-center gap-2 text-primary font-bold hover:text-accent transition-colors border-b-2 border-primary/20 hover:border-accent pb-1 no-underline">
+                すべての制度を見る <ArrowRight className="w-4 h-4" />
+              </a>
             </Link>
           </div>
+        </section>
+
+        {/* 相談誘導エリア (Strict ConsultationCTA) */}
+        <section>
+          <ConsultationCTA />
         </section>
 
       </main>
