@@ -68,11 +68,11 @@ export default function Home() {
                   </h2>
                   <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
                      {[
-                        { icon: "💰", label: "資金繰りが\n厳しい" },
                         { icon: "👥", label: "後継者が\nいない" },
-                        { icon: "📈", label: "売上を\n伸ばしたい" },
-                        { icon: "🚪", label: "事業を\nたたみたい" },
-                        { icon: "❓", label: "何から始めれば\nいいかわからない" }
+                        { icon: "🤝", label: "人材を\n確保したい" },
+                        { icon: "🏗️", label: "設備の復旧・\n改修がしたい" },
+                        { icon: "💰", label: "資金繰りが\n厳しい" },
+                        { icon: "📈", label: "売上を\n伸ばしたい" }
                      ].map((item, index) => (
                         <button 
                            key={index}
