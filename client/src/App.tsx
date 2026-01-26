@@ -9,6 +9,7 @@ import ContactPage from "./pages/ContactPage";
 import Home from "./pages/Home";
 import IndustryDetailPage from "./pages/IndustryDetailPage";
 import SupportArchivePage from "./pages/SupportArchivePage";
+import SupportDetailPage from "./pages/SupportDetailPage";
 
 import PrivacyPage from "./pages/PrivacyPage";
 
@@ -21,6 +22,7 @@ function Router() {
       <Route path={"/contact"} component={ContactPage} />
       <Route path={"/industry/:id"} component={IndustryDetailPage} />
       <Route path={"/supports"} component={SupportArchivePage} />
+      <Route path={"/support/:id"} component={SupportDetailPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
