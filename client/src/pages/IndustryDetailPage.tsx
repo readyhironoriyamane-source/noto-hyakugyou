@@ -221,9 +221,7 @@ export default function IndustryDetailPage() {
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
                   className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentImageIndex
-                      ? "bg-white w-8"
-                      : "bg-white/50 hover:bg-white/75"
+                    currentImageIndex === index ? "bg-white scale-125" : "bg-white/50 hover:bg-white/80"
                   }`}
                   aria-label={`${index + 1}枚目の画像を表示`}
                 />
@@ -232,257 +230,162 @@ export default function IndustryDetailPage() {
           </>
         )}
 
-        <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 text-white">
+        <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 text-white">
           <div className="container">
-            {isCaseStudy && industry.challengeCard && (
-              <div className="inline-flex items-center gap-2 px-5 py-2 bg-accent text-white text-base font-bold rounded-full mb-6 backdrop-blur-sm shadow-lg">
-                <AlertCircle className="w-5 h-5" />
-                {industry.challengeCard.label}
-              </div>
-            )}
-            <div className="text-base md:text-lg tracking-[0.2em] mb-4 opacity-90 font-medium">{industry.category}</div>
-            <h1 className="text-4xl md:text-6xl font-bold font-serif leading-tight mb-6 drop-shadow-lg">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="bg-accent text-white px-4 py-1 text-sm font-bold rounded-full tracking-wider shadow-sm">
+                {industry.category}
+              </span>
+              <span className="flex items-center gap-1 text-sm font-medium tracking-wider bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
+                <span className="w-2 h-2 rounded-full bg-white"></span>
+                {industry.location}
+              </span>
+            </div>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 leading-tight drop-shadow-lg">
               {industry.title}
             </h1>
-            {isCaseStudy && (
-              <div className="flex flex-wrap gap-3">
-                {industry.tags?.map((tag, i) => (
-                  <span key={i} className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/30 rounded text-base font-medium">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            )}
+            <p className="text-lg md:text-xl text-white/90 max-w-3xl leading-relaxed font-medium drop-shadow-md">
+              {industry.summary}
+            </p>
           </div>
         </div>
       </div>
 
+      {/* Main Content */}
       <div className="container py-16 md:py-24">
-        {isCaseStudy ? (
-          // 活用事例用のレイアウト（新構成）
-          <div className="space-y-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* Left Column: Article Content */}
+          <div className="lg:col-span-8 space-y-16">
             
-            {/* 1. 要点・概要 */}
-            <section className="prose prose-stone prose-lg max-w-none">
-              <div className="bg-secondary/30 p-8 md:p-12 rounded-lg border-l-8 border-primary mb-16">
-                <h3 className="text-2xl font-bold font-serif mb-8 flex items-center gap-4 text-primary">
-                  <CheckCircle2 className="w-8 h-8 text-primary" />
-                  この事例の要点
-                </h3>
-                <ul className="space-y-6 m-0 p-0 list-none">
-                  {industry.keyPoints?.map((point, i) => (
-                    <li key={i} className="flex items-start gap-4 text-foreground text-lg md:text-xl leading-loose">
-                      <span className="w-2 h-2 bg-primary rounded-full mt-3 shrink-0" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-16 mb-16">
-                <div>
-                  <h3 className="text-xl font-bold font-serif mb-6 text-primary border-b-2 border-primary/20 pb-3">どんな仕事？</h3>
-                  <p className="text-foreground leading-loose text-base md:text-lg font-sans">{industry.jobDescription}</p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold font-serif mb-6 text-primary border-b-2 border-primary/20 pb-3">直面した課題</h3>
-                  <p className="text-foreground leading-loose text-base md:text-lg font-sans">{industry.challengeDetail}</p>
-                </div>
-              </div>
-            </section>
-
-            {/* 2. 未来への選択（旧：再建への道のり） */}
-            <section className="relative">
-              <div className="text-center mb-20">
-                <h2 className="text-3xl md:text-4xl font-serif font-bold inline-block relative pb-8 text-primary">
-                  未来への選択
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-[2px] bg-accent"></span>
+            {/* 課題と解決策（活用事例の場合のみ表示） */}
+            {isCaseStudy && industry.challengeCard && (
+              <section ref={el => sectionsRef.current[0] = el} className="bg-card rounded-xl p-8 md:p-10 shadow-lg border-l-4 border-accent">
+                <h2 className="text-2xl font-serif font-bold text-primary mb-8 flex items-center gap-3">
+                  <AlertCircle className="w-8 h-8 text-accent" />
+                  直面していた課題
                 </h2>
-              </div>
-
-              <div className="relative pl-8 md:pl-0">
-                {/* 垂直タイムラインの線 */}
-                <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-[2px] bg-border -translate-x-1/2 hidden md:block"></div>
-                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-border md:hidden"></div>
-
-                {/* STEP 01: 検討した選択肢 */}
-                <div className="relative mb-24 md:grid md:grid-cols-2 md:gap-20 items-start">
-                  <div className="hidden md:block text-right pt-2">
-                    <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 01</span>
-                    <h3 className="text-2xl font-bold font-serif mt-3 text-foreground">検討した選択肢</h3>
-                  </div>
-                  
-                  {/* タイムラインのドット */}
-                  <div className="absolute left-0 md:left-1/2 w-5 h-5 bg-background border-4 border-muted-foreground rounded-full -translate-x-[calc(50%-1px)] mt-3 z-10"></div>
-
-                  <div className="pl-10 md:pl-0 pt-1 md:pt-0">
-                    <div className="md:hidden mb-6">
-                      <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 01</span>
-                      <h3 className="text-2xl font-bold font-serif mt-2 text-foreground">検討した選択肢</h3>
-                    </div>
-                    <div className="flex flex-wrap gap-4">
-                      {industry.decisionProcess?.options.map((option, i) => (
-                        <span key={i} className="px-5 py-3 bg-white border border-border text-foreground text-base md:text-lg rounded-md shadow-sm">
-                          {option}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* STEP 02: なぜこれを選んだ？ & 決定事項 */}
-                <div className="relative mb-24 md:grid md:grid-cols-2 md:gap-20 items-start">
-                  <div className="hidden md:block text-right pt-2">
-                    <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 02</span>
-                    <h3 className="text-2xl font-bold font-serif mt-3 text-foreground">なぜこれを選んだ？</h3>
-                  </div>
-
-                  {/* タイムラインのドット（強調） */}
-                  <div className="absolute left-0 md:left-1/2 w-6 h-6 bg-accent border-4 border-background rounded-full -translate-x-[calc(50%-1px)] mt-3 z-10 shadow-md ring-2 ring-accent/30"></div>
-
-                  <div className="pl-10 md:pl-0 pt-1 md:pt-0">
-                    <div className="md:hidden mb-6">
-                      <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 02</span>
-                      <h3 className="text-2xl font-bold font-serif mt-2 text-foreground">なぜこれを選んだ？</h3>
-                    </div>
-                    <p className="text-foreground leading-loose text-base md:text-lg mb-10 font-sans">
-                      {industry.decisionProcess?.reason}
-                    </p>
-
-                    {/* 決定事項カード（CV） */}
-                    <div className="bg-card border-l-8 border-accent p-8 shadow-md hover:shadow-xl transition-all group cursor-pointer relative overflow-hidden rounded-r-lg">
-                      <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <FileText className="w-24 h-24 text-accent" />
-                      </div>
-                      <div className="relative z-10">
-                        <span className="text-sm font-bold tracking-widest text-accent mb-3 block uppercase">Selected Support</span>
-                        <h4 className="text-2xl font-bold font-serif text-foreground mb-4 group-hover:text-accent transition-colors flex items-center gap-3">
-                          {industry.decisionProcess?.selectedSupport}
-                          <ArrowRight className="w-6 h-6 text-accent opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                        </h4>
-                        <p className="text-muted-foreground text-base font-medium leading-relaxed">
-                          {industry.supportMenu?.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* STEP 03: 実行したアクション */}
-                <div className="relative mb-24 md:grid md:grid-cols-2 md:gap-20 items-start">
-                  <div className="hidden md:block text-right pt-2">
-                    <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 03</span>
-                    <h3 className="text-2xl font-bold font-serif mt-3 text-foreground">実行したアクション</h3>
-                  </div>
-
-                  {/* タイムラインのドット */}
-                  <div className="absolute left-0 md:left-1/2 w-5 h-5 bg-background border-4 border-muted-foreground rounded-full -translate-x-[calc(50%-1px)] mt-3 z-10"></div>
-
-                  <div className="pl-10 md:pl-0 pt-1 md:pt-0">
-                    <div className="md:hidden mb-6">
-                      <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 03</span>
-                      <h3 className="text-2xl font-bold font-serif mt-2 text-foreground">実行したアクション</h3>
-                    </div>
-                    <p className="text-foreground leading-loose text-base md:text-lg font-sans">
-                      {industry.decisionProcess?.action}
-                    </p>
-                  </div>
-                </div>
-
-                {/* STEP 04: 変化と現在 */}
-                <div className="relative md:grid md:grid-cols-2 md:gap-20 items-start">
-                  <div className="hidden md:block text-right pt-2">
-                    <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 04</span>
-                    <h3 className="text-2xl font-bold font-serif mt-3 text-foreground">変化と現在</h3>
-                  </div>
-
-                  {/* タイムラインのドット */}
-                  <div className="absolute left-0 md:left-1/2 w-5 h-5 bg-background border-4 border-muted-foreground rounded-full -translate-x-[calc(50%-1px)] mt-3 z-10"></div>
-
-                  <div className="pl-10 md:pl-0 pt-1 md:pt-0">
-                    <div className="md:hidden mb-6">
-                      <span className="text-base font-bold tracking-widest text-muted-foreground">STEP 04</span>
-                      <h3 className="text-2xl font-bold font-serif mt-2 text-foreground">変化と現在</h3>
-                    </div>
-                    <p className="text-foreground leading-loose text-base md:text-lg font-sans">
-                      {industry.decisionProcess?.outcome}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* 3. 編集部コメント & おすすめ支援メニュー */}
-            <section className="bg-secondary/20 p-8 md:p-16 rounded-lg border border-border">
-              <div className="flex items-start gap-6 mb-12">
-                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center shrink-0 border border-border">
-                  <span className="font-serif font-bold text-muted-foreground text-xl">編</span>
-                </div>
-                <div className="bg-card p-8 rounded-xl shadow-sm relative flex-1 border border-border">
-                  <div className="absolute top-6 -left-3 w-6 h-6 bg-card transform rotate-45 border-l border-b border-border"></div>
-                  <h3 className="text-sm font-bold text-muted-foreground mb-4 tracking-widest">EDITOR'S NOTE</h3>
-                  <p className="text-foreground leading-loose text-base md:text-lg font-sans">
-                    {industry.editorComment}
+                <div className="bg-background rounded-lg p-6 mb-8 border border-border">
+                  <p className="text-lg font-bold text-foreground mb-2">{industry.challengeCard.label}</p>
+                  <p className="text-foreground/80 leading-relaxed">
+                    {industry.challengeCard.description}
                   </p>
                 </div>
-              </div>
+                
+                <div className="flex justify-center my-8">
+                  <ArrowRight className="w-10 h-10 text-accent animate-bounce" />
+                </div>
 
-              <div className="mt-16">
-                <h3 className="text-2xl font-bold font-serif mb-8 text-center text-primary">
-                  この事例に関心がある方へのおすすめ支援メニュー
-                </h3>
-                <div className="grid md:grid-cols-2 gap-8">
-                  {industry.recommendedSupports?.map((support, i) => (
-                    <a key={i} href="#" className="block bg-card p-8 border border-border hover:border-accent transition-colors group shadow-sm rounded-lg">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-sm font-bold bg-secondary text-primary px-3 py-1 rounded tracking-wider">{support.category}</span>
-                        <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-accent transition-colors" />
+                <h2 className="text-2xl font-serif font-bold text-primary mb-8 flex items-center gap-3">
+                  <CheckCircle2 className="w-8 h-8 text-green-600" />
+                  解決へのアプローチ
+                </h2>
+                <div className="space-y-6">
+                  {industry.challengeCard.solutions.map((solution, idx) => (
+                    <div key={idx} className="flex items-start gap-4 bg-green-50/50 p-4 rounded-lg">
+                      <div className="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold shrink-0 mt-1">
+                        {idx + 1}
                       </div>
-                      <h4 className="text-xl font-bold font-serif text-foreground mb-3 group-hover:text-accent transition-colors">
-                        {support.title}
-                      </h4>
-                      <p className="text-muted-foreground text-base leading-relaxed">
-                        {support.description}
-                      </p>
-                    </a>
+                      <div>
+                        <h3 className="text-lg font-bold text-foreground mb-2">{solution.title}</h3>
+                        <p className="text-foreground/80 leading-relaxed">{solution.detail}</p>
+                      </div>
+                    </div>
                   ))}
                 </div>
+              </section>
+            )}
+
+            {/* 本文セクション */}
+            <section ref={el => sectionsRef.current[1] = el} className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-primary prose-p:text-foreground/80 prose-p:leading-loose prose-strong:text-accent">
+              {/* UD対応: 本文の構造化と平易な表現への書き換え */}
+              <div className="whitespace-pre-line">
+                {industry.description}
               </div>
             </section>
 
-          </div>
-        ) : (
-          // 通常記事（百業録）用のレイアウト
-          <div className="prose prose-stone prose-lg max-w-none">
-            <p className="text-lg md:text-xl leading-loose mb-12 font-serif text-foreground border-l-4 border-primary pl-6 py-2 bg-secondary/10">
-              {industry.description}
-            </p>
-            
-            <div className="grid md:grid-cols-2 gap-12 my-16">
-              <div className="bg-card p-8 rounded-lg border border-border shadow-sm">
-                <h3 className="text-xl font-bold font-serif mb-4 text-primary flex items-center gap-2">
-                  <AlertCircle className="w-6 h-6" />
-                  なぜ必要か
-                </h3>
-                <p className="text-foreground leading-loose font-sans text-base md:text-lg">{industry.necessity}</p>
-              </div>
-              <div className="bg-card p-8 rounded-lg border border-border shadow-sm">
-                <h3 className="text-xl font-bold font-serif mb-4 text-primary flex items-center gap-2">
-                  <CheckCircle2 className="w-6 h-6" />
-                  仕事を深く知る
-                </h3>
-                <ul className="space-y-3 list-none pl-0">
-                  {industry.details.map((detail, i) => (
-                    <li key={i} className="flex items-start gap-3 text-foreground leading-relaxed text-base md:text-lg">
-                      <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2.5 shrink-0" />
-                      {detail}
-                    </li>
+            {/* タイムライン（活用事例の場合のみ表示） */}
+            {isCaseStudy && industry.timeline && (
+              <section ref={el => sectionsRef.current[2] = el} className="bg-muted/30 rounded-xl p-8 md:p-10 border border-border">
+                <h2 className="text-2xl font-serif font-bold text-primary mb-10 text-center">
+                  これまでの歩み
+                </h2>
+                <div className="relative border-l-2 border-primary/30 ml-4 md:ml-8 space-y-12">
+                  {industry.timeline.map((item, idx) => (
+                    <div key={idx} className="relative pl-8 md:pl-12">
+                      <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-primary border-4 border-background"></div>
+                      <span className="text-sm font-bold text-accent tracking-wider mb-2 block">
+                        {item.year}
+                      </span>
+                      <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
+                      <p className="text-foreground/80 leading-relaxed">
+                        {item.content}
+                      </p>
+                    </div>
                   ))}
-                </ul>
+                </div>
+              </section>
+            )}
+
+          </div>
+
+          {/* Right Column: Sidebar Info */}
+          <div className="lg:col-span-4 space-y-8">
+            <div className="sticky top-24">
+              {/* 事業者情報カード */}
+              <div className="bg-card rounded-xl p-8 shadow-md border border-border mb-8">
+                <h3 className="text-lg font-serif font-bold text-primary mb-6 border-b border-border pb-4">
+                  事業者情報
+                </h3>
+                <dl className="space-y-6">
+                  <div>
+                    <dt className="text-sm text-muted-foreground font-bold mb-1">事業者名</dt>
+                    <dd className="text-lg font-medium">{industry.details?.owner}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm text-muted-foreground font-bold mb-1">所在地</dt>
+                    <dd className="text-base">{industry.location}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm text-muted-foreground font-bold mb-1">創業</dt>
+                    <dd className="text-base">{industry.details?.founded}</dd>
+                  </div>
+                  {industry.details?.employees && (
+                    <div>
+                      <dt className="text-sm text-muted-foreground font-bold mb-1">従業員数</dt>
+                      <dd className="text-base">{industry.details.employees}</dd>
+                    </div>
+                  )}
+                </dl>
               </div>
+
+              {/* 支援制度カード（活用事例の場合のみ表示） */}
+              {isCaseStudy && industry.supportSystem && (
+                <div className="bg-accent/5 rounded-xl p-8 border border-accent/20">
+                  <h3 className="text-lg font-serif font-bold text-accent mb-6 flex items-center gap-2">
+                    <FileText className="w-5 h-5" />
+                    活用した支援制度
+                  </h3>
+                  <div className="space-y-4">
+                    {industry.supportSystem.map((support, idx) => (
+                      <div key={idx} className="bg-white p-4 rounded-lg shadow-sm border border-accent/10">
+                        <h4 className="font-bold text-foreground mb-2 text-sm">{support.name}</h4>
+                        <p className="text-sm text-foreground/70 leading-relaxed mb-3">
+                          {support.description}
+                        </p>
+                        {/* UD対応: リンクの視認性向上 */}
+                        <a href="#" className="text-xs font-bold text-accent hover:underline flex items-center gap-1">
+                          制度の詳細を見る <ArrowUpRight className="w-3 h-3" />
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )}
+
+        </div>
       </div>
 
       <Footer />

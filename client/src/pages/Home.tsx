@@ -46,7 +46,8 @@ export default function Home() {
 
                {/* Intro Text */}
                <div className="text-white max-w-md pt-24 md:pt-0 hidden md:block">
-                  <p className="text-sm tracking-[0.3em] mb-8 border-l-2 border-accent pl-4 text-white/90 font-bold">SUPPORT FOR NOTO BUSINESS</p>
+                  {/* UD対応: 英語表記を日本語へ変更 */}
+                  <p className="text-sm tracking-[0.3em] mb-8 border-l-2 border-accent pl-4 text-white/90 font-bold">能登の商いを支える</p>
                   {/* UD対応: 行間を広げ、文字サイズを大きく */}
                   <p className="text-lg md:text-xl font-serif leading-loose mb-8 text-justify drop-shadow-md">
                      能登の事業者の皆様へ。<br/>
@@ -139,7 +140,7 @@ export default function Home() {
                     {study.summary}
                   </p>
                   <div className="flex items-center text-primary text-sm font-bold tracking-widest group-hover:translate-x-2 transition-transform uppercase btn-ud w-fit -ml-6 pl-6">
-                    続きを読む <ArrowUpRight className="w-5 h-5 ml-2" />
+                    詳しく見る <ArrowUpRight className="w-5 h-5 ml-2" />
                   </div>
                 </div>
               </a>

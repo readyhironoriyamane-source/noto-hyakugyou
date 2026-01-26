@@ -45,63 +45,15 @@ export default function Header() {
           <div className="flex items-center gap-4 z-50">
              {/* UD対応: ロゴリンクは下線なし（no-underline-link） */}
              <a href="/" className="no-underline-link font-serif font-bold text-xl md:text-2xl tracking-widest text-foreground hover:opacity-80 transition-opacity flex items-center gap-2">
-               {/* ロゴがあれば表示 */}
-               {/* <img src="/logo.svg" alt="" className="h-8 w-auto hidden" /> */}
                能登百業録
              </a>
           </div>
           
           <div className="flex items-center gap-4 md:gap-8">
-            {/* PC用ナビゲーション（現在はシンプルに） */}
-            <nav className="hidden md:flex items-center gap-6 text-sm tracking-widest font-medium">
-              {/* 将来的な拡張用プレースホルダー */}
-              {/* 
-              <a href="/search" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors py-2 px-3 rounded-md hover:bg-secondary/50">
-                <Search className="w-4 h-4" />
-                <span>検索する</span>
-              </a>
-              */}
-            </nav>
-
-            {/* モバイルメニューボタン（UD対応: アイコン+ラベル） */}
-            {/* 現状はメニュー項目がないため非表示にするが、将来のために構造は残す */}
-            {/* 
-            <button 
-              className="flex flex-col items-center justify-center gap-1 text-foreground p-2 min-w-[48px] min-h-[48px] hover:bg-secondary/50 rounded-md transition-colors"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label={isMenuOpen ? "メニューを閉じる" : "メニューを開く"}
-            >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              <span className="text-[10px] font-bold leading-none">メニュー</span>
-            </button>
-            */}
+            {/* 将来的なナビゲーション拡張エリア */}
           </div>
         </div>
       </header>
-
-      {/* モバイルメニュー（現在は項目がないためコメントアウト） */}
-      {/* 
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden top-[60px]">
-          <div 
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setIsMenuOpen(false)}
-          />
-          
-          <div className="absolute top-0 right-0 w-64 h-[calc(100vh-60px)] bg-background shadow-2xl border-l border-border overflow-y-auto">
-            <nav className="flex flex-col p-6 space-y-6">
-              <a 
-                href="/" 
-                className="text-lg tracking-widest text-foreground hover:text-primary transition-colors py-3 border-b border-border"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                トップページ
-              </a>
-            </nav>
-          </div>
-        </div>
-      )}
-      */}
     </>
   );
 }
