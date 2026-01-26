@@ -210,7 +210,7 @@ export default function Home() {
                     <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
                       {study.challengeCard.structuredBlock.map((block, idx) => (
                         <div key={idx} className="text-sm">
-                          <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-1">
+                          <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
                             {block.label}
                           </span>
                           <ul className="list-disc list-inside text-gray-600 pl-1">
