@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, ArrowUpRight, FileText } from 'lucide-react';
 import { industries } from '@/data/industries';
-import SupportCard from '@/components/SupportCard';
+// SupportCard removed for reset
 import { supportSystems } from '@/lib/supports';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -10,10 +10,6 @@ import Header from '@/components/Header';
 export default function Home() {
   // 活用事例記事（isCaseStudyがtrue）のみを取得
   const caseStudies = industries.filter(i => i.isCaseStudy);
-
-  // TOPページに表示する主要な支援制度を抽出（IDで指定）
-  const featuredSupportIds = ["nariwai-reconstruction", "small-business-sustainability-disaster", "noto-nariwai-addon"];
-  const featuredSupports = supportSystems.filter(s => featuredSupportIds.includes(s.id));
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -324,17 +320,13 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {featuredSupports.map((support) => (
-              <SupportCard 
-                key={support.id} 
-                support={support} 
-              />
-            ))}
+          <div className="bg-muted/30 rounded-xl p-12 text-center border-2 border-dashed border-muted-foreground/20">
+            <p className="text-lg font-bold text-muted-foreground">現在、支援制度情報を更新中です。</p>
+            <p className="text-sm text-muted-foreground mt-2">しばらくお待ちください。</p>
           </div>
 
           {/* 一覧ボタン (No Underline) */}
-          <div className="text-center">
+          <div className="text-center mt-12">
             <Link href="/supports" className="inline-flex items-center justify-center gap-3 bg-primary text-white px-10 py-4 rounded-full font-bold tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl group no-underline">
               支援制度一覧を見る
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
