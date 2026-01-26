@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Coins, FileText } from 'lucide-react';
 
 export default function SupportSection() {
   return (
@@ -23,24 +23,30 @@ export default function SupportSection() {
             </h3>
             <p className="text-sm text-gray-500 mb-4">なりわい再建支援補助金</p>
             <p className="text-sm text-gray-700 mb-6 min-h-[40px]">
-              被災した施設・設備の復旧費用を補助します。
+              施設・設備の復旧費用を補助（中堅企業等も対象）
             </p>
             
             {/* C. スペック情報エリア（薄いグレーの箱） */}
             <div className="bg-[#F9F9F9] rounded p-4 mb-6 mt-auto">
               <div className="flex items-center mb-2">
-                <span className="text-xs text-[#B33E28] font-bold">💰 金額</span>
-                <span className="text-base font-bold text-[#1D3A52] ml-2">上限 15億円</span>
+                <div className="flex items-center w-24 shrink-0">
+                  <Coins className="w-4 h-4 text-[#B33E28] mr-1.5" />
+                  <span className="text-xs text-[#B33E28] font-bold">金額</span>
+                </div>
+                <span className="text-base font-bold text-[#1D3A52]">上限 15億円</span>
               </div>
               <div className="flex items-start">
-                <span className="text-xs text-[#1D3A52] font-bold mt-0.5">📄 条件など</span>
-                <span className="text-sm text-gray-700 ml-2">補助率 3/4 (中堅は1/2)</span>
+                <div className="flex items-center w-24 shrink-0 mt-0.5">
+                  <FileText className="w-4 h-4 text-[#1D3A52] mr-1.5" />
+                  <span className="text-xs text-[#1D3A52] font-bold">条件など</span>
+                </div>
+                <span className="text-sm text-gray-700">補助率 3/4 (中堅は1/2)</span>
               </div>
             </div>
 
             {/* D. ボタン */}
-            <a href="/supports/1" className="w-full border border-gray-300 bg-white text-[#1D3A52] text-sm py-3 rounded hover:bg-gray-50 flex justify-center items-center mt-auto no-underline">
-              詳細・相談先を見る ↗
+            <a href="/supports/1" className="w-full border border-gray-300 bg-white text-[#1D3A52] text-sm py-3 rounded hover:bg-gray-50 flex justify-center items-center mt-auto no-underline transition-colors">
+              詳細・相談先を見る <ArrowUpRight className="w-4 h-4 ml-1" />
             </a>
           </div>
 
@@ -54,24 +60,30 @@ export default function SupportSection() {
             </h3>
             <p className="text-sm text-gray-500 mb-4">小規模事業者持続化補助金<br />(災害支援枠)</p>
             <p className="text-sm text-gray-700 mb-6 min-h-[40px]">
-              地道な販路開拓等の取組や、業務効率化の取組を支援します。
+              機械装置等費、広報費、ウェブサイト関連費など
             </p>
 
             {/* C. スペック情報エリア（薄いグレーの箱） */}
             <div className="bg-[#F9F9F9] rounded p-4 mb-6 mt-auto">
               <div className="flex items-center mb-2">
-                <span className="text-xs text-[#B33E28] font-bold">💰 金額</span>
-                <span className="text-base font-bold text-[#1D3A52] ml-2">上限 200万円</span>
+                <div className="flex items-center w-24 shrink-0">
+                  <Coins className="w-4 h-4 text-[#B33E28] mr-1.5" />
+                  <span className="text-xs text-[#B33E28] font-bold">金額</span>
+                </div>
+                <span className="text-base font-bold text-[#1D3A52]">上限 200万円</span>
               </div>
               <div className="flex items-start">
-                <span className="text-xs text-[#1D3A52] font-bold mt-0.5">📄 条件など</span>
-                <span className="text-sm text-gray-700 ml-2">売上減少の間接被害の場合は100万円</span>
+                <div className="flex items-center w-24 shrink-0 mt-0.5">
+                  <FileText className="w-4 h-4 text-[#1D3A52] mr-1.5" />
+                  <span className="text-xs text-[#1D3A52] font-bold">条件など</span>
+                </div>
+                <span className="text-sm text-gray-700">売上減少の間接被害の場合は100万円</span>
               </div>
             </div>
 
             {/* D. ボタン */}
-            <a href="/supports/2" className="w-full border border-gray-300 bg-white text-[#1D3A52] text-sm py-3 rounded hover:bg-gray-50 flex justify-center items-center mt-auto no-underline">
-              詳細・相談先を見る ↗
+            <a href="/supports/2" className="w-full border border-gray-300 bg-white text-[#1D3A52] text-sm py-3 rounded hover:bg-gray-50 flex justify-center items-center mt-auto no-underline transition-colors">
+              詳細・相談先を見る <ArrowUpRight className="w-4 h-4 ml-1" />
             </a>
           </div>
 
@@ -85,24 +97,30 @@ export default function SupportSection() {
             </h3>
             <p className="text-sm text-gray-500 mb-4">能登町なりわい再建<br />支援補助金</p>
             <p className="text-sm text-gray-700 mb-6 min-h-[40px]">
-              県のなりわい再建支援補助金の上乗せ支援を行います。
+              「なりわい再建支援補助金」の対象経費から交付決定額を引いた額を補助
             </p>
 
             {/* C. スペック情報エリア（薄いグレーの箱） */}
             <div className="bg-[#F9F9F9] rounded p-4 mb-6 mt-auto">
               <div className="flex items-center mb-2">
-                <span className="text-xs text-[#B33E28] font-bold">💰 金額</span>
-                <span className="text-base font-bold text-[#1D3A52] ml-2">補助率 3/5</span>
+                <div className="flex items-center w-24 shrink-0">
+                  <Coins className="w-4 h-4 text-[#B33E28] mr-1.5" />
+                  <span className="text-xs text-[#B33E28] font-bold">金額</span>
+                </div>
+                <span className="text-base font-bold text-[#1D3A52]">補助率 3/5</span>
               </div>
               <div className="flex items-start">
-                <span className="text-xs text-[#1D3A52] font-bold mt-0.5">📄 条件など</span>
-                <span className="text-sm text-gray-700 ml-2">町への申請が必要</span>
+                <div className="flex items-center w-24 shrink-0 mt-0.5">
+                  <FileText className="w-4 h-4 text-[#1D3A52] mr-1.5" />
+                  <span className="text-xs text-[#1D3A52] font-bold">条件など</span>
+                </div>
+                <span className="text-sm text-gray-700">町への申請が必要</span>
               </div>
             </div>
 
             {/* D. ボタン */}
-            <a href="/supports/3" className="w-full border border-gray-300 bg-white text-[#1D3A52] text-sm py-3 rounded hover:bg-gray-50 flex justify-center items-center mt-auto no-underline">
-              詳細・相談先を見る ↗
+            <a href="/supports/3" className="w-full border border-gray-300 bg-white text-[#1D3A52] text-sm py-3 rounded hover:bg-gray-50 flex justify-center items-center mt-auto no-underline transition-colors">
+              詳細・相談先を見る <ArrowUpRight className="w-4 h-4 ml-1" />
             </a>
           </div>
         </div>
