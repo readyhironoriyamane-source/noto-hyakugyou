@@ -55,14 +55,32 @@ export interface Industry {
     }[];
   };
   keyPoints?: string[];
+  // 教訓（Regrets）
+  regrets?: {
+    title: string;
+    content: string;
+  };
+  // 決断ロジック（Decision Logic）
   decisionProcess?: {
-    options: string[];
-    reason: string;
+    worry: string; // 悩んだ選択肢
+    decider: string; // 選んだ決め手
     selectedSupport: string;
     action: string;
     outcome: string;
+    reason?: string; // 後方互換性のため追加
+    options?: string[]; // 後方互換性のため追加
+  };
+  // 実務の壁（Barriers）
+  barriers?: {
+    title: string;
+    content: string;
   };
   supportSystem?: { // 名前変更: supportMenu -> supportSystem
+    name: string;
+    description: string;
+    link: string;
+  }[];
+  supportMenu?: { // 後方互換性のため追加
     name: string;
     description: string;
     link: string;
@@ -166,6 +184,22 @@ export const industries: Industry[] = [
         { label: "成果", items: ["新商品「糀ディップ」が大ヒット", "売上がV字回復"] }
       ]
     },
+    regrets: {
+      title: "もっと早く、従業員と腹を割って話すべきだった",
+      content: "経営を引き継いだ当初、一人で抱え込んでしまい、従業員との溝が深まってしまいました。「自分たちがどうなるのか」という不安に、もっと早く寄り添うべきでした。"
+    },
+    decisionProcess: {
+      worry: "廃業するか、借金をしてでも続けるか",
+      decider: "「糀」という独自の強みと、従業員の技術力",
+      selectedSupport: "事業承継・引継ぎ補助金",
+      action: "新商品開発とパッケージ刷新",
+      outcome: "V字回復"
+    },
+    barriers: {
+      title: "補助金の申請書類作成は、想像以上に大変",
+      content: "事業計画書の作成には、膨大な時間と労力がかかりました。専門家のサポートがなければ、途中で挫折していたかもしれません。早めの相談をおすすめします。"
+    },
+    editorComment: "伝統を守るためにこそ、変わる勇気を持つ。その姿勢が、従業員や顧客の心を動かした好例です。",
     supportSystem: [
       {
         name: "事業承継・引継ぎ補助金",
@@ -227,6 +261,22 @@ export const industries: Industry[] = [
         { label: "成果", items: ["稼働率90%超え", "インバウンド客の増加"] }
       ]
     },
+    regrets: {
+      title: "資金繰りの相談は、もっと早く銀行に行くべきだった",
+      content: "「断られたらどうしよう」という不安から、ギリギリまで相談を先延ばしにしてしまいました。早めに相談していれば、もっと有利な条件で融資を受けられたかもしれません。"
+    },
+    decisionProcess: {
+      worry: "現状維持で細々と続けるか、大きな投資をするか",
+      decider: "窓から見える七尾湾の景色と、補助金の存在",
+      selectedSupport: "事業再構築補助金",
+      action: "全館リノベーションとインバウンド対応",
+      outcome: "稼働率90%超え"
+    },
+    barriers: {
+      title: "工事期間中の休業補償は出ない",
+      content: "リノベーション工事中は休業せざるを得ず、その間の売上はゼロになります。運転資金の確保は、工事費とは別に考えておく必要があります。"
+    },
+    editorComment: "ピンチをチャンスに変える発想の転換。補助金を単なる「お金」としてではなく、「変わるためのきっかけ」として活用した点が素晴らしいです。",
     supportSystem: [
       {
         name: "事業再構築補助金",
@@ -289,6 +339,22 @@ export const industries: Industry[] = [
         { label: "成果", items: ["欧州見本市で高評価", "新規取引先獲得"] }
       ]
     },
+    regrets: {
+      title: "英語の勉強を、もっと早く始めておけばよかった",
+      content: "海外のバイヤーと直接交渉する際、通訳を介すると微妙なニュアンスが伝わらないことがありました。自分の言葉で伝えることの重要性を痛感しました。"
+    },
+    decisionProcess: {
+      worry: "伝統を守るか、海外のニーズに合わせるか",
+      decider: "「使ってもらってこその伝統」という原点回帰",
+      selectedSupport: "JAPANブランド育成支援等事業",
+      action: "海外デザイナーとのコラボ商品開発",
+      outcome: "欧州市場での成功"
+    },
+    barriers: {
+      title: "海外発送の手続きと梱包は、国内とは別物",
+      content: "関税の手続きや、破損を防ぐための厳重な梱包など、国内取引にはない手間とコストがかかります。物流パートナー選びは慎重に行う必要があります。"
+    },
+    editorComment: "伝統工芸のポテンシャルを世界に示した好事例。外部の視点を取り入れることで、自社の価値を再発見できることを教えてくれます。",
     supportSystem: [
       {
         name: "JAPANブランド育成支援等事業",
