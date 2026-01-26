@@ -16,7 +16,7 @@ export default function Header() {
       <div className="max-w-[1140px] mx-auto px-6 h-20 flex items-center justify-between">
         
         {/* --- ロゴエリア (既存維持) --- */}
-        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity z-50 relative cursor-pointer">
+        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity z-50 relative cursor-pointer no-underline">
           <div className="relative h-10 w-10 mr-3 shrink-0"> 
             <img 
               src="/images/logo.png" 
@@ -31,13 +31,13 @@ export default function Header() {
 
         {/* --- PC用ナビゲーション (md以上で表示) --- */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-bold text-[#1D3A52]">
-          <a href="/#guidepost" className="hover:text-[#B33E28] transition-colors cursor-pointer">
+          <a href="/#guidepost" className="hover:text-[#B33E28] transition-colors cursor-pointer no-underline">
             商いの道しるべ
           </a>
-          <Link href="/supports" className="hover:text-[#B33E28] transition-colors cursor-pointer">
+          <Link href="/supports" className="hover:text-[#B33E28] transition-colors cursor-pointer no-underline">
             支援制度一覧
           </Link>
-          <Link href="/contact" className="px-5 py-2 bg-[#1D3A52] text-white rounded-full hover:bg-[#2c5270] transition-colors cursor-pointer">
+          <Link href="/contact" className="px-5 py-2 bg-[#1D3A52] text-white rounded-full hover:bg-[#2c5270] transition-colors cursor-pointer no-underline">
             お問い合わせ
           </Link>
         </nav>
@@ -70,21 +70,21 @@ export default function Header() {
             <a 
               href="/#guidepost" 
               onClick={() => setIsOpen(false)}
-              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer"
+              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline"
             >
               商いの道しるべ
             </a>
             <Link 
               href="/supports" 
               onClick={() => setIsOpen(false)}
-              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer"
+              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline"
             >
               支援制度一覧
             </Link>
             <Link 
               href="/contact" 
               onClick={() => setIsOpen(false)}
-              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer"
+              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline"
             >
               お問い合わせ
             </Link>
