@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useSearch } from 'wouter';
-import { ArrowUpRight, Search, Phone, MessageCircle, AlertCircle, Calendar, Building2, Wallet, Users, TrendingUp, Construction, Handshake, Store, Truck, GraduationCap, Laptop } from 'lucide-react';
+import { ArrowUpRight, Search, Phone, MessageCircle, AlertCircle, Calendar, Building2, Wallet, Users, TrendingUp, Construction, Handshake, Store, Truck, GraduationCap, Laptop, ArrowRight } from 'lucide-react';
 import { supportSystems, SupportCategory, SupportSystem } from '@/lib/supports';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -130,13 +130,13 @@ export default function SupportsPage() {
           <div className="flex flex-col md:flex-row justify-center gap-4">
             <a 
               href="tel:0768-62-0181" 
-              className="flex items-center justify-center gap-3 bg-[#2E7D32] text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:bg-[#1B5E20] transition-colors active:scale-95"
+              className="flex items-center justify-center gap-3 bg-[#2E7D32] text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:bg-[#1B5E20] transition-colors active:scale-95 no-underline"
             >
               <Phone className="w-6 h-6" />
               商工会に電話で相談する
             </a>
             <Link href="/contact">
-              <a className="flex items-center justify-center gap-3 bg-white text-[#2E7D32] font-bold py-4 px-8 rounded-xl shadow border-2 border-[#2E7D32] hover:bg-[#F1F8E9] transition-colors active:scale-95">
+              <a className="flex items-center justify-center gap-3 bg-white text-[#2E7D32] font-bold py-4 px-8 rounded-xl shadow border-2 border-[#2E7D32] hover:bg-[#F1F8E9] transition-colors active:scale-95 no-underline">
                 <MessageCircle className="w-6 h-6" />
                 相談窓口の一覧を見る
               </a>
@@ -154,21 +154,21 @@ export default function SupportsPage() {
 function SupportCard({ support, isClosingSoon, isExpired }: { support: SupportSystem, isClosingSoon: (d?: string) => boolean, isExpired: (d?: string) => boolean }) {
   const closing = isClosingSoon(support.deadline);
   const expired = isExpired(support.deadline);
-  const Icon = support.icon || Building2;
+  
+  // バッジカラーの決定
+  const badgeColor = support.badgeColor || '#2B2B2B'; // デフォルトは濃グレー
 
   return (
-    <div className={`bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all p-6 flex flex-col h-full group relative overflow-hidden ${expired ? 'opacity-60 grayscale' : ''}`}>
-      {/* 左側のアクセントバー */}
-      <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${
-        support.category === 'reconstruction' ? 'bg-blue-500' :
-        support.category === 'finance' ? 'bg-yellow-500' :
-        support.category === 'hr' ? 'bg-green-500' :
-        support.category === 'sales' ? 'bg-purple-500' : 'bg-gray-400'
-      }`}></div>
+    <div className={`bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col h-full group relative overflow-hidden ${expired ? 'opacity-60 grayscale' : ''}`}>
+      
+      {/* 左ボーダー廃止: デザインルール準拠 */}
 
       {/* ヘッダー: バッジとステータス */}
-      <div className="flex justify-between items-start mb-4 pl-2">
-        <span className="text-xs font-bold px-2 py-1 rounded bg-gray-100 text-gray-600 border border-gray-200">
+      <div className="p-6 pb-4 border-b border-gray-100 flex justify-between items-start">
+        <span 
+          className="inline-block px-3 py-1 text-xs font-bold text-white rounded-sm tracking-wider"
+          style={{ backgroundColor: badgeColor }}
+        >
           {support.badge}
         </span>
         <div className="flex flex-col items-end">
@@ -187,51 +187,53 @@ function SupportCard({ support, isClosingSoon, isExpired }: { support: SupportSy
         </div>
       </div>
 
-      {/* メインタイトル（メリット主導・20px Bold） */}
-      <h3 className="text-[20px] font-bold text-gray-900 mb-2 leading-snug pl-2">
-        {support.title}
-      </h3>
+      {/* コンテンツエリア */}
+      <div className="p-6 pt-4 flex-grow flex flex-col">
+        {/* メインタイトル（メリット主導・20px Bold） */}
+        <h3 className="text-[20px] font-bold text-gray-900 mb-2 leading-snug group-hover:text-primary transition-colors">
+          {support.title}
+        </h3>
 
-      {/* サブタイトル（正式名称・14px Regular） */}
-      <p className="text-[14px] font-medium text-gray-500 mb-4 pl-2">
-        {support.officialName}
-      </p>
+        {/* サブタイトル（正式名称・14px Regular） */}
+        <p className="text-[14px] font-medium text-gray-500 mb-4">
+          {support.officialName}
+        </p>
 
-      {/* タグリスト */}
-      <div className="flex flex-wrap gap-2 mb-6 pl-2">
-        {support.tags.map((tag, index) => (
-          <span key={index} className="text-xs font-bold text-primary bg-primary/5 px-2 py-1 rounded">
-            {tag}
-          </span>
-        ))}
+        {/* タグリスト */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {support.tags.map((tag, index) => (
+            <span key={index} className="text-xs font-bold text-primary bg-primary/5 px-2 py-1 rounded">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {/* 説明文 */}
+        <p className="text-sm text-gray-600 mb-6 leading-relaxed flex-grow">
+          {support.description}
+        </p>
+
+        {/* 期限表示 */}
+        {support.deadline && !expired && (
+          <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
+            <Calendar className="w-4 h-4" />
+            <span>申請期限: <span className={`font-bold ${closing ? 'text-red-600' : ''}`}>{support.deadline}</span> まで</span>
+          </div>
+        )}
       </div>
 
-      {/* 説明文 */}
-      <p className="text-sm text-gray-600 mb-6 pl-2 leading-relaxed flex-grow">
-        {support.description}
-      </p>
-
-      {/* 期限表示 */}
-      {support.deadline && !expired && (
-        <div className="flex items-center gap-2 text-sm text-gray-500 mb-6 pl-2">
-          <Calendar className="w-4 h-4" />
-          <span>申請期限: <span className={`font-bold ${closing ? 'text-red-600' : ''}`}>{support.deadline}</span> まで</span>
-        </div>
-      )}
-
-      {/* アクションボタン */}
-      <div className="mt-auto pl-2">
+      {/* アクションエリア（下線禁止・ホバーエフェクトのみ） */}
+      <div className="p-4 bg-gray-50 border-t border-gray-100 text-center group-hover:bg-primary/5 transition-colors">
         {expired ? (
-          <button disabled className="w-full flex items-center justify-center gap-2 bg-gray-100 text-gray-400 font-bold py-3 rounded-lg cursor-not-allowed">
+          <span className="text-sm font-bold text-gray-400 flex items-center justify-center gap-2 cursor-not-allowed">
             受付終了
-          </button>
+          </span>
         ) : (
           <a 
             href={support.link || "#"}
-            className="w-full flex items-center justify-center gap-2 border-2 border-primary text-primary font-bold py-3 rounded-lg hover:bg-primary hover:text-white transition-colors group-hover:shadow-sm"
+            className="text-sm font-bold text-primary/80 group-hover:text-primary flex items-center justify-center gap-2 transition-all group-hover:translate-x-1 no-underline"
           >
-            詳しく見る
-            <ArrowUpRight className="w-4 h-4" />
+            制度の詳細を見る <ArrowRight className="w-4 h-4" />
           </a>
         )}
       </div>
