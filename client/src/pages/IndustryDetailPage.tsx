@@ -218,8 +218,8 @@ export default function IndustryDetailPage() {
                 </p>
               </div>
 
-              {/* 矢印 - 余白を確保して重なりを解消 */}
-              <div className="flex justify-center my-6 relative z-10">
+              {/* 矢印 - 上下マージンを均等化してバランス調整 */}
+              <div className="flex justify-center my-8 relative z-10">
                 <div className="bg-white p-3 rounded-full border border-gray-200 shadow-sm">
                   <ArrowDown className="w-8 h-8 text-gray-400" />
                 </div>

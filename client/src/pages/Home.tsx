@@ -68,11 +68,9 @@ export default function Home() {
                      <h2 className="text-white text-center font-serif text-2xl md:text-3xl tracking-widest drop-shadow-lg font-bold">
                         今、どんなことでお困りですか？
                      </h2>
-                     <Link href="/supports" className="hidden md:inline-flex items-center gap-2 text-white/90 hover:text-white border-b border-white/50 hover:border-white pb-0.5 transition-all text-sm tracking-wider">
-                        支援制度一覧を見る <ArrowRight className="w-3 h-3" />
-                     </Link>
+                     
                   </div>
-                  <div className="grid grid-cols-5 gap-6">
+                  <div className="grid grid-cols-5 gap-6 mb-10">
                      {[
                         { icon: Users, label: "後継者が\nいない", category: "hr" },
                         { icon: Handshake, label: "人材を\n確保したい", category: "hr" },
@@ -83,12 +81,12 @@ export default function Home() {
                         <Link 
                            key={index}
                            href={`/supports?category=${item.category}`}
-                           className="bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/30 text-white p-6 rounded-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center gap-4 group focus:outline-none focus:ring-4 focus:ring-accent/50 relative overflow-hidden cursor-pointer"
+                           className="bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/30 text-white p-6 rounded-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center gap-4 group focus:outline-none focus:ring-4 focus:ring-accent/50 relative overflow-hidden cursor-pointer no-underline"
                            aria-label={item.label.replace('\n', '')}
                         >
                            <item.icon className="w-10 h-10 text-white stroke-[1.5]" />
                            {/* UD対応: 文字サイズを大きく、太字に */}
-                           <span className="text-base md:text-lg font-bold whitespace-pre-line leading-snug font-sans">{item.label}</span>
+                           <span className="text-base md:text-lg font-bold whitespace-pre-line leading-snug font-sans group-hover:opacity-80 transition-opacity">{item.label}</span>
                            
                            {/* 誘導アイコン */}
                            <div className="mt-2 flex items-center text-xs tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
@@ -96,6 +94,13 @@ export default function Home() {
                            </div>
                         </Link>
                      ))}
+                  </div>
+                  
+                  {/* 支援制度一覧を見るボタン（カード群の下へ移動） */}
+                  <div className="text-center">
+                     <Link href="/supports" className="inline-flex items-center gap-2 text-white border border-white/80 hover:bg-white/10 hover:border-white px-8 py-3 rounded-full transition-all text-sm tracking-wider font-medium no-underline">
+                        支援制度一覧を見る <ArrowRight className="w-4 h-4" />
+                     </Link>
                   </div>
                </div>
             </div>
@@ -127,11 +132,9 @@ export default function Home() {
                <h2 className="text-primary font-serif text-xl tracking-widest font-bold mb-4">
                   今、どんなことでお困りですか？
                </h2>
-               <Link href="/supports" className="inline-flex items-center gap-1 text-primary/80 hover:text-primary text-sm border-b border-primary/30 pb-0.5">
-                  支援制度一覧を見る <ArrowRight className="w-3 h-3" />
-               </Link>
+               
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 mb-8">
                {[
                   { icon: Users, label: "後継者が\nいない", category: "hr" },
                   { icon: Handshake, label: "人材を\n確保したい", category: "hr" },
@@ -142,13 +145,20 @@ export default function Home() {
                   <Link 
                      key={index}
                      href={`/supports?category=${item.category}`}
-                     className={`bg-white hover:bg-accent/10 border border-primary/20 text-primary p-4 rounded-lg transition-all active:scale-95 flex flex-col items-center text-center gap-2 shadow-sm cursor-pointer ${index === 4 ? 'col-span-2' : ''}`}
+                     className={`bg-white hover:bg-accent/10 border border-primary/20 text-primary p-4 rounded-lg transition-all active:scale-95 flex flex-col items-center text-center gap-2 shadow-sm cursor-pointer no-underline ${index === 4 ? 'col-span-2' : ''}`}
                      aria-label={item.label.replace('\n', '')}
                   >
                      <item.icon className="w-8 h-8 stroke-[1.5]" />
                      <span className="text-sm font-bold whitespace-pre-line leading-snug font-sans">{item.label}</span>
                   </Link>
                ))}
+            </div>
+            
+            {/* 支援制度一覧を見るボタン（SP用） */}
+            <div className="text-center">
+               <Link href="/supports" className="inline-flex items-center gap-2 text-primary border border-primary/30 hover:bg-primary/5 px-6 py-3 rounded-full transition-all text-sm tracking-wider font-medium no-underline">
+                  支援制度一覧を見る <ArrowRight className="w-4 h-4" />
+               </Link>
             </div>
           </div>
         </div>
