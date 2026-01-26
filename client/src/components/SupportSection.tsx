@@ -2,18 +2,20 @@ import { ArrowRight, ArrowUpRight, Coins, FileText } from 'lucide-react';
 
 export default function SupportSection() {
   return (
-    <section className="bg-[#F9F8F4] py-20">
-      <div className="max-w-[1140px] mx-auto px-6">
-        {/* セクションヘッダー */}
-        <h2 className="text-3xl md:text-[40px] font-bold text-[#1D3A52] text-left mb-6 font-serif">
-          使える支援制度
-        </h2>
-        <p className="text-gray-600 text-left mb-12 max-w-3xl leading-relaxed">
-          復旧・復興に向けた、国や自治体の支援制度をご案内します。あなたの状況に合わせてご活用ください。
-        </p>
+    <section className="bg-white py-20">
+      <div className="w-full px-6">
+        <div className="max-w-[1140px] mx-auto">
+          {/* セクションヘッダー */}
+          <h2 className="text-3xl md:text-[40px] font-bold text-[#1D3A52] text-left mb-6 font-serif">
+            使える支援制度
+          </h2>
+          <p className="text-gray-600 text-left mb-12 max-w-3xl leading-relaxed">
+            復旧・復興に向けた、国や自治体の支援制度をご案内します。あなたの状況に合わせてご活用ください。
+          </p>
+        </div>
 
-        {/* カードグリッド */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* カードグリッド - 幅制限を解除して画面いっぱいに */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
           
           {/* カード1：石川県 */}
           <div className="bg-white border border-gray-200 rounded-lg p-6 flex flex-col h-full shadow-sm hover:shadow-md transition-shadow">
