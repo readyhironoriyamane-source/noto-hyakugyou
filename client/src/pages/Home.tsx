@@ -15,7 +15,7 @@ export default function Home() {
       <Header />
 
       {/* Hero Section: Magazine Cover Style */}
-      <section className="relative w-full h-[100vh] md:h-[80vh] flex items-center justify-center overflow-hidden bg-primary">
+      <section className="relative w-full h-[100vh] md:h-[90vh] flex items-center justify-center overflow-hidden bg-primary">
          {/* Dynamic Background Video */}
          <div className="absolute inset-0 opacity-60">
             <video 
@@ -31,21 +31,21 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/40 to-primary/90"></div>
          </div>
          
-         <div className="relative z-10 container h-full flex flex-col justify-center">
-            <div className="flex flex-row-reverse md:flex-row justify-between items-center h-full md:h-[70%] pb-20 md:pb-0">
+         <div className="relative z-10 container h-full flex flex-col justify-center md:justify-start md:pt-32">
+            <div className="flex flex-row-reverse md:flex-row justify-between items-start h-full md:h-auto pb-20 md:pb-0">
                
                {/* Vertical Title - PC: Right side, SP: Center */}
                <div className="h-full flex flex-row items-center justify-center md:justify-start md:order-last pt-12 pr-4 md:pr-16 lg:pr-24 gap-4 md:gap-8">
                   <p className="writing-vertical-rl text-white/90 text-sm md:text-base tracking-[0.3em] font-medium whitespace-nowrap drop-shadow-md font-serif">
                      明日の商いを、共に創る
                   </p>
-                  <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl whitespace-nowrap">
+                  <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-8xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl whitespace-nowrap">
                      能登百業
                   </h1>
                </div>
 
                {/* Intro Text - PC Only */}
-               <div className="text-white max-w-md pt-24 md:pt-0 hidden md:block">
+               <div className="text-white max-w-md pt-24 md:pt-12 hidden md:block">
                   {/* UD対応: 英語表記を日本語へ変更 */}
                   <p className="text-sm tracking-[0.3em] mb-8 border-l-2 border-accent pl-4 text-white/90 font-bold">能登の商いを支える</p>
                   {/* UD対応: 行間を広げ、文字サイズを大きく */}
