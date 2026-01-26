@@ -1,15 +1,17 @@
 import React from 'react';
-import { useRoute, Link } from 'wouter';
+import { Link } from 'wouter';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { SUPPORT_ITEMS } from '@/data/supportData';
 import { ChevronRight, Download, ExternalLink, CheckCircle2, Calendar, User, FileText, Phone, Clock } from 'lucide-react';
 import NotFound from './NotFound';
 
-export default function SupportDetailPage() {
-  const [match, params] = useRoute('/support/:id');
-  
-  if (!match || !params) return <NotFound />;
+interface SupportDetailPageProps {
+  params: { id: string };
+}
+
+export default function SupportDetailPage({ params }: SupportDetailPageProps) {
+  if (!params || !params.id) return <NotFound />;
   
   const id = parseInt(params.id, 10);
   const item = SUPPORT_ITEMS.find((i) => i.id === id);

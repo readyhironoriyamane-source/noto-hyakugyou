@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useRoute } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { industries } from "@/data/industries";
@@ -10,8 +9,11 @@ import {
   Pin, AlertTriangle, MessageCircle, ExternalLink, ArrowUpRight
 } from "lucide-react";
 
-export default function IndustryDetailPage() {
-  const [, params] = useRoute("/industry/:id");
+interface IndustryDetailPageProps {
+  params: { id: string };
+}
+
+export default function IndustryDetailPage({ params }: IndustryDetailPageProps) {
   const [industry, setIndustry] = useState<Industry | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -247,11 +249,7 @@ export default function IndustryDetailPage() {
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">その後の変化</h4>
                     <p className="text-gray-700 leading-relaxed">
-                      {industry.decisionProcess.action}を行い、
-                      <span className="font-bold text-accent border-b-2 border-accent/20 mx-1">
-                        {industry.decisionProcess.outcome}
-                      </span>
-                      を実現しました。
+                      {industry.decisionProcess.outcome}
                     </p>
                   </div>
                 </div>
@@ -260,84 +258,98 @@ export default function IndustryDetailPage() {
           </section>
         )}
 
-        {/* 3. 実務の壁 (Barriers) */}
-        {industry.barriers && (
-          <section ref={el => sectionsRef.current[2] = el}>
-            <div className="border-2 border-[#E53935] rounded-xl p-6 md:p-8 bg-[#FFEBEE]/30 flex flex-col md:flex-row gap-6 items-start">
-              <div className="shrink-0 bg-[#FFEBEE] p-4 rounded-full">
-                <AlertTriangle className="w-8 h-8 text-[#E53935]" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-[#C62828] mb-3 flex items-center gap-2">
-                  ここが大変！実務の壁
-                </h3>
-                <h4 className="font-bold text-gray-900 mb-3 text-lg">
-                  {industry.barriers.title}
-                </h4>
-                <p className="text-gray-800 leading-relaxed">
-                  {industry.barriers.content}
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* 4. 編集部より・関連制度 (Writer's Eye) */}
-        <section ref={el => sectionsRef.current[3] = el} className="bg-[#F0EFED] rounded-2xl p-8 md:p-12 shadow-sm border border-gray-200">
-          <div className="flex items-start gap-6 mb-10">
-            <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden shrink-0 border-2 border-white shadow-md">
-              <img src="https://placehold.co/100x100/e2e8f0/1e293b?text=Editor" alt="編集部" className="w-full h-full object-cover" />
-            </div>
-            {/* コントラスト強化: 白背景 + ドロップシャドウ */}
-            <div className="relative bg-white rounded-2xl p-6 flex-grow bubble-left shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100">
-              <div className="absolute top-6 -left-2 w-4 h-4 bg-white transform rotate-45 border-l border-b border-gray-100"></div>
-              <h3 className="text-sm font-bold text-gray-500 mb-2 flex items-center gap-2">
-                <MessageCircle className="w-4 h-4" /> 編集部より
-              </h3>
-              <p className="text-gray-800 font-medium leading-relaxed">
-                {industry.editorComment || "困難な状況でも、諦めずに道を探す姿勢に心を打たれました。"}
-              </p>
-            </div>
-          </div>
-
-          <h3 className="text-xl font-serif font-bold text-primary mb-6 border-l-4 border-primary pl-4">
-            この記事で紹介した支援制度
-          </h3>
+        {/* 3. 活用した支援制度 (Actionable Info) */}
+        <section ref={el => sectionsRef.current[2] = el}>
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-8 pb-4 border-b border-gray-200">
+            活用した支援制度
+          </h2>
           
-          <div className="grid gap-6">
-            {industry.supportSystem?.map((support, idx) => (
-              <div key={idx} className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all p-6 group">
-                <div className="flex justify-between items-start mb-4">
-                  <h4 className="text-lg font-bold text-primary group-hover:text-accent transition-colors">
-                    {support.name}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="bg-primary px-6 py-4 flex justify-between items-center">
+              <h3 className="text-white font-bold text-lg">
+                {industry.decisionProcess?.selectedSupport || '支援制度'}
+              </h3>
+              <span className="bg-white/20 text-white text-xs px-2 py-1 rounded">
+                {industry.category}
+              </span>
+            </div>
+            
+            <div className="p-6 md:p-8">
+              <div className="flex flex-col md:flex-row gap-6 mb-8">
+                <div className="flex-1">
+                  <h4 className="font-bold text-gray-700 mb-2 flex items-center gap-2">
+                    <FileText className="w-4 h-4" /> 制度の概要
                   </h4>
-                  <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-accent" />
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {/* ダミーテキスト：実際の制度データと紐付ける必要があります */}
+                    被災した中小企業・小規模事業者の施設・設備の復旧を支援する補助金です。
+                    建物の建設・改修、機械装置の購入・修繕などが対象となります。
+                  </p>
                 </div>
-                {/* <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  {support.description}
-                </p> */}
+                <div className="flex-1 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                  <h4 className="font-bold text-gray-700 mb-2 text-sm">ここがポイント</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2 text-sm text-gray-600">
+                      <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                      <span>補助率：最大3/4（国・県）</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-gray-600">
+                      <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                      <span>上限額：最大15億円</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="flex justify-center">
                 <a 
-                  href={support.link} 
-                  className="inline-flex items-center text-sm font-bold text-primary hover:text-accent hover:underline decoration-2 underline-offset-4"
+                  href="/supports" 
+                  className="inline-flex items-center gap-2 bg-primary text-white font-bold py-3 px-8 rounded-full hover:bg-primary/90 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
                 >
-                  制度の詳細を見る <ArrowUpRight className="w-4 h-4 ml-1" />
+                  この制度の詳細を見る
+                  <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
-            ))}
+            </div>
           </div>
+        </section>
+
+        {/* 4. 応援メッセージ (Emotional Connection) */}
+        <section ref={el => sectionsRef.current[3] = el} className="bg-white rounded-xl p-8 md:p-12 text-center border border-gray-100 shadow-sm relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary via-accent to-primary"></div>
+          <MessageCircle className="w-12 h-12 text-gray-200 mx-auto mb-6" />
+          <h3 className="text-xl md:text-2xl font-serif font-bold text-gray-800 mb-6">
+            「{industry.details?.owner}」さんからのメッセージ
+          </h3>
+          <p className="text-lg md:text-xl font-serif leading-relaxed text-gray-700 italic">
+            「{industry.message}」
+          </p>
         </section>
 
       </main>
 
-      {/* フローティングフッター (SPのみ) */}
-      <div className="md:hidden fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-md border-t border-gray-200 p-4 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-        <a 
-          href="#" 
-          className="flex items-center justify-center gap-2 w-full bg-primary text-white font-bold py-3 rounded-lg shadow-md active:scale-95 transition-transform"
+      {/* シェアボタン (Floating) */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <div className={`absolute bottom-full right-0 mb-4 flex flex-col gap-3 transition-all duration-300 ${showShareMenu ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+          <button className="bg-[#1DA1F2] text-white p-3 rounded-full shadow-lg hover:bg-[#1a91da] transition-colors" aria-label="Twitterでシェア">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+          </button>
+          <button className="bg-[#06C755] text-white p-3 rounded-full shadow-lg hover:bg-[#05b34c] transition-colors" aria-label="LINEでシェア">
+            <MessageCircle className="w-5 h-5" />
+          </button>
+          <button className="bg-gray-800 text-white p-3 rounded-full shadow-lg hover:bg-gray-700 transition-colors" onClick={() => {
+            navigator.clipboard.writeText(window.location.href);
+            alert('URLをコピーしました');
+          }} aria-label="URLをコピー">
+            <ExternalLink className="w-5 h-5" />
+          </button>
+        </div>
+        <button 
+          onClick={() => setShowShareMenu(!showShareMenu)}
+          className="bg-primary text-white p-4 rounded-full shadow-xl hover:bg-primary/90 transition-all hover:scale-105 active:scale-95"
         >
-          <MessageCircle className="w-5 h-5" />
-          この制度について相談する
-        </a>
+          {showShareMenu ? <X className="w-6 h-6" /> : <Share2 className="w-6 h-6" />}
+        </button>
       </div>
 
       <Footer />

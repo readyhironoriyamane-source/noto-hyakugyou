@@ -1,10 +1,12 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ScrollToTop from "./components/ScrollToTop";
+import { AnimatePresence } from "framer-motion";
+import PageTransition from "./components/PageTransition";
 
 import ContactPage from "./pages/ContactPage";
 import Home from "./pages/Home";
@@ -15,19 +17,65 @@ import SupportDetailPage from "./pages/SupportDetailPage";
 import PrivacyPage from "./pages/PrivacyPage";
 
 function Router() {
-  return (
-    <Switch>
-      <Route path={"/"} component={Home} />
+  const [location] = useLocation();
 
-      <Route path={"/privacy"} component={PrivacyPage} />
-      <Route path={"/contact"} component={ContactPage} />
-      <Route path={"/industry/:id"} component={IndustryDetailPage} />
-      <Route path={"/supports"} component={SupportArchivePage} />
-      <Route path={"/support/:id"} component={SupportDetailPage} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+  return (
+    <AnimatePresence mode="wait">
+      <Switch location={location} key={location}>
+        <Route path={"/"}>
+          <PageTransition>
+            <Home />
+          </PageTransition>
+        </Route>
+
+        <Route path={"/privacy"}>
+          <PageTransition>
+            <PrivacyPage />
+          </PageTransition>
+        </Route>
+
+        <Route path={"/contact"}>
+          <PageTransition>
+            <ContactPage />
+          </PageTransition>
+        </Route>
+
+        <Route path={"/industry/:id"}>
+          {(params) => (
+            <PageTransition>
+              <IndustryDetailPage params={params} />
+            </PageTransition>
+          )}
+        </Route>
+
+        <Route path={"/supports"}>
+          <PageTransition>
+            <SupportArchivePage />
+          </PageTransition>
+        </Route>
+
+        <Route path={"/support/:id"}>
+          {(params) => (
+            <PageTransition>
+              <SupportDetailPage params={params} />
+            </PageTransition>
+          )}
+        </Route>
+
+        <Route path={"/404"}>
+          <PageTransition>
+            <NotFound />
+          </PageTransition>
+        </Route>
+
+        {/* Final fallback route */}
+        <Route>
+          <PageTransition>
+            <NotFound />
+          </PageTransition>
+        </Route>
+      </Switch>
+    </AnimatePresence>
   );
 }
 
