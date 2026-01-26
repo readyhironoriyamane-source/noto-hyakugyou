@@ -15,7 +15,7 @@ export default function Home() {
       <Header />
 
       {/* Hero Section: Magazine Cover Style */}
-      <section className="relative w-full h-screen md:h-[70vh] flex items-center justify-center overflow-hidden bg-primary">
+      <section className="relative w-full h-[100vh] md:h-[80vh] flex items-center justify-center overflow-hidden bg-primary">
          {/* Dynamic Background Video */}
          <div className="absolute inset-0 opacity-60">
             <video 
@@ -32,11 +32,11 @@ export default function Home() {
          </div>
          
          <div className="relative z-10 container h-full flex flex-col justify-center">
-            <div className="flex flex-row-reverse md:flex-row justify-between items-start h-[60%]">
+            <div className="flex flex-row-reverse md:flex-row justify-between items-center h-full md:h-[70%] pb-20 md:pb-0">
                
-               {/* Vertical Title */}
-               <div className="h-full flex flex-row items-center justify-center md:justify-start md:order-last pt-12 pr-8 md:pr-16 lg:pr-24 gap-6 md:gap-8">
-                  <p className="writing-vertical-rl text-white/90 text-sm md:text-base tracking-[0.3em] font-medium hidden md:block whitespace-nowrap drop-shadow-md font-serif">
+               {/* Vertical Title - PC: Right side, SP: Center */}
+               <div className="h-full flex flex-row items-center justify-center md:justify-start md:order-last pt-12 pr-4 md:pr-16 lg:pr-24 gap-4 md:gap-8">
+                  <p className="writing-vertical-rl text-white/90 text-sm md:text-base tracking-[0.3em] font-medium whitespace-nowrap drop-shadow-md font-serif">
                      明日の商いを、共に創る
                   </p>
                   <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl whitespace-nowrap">
@@ -44,7 +44,7 @@ export default function Home() {
                   </h1>
                </div>
 
-               {/* Intro Text */}
+               {/* Intro Text - PC Only */}
                <div className="text-white max-w-md pt-24 md:pt-0 hidden md:block">
                   {/* UD対応: 英語表記を日本語へ変更 */}
                   <p className="text-sm tracking-[0.3em] mb-8 border-l-2 border-accent pl-4 text-white/90 font-bold">能登の商いを支える</p>
@@ -60,13 +60,13 @@ export default function Home() {
                </div>
             </div>
 
-            {/* 課題選択エリア */}
-            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-primary to-transparent pt-24 pb-16">
+            {/* 課題選択エリア - PC Only (Absolute Position) */}
+            <div className="hidden md:block absolute bottom-0 left-0 w-full bg-gradient-to-t from-primary to-transparent pt-24 pb-16">
                <div className="container">
                   <h2 className="text-white text-center font-serif text-2xl md:text-3xl mb-10 tracking-widest drop-shadow-lg font-bold">
                      今、どんなことでお困りですか？
                   </h2>
-                  <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+                  <div className="grid grid-cols-5 gap-6">
                      {[
                         { icon: "👥", label: "後継者が\nいない" },
                         { icon: "🤝", label: "人材を\n確保したい" },
@@ -87,10 +87,56 @@ export default function Home() {
                   </div>
                </div>
             </div>
+            
+            {/* Scroll Indicator - SP Only */}
+            <div className="md:hidden absolute bottom-8 left-1/2 -translate-x-1/2 text-white flex flex-col items-center gap-2 animate-bounce">
+              <span className="text-xs tracking-widest uppercase">Scroll</span>
+              <div className="w-[1px] h-12 bg-white"></div>
+            </div>
          </div>
       </section>
 
-      <main className="container py-32">
+      {/* SP用: イントロダクション & 課題選択エリア (スクロール後に表示) */}
+      <section className="md:hidden py-16 bg-background">
+        <div className="container">
+          <div className="mb-16">
+            <p className="text-sm tracking-[0.3em] mb-6 border-l-4 border-accent pl-4 text-primary font-bold">能登の商いを支える</p>
+            <p className="text-lg font-serif leading-loose text-justify text-foreground">
+               能登の事業者の皆様へ。<br/>
+               一人ひとりの悩みに寄り添い、<br/>
+               最適な支援をご案内します。<br/>
+               ここには、明日を切り拓くための<br/>
+               確かな道筋があります。
+            </p>
+          </div>
+
+          <div className="bg-primary/5 rounded-2xl p-8 border border-primary/10">
+            <h2 className="text-primary text-center font-serif text-xl mb-8 tracking-widest font-bold">
+               今、どんなことでお困りですか？
+            </h2>
+            <div className="grid grid-cols-2 gap-4">
+               {[
+                  { icon: "👥", label: "後継者が\nいない" },
+                  { icon: "🤝", label: "人材を\n確保したい" },
+                  { icon: "🏗️", label: "設備の復旧・\n改修がしたい" },
+                  { icon: "💰", label: "資金繰りが\n厳しい" },
+                  { icon: "📈", label: "売上を\n伸ばしたい" }
+               ].map((item, index) => (
+                  <button 
+                     key={index}
+                     className={`bg-white hover:bg-accent/10 border border-primary/20 text-primary p-4 rounded-lg transition-all active:scale-95 flex flex-col items-center text-center gap-2 shadow-sm ${index === 4 ? 'col-span-2' : ''}`}
+                     aria-label={item.label.replace('\n', '')}
+                  >
+                     <span className="text-3xl">{item.icon}</span>
+                     <span className="text-sm font-bold whitespace-pre-line leading-snug font-sans">{item.label}</span>
+                  </button>
+               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main className="container py-16 md:py-32">
         
         {/* 活用事例セクション */}
         <section className="mb-32">
