@@ -97,8 +97,8 @@ export default function IndustryDetailPage() {
               )}
             </div>
             
-            {/* 文字サイズ切り替え */}
-            <div className="flex items-center gap-2 bg-gray-50 p-1 rounded-lg border border-gray-200 self-start md:self-auto">
+            {/* 文字サイズ切り替え (PC) */}
+            <div className="hidden md:flex items-center gap-2 bg-gray-50 p-1 rounded-lg border border-gray-200 self-start md:self-auto">
               <span className="text-xs font-bold text-gray-500 px-2">文字サイズ</span>
               <button 
                 onClick={() => setFontSize('normal')}
@@ -115,9 +115,28 @@ export default function IndustryDetailPage() {
             </div>
           </div>
 
-          <h1 className="text-3xl md:text-5xl font-serif font-bold text-primary mb-8 leading-tight">
+          <h1 className="text-3xl md:text-5xl font-serif font-bold text-primary mb-4 leading-tight">
             {industry.title}
           </h1>
+
+          {/* 文字サイズ切り替え (SP) - タイトル直下に配置 */}
+          <div className="md:hidden flex items-center gap-2 mb-8">
+            <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded">文字サイズ</span>
+            <div className="flex bg-gray-100 p-1 rounded-lg border border-gray-200">
+              <button 
+                onClick={() => setFontSize('normal')}
+                className={`px-4 py-1.5 rounded text-sm font-bold transition-all ${fontSize === 'normal' ? 'bg-white shadow-sm text-primary border border-gray-200' : 'text-gray-400'}`}
+              >
+                標準
+              </button>
+              <button 
+                onClick={() => setFontSize('large')}
+                className={`px-4 py-1.5 rounded text-lg font-bold transition-all ${fontSize === 'large' ? 'bg-white shadow-sm text-primary border border-gray-200' : 'text-gray-400'}`}
+              >
+                大きく
+              </button>
+            </div>
+          </div>
 
           {/* メインビジュアル */}
           <div className="relative aspect-[16/9] md:aspect-[21/9] rounded-2xl overflow-hidden shadow-lg mb-8 group">
@@ -126,10 +145,11 @@ export default function IndustryDetailPage() {
               alt={industry.title} 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
-            <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-white">
-              <p className="text-lg md:text-xl font-bold opacity-90 mb-1">{industry.details?.owner}</p>
-              <p className="text-sm opacity-80">{industry.details?.founded} 創業</p>
+            {/* 視認性確保のための強力なグラデーションオーバーレイ */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80"></div>
+            <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-white z-10">
+              <p className="text-lg md:text-xl font-bold opacity-100 mb-1 drop-shadow-md">{industry.details?.owner}</p>
+              <p className="text-sm opacity-90 drop-shadow-md">{industry.details?.founded} 創業</p>
             </div>
           </div>
 
@@ -150,7 +170,18 @@ export default function IndustryDetailPage() {
             直面した危機
           </h2>
           <div className={`font-serif ${baseTextSize} ${leadingRelaxed} text-gray-800 whitespace-pre-line mb-10`}>
-            {industry.description}
+            {industry.description.split('\n').map((line, i) => {
+              // 会話文（「」や『』で始まる行）の判定
+              const isConversation = line.trim().match(/^[「『]/);
+              if (isConversation) {
+                return (
+                  <p key={i} className="font-serif font-bold pl-[1em] my-4 text-gray-900">
+                    {line}
+                  </p>
+                );
+              }
+              return <span key={i}>{line}<br/></span>;
+            })}
           </div>
 
           {/* 先人の教訓ボックス (Regrets) */}
@@ -187,15 +218,15 @@ export default function IndustryDetailPage() {
                 </p>
               </div>
 
-              {/* 矢印 */}
-              <div className="flex justify-center -my-4 relative z-10">
-                <div className="bg-white p-2 rounded-full border border-gray-200 shadow-sm">
+              {/* 矢印 - 余白を確保して重なりを解消 */}
+              <div className="flex justify-center my-6 relative z-10">
+                <div className="bg-white p-3 rounded-full border border-gray-200 shadow-sm">
                   <ArrowDown className="w-8 h-8 text-gray-400" />
                 </div>
               </div>
 
               {/* 決め手 */}
-              <div className="border-2 border-primary/20 bg-primary/5 rounded-lg p-8 mt-4 text-center relative">
+              <div className="border-2 border-primary/20 bg-primary/5 rounded-lg p-8 text-center relative">
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
                   選んだ決め手
                 </span>
@@ -252,13 +283,14 @@ export default function IndustryDetailPage() {
         )}
 
         {/* 4. 編集部より・関連制度 (Writer's Eye) */}
-        <section ref={el => sectionsRef.current[3] = el} className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100">
+        <section ref={el => sectionsRef.current[3] = el} className="bg-[#F0EFED] rounded-2xl p-8 md:p-12 shadow-sm border border-gray-200">
           <div className="flex items-start gap-6 mb-10">
             <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden shrink-0 border-2 border-white shadow-md">
               <img src="https://placehold.co/100x100/e2e8f0/1e293b?text=Editor" alt="編集部" className="w-full h-full object-cover" />
             </div>
-            <div className="relative bg-gray-50 rounded-2xl p-6 flex-grow bubble-left">
-              <div className="absolute top-6 -left-2 w-4 h-4 bg-gray-50 transform rotate-45"></div>
+            {/* コントラスト強化: 白背景 + ドロップシャドウ */}
+            <div className="relative bg-white rounded-2xl p-6 flex-grow bubble-left shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100">
+              <div className="absolute top-6 -left-2 w-4 h-4 bg-white transform rotate-45 border-l border-b border-gray-100"></div>
               <h3 className="text-sm font-bold text-gray-500 mb-2 flex items-center gap-2">
                 <MessageCircle className="w-4 h-4" /> 編集部より
               </h3>
