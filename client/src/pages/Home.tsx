@@ -5,6 +5,7 @@ import { industries } from '@/data/industries';
 import SupportSection from '@/components/SupportSection';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import ConsultationCTA from '@/components/ConsultationCTA';
 
 export default function Home() {
   // 活用事例記事（isCaseStudyがtrue）のみを取得
@@ -311,6 +312,10 @@ export default function Home() {
 
         {/* 使える支援制度セクション (Support Section) - Moved DOWN and using new component */}
         <SupportSection />
+
+        <div className="mt-32">
+          <ConsultationCTA />
+        </div>
 
       </main>
 
