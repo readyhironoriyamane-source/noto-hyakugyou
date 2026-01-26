@@ -44,8 +44,16 @@ export default function Header() {
         <div className="container flex justify-between items-center h-full">
           <div className="flex items-center gap-4 z-50">
              {/* UD対応: ロゴリンクは下線なし（no-underline-link） */}
-             <a href="/" className="no-underline-link font-serif font-bold text-xl md:text-2xl tracking-widest text-foreground hover:opacity-80 transition-opacity flex items-center gap-2">
-               能登百業録
+             <a href="/" className="no-underline-link font-serif font-bold text-xl md:text-2xl tracking-widest text-foreground hover:opacity-80 transition-opacity flex items-center gap-3 group">
+               {/* ロゴ画像（アイコン的に配置） */}
+               <div className="relative h-10 w-10 shrink-0"> 
+                 <img 
+                   src="/images/logo.png" 
+                   alt="能登百業録ロゴ"
+                   className="w-full h-full object-contain"
+                 />
+               </div>
+               <span className="mt-1">能登百業録</span>
              </a>
           </div>
           
