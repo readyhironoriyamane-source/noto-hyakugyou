@@ -165,9 +165,9 @@
     }
   }
 
-  /* 見出しフォント設定: Noto Serif JP */
+  /* 見出しフォント設定: Noto Serif JP (デフォルトはゴシック体とし、必要な箇所のみ serif クラスで適用) */
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+    /* font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif; */
     font-weight: 700;
     line-height: 1.5;
   }
