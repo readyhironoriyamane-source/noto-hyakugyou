@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X, ChevronDown } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { industries } from '@/data/industries';
-import DetailModal from '@/components/DetailModal';
 import Footer from '@/components/Footer';
-import type { Industry } from '@/data/industries';
 
 export default function Home() {
-  const [selectedJob, setSelectedJob] = useState<Industry | null>(null);
-  const [filter, setFilter] = useState("すべて");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -16,13 +12,6 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const categories = ["すべて", "農業", "漁業", "林業", "食", "工芸", "伝統", "観光", "インフラ"];
-  
-  // 通常の記事（isCaseStudyがfalseまたは未定義）のみを表示
-  const filteredIndustries = industries
-    .filter(i => !i.isCaseStudy)
-    .filter(i => filter === "すべて" || i.category === filter);
 
   // 活用事例記事（isCaseStudyがtrue）のみを取得
   const caseStudies = industries.filter(i => i.isCaseStudy);
@@ -37,77 +26,9 @@ export default function Home() {
              <h1 className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-stone-900' : 'text-white drop-shadow-lg'}`}>能登百業録</h1>
           </div>
           
-          <div className="flex items-center gap-8">
-            <nav className="hidden md:flex items-center gap-8 text-sm tracking-widest font-medium">
-              <a 
-                href="/about" 
-                className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-white hover:text-white/80 drop-shadow-lg'}`}
-              >
-                百業について
-              </a>
-              <a 
-                href="/map" 
-                className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-white hover:text-white/80 drop-shadow-lg'}`}
-              >
-                地図から探す
-              </a>
-            </nav>
-            <button 
-              className={`md:hidden ${isScrolled ? 'text-stone-900' : 'text-white'}`}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="メニュー"
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
+          {/* ナビゲーションリンクは削除されました */}
         </div>
       </header>
-
-      {/* モバイルメニュー */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          {/* 背景オーバーレイ */}
-          <div 
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setIsMenuOpen(false)}
-          />
-          
-          {/* メニューパネル */}
-          <div className="absolute top-0 right-0 w-64 h-full bg-stone-50 shadow-2xl">
-            <div className="flex flex-col h-full">
-              {/* ヘッダー */}
-              <div className="flex justify-between items-center p-6 border-b border-stone-200">
-                <h2 className="font-serif text-xl tracking-widest">メニュー</h2>
-                <button 
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-stone-900"
-                  aria-label="閉じる"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-              
-              {/* ナビゲーション */}
-              <nav className="flex flex-col p-6 space-y-6">
-                <a 
-                  href="/about" 
-                  className="text-lg tracking-widest text-stone-900 hover:text-stone-600 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  百業について
-                </a>
-                <a 
-                  href="/map" 
-                  className="text-lg tracking-widest text-stone-900 hover:text-stone-600 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  地図から探す
-                </a>
-              </nav>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Hero Section: Magazine Cover Style */}
       <section className="relative w-full h-screen md:h-[70vh] flex items-center justify-center overflow-hidden bg-[#0a1929]">
@@ -230,7 +151,7 @@ export default function Home() {
               </a>
             ))}
             
-            {/* 事例が少ない場合のプレースホルダー（必要に応じて削除可） */}
+            {/* 事例が少ない場合のプレースホルダー */}
             {caseStudies.length === 0 && (
               <div className="col-span-full text-center py-12 bg-stone-50 rounded-xl border border-dashed border-stone-300">
                 <p className="text-stone-500">現在、公開準備中の事例があります。</p>
@@ -239,81 +160,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 能登の仕事図鑑（一覧） */}
-        <section>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
-            <div>
-              <div className="flex items-center gap-4 mb-6">
-                <span className="w-12 h-[2px] bg-stone-900"></span>
-                <h2 className="font-serif text-3xl md:text-4xl tracking-wider">
-                  {filter === "すべて" ? "能登百業録" : filter}
-                </h2>
-              </div>
-              <p className="text-stone-600 leading-relaxed pl-16">
-                能登半島に根付くさまざまな生業をご紹介します。
-              </p>
-            </div>
-            
-            {/* Filter */}
-            <div className="flex flex-wrap gap-2 justify-end">
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setFilter(cat)}
-                  className={`px-4 py-2 text-sm tracking-wider transition-all ${
-                    filter === cat 
-                      ? 'bg-stone-900 text-white' 
-                      : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-            {filteredIndustries.map((job) => (
-              <div 
-                key={job.id} 
-                onClick={() => setSelectedJob(job)}
-                className="group cursor-pointer flex flex-col gap-4"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden bg-stone-200 rounded-sm">
-                  <img 
-                    src={job.image} 
-                    alt={job.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/10 transition-colors duration-500" />
-                </div>
-                
-                <div className="border-t border-stone-200 pt-4 group-hover:border-stone-400 transition-colors">
-                  <div className="flex justify-between items-baseline mb-2">
-                    <p className="text-xs tracking-widest text-stone-500 uppercase font-medium">{job.category} | {job.location}</p>
-                    <span className="font-serif text-xl text-stone-300 group-hover:text-stone-400 transition-colors">
-                      {String(job.id).padStart(2, '0')}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-serif font-medium text-stone-900 group-hover:text-stone-600 transition-colors">
-                    {job.title}
-                  </h3>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
       </main>
 
       <Footer />
-
-      {/* Detail Modal (通常記事用) */}
-      {selectedJob && (
-        <DetailModal 
-          industry={selectedJob} 
-          onClose={() => setSelectedJob(null)} 
-        />
-      )}
     </div>
   );
 }
