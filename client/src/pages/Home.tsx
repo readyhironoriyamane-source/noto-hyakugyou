@@ -145,14 +145,12 @@ export default function Home() {
         
         {/* 活用事例セクション */}
         <section className="mb-32">
-          <div className="flex items-center gap-6 mb-8">
-            <span className="w-16 h-[4px] bg-primary"></span>
-            <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary">活用事例</h2>
+          <div className="mb-16">
+            <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary mb-6">商いの道しるべ</h2>
+            <p className="text-foreground/80 text-base md:text-lg leading-loose font-sans">
+              支援制度を活かし、新たな一歩を踏み出した<br className="block md:hidden" />能登の事業者をご紹介します。
+            </p>
           </div>
-          <p className="text-foreground/80 text-base md:text-lg leading-loose mb-16 pl-4 md:pl-20 max-w-3xl font-sans">
-            困難を乗り越え、新たな一歩を踏み出した事業者の物語をご紹介します。<br/>
-            同じ悩みを抱える方のヒントになれば幸いです。
-          </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {caseStudies.map((study) => (
