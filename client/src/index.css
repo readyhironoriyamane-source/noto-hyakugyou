@@ -251,3 +251,11 @@
 .animate-fade-in-up {
   animation: fade-in-up 0.8s ease-out forwards;
 }
+
+/* スマホ横持ちなど画面高さが低い場合のヘッダー固定解除 */
+@media (max-height: 400px) {
+  header.fixed {
+    position: absolute !important;
+    top: 0;
+  }
+}

@@ -15,10 +15,10 @@ export default function Header() {
       // ただし、最上部付近では常に表示
       if (currentScrollY < 50) {
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY.current) {
-        // 下スクロール
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // 下スクロール（かつ一定以上スクロールしている場合）
         setIsVisible(false);
-      } else {
+      } else if (currentScrollY < lastScrollY.current) {
         // 上スクロール
         setIsVisible(true);
       }
@@ -44,7 +44,8 @@ export default function Header() {
         <div className="container flex justify-between items-center h-full">
           <div className="flex items-center gap-4 z-50">
              <a href="/" className="font-serif font-bold text-xl md:text-2xl tracking-widest text-foreground hover:opacity-80 transition-opacity flex items-center gap-2">
-               <img src="/logo.svg" alt="" className="h-8 w-auto hidden" /> {/* ロゴがあれば表示 */}
+               {/* ロゴがあれば表示 */}
+               {/* <img src="/logo.svg" alt="" className="h-8 w-auto hidden" /> */}
                能登百業録
              </a>
           </div>

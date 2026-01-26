@@ -2,30 +2,17 @@ import { useState, useEffect } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { industries } from '@/data/industries';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 export default function Home() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   // 活用事例記事（isCaseStudyがtrue）のみを取得
   const caseStudies = industries.filter(i => i.isCaseStudy);
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       
-      {/* Fixed Navigation */}
-      <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled ? 'bg-background/95 backdrop-blur-sm py-4 border-b border-border shadow-sm' : 'bg-transparent py-8'}`}>
-        <div className="container flex justify-between items-center">
-          <div className="flex items-center gap-4 z-50">
-             <h1 className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-primary' : 'text-white drop-shadow-lg'}`}>能登百業録</h1>
-          </div>
-        </div>
-      </header>
+      {/* Navigation */}
+      <Header />
 
       {/* Hero Section: Magazine Cover Style */}
       <section className="relative w-full h-screen md:h-[70vh] flex items-center justify-center overflow-hidden bg-primary">
