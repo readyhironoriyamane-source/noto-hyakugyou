@@ -24,58 +24,219 @@ export default function IndustryDetailPage() {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
+  // 共通ヘッダー
+  const Header = () => (
+    <div className="relative h-[60vh] w-full overflow-hidden">
+      <div className="absolute inset-0 bg-black/40 z-10" />
+      <img
+        src={industry.image}
+        alt={industry.title}
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute bottom-0 left-0 w-full p-8 z-20 bg-gradient-to-t from-black/80 to-transparent">
+        <div className="container mx-auto max-w-4xl">
+          <div className="flex gap-2 mb-4">
+            <Badge variant="secondary" className="bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm border-none">
+              {industry.category}
+            </Badge>
+            <Badge variant="outline" className="text-white border-white/40">
+              {industry.location}
+            </Badge>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight leading-tight">
+            {industry.title}
+          </h1>
+          <div className="flex flex-wrap gap-2">
+            {industry.tags.map((tag) => (
+              <span key={tag} className="text-sm text-white/80 bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+      <Link href="/">
+        <Button
+          variant="ghost"
+          className="absolute top-4 left-4 z-30 text-white hover:bg-white/20 hover:text-white"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          一覧に戻る
+        </Button>
+      </Link>
+    </div>
+  );
+
+  // 共通: 訪問情報セクション
+  const VisitInfoSection = () => (
+    industry.visitInfo ? (
+      <section>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-8 w-1 bg-primary rounded-full" />
+          <h2 className="text-2xl font-bold tracking-tight">訪問情報</h2>
+        </div>
+        <Card>
+          <CardContent className="p-6 space-y-4">
+            {industry.visitInfo.hours && (
+              <div className="flex items-start gap-3">
+                <Calendar className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium">営業時間・時期</p>
+                  <p className="text-muted-foreground">{industry.visitInfo.hours}</p>
+                </div>
+              </div>
+            )}
+            {industry.visitInfo.access && (
+              <div className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium">アクセス</p>
+                  <p className="text-muted-foreground">{industry.visitInfo.access}</p>
+                </div>
+              </div>
+            )}
+            {industry.visitInfo.contact && (
+              <div className="flex items-start gap-3">
+                <Info className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium">お問い合わせ</p>
+                  <p className="text-muted-foreground">{industry.visitInfo.contact}</p>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </section>
+    ) : null
+  );
+
+  // 共通: 関わりを持つセクション (背景色はプロパティで制御)
+  const ActionSection = ({ className = "bg-primary text-primary-foreground" }: { className?: string }) => (
+    <section className={`rounded-2xl overflow-hidden shadow-xl ${className}`}>
+      <div className="p-8 md:p-12 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4">関わりを持つ</h2>
+        <p className="mb-8 max-w-2xl mx-auto opacity-90">
+          この産業を守り、未来へ繋ぐために、あなたにできることがあります。
+          小さな一歩が、大きな力になります。
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {industry.actions.map((action, index) => (
+            <Button 
+              key={index} 
+              size="lg" 
+              variant="secondary"
+              className="font-bold shadow-lg min-w-[200px]"
+              asChild
+            >
+              <a href={action.link} target="_blank" rel="noopener noreferrer">
+                {action.label}
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
+  // ==========================================
+  // パターンA: 活用事例 (Case Study) 用レイアウト
+  // ==========================================
+  if (industry.isCaseStudy) {
+    // 関連産業（活用事例に関連する産業）
+    const relatedIndustries = industry.relatedIndustries
+      .map(id => industries.find(i => i.id === id))
+      .filter((i): i is Industry => i !== undefined);
+
+    return (
+      <div className="min-h-screen bg-background font-sans text-foreground">
+        <Header />
+        <div className="container mx-auto max-w-4xl px-4 py-12 space-y-16">
+          
+          {/* 物語 */}
+          <section>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-8 w-1 bg-primary rounded-full" />
+              <h2 className="text-2xl font-bold tracking-tight">物語</h2>
+            </div>
+            <div className="prose prose-lg max-w-none text-muted-foreground leading-relaxed whitespace-pre-line">
+              {industry.description || industry.summary}
+            </div>
+          </section>
+
+          {/* 歩みと展望 */}
+          <section>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-8 w-1 bg-primary rounded-full" />
+              <h2 className="text-2xl font-bold tracking-tight">歩みと展望</h2>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">これまでの歩み</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{industry.timeline.past}</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">今後の展望</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{industry.timeline.future}</p>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+
+          {/* 関連する産業 */}
+          {relatedIndustries.length > 0 && (
+            <section>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-8 w-1 bg-primary rounded-full" />
+                <h2 className="text-2xl font-bold tracking-tight">関連する産業</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {relatedIndustries.map((rel) => (
+                  <Link key={rel.id} href={`/industry/${rel.id}`}>
+                    <Card className="cursor-pointer hover:shadow-md transition-all">
+                      <div className="flex items-center p-4 gap-4">
+                        <img src={rel.image} alt={rel.title} className="w-16 h-16 rounded object-cover" />
+                        <div>
+                          <h3 className="font-bold">{rel.title}</h3>
+                          <p className="text-xs text-muted-foreground">{rel.category}</p>
+                        </div>
+                      </div>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <VisitInfoSection />
+          <ActionSection />
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // パターンB: 能登百業録 (通常) 用レイアウト
+  // ==========================================
+  
   // 関連する支援事例（isCaseStudy: true の産業）を取得
-  // 本来は relatedIndustries から引くべきだが、デモ用に簡易実装
   const relatedCaseStudies = industry.relatedIndustries
     .map(id => industries.find(i => i.id === id))
     .filter((i): i is Industry => i !== undefined && !!i.isCaseStudy);
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
-      {/* ヘッダー画像エリア */}
-      <div className="relative h-[60vh] w-full overflow-hidden">
-        <div className="absolute inset-0 bg-black/40 z-10" />
-        <img
-          src={industry.image}
-          alt={industry.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute bottom-0 left-0 w-full p-8 z-20 bg-gradient-to-t from-black/80 to-transparent">
-          <div className="container mx-auto max-w-4xl">
-            <div className="flex gap-2 mb-4">
-              <Badge variant="secondary" className="bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm border-none">
-                {industry.category}
-              </Badge>
-              <Badge variant="outline" className="text-white border-white/40">
-                {industry.location}
-              </Badge>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight leading-tight">
-              {industry.title}
-            </h1>
-            <div className="flex flex-wrap gap-2">
-              {industry.tags.map((tag) => (
-                <span key={tag} className="text-sm text-white/80 bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-        <Link href="/">
-          <Button
-            variant="ghost"
-            className="absolute top-4 left-4 z-30 text-white hover:bg-white/20 hover:text-white"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            一覧に戻る
-          </Button>
-        </Link>
-      </div>
-
+      <Header />
       <div className="container mx-auto max-w-4xl px-4 py-12 space-y-16">
         
-        {/* 1. 仕事概要 (旧: 物語) */}
+        {/* 1. 仕事概要 */}
         <section>
           <div className="flex items-center gap-3 mb-6">
             <div className="h-8 w-1 bg-primary rounded-full" />
@@ -228,72 +389,10 @@ export default function IndustryDetailPage() {
           </section>
         )}
 
-        {/* 5. 訪問情報 */}
-        {industry.visitInfo && (
-          <section>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-8 w-1 bg-primary rounded-full" />
-              <h2 className="text-2xl font-bold tracking-tight">訪問情報</h2>
-            </div>
-            <Card>
-              <CardContent className="p-6 space-y-4">
-                {industry.visitInfo.hours && (
-                  <div className="flex items-start gap-3">
-                    <Calendar className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-medium">営業時間・時期</p>
-                      <p className="text-muted-foreground">{industry.visitInfo.hours}</p>
-                    </div>
-                  </div>
-                )}
-                {industry.visitInfo.access && (
-                  <div className="flex items-start gap-3">
-                    <MapPin className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-medium">アクセス</p>
-                      <p className="text-muted-foreground">{industry.visitInfo.access}</p>
-                    </div>
-                  </div>
-                )}
-                {industry.visitInfo.contact && (
-                  <div className="flex items-start gap-3">
-                    <Info className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-medium">お問い合わせ</p>
-                      <p className="text-muted-foreground">{industry.visitInfo.contact}</p>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </section>
-        )}
-
+        <VisitInfoSection />
+        
         {/* 6. 関わりを持つ (ブルーベース背景) */}
-        <section className="rounded-2xl overflow-hidden bg-blue-900 text-white shadow-xl">
-          <div className="p-8 md:p-12 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">関わりを持つ</h2>
-            <p className="text-blue-100 mb-8 max-w-2xl mx-auto">
-              この産業を守り、未来へ繋ぐために、あなたにできることがあります。
-              小さな一歩が、大きな力になります。
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {industry.actions.map((action, index) => (
-                <Button 
-                  key={index} 
-                  size="lg" 
-                  className="bg-white text-blue-900 hover:bg-blue-50 font-bold shadow-lg border-none min-w-[200px]"
-                  asChild
-                >
-                  <a href={action.link} target="_blank" rel="noopener noreferrer">
-                    {action.label}
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ActionSection className="bg-blue-900 text-white" />
 
       </div>
     </div>
