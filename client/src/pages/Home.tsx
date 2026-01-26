@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, ArrowUpRight, FileText } from 'lucide-react';
 import { industries } from '@/data/industries';
+// import DetailModal from '@/components/DetailModal'; // Removed unused import
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 

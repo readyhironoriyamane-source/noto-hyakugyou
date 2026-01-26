@@ -91,6 +91,16 @@ export const supportSystems: SupportSystem[] = [
     icon: Handshake
   },
   {
+    id: "new-product-sales",
+    title: "新商品の開発や販路開拓の支援",
+    officialName: "新商品等の販路開拓",
+    category: "sales",
+    tags: ["📦 新商品"],
+    badge: "【中小機構】",
+    description: "新商品開発や販路開拓に関するアドバイス、ビジネスマッチングなどの支援を行います。",
+    icon: TrendingUp
+  },
+  {
     id: "exhibition-support-smrj",
     title: "首都圏などの展示会・商談会への参加",
     officialName: "展示会への出展支援",
@@ -119,16 +129,6 @@ export const supportSystems: SupportSystem[] = [
     badge: "【能登町商工会】",
     description: "セミナーやワークショップを開催し、ネットショップの開設や運営をサポートします。",
     icon: Truck
-  },
-  {
-    id: "homepage-support",
-    title: "お店のホームページ作成・リニューアル",
-    officialName: "ホームページ作成支援",
-    category: "sales",
-    tags: ["💻 Web制作"],
-    badge: "【能登町商工会】",
-    description: "事業所のホームページ作成やリニューアルに関する支援を行います。",
-    icon: Globe
   },
   {
     id: "exhibition-support-noto",
@@ -225,7 +225,7 @@ export const supportSystems: SupportSystem[] = [
   {
     id: "ishikawa-note",
     title: "県外からの移住者・正社員の採用に",
-    officialName: "イシカワノオト (UIターン)",
+    officialName: "イシカワノオト",
     category: "hr",
     tags: ["🏠 移住採用"],
     badge: "【ILAC】",
@@ -247,7 +247,7 @@ export const supportSystems: SupportSystem[] = [
   {
     id: "special-loan",
     title: "災害復旧のための特別な融資制度",
-    officialName: "令和6年能登半島地震特別貸付",
+    officialName: "令和６年能登半島地震特別貸付",
     category: "finance",
     tags: ["💴 公庫融資"],
     badge: "【公庫】",
@@ -257,7 +257,7 @@ export const supportSystems: SupportSystem[] = [
   {
     id: "reconstruction-fund",
     title: "二重ローンの解消、債権買取の相談",
-    officialName: "復興支援ファンド",
+    officialName: "復興支援ファンドによる二重債務の債権買取",
     category: "finance",
     tags: ["🏦 債務整理"],
     badge: "【復興相談センター】",

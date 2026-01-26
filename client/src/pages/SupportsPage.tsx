@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 
 // カテゴリ定義
-const CATEGORIES: { id: SupportCategory | 'all'; label: string; icon: JSX.Element }[] = [
+const CATEGORIES: { id: SupportCategory | 'all'; label: string; icon: React.ReactNode }[] = [
   { id: 'all', label: 'すべて表示', icon: <Search className="w-4 h-4" /> },
   { id: 'reconstruction', label: '設備の復旧・再建', icon: <Construction className="w-4 h-4" /> },
   { id: 'sales', label: '販路開拓・売上', icon: <TrendingUp className="w-4 h-4" /> },
