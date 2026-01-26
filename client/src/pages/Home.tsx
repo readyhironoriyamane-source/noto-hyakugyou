@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, ArrowUpRight, FileText } from 'lucide-react';
 import { industries } from '@/data/industries';
-// SupportCard removed for reset
-import { supportSystems } from '@/lib/supports';
+import SupportSection from '@/components/SupportSection';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 
@@ -171,96 +170,7 @@ export default function Home() {
 
       <main className="container py-16 md:py-32">
         
-        {/* 使える支援制度セクション */}
-        <section className="mb-32 bg-[#F9F8F4] py-16 -mx-4 md:-mx-8 lg:-mx-16 px-4 md:px-8 lg:px-16">
-          <div className="container mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#1D3A52] text-center mb-10">
-              使える支援制度
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* 1. なりわい再建支援補助金 (県) */}
-              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-                <span className="inline-block rounded px-3 py-1 text-xs font-bold text-white mb-4 bg-[#1D3A52]">
-                  石川県
-                </span>
-                <h3 className="text-xl font-bold text-[#1D3A52] mb-2">
-                  工場・店舗の再建、<br />機械設備の復旧に
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">なりわい再建支援補助金</p>
-                <div className="bg-gray-50 p-4 rounded mb-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-red-800 font-bold text-xs border border-red-800 px-1 rounded">金額</span>
-                    <span className="font-bold text-gray-800">上限15億円</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-500 text-xs border border-gray-400 px-1 rounded">補助率</span>
-                    <span className="text-sm text-gray-700">3/4 (中堅は1/2)</span>
-                  </div>
-                </div>
-                <a href="/supports/1" className="block w-full text-center border border-gray-300 text-[#1D3A52] font-bold py-3 rounded hover:bg-gray-50 no-underline transition-colors">
-                  詳細・相談先を見る ↗
-                </a>
-              </div>
-
-              {/* 2. 小規模事業者持続化補助金 (国) */}
-              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-                <span className="inline-block rounded px-3 py-1 text-xs font-bold text-white mb-4 bg-[#2B2B2B]">
-                  国
-                </span>
-                <h3 className="text-xl font-bold text-[#1D3A52] mb-2">
-                  販路開拓や、<br />業務効率化の取り組みに
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">小規模事業者持続化補助金<br />(災害支援枠)</p>
-                <div className="bg-gray-50 p-4 rounded mb-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-red-800 font-bold text-xs border border-red-800 px-1 rounded">金額</span>
-                    <span className="font-bold text-gray-800">上限200万円</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-500 text-xs border border-gray-400 px-1 rounded">条件など</span>
-                    <span className="text-sm text-gray-700">売上減少の間接被害の場合は100万円</span>
-                  </div>
-                </div>
-                <a href="/supports/2" className="block w-full text-center border border-gray-300 text-[#1D3A52] font-bold py-3 rounded hover:bg-gray-50 no-underline transition-colors">
-                  詳細・相談先を見る ↗
-                </a>
-              </div>
-
-              {/* 3. 能登町なりわい再建支援補助金 (町) */}
-              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-                <span className="inline-block rounded px-3 py-1 text-xs font-bold text-white mb-4 bg-[#B33E28]">
-                  能登町
-                </span>
-                <h3 className="text-xl font-bold text-[#1D3A52] mb-2">
-                  県の補助金に対する<br />「自己負担」を軽減
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">能登町なりわい再建<br />支援補助金</p>
-                <div className="bg-gray-50 p-4 rounded mb-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-red-800 font-bold text-xs border border-red-800 px-1 rounded">金額</span>
-                    <span className="font-bold text-gray-800">補助率 3/5</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-500 text-xs border border-gray-400 px-1 rounded">条件など</span>
-                    <span className="text-sm text-gray-700">町への申請が必要</span>
-                  </div>
-                </div>
-                <a href="/supports/3" className="block w-full text-center border border-gray-300 text-[#1D3A52] font-bold py-3 rounded hover:bg-gray-50 no-underline transition-colors">
-                  詳細・相談先を見る ↗
-                </a>
-              </div>
-            </div>
-            
-            {/* 支援制度一覧を見るボタン */}
-            <div className="text-center mt-10">
-              <a href="/supports" className="inline-flex items-center gap-2 bg-[#1D3A52] text-white px-8 py-3 rounded-full font-bold hover:bg-[#152a3d] transition-colors no-underline">
-                支援制度一覧を見る <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* 活用事例セクション */}
+        {/* 活用事例セクション (Guidepost Section) - Moved UP */}
         <section className="mb-32">
           <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
@@ -399,29 +309,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 支援制度セクション */}
-        <section className="mb-32">
-          <div className="mb-16">
-            <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary mb-6">使える支援制度</h2>
-            <p className="text-foreground/80 text-base md:text-lg leading-loose font-sans">
-              復旧・復興に向けた、国や自治体の支援制度をご案内します。<br className="block md:hidden" />
-              あなたの状況に合わせてご活用ください。
-            </p>
-          </div>
-
-          <div className="bg-muted/30 rounded-xl p-12 text-center border-2 border-dashed border-muted-foreground/20">
-            <p className="text-lg font-bold text-muted-foreground">現在、支援制度情報を更新中です。</p>
-            <p className="text-sm text-muted-foreground mt-2">しばらくお待ちください。</p>
-          </div>
-
-          {/* 一覧ボタン (No Underline) */}
-          <div className="text-center mt-12">
-            <Link href="/supports" className="inline-flex items-center justify-center gap-3 bg-primary text-white px-10 py-4 rounded-full font-bold tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl group no-underline">
-              支援制度一覧を見る
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-        </section>
+        {/* 使える支援制度セクション (Support Section) - Moved DOWN and using new component */}
+        <SupportSection />
 
       </main>
 
