@@ -1,98 +1,105 @@
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Menu, X, Search } from 'lucide-react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // スクロール方向による表示制御
+      // 下スクロールで隠す、上スクロールで表示
+      // ただし、最上部付近では常に表示
+      if (currentScrollY < 50) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current) {
+        // 下スクロール
+        setIsVisible(false);
+      } else {
+        // 上スクロール
+        setIsVisible(true);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <>
       {/* Fixed Navigation */}
-      <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled ? 'bg-stone-50/90 backdrop-blur-sm py-4 border-b border-stone-200' : 'bg-transparent py-8'}`}>
-        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 flex justify-between items-center">
+      <header 
+        className={`fixed top-0 left-0 w-full z-40 transition-transform duration-300 ease-in-out bg-background/95 backdrop-blur-sm border-b border-border shadow-sm
+          ${isVisible ? 'translate-y-0' : '-translate-y-full'}
+          /* スマホ横持ちなど高さが低い場合は固定解除（CSSメディアクエリの代用としてクラスで制御は難しいが、JS制御と併用） */
+          max-h-[60px] flex items-center
+        `}
+        style={{ height: '60px' }}
+      >
+        <div className="container flex justify-between items-center h-full">
           <div className="flex items-center gap-4 z-50">
-             <a href="/" className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-stone-900' : 'text-stone-900'}`}>
+             <a href="/" className="font-serif font-bold text-xl md:text-2xl tracking-widest text-foreground hover:opacity-80 transition-opacity flex items-center gap-2">
+               <img src="/logo.svg" alt="" className="h-8 w-auto hidden" /> {/* ロゴがあれば表示 */}
                能登百業録
              </a>
           </div>
           
-          <div className="flex items-center gap-8">
-            <nav className="hidden md:flex items-center gap-8 text-sm tracking-widest font-medium">
-              <a 
-                href="/about" 
-                className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-stone-900 hover:text-stone-600'}`}
-              >
-                百業について
+          <div className="flex items-center gap-4 md:gap-8">
+            {/* PC用ナビゲーション（現在はシンプルに） */}
+            <nav className="hidden md:flex items-center gap-6 text-sm tracking-widest font-medium">
+              {/* 将来的な拡張用プレースホルダー */}
+              {/* 
+              <a href="/search" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors py-2 px-3 rounded-md hover:bg-secondary/50">
+                <Search className="w-4 h-4" />
+                <span>検索する</span>
               </a>
-              <a 
-                href="/map" 
-                className={`transition-colors ${isScrolled ? 'text-stone-900 hover:text-stone-600' : 'text-stone-900 hover:text-stone-600'}`}
-              >
-                地図から探す
-              </a>
+              */}
             </nav>
+
+            {/* モバイルメニューボタン（UD対応: アイコン+ラベル） */}
+            {/* 現状はメニュー項目がないため非表示にするが、将来のために構造は残す */}
+            {/* 
             <button 
-              className={`md:hidden ${isScrolled ? 'text-stone-900' : 'text-stone-900'}`}
+              className="flex flex-col items-center justify-center gap-1 text-foreground p-2 min-w-[48px] min-h-[48px] hover:bg-secondary/50 rounded-md transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="メニュー"
+              aria-label={isMenuOpen ? "メニューを閉じる" : "メニューを開く"}
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <span className="text-[10px] font-bold leading-none">メニュー</span>
             </button>
+            */}
           </div>
         </div>
       </header>
 
-      {/* モバイルメニュー */}
+      {/* モバイルメニュー（現在は項目がないためコメントアウト） */}
+      {/* 
       {isMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          {/* 背景オーバーレイ */}
+        <div className="fixed inset-0 z-50 md:hidden top-[60px]">
           <div 
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setIsMenuOpen(false)}
           />
           
-          {/* メニューパネル */}
-          <div className="absolute top-0 right-0 w-64 h-full bg-stone-50 shadow-2xl">
-            <div className="flex flex-col h-full">
-              {/* ヘッダー */}
-              <div className="flex justify-between items-center p-6 border-b border-stone-200">
-                <h2 className="font-serif text-xl tracking-widest">メニュー</h2>
-                <button 
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-stone-900"
-                  aria-label="閉じる"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-              
-              {/* ナビゲーション */}
-              <nav className="flex flex-col p-6 space-y-6">
-                <a 
-                  href="/about" 
-                  className="text-lg tracking-widest text-stone-900 hover:text-stone-600 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  百業について
-                </a>
-                <a 
-                  href="/map" 
-                  className="text-lg tracking-widest text-stone-900 hover:text-stone-600 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  地図から探す
-                </a>
-              </nav>
-            </div>
+          <div className="absolute top-0 right-0 w-64 h-[calc(100vh-60px)] bg-background shadow-2xl border-l border-border overflow-y-auto">
+            <nav className="flex flex-col p-6 space-y-6">
+              <a 
+                href="/" 
+                className="text-lg tracking-widest text-foreground hover:text-primary transition-colors py-3 border-b border-border"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                トップページ
+              </a>
+            </nav>
           </div>
         </div>
       )}
+      */}
     </>
   );
 }
