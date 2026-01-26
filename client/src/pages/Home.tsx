@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Users, Handshake, Construction, Coins, TrendingUp, ArrowRight } from 'lucide-react';
 import { industries } from '@/data/industries';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -27,8 +27,8 @@ export default function Home() {
             >
               <source src="/noto-sea.mp4" type="video/mp4" />
             </video>
-            {/* UD対応: コントラスト確保のためのオーバーレイを強化 */}
-            <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/40 to-primary/90"></div>
+            {/* UD対応: コントラスト強化 (最重要) - #1D3A52 (深藍) の不透明度70%オーバーレイ */}
+            <div className="absolute inset-0 bg-[#1D3A52]/70"></div>
          </div>
          
          <div className="relative z-10 container h-full flex flex-col justify-center md:justify-start md:pt-32">
@@ -47,9 +47,9 @@ export default function Home() {
                {/* Intro Text - PC Only */}
                <div className="text-white max-w-md pt-24 md:pt-12 hidden md:block">
                   {/* UD対応: 英語表記を日本語へ変更 */}
-                  <p className="text-sm tracking-[0.3em] mb-8 border-l-2 border-accent pl-4 text-white/90 font-bold">能登の商いを支える</p>
-                  {/* UD対応: 行間を広げ、文字サイズを大きく */}
-                  <p className="text-lg md:text-xl font-serif leading-loose mb-8 text-justify drop-shadow-md">
+                  <p className="text-sm tracking-[0.3em] mb-8 border-l-[3px] border-accent pl-4 text-white/90 font-bold">能登の商いを支える</p>
+                  {/* UD対応: フォントをゴシック体(font-sans)に変更、行間を2.0(leading-loose)に */}
+                  <p className="text-lg md:text-xl font-sans leading-loose mb-8 text-justify drop-shadow-md">
                      能登の事業者の皆様へ。<br/>
                      一人ひとりの悩みに寄り添い、<br/>
                      最適な支援をご案内します。<br/>
@@ -61,27 +61,32 @@ export default function Home() {
             </div>
 
             {/* 課題選択エリア - PC Only (Absolute Position) */}
-            <div className="hidden md:block absolute bottom-0 left-0 w-full bg-gradient-to-t from-primary to-transparent pt-24 pb-16">
+            <div className="hidden md:block absolute bottom-0 left-0 w-full bg-gradient-to-t from-[#1D3A52] to-transparent pt-24 pb-16">
                <div className="container">
                   <h2 className="text-white text-center font-serif text-2xl md:text-3xl mb-10 tracking-widest drop-shadow-lg font-bold">
                      今、どんなことでお困りですか？
                   </h2>
                   <div className="grid grid-cols-5 gap-6">
                      {[
-                        { icon: "👥", label: "後継者が\nいない" },
-                        { icon: "🤝", label: "人材を\n確保したい" },
-                        { icon: "🏗️", label: "設備の復旧・\n改修がしたい" },
-                        { icon: "💰", label: "資金繰りが\n厳しい" },
-                        { icon: "📈", label: "売上を\n伸ばしたい" }
+                        { icon: Users, label: "後継者が\nいない" },
+                        { icon: Handshake, label: "人材を\n確保したい" },
+                        { icon: Construction, label: "設備の復旧・\n改修がしたい" },
+                        { icon: Coins, label: "資金繰りが\n厳しい" },
+                        { icon: TrendingUp, label: "売上を\n伸ばしたい" }
                      ].map((item, index) => (
                         <button 
                            key={index}
-                           className="bg-white/10 backdrop-blur-md hover:bg-accent/90 border-2 border-white/30 text-white p-6 rounded-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center gap-3 group focus:outline-none focus:ring-4 focus:ring-accent/50"
+                           className="bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/30 text-white p-6 rounded-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center gap-4 group focus:outline-none focus:ring-4 focus:ring-accent/50 relative overflow-hidden"
                            aria-label={item.label.replace('\n', '')}
                         >
-                           <span className="text-4xl group-hover:scale-110 transition-transform drop-shadow-md">{item.icon}</span>
+                           <item.icon className="w-10 h-10 text-white stroke-[1.5]" />
                            {/* UD対応: 文字サイズを大きく、太字に */}
                            <span className="text-base md:text-lg font-bold whitespace-pre-line leading-snug font-sans">{item.label}</span>
+                           
+                           {/* 誘導アイコン */}
+                           <div className="mt-2 flex items-center text-xs tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
+                              詳しく見る <ArrowRight className="w-3 h-3 ml-1" />
+                           </div>
                         </button>
                      ))}
                   </div>
@@ -101,7 +106,7 @@ export default function Home() {
         <div className="container">
           <div className="mb-16">
             <p className="text-sm tracking-[0.3em] mb-6 border-l-4 border-accent pl-4 text-primary font-bold">能登の商いを支える</p>
-            <p className="text-lg font-serif leading-loose text-justify text-foreground">
+            <p className="text-lg font-sans leading-loose text-justify text-foreground">
                能登の事業者の皆様へ。<br/>
                一人ひとりの悩みに寄り添い、<br/>
                最適な支援をご案内します。<br/>
@@ -116,18 +121,18 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-2 gap-4">
                {[
-                  { icon: "👥", label: "後継者が\nいない" },
-                  { icon: "🤝", label: "人材を\n確保したい" },
-                  { icon: "🏗️", label: "設備の復旧・\n改修がしたい" },
-                  { icon: "💰", label: "資金繰りが\n厳しい" },
-                  { icon: "📈", label: "売上を\n伸ばしたい" }
+                  { icon: Users, label: "後継者が\nいない" },
+                  { icon: Handshake, label: "人材を\n確保したい" },
+                  { icon: Construction, label: "設備の復旧・\n改修がしたい" },
+                  { icon: Coins, label: "資金繰りが\n厳しい" },
+                  { icon: TrendingUp, label: "売上を\n伸ばしたい" }
                ].map((item, index) => (
                   <button 
                      key={index}
                      className={`bg-white hover:bg-accent/10 border border-primary/20 text-primary p-4 rounded-lg transition-all active:scale-95 flex flex-col items-center text-center gap-2 shadow-sm ${index === 4 ? 'col-span-2' : ''}`}
                      aria-label={item.label.replace('\n', '')}
                   >
-                     <span className="text-3xl">{item.icon}</span>
+                     <item.icon className="w-8 h-8 stroke-[1.5]" />
                      <span className="text-sm font-bold whitespace-pre-line leading-snug font-sans">{item.label}</span>
                   </button>
                ))}
