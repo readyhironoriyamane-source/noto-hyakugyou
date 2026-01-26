@@ -209,7 +209,7 @@ export default function Home() {
                   {/* ① 課題ラベル（最優先情報） */}
                   {study.challengeCard && (
                     <div className="mb-4">
-                      <span className="inline-block bg-[#B33E28] text-white text-sm font-bold px-3 py-1 rounded tracking-wider">
+                      <span className="inline-block bg-[#E6F4EA] text-[#1D3A52] text-xs font-bold px-3 py-1 rounded-full tracking-wider border border-[#CDE8D6]">
                         {study.challengeCard.label}
                       </span>
                     </div>
@@ -355,16 +355,16 @@ export default function Home() {
                 link: "#"
               }
             ].map((item, index) => (
-              <div id={item.id} key={index} className="bg-white rounded-xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col overflow-hidden group scroll-mt-32 relative">
+              <div id={item.id} key={index} className="bg-white rounded-lg border border-[#E2E8F0] shadow-[0_4px_6px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_15px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group scroll-mt-32 relative">
                 
-                {/* 左上バッジ (Badge Style) */}
-                <div className="absolute top-6 left-6 z-10">
-                  <span className={`${item.badgeColor} text-white px-3 py-1 rounded font-bold text-xs tracking-wider shadow-sm`}>
+                {/* 左上バッジ (Strict Badge Style) */}
+                <div className="absolute top-5 left-5 z-10">
+                  <span className={`${item.badgeColor} text-white px-3 py-1 rounded text-xs font-bold tracking-wider shadow-sm`}>
                     {item.badge}
                   </span>
                 </div>
                 
-                <div className="p-8 pt-16 flex flex-col flex-grow">
+                <div className="p-6 pt-16 flex flex-col flex-grow">
                   {/* メインタイトル（目的） - 20px Bold #1D3A52 */}
                   <h3 className="text-[20px] font-bold text-[#1D3A52] mb-2 leading-snug whitespace-pre-line">
                     {item.catch}
@@ -401,10 +401,13 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* 詳しく見るリンク (No Underline) */}
-                  <div className="mt-auto text-right">
-                    <a href={item.link} className="inline-flex items-center text-sm font-bold text-primary hover:text-accent transition-colors no-underline">
-                      詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
+                  {/* 詳しく見るリンク (No Underline, Button Style) */}
+                  <div className="mt-auto">
+                    <a 
+                      href={item.link} 
+                      className="flex items-center justify-center w-full py-3 text-sm font-bold text-[#1D3A52] bg-white border border-gray-300 rounded hover:bg-gray-50 transition-all no-underline"
+                    >
+                      詳細・相談先を見る <ArrowUpRight className="w-4 h-4 ml-2" />
                     </a>
                   </div>
                 </div>
