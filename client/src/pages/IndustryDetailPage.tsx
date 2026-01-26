@@ -142,7 +142,10 @@ export default function IndustryDetailPage() {
   // ==========================================
   // パターンA: 活用事例 (Case Study) 用レイアウト
   // ==========================================
-  if (industry.isCaseStudy) {
+    // デバッグ用: 判定結果をコンソールに出力
+  console.log(`Industry ID: ${industry.id}, isCaseStudy: ${industry.isCaseStudy}`);
+
+  if (!!industry.isCaseStudy) {
     // 関連産業（活用事例に関連する産業）
     const relatedIndustries = industry.relatedIndustries
       .map(id => industries.find(i => i.id === id))
