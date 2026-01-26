@@ -47,7 +47,7 @@ export default function Home() {
                </div>
 
                {/* Intro Text - PC Only */}
-               <div className="text-white max-w-md pt-24 md:pt-12 hidden md:block">
+               <div className="text-white max-w-md pt-24 md:pt-20 hidden md:block">
                   {/* UD対応: 英語表記を日本語へ変更 */}
                   <p className="text-sm tracking-[0.3em] mb-8 border-l-[3px] border-accent pl-4 text-white/90 font-bold">能登の商いを支える</p>
                   {/* UD対応: フォントをゴシック体(font-sans)に変更、行間を2.0(leading-loose)に */}
