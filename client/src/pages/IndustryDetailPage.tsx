@@ -620,7 +620,7 @@ export default function IndustryDetailPage() {
             )}
 
             {/* 6. 関わりを持つ（アクション） - ブルー背景に変更 */}
-            <section ref={(el) => { sectionsRef.current[4] = el; }} className="bg-slate-900 text-white p-10 md:p-16 -mx-6 md:-mx-24 rounded-sm relative overflow-hidden">
+            <section ref={(el) => { sectionsRef.current[4] = el; }} className="bg-blue-900 text-white p-10 md:p-16 -mx-6 md:-mx-24 rounded-sm relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
                 <div className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[radial-gradient(circle,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
               </div>
@@ -629,7 +629,7 @@ export default function IndustryDetailPage() {
                 <h2 className="text-2xl md:text-3xl font-serif font-bold mb-6 tracking-widest">
                   関わりを持つ
                 </h2>
-                <p className="text-slate-300 mb-12 leading-relaxed">
+                <p className="text-blue-100 mb-12 leading-relaxed">
                   この産業を守り、未来へつなぐために、あなたにできることがあります。<br className="hidden md:block" />
                   小さな一歩が、大きな力になります。
                 </p>
@@ -648,7 +648,7 @@ export default function IndustryDetailPage() {
                         {action.type === 'support' && <span className="text-2xl">📣</span>}
                       </div>
                       <div>
-                        <div className="text-xs text-slate-400 font-bold uppercase tracking-widest mb-1">{action.type}</div>
+                        <div className="text-xs text-blue-200 font-bold uppercase tracking-widest mb-1">{action.type}</div>
                         <h3 className="font-bold text-lg text-white font-serif flex items-center gap-2">
                           {action.label}
                           <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />

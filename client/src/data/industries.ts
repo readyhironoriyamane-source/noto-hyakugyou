@@ -314,8 +314,8 @@ export const industries: Industry[] = [
     history: "藩政時代から植林が奨励され、大切に守り育てられてきた。",
     future: "建材以外の用途開発（精油、木工品）により、付加価値を高める。",
     necessity: "山を守ることは、海を守ることにも繋がる。土砂災害の防止や水源涵養機能も重要。",
-    connections: "製材所、工務店、漆器職人",
-    relatedIndustries: [4, 10, 101],
+    connections: "石川県森林組合連合会、製材所、工務店",
+    relatedIndustries: [4, 101],
     visitInfo: {
       hours: "見学は要問合せ",
       access: "門前バス停から車で20分",
