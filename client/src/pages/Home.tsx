@@ -159,38 +159,41 @@ export default function Home() {
               <a 
                 key={study.id}
                 href={`/industry/${study.id}`}
-                className="group cursor-pointer bg-card rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-border focus:outline-none focus:ring-4 focus:ring-primary/30"
+                className="group cursor-pointer bg-card rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-border focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline hover:border-primary/50"
               >
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-64 overflow-hidden bg-muted">
                   <img 
                     src={study.image} 
                     alt={`${study.title}のイメージ画像`} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.src = "https://placehold.co/600x400/e2e8f0/1e293b?text=No+Image";
+                    }}
                   />
                   {study.challengeCard && (
-                    <div className="absolute top-4 left-4 bg-accent text-white text-sm font-bold px-4 py-2 tracking-wider shadow-md rounded-sm">
+                    <div className="absolute top-4 left-4 bg-accent text-white text-[13px] font-bold px-5 py-2 tracking-wider shadow-md rounded-sm">
                       {study.challengeCard.label}
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500" />
                 </div>
                 <div className="p-8">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-sm font-bold text-primary bg-primary/10 px-3 py-1 rounded-full tracking-wider">{study.category}</span>
-                    <span className="text-sm text-muted-foreground tracking-widest flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-muted-foreground/50"></span>
+                    <span className="text-sm font-bold text-primary bg-[#E0E0E0] px-3 py-1 rounded-full tracking-wider">{study.category}</span>
+                    <span className="text-sm text-[#555555] font-medium tracking-widest flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-[#555555]/50"></span>
                       {study.location}
                     </span>
                   </div>
                   {/* UD対応: 見出しの行間を広げ、視認性を向上 */}
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors line-clamp-2 font-serif leading-normal">
+                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors line-clamp-2 font-serif leading-normal no-underline">
                     {study.title}
                   </h3>
                   {/* UD対応: 本文の文字サイズと行間を確保 */}
-                  <p className="text-base text-foreground/80 line-clamp-3 mb-8 leading-loose font-sans">
+                  <p className="text-base text-foreground/80 line-clamp-3 mb-8 leading-loose font-sans no-underline">
                     {study.summary}
                   </p>
-                  <div className="flex items-center text-primary text-sm font-bold tracking-widest group-hover:translate-x-2 transition-transform uppercase btn-ud w-fit -ml-6 pl-6">
+                  <div className="flex items-center text-primary text-sm font-bold tracking-widest group-hover:translate-x-2 transition-transform uppercase btn-ud w-fit -ml-6 pl-6 underline decoration-2 underline-offset-4">
                     詳しく見る <ArrowUpRight className="w-5 h-5 ml-2" />
                   </div>
                 </div>
