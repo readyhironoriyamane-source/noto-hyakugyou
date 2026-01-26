@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
-import { ArrowUpRight, Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, FileText } from 'lucide-react';
+import { Users, Handshake, Construction, Coins, TrendingUp, ArrowRight } from 'lucide-react';
 import { industries } from '@/data/industries';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -64,9 +64,14 @@ export default function Home() {
             {/* 課題選択エリア - PC Only (Absolute Position) */}
             <div className="hidden md:block absolute bottom-0 left-0 w-full bg-gradient-to-t from-[#1D3A52] to-transparent pt-24 pb-16">
                <div className="container">
-                  <h2 className="text-white text-center font-serif text-2xl md:text-3xl mb-10 tracking-widest drop-shadow-lg font-bold">
-                     今、どんなことでお困りですか？
-                  </h2>
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 relative">
+                     <h2 className="text-white text-center font-serif text-2xl md:text-3xl tracking-widest drop-shadow-lg font-bold">
+                        今、どんなことでお困りですか？
+                     </h2>
+                     <Link href="/supports" className="hidden md:inline-flex items-center gap-2 text-white/90 hover:text-white border-b border-white/50 hover:border-white pb-0.5 transition-all text-sm tracking-wider">
+                        支援制度一覧を見る <ArrowRight className="w-3 h-3" />
+                     </Link>
+                  </div>
                   <div className="grid grid-cols-5 gap-6">
                      {[
                         { icon: Users, label: "後継者が\nいない", category: "hr" },
@@ -118,9 +123,14 @@ export default function Home() {
           </div>
 
           <div className="bg-primary/5 rounded-2xl p-8 border border-primary/10">
-            <h2 className="text-primary text-center font-serif text-xl mb-8 tracking-widest font-bold">
-               今、どんなことでお困りですか？
-            </h2>
+            <div className="text-center mb-8">
+               <h2 className="text-primary font-serif text-xl tracking-widest font-bold mb-4">
+                  今、どんなことでお困りですか？
+               </h2>
+               <Link href="/supports" className="inline-flex items-center gap-1 text-primary/80 hover:text-primary text-sm border-b border-primary/30 pb-0.5">
+                  支援制度一覧を見る <ArrowRight className="w-3 h-3" />
+               </Link>
+            </div>
             <div className="grid grid-cols-2 gap-4">
                {[
                   { icon: Users, label: "後継者が\nいない", category: "hr" },
@@ -150,17 +160,13 @@ export default function Home() {
         <section className="mb-32">
           <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-              <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary mb-6">使える支援制度</h2>
+              <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary mb-6">商いの道しるべ</h2>
               <p className="text-foreground/80 text-base md:text-lg leading-loose font-sans">
-                今すぐ申請できる、<br className="block md:hidden" />復興・事業継続のための主な制度です。
+                先人たちの知恵と、復興への道のり。<br className="block md:hidden" />
+                困難を乗り越えた、決断の記録です。
               </p>
             </div>
-            <Link 
-              href="/supports" 
-              className="inline-flex items-center gap-2 text-primary font-bold border-b-2 border-primary pb-1 hover:text-accent hover:border-accent transition-colors self-start md:self-end mb-2 cursor-pointer"
-            >
-              全ての制度を見る <ArrowRight className="w-4 h-4" />
-            </Link>
+            {/* Link moved to Hero section */}
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -395,10 +401,10 @@ export default function Home() {
 
           {/* 一覧ボタン */}
           <div className="text-center">
-            <button className="inline-flex items-center justify-center gap-3 bg-primary text-white px-10 py-4 rounded-full font-bold tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl group">
+            <Link href="/supports" className="inline-flex items-center justify-center gap-3 bg-primary text-white px-10 py-4 rounded-full font-bold tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl group">
               支援制度一覧を見る
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+            </Link>
           </div>
         </section>
 

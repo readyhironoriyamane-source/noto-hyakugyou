@@ -214,7 +214,7 @@ export default function IndustryDetailPage() {
                   悩んだ選択肢
                 </span>
                 <p className="text-lg font-bold text-gray-700 mt-2">
-                  「{industry.decisionProcess.worry || (industry.decisionProcess.options && industry.decisionProcess.options.join(' / ')) || '選択肢'}」
+                  「{industry.decisionProcess.worry || (industry.decisionProcess.options && industry.decisionProcess.options?.join(' / ')) || '選択肢'}」
                 </p>
               </div>
 
@@ -313,9 +313,9 @@ export default function IndustryDetailPage() {
                   </h4>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-accent" />
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                {/* <p className="text-gray-600 text-sm leading-relaxed mb-4">
                   {support.description}
-                </p>
+                </p> */}
                 <a 
                   href={support.link} 
                   className="inline-flex items-center text-sm font-bold text-primary hover:text-accent hover:underline decoration-2 underline-offset-4"
