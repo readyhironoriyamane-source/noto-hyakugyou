@@ -242,6 +242,109 @@ export default function Home() {
           </div>
         </section>
 
+        {/* 支援制度セクション */}
+        <section className="mb-32">
+          <div className="mb-16">
+            <h2 className="font-serif text-3xl md:text-5xl tracking-wider font-bold text-primary mb-6">使える支援制度</h2>
+            <p className="text-foreground/80 text-base md:text-lg leading-loose font-sans">
+              復旧・復興に向けた、国や自治体の支援制度をご案内します。<br className="block md:hidden" />
+              あなたの状況に合わせてご活用ください。
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {[
+              {
+                badge: "石川県",
+                badgeColor: "bg-[#1D3A52]",
+                title: "なりわい再建支援補助金",
+                catch: "工場・店舗の再建、\n機械設備の復旧に",
+                content: "施設・設備の復旧費用を補助（中堅企業等も対象）",
+                amount: "上限 15億円",
+                condition: "補助率 3/4（中堅は1/2）",
+                link: "#"
+              },
+              {
+                badge: "国",
+                badgeColor: "bg-[#2B2B2B]",
+                title: "小規模事業者持続化補助金\n（災害支援枠）",
+                catch: "販路開拓や、\n業務効率化の取り組みに",
+                content: "機械装置等費、広報費、ウェブサイト関連費など",
+                amount: "上限 200万円",
+                condition: "売上減少の間接被害の場合は100万円",
+                link: "#"
+              },
+              {
+                badge: "能登町",
+                badgeColor: "bg-[#B33E28]",
+                title: "能登町なりわい再建\n支援補助金",
+                catch: "県の補助金に対する\n「自己負担」を軽減",
+                content: "「なりわい再建支援補助金」の対象経費から交付決定額を引いた額を補助",
+                amount: "補助率 3/5",
+                condition: "町への申請が必要",
+                link: "#"
+              }
+            ].map((item, index) => (
+              <div key={index} className="bg-white rounded-xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col overflow-hidden group">
+                {/* ヘッダーバッジ */}
+                <div className={`${item.badgeColor} text-white px-6 py-3 font-bold tracking-widest text-sm flex items-center justify-between`}>
+                  <span>【 {item.badge} 】</span>
+                  <ArrowUpRight className="w-4 h-4 opacity-70" />
+                </div>
+                
+                <div className="p-8 flex flex-col flex-grow">
+                  {/* キャッチコピー */}
+                  <h3 className="text-lg font-bold text-primary mb-4 leading-relaxed whitespace-pre-line min-h-[3.5em]">
+                    {item.catch}
+                  </h3>
+                  
+                  {/* 制度名 */}
+                  <div className="mb-6 pb-6 border-b border-dashed border-gray-200">
+                    <p className="text-sm text-muted-foreground mb-1 font-bold">制度名</p>
+                    <p className="text-xl font-bold text-foreground whitespace-pre-line leading-snug">
+                      {item.title}
+                    </p>
+                  </div>
+
+                  {/* 支援内容 */}
+                  <div className="mb-6 flex-grow">
+                    <p className="text-sm text-muted-foreground mb-2 font-bold">支援内容</p>
+                    <p className="text-sm text-foreground/80 leading-relaxed">
+                      {item.content}
+                    </p>
+                  </div>
+
+                  {/* 金額・条件 */}
+                  <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+                    <div className="flex items-start gap-3">
+                      <Coins className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-xs font-bold text-muted-foreground block mb-0.5">金額</span>
+                        <span className="text-base font-bold text-foreground">{item.amount}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Construction className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-xs font-bold text-muted-foreground block mb-0.5">条件など</span>
+                        <span className="text-sm font-medium text-foreground">{item.condition}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 一覧ボタン */}
+          <div className="text-center">
+            <button className="inline-flex items-center justify-center gap-3 bg-primary text-white px-10 py-4 rounded-full font-bold tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl group">
+              支援制度一覧を見る
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </section>
+
       </main>
 
       <Footer />
