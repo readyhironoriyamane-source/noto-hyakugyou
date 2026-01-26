@@ -207,15 +207,15 @@ export default function Home() {
 
                   {/* ⑤ 構造化データブロック（新設） */}
                   {study.challengeCard?.structuredBlock && (
-                    <div className="mb-6 space-y-3 bg-gray-50 p-4 rounded border border-gray-100">
+                    <div className="mb-6 space-y-6 bg-gray-50 p-6 rounded border border-gray-100">
                       {study.challengeCard.structuredBlock.map((block, idx) => (
                         <div key={idx} className="text-sm">
                           <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-1">
                             {block.label}
                           </span>
-                          <ul className="list-disc list-inside text-gray-600 pl-1 space-y-0.5">
+                          <ul className="list-disc list-inside text-gray-600 pl-1">
                             {block.items.map((item, i) => (
-                              <li key={i} className="leading-snug">{item}</li>
+                              <li key={i} className="leading-[1.7] mb-2 last:mb-0">{item}</li>
                             ))}
                           </ul>
                         </div>
