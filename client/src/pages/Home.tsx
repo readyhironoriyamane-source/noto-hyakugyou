@@ -39,7 +39,7 @@ export default function Home() {
                   <p className="writing-vertical-rl text-white/90 text-sm md:text-base tracking-[0.3em] font-medium whitespace-nowrap drop-shadow-md font-serif">
                      明日の商いを、共に創る
                   </p>
-                  <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-8xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl whitespace-nowrap">
+                  <h1 className="writing-vertical-rl text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl whitespace-nowrap">
                      能登百業
                   </h1>
                </div>
