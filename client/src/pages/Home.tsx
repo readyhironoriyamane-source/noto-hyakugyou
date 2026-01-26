@@ -110,7 +110,7 @@ export default function Home() {
       )}
 
       {/* Hero Section: Magazine Cover Style */}
-      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[#0a1929]">
+      <section className="relative w-full h-screen md:h-[70vh] flex items-center justify-center overflow-hidden bg-[#0a1929]">
          {/* Dynamic Background Video */}
          <div className="absolute inset-0 opacity-50">
             <video 
