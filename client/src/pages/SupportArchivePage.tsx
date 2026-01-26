@@ -441,7 +441,7 @@ const SupportArchive = () => {
                 </span>
 
                 {/* タイトル */}
-                <h3 className="text-xl font-bold text-[#1D3A52] mb-2 leading-snug min-h-[56px] flex items-end whitespace-pre-wrap font-sans">
+                <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans min-h-[56px] flex items-end whitespace-pre-wrap">
                   {item.mainTitle}
                 </h3>
 
