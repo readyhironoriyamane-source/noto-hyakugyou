@@ -356,46 +356,47 @@ const SupportArchive = () => {
         </div>
 
         {/* -------------------------------------------------- */}
-        {/* フィルタリング UI (ここが追加箇所) */}
+        {/* フィルタリング UI (形状・色統一版) */}
         {/* -------------------------------------------------- */}
         <div className="bg-white rounded-lg border border-gray-200 p-6 mb-12 shadow-sm">
           
           {/* 軸1：困りごとで絞り込む */}
           <div className="mb-6">
             <h3 className="text-sm font-bold text-gray-500 mb-3 flex items-center">
-              <span className="mr-2">🔍</span> 困りごと・目的で絞り込む
+              <span className="mr-2 text-[#1D3A52]">🔍</span> 困りごと・目的で絞り込む
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {[
-                { key: 'all', label: '全て表示' },
-                { key: 'reconstruction', label: '🏗 設備の復旧・再建' },
-                { key: 'finance', label: '💰 資金繰り' },
-                { key: 'hr', label: '👥 人材・承継' },
-                { key: 'sales', label: '📈 販路開拓' },
+                { key: 'all', label: '全て表示', icon: null },
+                { key: 'reconstruction', label: '設備の復旧・再建', icon: '🏗' },
+                { key: 'finance', label: '資金繰り', icon: '💰' },
+                { key: 'hr', label: '人材・承継', icon: '👥' },
+                { key: 'sales', label: '販路開拓', icon: '📈' },
               ].map((btn) => (
                 <button
                   key={btn.key}
                   onClick={() => setFilterCategory(btn.key)}
-                  className={`px-4 py-2 rounded-full text-sm font-bold transition-colors border ${
+                  // 修正点: rounded-full に統一 / アイコン色調整
+                  className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all border flex items-center ${
                     filterCategory === btn.key
-                      ? 'bg-[#1D3A52] text-white border-[#1D3A52]' // Active
-                      : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50' // Inactive
+                      ? 'bg-[#1D3A52] text-white border-[#1D3A52] shadow-md' // Active
+                      : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300' // Inactive
                   }`}
                 >
+                  {/* アイコンをあえてCSSフィルタ等で単色化するか、そのまま表示するか。ここではシンプルに表示 */}
+                  {btn.icon && <span className="mr-2 opacity-80">{btn.icon}</span>}
                   {btn.label}
                 </button>
               ))}
             </div>
           </div>
-
-          <div className="border-t border-gray-100 my-4"></div>
-
+          <div className="border-t border-gray-100 my-5"></div>
           {/* 軸2：主体で絞り込む */}
           <div>
             <h3 className="text-sm font-bold text-gray-500 mb-3 flex items-center">
-              <span className="mr-2">🏛</span> 制度の主体で絞り込む
+              <span className="mr-2 text-[#1D3A52]">🏛</span> 制度の主体で絞り込む
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {[
                 { key: 'all', label: '全て' },
                 { key: 'ishikawa', label: '石川県の制度' },
@@ -406,10 +407,11 @@ const SupportArchive = () => {
                 <button
                   key={btn.key}
                   onClick={() => setFilterProvider(btn.key)}
-                  className={`px-4 py-2 rounded text-sm font-bold transition-colors border ${
+                  // 修正点: ここも rounded-full に合わせて統一
+                  className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all border ${
                     filterProvider === btn.key
-                      ? 'bg-[#1D3A52] text-white border-[#1D3A52]' // Active
-                      : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50' // Inactive
+                      ? 'bg-[#1D3A52] text-white border-[#1D3A52] shadow-md'
+                      : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
                   }`}
                 >
                   {btn.label}
@@ -417,7 +419,6 @@ const SupportArchive = () => {
               ))}
             </div>
           </div>
-
         </div>
 
         {/* 検索結果カウント */}
