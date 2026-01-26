@@ -16,21 +16,21 @@ export default function Home() {
   const caseStudies = industries.filter(i => i.isCaseStudy);
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 font-serif">
+    <div className="min-h-screen bg-background text-foreground font-sans">
       
       {/* Fixed Navigation */}
-      <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled ? 'bg-stone-50/90 backdrop-blur-sm py-4 border-b border-stone-200' : 'bg-transparent py-8'}`}>
+      <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled ? 'bg-background/95 backdrop-blur-sm py-4 border-b border-border shadow-sm' : 'bg-transparent py-8'}`}>
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 flex justify-between items-center">
           <div className="flex items-center gap-4 z-50">
-             <h1 className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-stone-900' : 'text-white drop-shadow-lg'}`}>能登百業録</h1>
+             <h1 className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-primary' : 'text-white drop-shadow-lg'}`}>能登百業録</h1>
           </div>
         </div>
       </header>
 
       {/* Hero Section: Magazine Cover Style */}
-      <section className="relative w-full h-screen md:h-[70vh] flex items-center justify-center overflow-hidden bg-[#0a1929]">
+      <section className="relative w-full h-screen md:h-[70vh] flex items-center justify-center overflow-hidden bg-primary">
          {/* Dynamic Background Video */}
-         <div className="absolute inset-0 opacity-50">
+         <div className="absolute inset-0 opacity-60">
             <video 
               autoPlay 
               loop 
@@ -40,7 +40,8 @@ export default function Home() {
             >
               <source src="/noto-sea.mp4" type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0a1929]/60 via-transparent to-[#0a1929]/80"></div>
+            {/* UD対応: コントラスト確保のためのオーバーレイを強化 */}
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/40 to-primary/90"></div>
          </div>
          
          <div className="relative z-10 w-full max-w-screen-2xl mx-auto px-6 md:px-12 h-full flex flex-col justify-center">
@@ -48,35 +49,36 @@ export default function Home() {
                
                {/* Vertical Title */}
                <div className="h-full flex flex-row items-center justify-center md:justify-start md:order-last pt-12 pr-8 md:pr-16 lg:pr-24 gap-6 md:gap-8">
-                  <p className="writing-vertical-rl text-white/80 text-xs md:text-sm tracking-[0.3em] font-light hidden md:block whitespace-nowrap drop-shadow-lg">
+                  <p className="writing-vertical-rl text-white/90 text-sm md:text-base tracking-[0.3em] font-medium hidden md:block whitespace-nowrap drop-shadow-md font-serif">
                      明日の商いを、共に創る
                   </p>
-                  <h1 className="writing-vertical-rl text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl whitespace-nowrap">
+                  <h1 className="writing-vertical-rl text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif font-bold text-white tracking-wider leading-none drop-shadow-2xl whitespace-nowrap">
                      能登百業
                   </h1>
                </div>
 
                {/* Intro Text */}
                <div className="text-white max-w-md pt-24 md:pt-0 hidden md:block">
-                  <p className="text-xs tracking-[0.4em] mb-8 border-l border-white/30 pl-4 text-white/70">SUPPORT FOR NOTO BUSINESS</p>
-                  <p className="text-lg font-serif leading-loose mb-8 text-justify">
+                  <p className="text-sm tracking-[0.3em] mb-8 border-l-2 border-accent pl-4 text-white/90 font-bold">SUPPORT FOR NOTO BUSINESS</p>
+                  {/* UD対応: 行間を広げ、文字サイズを大きく */}
+                  <p className="text-xl font-serif leading-loose mb-8 text-justify drop-shadow-md">
                      能登の事業者の皆様へ。<br/>
                      一人ひとりの悩みに寄り添い、<br/>
                      最適な支援をご案内します。<br/>
                      ここには、明日を切り拓くための<br/>
                      確かな道筋があります。
                   </p>
-                  <div className="w-12 h-[1px] bg-white/50"></div>
+                  <div className="w-16 h-[2px] bg-accent"></div>
                </div>
             </div>
 
             {/* 課題選択エリア */}
-            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-[#0a1929] to-transparent pt-20 pb-12 px-6 md:px-12">
+            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-primary to-transparent pt-24 pb-16 px-6 md:px-12">
                <div className="max-w-screen-2xl mx-auto">
-                  <h2 className="text-white text-center font-serif text-xl md:text-2xl mb-8 tracking-widest drop-shadow-lg">
+                  <h2 className="text-white text-center font-serif text-2xl md:text-3xl mb-10 tracking-widest drop-shadow-lg font-bold">
                      今、どんなことでお困りですか？
                   </h2>
-                  <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
                      {[
                         { icon: "💰", label: "資金繰りが\n厳しい" },
                         { icon: "👥", label: "後継者が\nいない" },
@@ -86,10 +88,12 @@ export default function Home() {
                      ].map((item, index) => (
                         <button 
                            key={index}
-                           className="bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/20 text-white p-4 rounded-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center gap-2 group"
+                           className="bg-white/10 backdrop-blur-md hover:bg-accent/90 border-2 border-white/30 text-white p-6 rounded-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center gap-3 group focus:outline-none focus:ring-4 focus:ring-accent/50"
+                           aria-label={item.label.replace('\n', '')}
                         >
-                           <span className="text-2xl group-hover:scale-110 transition-transform">{item.icon}</span>
-                           <span className="text-sm font-medium whitespace-pre-line leading-tight">{item.label}</span>
+                           <span className="text-4xl group-hover:scale-110 transition-transform drop-shadow-md">{item.icon}</span>
+                           {/* UD対応: 文字サイズを大きく、太字に */}
+                           <span className="text-lg font-bold whitespace-pre-line leading-snug font-sans">{item.label}</span>
                         </button>
                      ))}
                   </div>
@@ -98,51 +102,57 @@ export default function Home() {
          </div>
       </section>
 
-      <main className="max-w-screen-2xl mx-auto px-6 md:px-12 py-24">
+      <main className="max-w-screen-2xl mx-auto px-6 md:px-12 py-32">
         
         {/* 活用事例セクション */}
         <section className="mb-32">
-          <div className="flex items-center gap-4 mb-6">
-            <span className="w-12 h-[2px] bg-stone-900"></span>
-            <h2 className="font-serif text-3xl md:text-4xl tracking-wider">活用事例</h2>
+          <div className="flex items-center gap-6 mb-8">
+            <span className="w-16 h-[4px] bg-primary"></span>
+            <h2 className="font-serif text-4xl md:text-5xl tracking-wider font-bold text-primary">活用事例</h2>
           </div>
-          <p className="text-stone-600 leading-relaxed mb-12 pl-16">
-            困難を乗り越え、新たな一歩を踏み出した事業者の物語をご紹介します。
+          <p className="text-foreground/80 text-lg leading-loose mb-16 pl-20 max-w-3xl font-sans">
+            困難を乗り越え、新たな一歩を踏み出した事業者の物語をご紹介します。<br/>
+            同じ悩みを抱える方のヒントになれば幸いです。
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {caseStudies.map((study) => (
               <a 
                 key={study.id}
                 href={`/industry/${study.id}`}
-                className="group cursor-pointer bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100"
+                className="group cursor-pointer bg-card rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-border focus:outline-none focus:ring-4 focus:ring-primary/30"
               >
-                <div className="relative h-56 overflow-hidden">
+                <div className="relative h-64 overflow-hidden">
                   <img 
                     src={study.image} 
-                    alt={study.title} 
+                    alt={`${study.title}のイメージ画像`} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   {study.challengeCard && (
-                    <div className="absolute top-4 left-4 bg-red-800/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 tracking-wider border border-red-700/50">
+                    <div className="absolute top-4 left-4 bg-accent text-white text-sm font-bold px-4 py-2 tracking-wider shadow-md rounded-sm">
                       {study.challengeCard.label}
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-500" />
                 </div>
                 <div className="p-8">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-xs font-bold text-stone-500 bg-stone-100 px-2 py-1 tracking-widest">{study.category}</span>
-                    <span className="text-xs text-stone-400 tracking-widest">{study.location}</span>
+                    <span className="text-sm font-bold text-primary bg-primary/10 px-3 py-1 rounded-full tracking-wider">{study.category}</span>
+                    <span className="text-sm text-muted-foreground tracking-widest flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-muted-foreground/50"></span>
+                      {study.location}
+                    </span>
                   </div>
-                  <h3 className="text-xl font-bold text-stone-900 mb-4 group-hover:text-stone-600 transition-colors line-clamp-2 font-serif leading-snug">
+                  {/* UD対応: 見出しの行間を広げ、視認性を向上 */}
+                  <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors line-clamp-2 font-serif leading-normal">
                     {study.title}
                   </h3>
-                  <p className="text-sm text-stone-600 line-clamp-2 mb-6 leading-relaxed font-serif">
+                  {/* UD対応: 本文の文字サイズと行間を確保 */}
+                  <p className="text-base text-foreground/80 line-clamp-3 mb-8 leading-loose font-sans">
                     {study.summary}
                   </p>
-                  <div className="flex items-center text-stone-800 text-xs font-bold tracking-widest group-hover:translate-x-1 transition-transform uppercase">
-                    続きを読む <ArrowUpRight className="w-3 h-3 ml-1" />
+                  <div className="flex items-center text-primary text-sm font-bold tracking-widest group-hover:translate-x-2 transition-transform uppercase btn-ud w-fit -ml-6 pl-6">
+                    続きを読む <ArrowUpRight className="w-5 h-5 ml-2" />
                   </div>
                 </div>
               </a>
@@ -150,8 +160,8 @@ export default function Home() {
             
             {/* 事例が少ない場合のプレースホルダー */}
             {caseStudies.length === 0 && (
-              <div className="col-span-full text-center py-12 bg-stone-50 rounded-xl border border-dashed border-stone-300">
-                <p className="text-stone-500">現在、公開準備中の事例があります。</p>
+              <div className="col-span-full text-center py-20 bg-muted/30 rounded-xl border-2 border-dashed border-muted-foreground/30">
+                <p className="text-xl text-muted-foreground font-bold">現在、公開準備中の事例があります。</p>
               </div>
             )}
           </div>
