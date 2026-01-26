@@ -24,8 +24,8 @@ export default function SupportSection() {
           <span className="inline-block px-3 py-1 text-xs font-bold text-white rounded mb-4 self-start bg-[#1D3A52]">
             石川県
           </span>
-          {/* タイトル：高さ固定 (min-h-[56px]) */}
-          <h3 className="text-xl font-bold text-[#1D3A52] mb-2 leading-snug font-serif min-h-[56px] flex items-end">
+          {/* タイトル：高さ固定 (min-h-[64px]) */}
+          <h3 className="text-2xl font-bold text-gray-800 mb-3 leading-tight font-sans min-h-[64px] flex items-end">
             工場・店舗の再建、<br />機械設備の復旧に
           </h3>
           {/* 制度名：高さ固定 (min-h-[40px]) */}
@@ -74,7 +74,7 @@ export default function SupportSection() {
             国
           </span>
           {/* タイトル：高さ固定 */}
-          <h3 className="text-xl font-bold text-[#1D3A52] mb-2 leading-snug font-serif min-h-[56px] flex items-end">
+          <h3 className="text-2xl font-bold text-gray-800 mb-3 leading-tight font-sans min-h-[64px] flex items-end">
             販路開拓や、<br />業務効率化の取り組みに
           </h3>
           {/* 制度名：高さ固定 */}
@@ -121,7 +121,7 @@ export default function SupportSection() {
             能登町
           </span>
           {/* タイトル：高さ固定 */}
-          <h3 className="text-xl font-bold text-[#1D3A52] mb-2 leading-snug font-serif min-h-[56px] flex items-end">
+          <h3 className="text-2xl font-bold text-gray-800 mb-3 leading-tight font-sans min-h-[64px] flex items-end">
             県の補助金に対する<br />「自己負担」を軽減
           </h3>
           {/* 制度名：高さ固定 */}
