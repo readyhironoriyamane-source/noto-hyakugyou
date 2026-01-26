@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { industries } from '@/data/industries';
 import Footer from '@/components/Footer';
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -25,8 +24,6 @@ export default function Home() {
           <div className="flex items-center gap-4 z-50">
              <h1 className={`font-serif font-bold text-2xl tracking-widest transition-colors ${isScrolled ? 'text-stone-900' : 'text-white drop-shadow-lg'}`}>能登百業録</h1>
           </div>
-          
-          {/* ナビゲーションリンクは削除されました */}
         </div>
       </header>
 

@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-300">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
           {/* About & Noto Town Hall Info */}
           <div>
             <h3 className="font-serif text-xl text-white mb-4 tracking-wider">
@@ -27,39 +27,12 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <div>
-            <h4 className="font-serif text-lg text-white mb-4 tracking-wider">
-              ナビゲーション
-            </h4>
-            <nav className="space-y-3">
-              <a 
-                href="/" 
-                className="block text-sm text-slate-400 hover:text-white transition-colors"
-              >
-                トップページ
-              </a>
-              <a 
-                href="/map" 
-                className="block text-sm text-slate-400 hover:text-white transition-colors"
-              >
-                地図から探す
-              </a>
-              <a 
-                href="/about" 
-                className="block text-sm text-slate-400 hover:text-white transition-colors"
-              >
-                百業について
-              </a>
-            </nav>
-          </div>
-
           {/* Contact & Legal */}
-          <div>
+          <div className="md:text-right">
             <h4 className="font-serif text-lg text-white mb-4 tracking-wider">
               お問い合わせ
             </h4>
-            <div className="space-y-3">
+            <div className="space-y-3 md:flex md:flex-col md:items-end">
               <a 
                 href="/contact" 
                 className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
