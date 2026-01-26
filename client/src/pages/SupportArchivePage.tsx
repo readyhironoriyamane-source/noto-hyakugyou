@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 // ----------------------------------------------------------------------
 // データ定義（フィルタリング用のタグ category / providerType を追加）
@@ -335,11 +337,15 @@ const SupportArchive = () => {
   }, [filterCategory, filterProvider]);
 
   return (
-    <section className="bg-[#F9F8F4] py-20">
-      <div className="max-w-[1140px] mx-auto px-6">
-        
-        {/* ページヘッダー */}
-        <div className="mb-10">
+    <div className="min-h-screen bg-background text-foreground font-sans">
+      <Header />
+      
+      <main className="pt-[60px]"> {/* Header height compensation */}
+        <section className="bg-[#F9F8F4] py-20">
+          <div className="max-w-[1140px] mx-auto px-6">
+            
+            {/* ページヘッダー */}
+            <div className="mb-10">
           <h1 className="text-3xl md:text-[40px] font-bold text-[#1D3A52] text-left mb-6 font-serif">
             支援制度一覧
           </h1>
@@ -493,8 +499,12 @@ const SupportArchive = () => {
           </div>
         )}
 
-      </div>
-    </section>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
   );
 };
 
