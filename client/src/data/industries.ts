@@ -168,7 +168,7 @@ export const industries: Industry[] = [
       { type: "buy", label: "商品を購入", link: "#" },
       { type: "visit", label: "蔵見学", link: "#" }
     ],
-    image: "/soy-sauce-brewery.jpg",
+    image: "/images/soy-sauce-brewery-real.jpg",
     seasonalMonths: [],
     isCaseStudy: true,
     challengeCard: {
@@ -245,7 +245,7 @@ export const industries: Industry[] = [
     actions: [
       { type: "visit", label: "宿泊予約", link: "#" }
     ],
-    image: "/onsen-ryokan.jpg",
+    image: "/images/ryokan-lamp-real.jpg",
     seasonalMonths: [],
     isCaseStudy: true,
     challengeCard: {
