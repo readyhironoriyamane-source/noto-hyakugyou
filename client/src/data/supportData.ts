@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------
-// データ定義 (全24件：タイトル修正・タグ追加版)
+// データ定義 (全24件：タイトル修正・タグ追加・詳細情報更新版)
 // ----------------------------------------------------------------------
 export type SupportItem = {
   id: number;
@@ -46,6 +46,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '補助率 3/4（中堅は1/2）',
     category: 'reconstruction',
     providerType: 'ishikawa',
+    contactInfo: {
+      name: '能登町商工会',
+      phone: '076-204-6856',
+      hours: '要確認',
+    },
   },
   {
     id: 12,
@@ -59,6 +64,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '町への申請が必要',
     category: 'reconstruction',
     providerType: 'noto',
+    contactInfo: {
+      name: '能登町ふるさと振興課',
+      phone: '0768-62-8526',
+      hours: '要確認',
+    },
   },
   {
     id: 16,
@@ -72,6 +82,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '補助率 10/10（定額）',
     category: 'reconstruction',
     providerType: 'noto',
+    contactInfo: {
+      name: '能登町商工会',
+      phone: '076-204-6856',
+      hours: '要確認',
+    },
   },
   {
     id: 14,
@@ -85,6 +100,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '補助率 2/3',
     category: 'reconstruction',
     providerType: 'ishikawa',
+    contactInfo: {
+      name: '小規模事業者事業継続支援補助金事務局',
+      phone: '076-204-6856',
+      hours: '要確認',
+    },
   },
 
   // --- カテゴリ：資金繰り ---
@@ -100,6 +120,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '金利引き下げ措置あり',
     category: 'finance',
     providerType: 'national',
+    contactInfo: {
+      name: '日本政策金融公庫',
+      phone: '0120-154-505',
+      hours: '9:00-17:00',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://www.jfc.go.jp/',
+      },
+    ],
   },
   {
     id: 18,
@@ -113,6 +144,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '再生計画の策定が必要',
     category: 'finance',
     providerType: 'national',
+    contactInfo: {
+      name: '能登産業復興相談センター 奥能登サテライトオフィス',
+      phone: '0768-23-4707',
+      hours: '要確認',
+    },
   },
   {
     id: 15,
@@ -126,6 +162,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '国の補助額の 1/10',
     category: 'finance',
     providerType: 'noto',
+    contactInfo: {
+      name: '能登町ふるさと振興課',
+      phone: '0768-62-8526',
+      hours: '要確認',
+    },
   },
 
   // --- カテゴリ：人材・承継 ---
@@ -141,6 +182,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '専門家派遣は一部負担あり',
     category: 'hr',
     providerType: 'national',
+    contactInfo: {
+      name: '中小企業基盤整備機構 北陸支本部 地域・連携支援課',
+      phone: '076-223-6100',
+      hours: '9:00-18:00',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://www.smrj.go.jp/supporter/training/succession/index.html#contact',
+      },
+    ],
   },
   {
     id: 2,
@@ -154,6 +206,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '要予約',
     category: 'hr',
     providerType: 'other',
+    contactInfo: {
+      name: '能登町商工会',
+      phone: '076-204-6856',
+      hours: '13:00-17:00',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://noto.shoko.or.jp/contents/common/151',
+      },
+    ],
   },
   {
     id: 3,
@@ -167,6 +230,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '成約時は手数料の場合あり',
     category: 'hr',
     providerType: 'other',
+    contactInfo: {
+      name: '石川県事業承継・引継ぎ支援センター（引継ぎ隊！）',
+      phone: '076-256-1031',
+      hours: '8:30～17:15',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://ishikawa-hikitsugi.go.jp/contact/',
+      },
+    ],
   },
   {
     id: 4,
@@ -180,6 +254,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '専門家派遣対応',
     category: 'hr',
     providerType: 'other',
+    contactInfo: {
+      name: '石川県事業承継・引継ぎ支援センター（引継ぎ隊！）',
+      phone: '076-256-1031',
+      hours: '8:30～17:15',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://ishikawa-hikitsugi.go.jp/contact/',
+      },
+    ],
   },
   {
     id: 5,
@@ -193,6 +278,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '面談審査あり',
     category: 'hr',
     providerType: 'other',
+    contactInfo: {
+      name: '石川県事業承継・引継ぎ支援センター（引継ぎ隊！）',
+      phone: '076-256-1031',
+      hours: '8:30～17:15',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://ishikawa-hikitsugi.go.jp/contact/',
+      },
+    ],
   },
   {
     id: 6,
@@ -206,6 +302,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '※被災地支援キャンペーン中',
     category: 'hr',
     providerType: 'other',
+    contactInfo: {
+      name: '能登官民連携復興センター',
+      phone: '0768-23-4681',
+      hours: '要確認',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://www.notorenpuku.jp/contact/',
+      },
+    ],
   },
   {
     id: 7,
@@ -219,6 +326,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: 'プロジェクト単位での支援',
     category: 'hr',
     providerType: 'other',
+    contactInfo: {
+      name: '能登官民連携復興センター',
+      phone: '0768-23-4681',
+      hours: '要確認',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://www.notorenpuku.jp/contact/',
+      },
+    ],
   },
   {
     id: 8,
@@ -232,6 +350,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '※特別プラン適用',
     category: 'hr',
     providerType: 'other',
+    contactInfo: {
+      name: '能登官民連携復興センター',
+      phone: '0768-23-4681',
+      hours: '要確認',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://www.notorenpuku.jp/contact/',
+      },
+    ],
   },
   {
     id: 9,
@@ -245,6 +374,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '企業登録が必要',
     category: 'hr',
     providerType: 'other',
+    contactInfo: {
+      name: 'ILACいしかわ就職・定住サポートセンター',
+      phone: '076ｰ235ｰ4540',
+      hours: '要確認',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://ishikawa-ilac.jp/resident/index.html',
+      },
+    ],
   },
   {
     id: 10,
@@ -258,6 +398,17 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '専門家派遣',
     category: 'hr',
     providerType: 'ishikawa',
+    contactInfo: {
+      name: 'ISICO',
+      phone: '076-267-1001',
+      hours: '8:30～17:15',
+    },
+    relatedLinks: [
+      {
+        title: '公式サイト',
+        url: 'https://www.isico.or.jp/ques/questionnaire.php?openid=146&check',
+      },
+    ],
   },
 
   // --- カテゴリ：販路開拓 ---
@@ -273,6 +424,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '売上減少の間接被害は100万円',
     category: 'sales',
     providerType: 'national',
+    contactInfo: {
+      name: '能登町商工会',
+      phone: '076-204-6856',
+      hours: '要確認',
+    },
   },
   {
     id: 19,
@@ -286,6 +442,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '取引希望情報の登録が必要',
     category: 'sales',
     providerType: 'ishikawa',
+    contactInfo: {
+      name: 'ISICO 販路開拓支援課',
+      phone: '076-267-1001',
+      hours: '要確認',
+    },
   },
   {
     id: 20,
@@ -299,6 +460,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '審査あり',
     category: 'sales',
     providerType: 'national',
+    contactInfo: {
+      name: 'ISICO 販路開拓支援課',
+      phone: '076-267-1001',
+      hours: '要確認',
+    },
   },
   {
     id: 21,
@@ -312,6 +478,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '旅費等は自己負担',
     category: 'sales',
     providerType: 'national',
+    contactInfo: {
+      name: '中小企業基盤整備機構 北陸本部 中小企業復興機動チーム',
+      phone: '076-204-6310',
+      hours: '要確認',
+    },
   },
   {
     id: 22,
@@ -325,6 +496,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: 'オンライン対応可',
     category: 'sales',
     providerType: 'national',
+    contactInfo: {
+      name: '中小企業基盤整備機構 販路支援部 販路支援企画課（中小機構 EC 活用支援事務局）',
+      phone: '03-5470-1619',
+      hours: '要確認',
+    },
   },
   {
     id: 23,
@@ -338,6 +514,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '会員事業者向け',
     category: 'sales',
     providerType: 'other',
+    contactInfo: {
+      name: '能登町商工会',
+      phone: '076-204-6856',
+      hours: '要確認',
+    },
   },
   {
     id: 24,
@@ -351,5 +532,10 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '商品審査あり',
     category: 'sales',
     providerType: 'other',
+    contactInfo: {
+      name: '能登町商工会',
+      phone: '076-204-6856',
+      hours: '要確認',
+    },
   },
 ];
