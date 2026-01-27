@@ -273,9 +273,9 @@ export const SUPPORT_ITEMS: SupportItem[] = [
       '特になし（初回相談時）'
     ],
     contactInfo: {
-      name: '中小機構 北陸本部',
-      phone: '076-xxx-xxxx',
-      hours: '平日 9:00 - 17:00'
+      name: '北陸支本部 地域・連携支援課',
+      phone: '076-223-6100',
+      hours: '平日 9:00 - 17:45'
     },
     officialLink: 'https://www.smrj.go.jp/'
   },
