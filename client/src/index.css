@@ -174,9 +174,7 @@
 
   /* リンクの視認性強化 (Link Decoration) */
   a {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
+    text-decoration: none;
     transition: opacity 0.2s ease, background-color 0.2s ease;
   }
   

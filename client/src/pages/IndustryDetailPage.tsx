@@ -73,15 +73,15 @@ export default function IndustryDetailPage({ params }: IndustryDetailPageProps) 
       {/* パンくずリスト */}
       <div className="bg-white border-b border-gray-200 py-3">
         <div className="container max-w-5xl mx-auto px-4 text-sm text-gray-500 flex items-center gap-2 overflow-x-auto whitespace-nowrap">
-          <a href="/" className="hover:text-primary transition-colors">TOP</a>
+          <a href="/" className="hover:text-primary transition-colors no-underline">TOP</a>
           <ChevronRight className="w-4 h-4 flex-shrink-0" />
-          <a href="/#case-studies" className="hover:text-primary transition-colors">商いの道しるべ</a>
+          <a href="/#case-studies" className="hover:text-primary transition-colors no-underline">商いの道しるべ</a>
           <ChevronRight className="w-4 h-4 flex-shrink-0" />
           <span className="text-gray-800 font-medium">{industry.title}</span>
         </div>
       </div>
 
-      {/* ヘッダーエリア (Basic Info) */}
+      {/* Phase 0: 基礎情報 (Basic Info) */}
       <header className="bg-white pb-12 pt-8 md:pt-12 border-b border-gray-100">
         <div className="container max-w-5xl mx-auto px-4">
           {/* 属性バッジ & 文字サイズ変更 */}
@@ -167,11 +167,15 @@ export default function IndustryDetailPage({ params }: IndustryDetailPageProps) 
 
       <main className="container max-w-[720px] mx-auto px-4 py-16 space-y-20">
         
-        {/* 1. 課題と背景 (Narrative) */}
+        {/* Phase 1: 現状と課題 (Before & Regrets) */}
         <section ref={el => sectionsRef.current[0] = el}>
-          <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-8 pb-4 border-b border-gray-200">
-            直面した危機
-          </h2>
+          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200">
+            <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded">Phase 1</span>
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary">
+              現状と課題
+            </h2>
+          </div>
+          
           <div className={`font-serif ${baseTextSize} ${leadingRelaxed} text-gray-800 whitespace-pre-line mb-10`}>
             {(industry.description || '').split('\n').map((line, i) => {
               // 会話文（「」や『』で始まる行）の判定
@@ -187,7 +191,7 @@ export default function IndustryDetailPage({ params }: IndustryDetailPageProps) 
             })}
           </div>
 
-          {/* 先人の教訓ボックス (Regrets) */}
+          {/* Q2b. 教訓・後悔 (Regrets) */}
           {industry.regrets && (
             <div className="bg-[#FFF9C4] rounded-lg p-6 md:p-8 relative shadow-sm border border-[#F0E68C] my-12 transform rotate-1">
               <div className="absolute -top-4 -left-3 bg-[#B33E28] text-white px-4 py-1.5 rounded shadow-md font-bold flex items-center gap-2 transform -rotate-2">
@@ -203,32 +207,35 @@ export default function IndustryDetailPage({ params }: IndustryDetailPageProps) 
           )}
         </section>
 
-        {/* 2. 決断のロジック (Decision Logic) */}
+        {/* Phase 2: 選択と決断 (Decision) */}
         {industry.decisionProcess && (
           <section ref={el => sectionsRef.current[1] = el}>
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-10 pb-4 border-b border-gray-200">
-              決断の分かれ道
-            </h2>
+            <div className="flex items-center gap-3 mb-10 pb-4 border-b border-gray-200">
+              <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded">Phase 2</span>
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary">
+                選択と決断
+              </h2>
+            </div>
             
             <div className="bg-white rounded-xl p-6 md:p-10 shadow-sm border border-gray-200">
-              {/* 悩み */}
+              {/* Q3. 比較検討 (Worry) */}
               <div className="bg-gray-100 rounded-lg p-6 mb-8 text-center relative">
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gray-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                  悩んだ選択肢
+                  比較検討した選択肢
                 </span>
                 <p className="text-lg font-bold text-gray-700 mt-2">
                   「{industry.decisionProcess.worry || (industry.decisionProcess.options?.map((o: any) => typeof o === 'string' ? o : (o as any).name).join(' / ')) || '選択肢'}」
                 </p>
               </div>
 
-              {/* 矢印 - 上下マージンを均等化してバランス調整 */}
+              {/* 矢印 */}
               <div className="flex justify-center my-8 relative z-10">
                 <div className="bg-white p-3 rounded-full border border-gray-200 shadow-sm">
                   <ArrowDown className="w-8 h-8 text-gray-400" />
                 </div>
               </div>
 
-              {/* 決め手 */}
+              {/* Q4. 決め手 (Decider) */}
               <div className="border-2 border-primary/20 bg-primary/5 rounded-lg p-8 text-center relative">
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
                   選んだ決め手
@@ -240,91 +247,151 @@ export default function IndustryDetailPage({ params }: IndustryDetailPageProps) 
                   選んだ制度：{industry.decisionProcess.selectedSupport}
                 </div>
               </div>
-
-              {/* 結果 */}
-              <div className="mt-8 pt-8 border-t border-dashed border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="bg-accent/10 p-3 rounded-full shrink-0">
-                    <CheckCircle2 className="w-6 h-6 text-accent" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-2">その後の変化</h4>
-                    <p className="text-gray-700 leading-relaxed">
-                      {industry.decisionProcess.outcome}
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </section>
         )}
 
-        {/* 3. 活用した支援制度 (Actionable Info) */}
+        {/* Phase 3: 行動と変化 (Action & Reality) */}
         <section ref={el => sectionsRef.current[2] = el}>
-          <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-8 pb-4 border-b border-gray-200">
-            活用した支援制度
-          </h2>
-          
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="bg-primary px-6 py-4 flex justify-between items-center">
-              <h3 className="text-white font-bold text-lg">
-                {industry.decisionProcess?.selectedSupport || '支援制度'}
-              </h3>
-              <span className="bg-white/20 text-white text-xs px-2 py-1 rounded">
-                {industry.category}
-              </span>
-            </div>
-            
-            <div className="p-6 md:p-8">
-              <div className="flex flex-col md:flex-row gap-6 mb-8">
-                <div className="flex-1">
-                  <h4 className="font-bold text-gray-700 mb-2 flex items-center gap-2">
-                    <FileText className="w-4 h-4" /> 制度の概要
-                  </h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {/* ダミーテキスト：実際の制度データと紐付ける必要があります */}
-                    被災した中小企業・小規模事業者の施設・設備の復旧を支援する補助金です。
-                    建物の建設・改修、機械装置の購入・修繕などが対象となります。
-                  </p>
-                </div>
-                <div className="flex-1 bg-gray-50 p-4 rounded-lg border border-gray-100">
-                  <h4 className="font-bold text-gray-700 mb-2 text-sm">ここがポイント</h4>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2 text-sm text-gray-600">
-                      <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                      <span><GlossaryTerm term="補助率" />：最大3/4（国・県）</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-gray-600">
-                      <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                      <span>上限額：最大15億円</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200">
+            <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded">Phase 3</span>
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary">
+              行動と変化
+            </h2>
+          </div>
 
-              <div className="flex justify-center">
-                <a 
-                  href="/supports" 
-                  className="inline-flex items-center gap-2 bg-primary text-white font-bold py-3 px-8 rounded-full hover:bg-primary/90 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-                >
-                  この制度の詳細を見る
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
+          {/* Q5. 実行内容 (Action) */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <CheckCircle2 className="w-6 h-6 text-accent" />
+              実行したこと
+            </h3>
+            <p className={`${baseTextSize} ${leadingRelaxed} text-gray-700`}>
+              {industry.decisionProcess?.action}
+            </p>
+          </div>
+
+          {/* Q5b. 実務の壁 (Barriers) */}
+          {industry.barriers && (
+            <div className="bg-gray-50 rounded-lg p-6 md:p-8 border-l-4 border-gray-400 mb-12">
+              <h3 className="text-lg font-bold text-gray-700 mb-3 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-gray-500" />
+                実務の壁
+              </h3>
+              <h4 className="font-bold text-gray-800 mb-2">{industry.barriers.title}</h4>
+              <p className="text-gray-600 leading-relaxed">
+                {industry.barriers.content}
+              </p>
             </div>
+          )}
+
+          {/* Q6. ビフォーアフター (Outcome) */}
+          <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm">
+            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <ArrowUpRight className="w-6 h-6 text-primary" />
+              活用後の変化
+            </h3>
+            <p className={`${baseTextSize} ${leadingRelaxed} text-gray-700`}>
+              {industry.decisionProcess?.outcome}
+            </p>
           </div>
         </section>
 
-        {/* 4. 応援メッセージ (Emotional Connection) */}
-        <section ref={el => sectionsRef.current[3] = el} className="bg-white rounded-xl p-8 md:p-12 text-center border border-gray-100 shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary via-accent to-primary"></div>
-          <MessageCircle className="w-12 h-12 text-gray-200 mx-auto mb-6" />
-          <h3 className="text-xl md:text-2xl font-serif font-bold text-gray-800 mb-6">
-            「{industry.details?.owner}」さんからのメッセージ
-          </h3>
-          <p className="text-lg md:text-xl font-serif leading-relaxed text-gray-700 italic">
-            「{industry.message}」
-          </p>
+        {/* Phase 4: 未来 (Future) */}
+        <section ref={el => sectionsRef.current[3] = el}>
+          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200">
+            <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded">Phase 4</span>
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary">
+              未来への展望
+            </h2>
+          </div>
+          
+          <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl p-8 md:p-12 text-center border border-primary/10 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-primary"></div>
+            <MessageCircle className="w-12 h-12 text-primary/20 mx-auto mb-6" />
+            <h3 className="text-xl md:text-2xl font-serif font-bold text-gray-800 mb-6">
+              「{industry.details?.owner}」さんからのメッセージ
+            </h3>
+            <p className="text-lg md:text-xl font-serif leading-relaxed text-gray-700 italic">
+              「{industry.future || industry.timeline.future}」
+            </p>
+          </div>
+        </section>
+
+        {/* Phase 5: 編集者視点 (Writer's Eye) */}
+        <section ref={el => sectionsRef.current[4] = el} className="bg-gray-800 text-white rounded-xl p-8 md:p-12 shadow-lg">
+          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-700">
+            <span className="bg-accent text-white text-xs font-bold px-2 py-1 rounded">Phase 5</span>
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-white">
+              編集者視点
+            </h2>
+          </div>
+
+          {/* W1. 一言コメント */}
+          <div className="mb-10">
+            <h3 className="text-lg font-bold text-gray-300 mb-3">編集部より</h3>
+            <p className="text-lg leading-relaxed font-medium">
+              {industry.editorComment || "この事例は、多くの事業者にとって希望の光となるでしょう。"}
+            </p>
+          </div>
+
+          {/* W3. 制度スペック */}
+          <div className="bg-gray-700/50 rounded-lg p-6 mb-8">
+            <h3 className="text-sm font-bold text-gray-400 mb-4 uppercase tracking-wider">今回活用した制度</h3>
+            {industry.supportSystem?.map((support, index) => (
+              <div key={index} className="mb-4 last:mb-0">
+                <div className="flex justify-between items-start gap-4 mb-2">
+                  <h4 className="font-bold text-white text-lg">{support.name}</h4>
+                  <a 
+                    href={support.link} 
+                    className="text-accent hover:text-accent/80 text-sm font-bold flex items-center gap-1 no-underline"
+                  >
+                    詳細 <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  {support.description}
+                </p>
+                {/* GlossaryTermの適用例（ここがポイント） */}
+                {support.name.includes("補助金") && (
+                  <div className="mt-3 bg-gray-800 p-3 rounded border border-gray-600">
+                    <h5 className="text-xs font-bold text-gray-400 mb-1">ここがポイント</h5>
+                    <ul className="space-y-1">
+                      <li className="flex items-center gap-2 text-xs text-gray-300">
+                        <CheckCircle2 className="w-3 h-3 text-accent" />
+                        <span><GlossaryTerm term="補助率" />：最大3/4（国・県）</span>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* W2. 他のおすすめ */}
+          {industry.recommendedSupports && (
+            <div>
+              <h3 className="text-sm font-bold text-gray-400 mb-4 uppercase tracking-wider">あわせて検討したい制度</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                {industry.recommendedSupports.map((rec, index) => (
+                  <a 
+                    key={index} 
+                    href={rec.link}
+                    className="block bg-white text-gray-800 p-4 rounded hover:bg-gray-50 transition-colors no-underline group"
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs font-bold bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                        {rec.category}
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" />
+                    </div>
+                    <h4 className="font-bold text-primary mb-1">{rec.name}</h4>
+                    <p className="text-xs text-gray-600 line-clamp-2">{rec.description}</p>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
       </main>
