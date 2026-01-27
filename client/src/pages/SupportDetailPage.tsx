@@ -80,8 +80,8 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                   <User className="w-5 h-5 text-slate-500" />
                   対象者
                 </h2>
-                <p className="text-slate-700 leading-relaxed bg-white p-5 rounded-lg border border-slate-100">
-                  {item.targetAudience}
+                  <p className="text-slate-700 leading-relaxed bg-white p-5 rounded-lg border border-slate-100">
+                  {item.targetAudience || '詳細はお問い合わせください。'}
                 </p>
               </section>
               
@@ -93,7 +93,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                 </h2>
                 <div className="bg-white p-5 rounded-lg border border-slate-100">
                   <p className="text-slate-700 font-medium mb-2">
-                    申請期限：<span className="text-red-600">{item.applicationDeadline}</span>
+                    申請期限：<span className="text-red-600">{item.applicationDeadline || '随時'}</span>
                   </p>
                   <p className="text-sm text-slate-500">
                     ※予算の上限に達し次第、終了する場合があります。最新情報は公式サイトをご確認ください。
@@ -113,7 +113,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                     <div className="absolute left-[15px] top-4 bottom-4 w-0.5 bg-slate-200"></div>
                     
                     <ul className="space-y-6 relative">
-                      {item.flow.map((step, index) => (
+                      {(item.flow || ['詳細はお問い合わせください']).map((step, index) => (
                         <li key={index} className="flex items-start gap-4">
                           <div className="shrink-0 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm font-bold z-10 ring-4 ring-white">
                             {index + 1}
@@ -136,7 +136,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                 </h2>
                 <div className="bg-white p-5 rounded-lg border border-slate-100">
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {item.requiredDocuments.map((doc, index) => (
+                    {(item.requiredDocuments || ['詳細はお問い合わせください']).map((doc, index) => (
                       <li key={index} className="flex items-start gap-2 text-slate-700">
                         <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
                         <span>{doc}</span>
@@ -161,11 +161,11 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                     </h3>
                   </div>
                   <div className="p-6">
-                    <p className="font-bold text-slate-900 mb-2 whitespace-pre-line">{item.contactInfo.name}</p>
-                    <p className="text-2xl font-bold text-slate-800 mb-4">{item.contactInfo.phone}</p>
+                    <p className="font-bold text-slate-900 mb-2 whitespace-pre-line">{item.contactInfo?.name || 'お問い合わせ先をご確認ください'}</p>
+                    <p className="text-2xl font-bold text-slate-800 mb-4">{item.contactInfo?.phone || '-'}</p>
                     <div className="flex items-center gap-2 text-sm text-slate-500 bg-slate-50 p-3 rounded">
                       <Clock className="w-4 h-4" />
-                      <span>{item.contactInfo.hours}</span>
+                      <span>{item.contactInfo?.hours || '営業時間：要確認'}</span>
                     </div>
                   </div>
                 </div>
