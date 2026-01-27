@@ -6,10 +6,10 @@ export default function Footer() {
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
           {/* About & Noto Town Hall Info */}
-          <div className="flex flex-row items-start gap-12">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 text-center md:text-left">
             {/* ロゴ画像（背景なし・サイズ2倍拡大） */}
             <div className="shrink-0">
-              <div className="relative h-64 w-56">
+              <div className="relative h-48 w-40 md:h-64 md:w-56 mx-auto md:mx-0">
                 <img 
                   src="/images/logo.png" 
                   alt="能登百業録ロゴ" 
@@ -41,7 +41,7 @@ export default function Footer() {
               <h4 className="font-serif text-base text-white mb-2 tracking-wider">
                 お問い合わせ
               </h4>
-              <div className="space-y-3">
+              <div className="space-y-3 flex flex-col items-center md:items-start">
                 <a 
                   href="/contact" 
                   className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors no-underline"
@@ -54,7 +54,7 @@ export default function Footer() {
           </div>
 
           {/* Right Column (Empty for now as Contact moved to left) */}
-          <div className="md:text-right">
+          <div className="md:text-right hidden md:block">
             {/* Future content can go here */}
           </div>
         </div>

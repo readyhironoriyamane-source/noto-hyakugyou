@@ -43,7 +43,7 @@ function Router() {
         <Route path={"/industry/:id"}>
           {(params) => (
             <PageTransition>
-              <IndustryDetailPage params={params as any} />
+              <IndustryDetailPage params={params} />
             </PageTransition>
           )}
         </Route>

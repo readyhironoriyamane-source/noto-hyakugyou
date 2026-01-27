@@ -103,22 +103,15 @@ export default function Header() {
         </nav>
 
         {/* --- スマホ用ハンバーガーボタン (md以下で表示) --- */}
+        {/* メニューが開いているときは非表示にする（オーバーレイ側の×ボタンを使うため） */}
         <button 
           onClick={toggleMenu}
-          className="md:hidden z-[70] p-2 text-[#1D3A52] focus:outline-none relative"
+          className={`md:hidden z-50 p-2 text-[#1D3A52] focus:outline-none ${isOpen ? 'hidden' : 'block'}`}
           aria-label="メニューを開く"
         >
-          {isOpen ? (
-            // 閉じるアイコン (×)
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            // ハンバーガーアイコン (三)
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
         </button>
 
         {/* --- スマホ用全画面メニュー (オーバーレイ) --- */}
@@ -126,6 +119,17 @@ export default function Header() {
           fixed inset-0 bg-[#F9F8F4] z-[60] flex flex-col items-center justify-center transition-opacity duration-300
           ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
         `}>
+          {/* 閉じるボタン (オーバーレイ内・右上) */}
+          <button 
+            onClick={toggleMenu}
+            className="absolute top-6 right-6 p-2 text-[#1D3A52] focus:outline-none"
+            aria-label="メニューを閉じる"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
           <nav className="flex flex-col items-center gap-8 text-[#1D3A52]">
             <a 
               href="/#guidepost" 

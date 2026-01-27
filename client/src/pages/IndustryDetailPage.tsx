@@ -172,7 +172,7 @@ export default function IndustryDetailPage({ params }: IndustryDetailPageProps) 
             直面した危機
           </h2>
           <div className={`font-serif ${baseTextSize} ${leadingRelaxed} text-gray-800 whitespace-pre-line mb-10`}>
-            {industry.description.split('\n').map((line, i) => {
+            {(industry.description || '').split('\n').map((line, i) => {
               // 会話文（「」や『』で始まる行）の判定
               const isConversation = line.trim().match(/^[「『]/);
               if (isConversation) {
@@ -216,7 +216,7 @@ export default function IndustryDetailPage({ params }: IndustryDetailPageProps) 
                   悩んだ選択肢
                 </span>
                 <p className="text-lg font-bold text-gray-700 mt-2">
-                  「{industry.decisionProcess.worry || (industry.decisionProcess.options?.map((o: any) => typeof o === 'string' ? o : o.name).join(' / ')) || '選択肢'}」
+                  「{industry.decisionProcess.worry || (industry.decisionProcess.options?.map((o: any) => typeof o === 'string' ? o : (o as any).name).join(' / ')) || '選択肢'}」
                 </p>
               </div>
 
