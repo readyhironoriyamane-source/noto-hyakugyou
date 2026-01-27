@@ -1,11 +1,11 @@
-'use client';
-
 import React, { useState, useMemo, useEffect } from 'react';
-import { Link, useLocation } from 'wouter';
+import { Link } from 'wouter';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ConsultationCTA from '@/components/ConsultationCTA';
 import { SUPPORT_ITEMS } from '@/data/supportData';
-import { Search, Bookmark, BookmarkCheck, ChevronRight, Filter, ArrowRight, Share2, Printer, Heart } from 'lucide-react';
+import { Search, Heart, FolderOpen, Share2, Printer, X } from 'lucide-react';
+import { useLocation } from 'wouter';
 
 // ----------------------------------------------------------------------
 // カスタムフック: 保存機能 (Local Storage)
@@ -13,37 +13,42 @@ import { Search, Bookmark, BookmarkCheck, ChevronRight, Filter, ArrowRight, Shar
 const useSavedItems = () => {
   const [savedIds, setSavedIds] = useState<number[]>([]);
 
+  // 初期化時にLocal Storageから読み込み
   useEffect(() => {
-    // サーバーサイドレンダリング対策
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('noto_saved_items');
-      if (saved) {
-        setSavedIds(JSON.parse(saved));
-      }
-      
-      // URLパラメータからの復元（共有機能）
-      const params = new URLSearchParams(window.location.search);
-      const sharedIds = params.get('ids');
-      if (sharedIds) {
-        const idsToSave = sharedIds.split(',').map(id => parseInt(id, 10)).filter(id => !isNaN(id));
-        if (idsToSave.length > 0) {
-          // 既存の保存リストとマージ（重複排除）
-          const currentSaved = saved ? JSON.parse(saved) : [];
-          const newSaved = Array.from(new Set([...currentSaved, ...idsToSave]));
-          setSavedIds(newSaved);
-          localStorage.setItem('noto_saved_items', JSON.stringify(newSaved));
-          
-          // URLパラメータをクリアして保存済みモードにする
-          window.history.replaceState({}, '', window.location.pathname);
-        }
+    const saved = localStorage.getItem('noto_saved_items');
+    if (saved) {
+      setSavedIds(JSON.parse(saved));
+    }
+  }, []);
+
+  // URLパラメータから保存リストを復元（共有機能用）
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sharedIds = params.get('ids');
+    if (sharedIds) {
+      const ids = sharedIds.split(',').map(Number).filter(n => !isNaN(n));
+      if (ids.length > 0) {
+        // 既存の保存リストとマージするか、共有されたリストで上書きするか
+        // ここでは、共有されたリストを一時的に表示するのではなく、
+        // ユーザーの保存リストに追加する挙動とする（または確認ダイアログを出すのが丁寧だが、今回はシンプルに追加）
+        setSavedIds(prev => {
+          const newIds = Array.from(new Set([...prev, ...ids]));
+          localStorage.setItem('noto_saved_items', JSON.stringify(newIds));
+          return newIds;
+        });
+        
+        // URLパラメータをクリアして、通常の表示に戻す
+        window.history.replaceState({}, '', window.location.pathname);
       }
     }
   }, []);
 
+  // 保存状態の切り替え
   const toggleSave = (id: number) => {
     const newSavedIds = savedIds.includes(id)
-      ? savedIds.filter((savedId) => savedId !== id)
-      : [...savedIds, id];
+      ? savedIds.filter((savedId) => savedId !== id) // 削除
+      : [...savedIds, id]; // 追加
+
     setSavedIds(newSavedIds);
     localStorage.setItem('noto_saved_items', JSON.stringify(newSavedIds));
   };
@@ -52,39 +57,60 @@ const useSavedItems = () => {
 };
 
 // ----------------------------------------------------------------------
-// メインコンポーネント (検索 + 保存 + リスト表示)
+// コンポーネント実装
 // ----------------------------------------------------------------------
-export default function SupportArchivePage() {
+
+const SupportArchive = () => {
+  // State for filtering
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [filterProvider, setFilterProvider] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [showSavedOnly, setShowSavedOnly] = useState<boolean>(false);
-  const [location] = useLocation();
-  
-  const { savedIds, toggleSave } = useSavedItems();
+  const [searchQuery, setSearchQuery] = useState<string>(''); // ★検索クエリ
+  const [showSavedOnly, setShowSavedOnly] = useState<boolean>(false); // ★保存のみ表示モード
+  const [showShareModal, setShowShareModal] = useState<boolean>(false); // ★共有モーダル表示
 
-  // URLパラメータからカテゴリフィルターを初期化
+  // Hook
+  const { savedIds, toggleSave } = useSavedItems();
+  const [location] = useLocation();
+
+  // URLパラメータからカテゴリを初期設定
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const categoryParam = params.get('category');
     if (categoryParam) {
       setFilterCategory(categoryParam);
     }
-    
-    // 共有リンクで来た場合は保存済みリストを表示
-    const idsParam = params.get('ids');
-    if (idsParam) {
-      setShowSavedOnly(true);
-    }
   }, []);
 
+  // 共有URL生成
+  const generateShareUrl = () => {
+    if (savedIds.length === 0) return '';
+    const baseUrl = window.location.origin + location;
+    const params = new URLSearchParams();
+    params.set('ids', savedIds.join(','));
+    return `${baseUrl}?${params.toString()}`;
+  };
+
+  const copyToClipboard = () => {
+    const url = generateShareUrl();
+    navigator.clipboard.writeText(url).then(() => {
+      alert('共有URLをコピーしました');
+      setShowShareModal(false);
+    });
+  };
+
+  // Filtering Logic
   const filteredItems = useMemo(() => {
     return SUPPORT_ITEMS.filter((item) => {
+      // 1. 保存済みフィルター (ONの場合、保存されていないものは除外)
       if (showSavedOnly && !savedIds.includes(item.id)) return false;
 
+      // 2. カテゴリフィルター
       const matchCategory = filterCategory === 'all' || item.category === filterCategory;
-      const matchProvider = filterProvider === 'all' || item.providerType === filterProvider;
       
+      // 3. 主体フィルター
+      const matchProvider = filterProvider === 'all' || item.providerType === filterProvider;
+
+      // 4. フリーワード検索 (タイトル、サブタイトル、説明文)
       const query = searchQuery.toLowerCase().trim();
       const matchSearch = query === '' || 
         item.mainTitle.toLowerCase().includes(query) ||
@@ -95,289 +121,311 @@ export default function SupportArchivePage() {
     });
   }, [filterCategory, filterProvider, searchQuery, showSavedOnly, savedIds]);
 
-  // 共有用URLの生成
-  const generateShareUrl = () => {
-    if (savedIds.length === 0) return '';
-    const baseUrl = window.location.origin + window.location.pathname;
-    return `${baseUrl}?ids=${savedIds.join(',')}`;
-  };
-
-  // 共有アクション
-  const handleShare = async () => {
-    const url = generateShareUrl();
-    if (!url) return;
-    
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: '能登百業録 - 保存した支援制度リスト',
-          text: '私が気になった支援制度のリストです。',
-          url: url,
-        });
-      } catch (error) {
-        console.log('Error sharing:', error);
-      }
-    } else {
-      navigator.clipboard.writeText(url);
-      alert('共有用URLをコピーしました');
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 print:bg-white">
+    <div className="min-h-screen bg-background text-foreground font-sans">
       <Header />
       
-      <main className="pt-[80px] pb-20 print:pt-0 print:pb-0">
-        {/* ヒーローエリア（印刷時は非表示） */}
-        <div className="bg-slate-900 text-white py-16 px-6 print:hidden">
-          <div className="max-w-5xl mx-auto text-center">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 tracking-wider">
-              支援制度一覧
-            </h1>
-            <p className="text-slate-300 text-lg max-w-2xl mx-auto">
-              事業者様の状況や目的に合わせた支援制度を、<br className="hidden md:block" />
-              目的・提供元・キーワードから検索できます。
-            </p>
-          </div>
-        </div>
-
-        {/* 検索・フィルターエリア（印刷時は非表示） */}
-        <div className="sticky top-[60px] z-30 bg-slate-50/95 backdrop-blur shadow-sm border-b border-slate-200 print:hidden pb-6">
-          <div className="max-w-6xl mx-auto px-4 pt-6">
+      <main className="pt-[60px]"> {/* Header height compensation */}
+        <section className="bg-[#F9F8F4] py-20">
+          <div className="max-w-[1140px] mx-auto px-6">
             
-            {/* 上段：検索バーと保存リストボタン */}
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
-              <div className="relative flex-1 w-full md:max-w-xl">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="キーワードで検索（例：補助金、融資、雇用...）"
+            {/* ページヘッダー */}
+            <div className="mb-10">
+              <h1 className="text-3xl md:text-[40px] font-bold text-[#1D3A52] text-left mb-6 font-serif">
+                支援制度一覧
+              </h1>
+              <p className="text-gray-600 text-left max-w-3xl leading-relaxed">
+                事業者の皆様が活用できる、国・県・町および民間企業の支援制度を網羅しています。<br />
+                目的に合わせて最適な制度をお探しください。
+              </p>
+            </div>
+
+            {/* -------------------------------------------------- */}
+            {/* ★検索 & 保存リスト UI (新規追加) */}
+            {/* -------------------------------------------------- */}
+            <div className="mb-8 flex flex-col md:flex-row gap-4 items-stretch">
+              
+              {/* 検索窓 */}
+              <div className="relative flex-grow">
+                <input 
+                  type="text" 
+                  placeholder="キーワードで探す（例：解体、冷蔵庫、車両、販路...）" 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-white border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-900 transition-all text-base"
+                  className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-full shadow-sm focus:ring-2 focus:ring-[#1D3A52] focus:border-transparent outline-none text-base transition-shadow"
                 />
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
               </div>
 
+              {/* 保存リストを見るボタン (トグル) */}
               <button
                 onClick={() => setShowSavedOnly(!showSavedOnly)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-bold transition-all border shadow-sm ${
-                  showSavedOnly
-                    ? 'bg-yellow-50 border-yellow-400 text-yellow-700 ring-2 ring-yellow-200'
-                    : 'bg-white border-slate-300 text-slate-600 hover:bg-slate-50'
-                }`}
+                className={`
+                  flex items-center justify-center px-8 py-4 rounded-full font-bold transition-all shadow-sm whitespace-nowrap
+                  ${showSavedOnly 
+                    ? 'bg-[#B33E28] text-white border border-[#B33E28]' // Active (赤)
+                    : 'bg-white text-[#1D3A52] border border-gray-300 hover:bg-gray-50' // Inactive
+                  }
+                `}
               >
-                {showSavedOnly ? <BookmarkCheck className="w-5 h-5 fill-current" /> : <Bookmark className="w-5 h-5" />}
-                {showSavedOnly ? '保存済みを表示中' : '保存リストを見る'}
-                <span className="bg-slate-200 text-slate-700 text-xs px-2 py-0.5 rounded-full ml-1 font-bold">
-                  {savedIds.length}
-                </span>
+                {showSavedOnly ? <FolderOpen className="mr-2 w-5 h-5" /> : <Heart className="mr-2 w-5 h-5" />}
+                {showSavedOnly ? '全ての制度に戻る' : `保存リスト (${savedIds.length})`}
               </button>
             </div>
 
-            {/* 下段：フィルターボックス（白背景） */}
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-1 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
-              
-              {/* 左カラム：困りごと（紺色アクセント） */}
-              <div className="p-3 flex flex-col gap-2">
-                <div className="flex items-center gap-2 mb-1 px-1">
-                  <div className="w-1 h-4 bg-[#1D3A52] rounded-full"></div>
-                  <span className="text-xs font-bold text-slate-500">困りごとで絞り込む</span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    { id: 'all', label: 'すべて' },
-                    { id: 'reconstruction', label: '設備の復旧・再建' },
-                    { id: 'finance', label: '資金繰り・融資' },
-                    { id: 'hr', label: '人材・承継' },
-                    { id: 'sales', label: '販路開拓' },
-                  ].map((cat) => (
-                    <button
-                      key={cat.id}
-                      onClick={() => setFilterCategory(cat.id)}
-                      className={`px-3 py-1.5 rounded text-sm font-bold transition-all ${
-                        filterCategory === cat.id
-                          ? 'bg-[#1D3A52] text-white shadow-sm'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                      }`}
-                    >
-                      {cat.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
+            {/* -------------------------------------------------- */}
+            {/* フィルタリング UI (形状・色統一版) */}
+            {/* -------------------------------------------------- */}
+            {!showSavedOnly && (
+              <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-12">
+                <div className="flex flex-col md:flex-row gap-8">
+                  
+                  {/* 困りごとで絞り込む */}
+                  <div className="flex-1">
+                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                      <span className="w-1 h-4 bg-[#1D3A52] rounded-full"></span>
+                      困りごとで絞り込む
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        { value: 'all', label: 'すべて表示' },
+                        { value: 'reconstruction', label: '設備の復旧・再建' },
+                        { value: 'finance', label: '資金繰り・融資' },
+                        { value: 'hr', label: '人材確保・事業承継' },
+                        { value: 'sales', label: '販路開拓・売上拡大' },
+                      ].map((btn) => (
+                        <button
+                          key={btn.value}
+                          onClick={() => setFilterCategory(btn.value)}
+                          className={`
+                            px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border
+                            ${filterCategory === btn.value
+                              ? 'bg-[#1D3A52] text-white border-[#1D3A52] shadow-md transform scale-105'
+                              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                            }
+                          `}
+                        >
+                          {btn.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* 右カラム：実施主体（赤茶アクセント） */}
-              <div className="p-3 flex flex-col gap-2">
-                <div className="flex items-center gap-2 mb-1 px-1">
-                  <div className="w-1 h-4 bg-[#B33E28] rounded-full"></div>
-                  <span className="text-xs font-bold text-slate-500">実施主体で絞り込む</span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    { id: 'all', label: 'すべて' },
-                    { id: 'ishikawa', label: '石川県' },
-                    { id: 'noto', label: '能登町' },
-                    { id: 'national', label: '国・公庫' },
-                    { id: 'other', label: 'その他' },
-                  ].map((prov) => (
-                    <button
-                      key={prov.id}
-                      onClick={() => setFilterProvider(prov.id)}
-                      className={`px-3 py-1.5 rounded text-sm font-bold transition-all ${
-                        filterProvider === prov.id
-                          ? 'bg-[#B33E28] text-white shadow-sm'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                      }`}
-                    >
-                      {prov.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
+                  {/* 区切り線 (MD以上で表示) */}
+                  <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
 
-            </div>
-          </div>
-        </div>
+                  {/* 実施主体で絞り込む */}
+                  <div className="flex-1">
+                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                      <span className="w-1 h-4 bg-[#B33E28] rounded-full"></span>
+                      実施主体で絞り込む
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        { value: 'all', label: 'すべて' },
+                        { value: 'ishikawa', label: '石川県' },
+                        { value: 'noto', label: '能登町' },
+                        { value: 'national', label: '国・公庫' },
+                        { value: 'other', label: '民間・その他' },
+                      ].map((btn) => (
+                        <button
+                          key={btn.value}
+                          onClick={() => setFilterProvider(btn.value)}
+                          className={`
+                            px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border
+                            ${filterProvider === btn.value
+                              ? 'bg-[#B33E28] text-white border-[#B33E28] shadow-md transform scale-105'
+                              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                            }
+                          `}
+                        >
+                          {btn.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-        {/* 保存リスト表示時のアクションバー */}
-        {showSavedOnly && savedIds.length > 0 && (
-          <div className="max-w-6xl mx-auto px-4 mt-6 print:hidden">
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <BookmarkCheck className="w-6 h-6 text-yellow-600" />
-                <div>
-                  <h3 className="font-bold text-yellow-800">保存した制度リスト（{filteredItems.length}件）</h3>
-                  <p className="text-xs text-yellow-700">このリストはブラウザに保存されています。</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <button 
-                  onClick={handleShare}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border border-yellow-300 text-yellow-800 rounded-md text-sm font-bold hover:bg-yellow-100 transition-colors"
-                >
-                  <Share2 className="w-4 h-4" />
-                  リストを共有
-                </button>
-                <button 
-                  onClick={() => window.print()}
-                  className="flex items-center gap-2 px-4 py-2 bg-yellow-600 text-white rounded-md text-sm font-bold hover:bg-yellow-700 transition-colors shadow-sm"
-                >
-                  <Printer className="w-4 h-4" />
-                  リストを印刷
-                </button>
+            )}
+
+            {/* 検索結果カウント & ステータス & アクションボタン */}
+            <div className="mb-6 flex flex-col md:flex-row justify-between items-end border-b border-gray-200 pb-2 gap-4">
+              <div className="text-gray-500 text-sm">
+                <span className="font-bold text-[#1D3A52] text-lg mr-1">{filteredItems.length}</span>
+                件の制度を表示中
+                {showSavedOnly && <span className="ml-2 text-[#B33E28] font-bold">（保存した制度のみ）</span>}
               </div>
-            </div>
-          </div>
-        )}
 
-        {/* 印刷用ヘッダー（画面では非表示） */}
-        <div className="hidden print:block p-8 border-b-2 border-black mb-8">
-          <h1 className="text-2xl font-bold mb-2">能登百業録 - 支援制度保存リスト</h1>
-          <p className="text-sm">出力日: {new Date().toLocaleDateString()}</p>
-        </div>
-
-        {/* リスト表示エリア */}
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          {filteredItems.length === 0 ? (
-            <div className="text-center py-20 bg-white rounded-xl border border-dashed border-slate-300">
-              <p className="text-slate-500 font-medium">条件に一致する支援制度は見つかりませんでした。</p>
-              <button 
-                onClick={() => {
-                  setFilterCategory('all');
-                  setFilterProvider('all');
-                  setSearchQuery('');
-                }}
-                className="mt-4 text-slate-900 underline hover:text-slate-600"
-              >
-                条件をリセットしてすべて表示
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredItems.map((item) => (
-                <div 
-                  key={item.id} 
-                  className="group bg-white border border-gray-200 rounded-lg p-6 flex flex-col h-full shadow-sm hover:shadow-md transition-shadow relative print:break-inside-avoid print:border-black"
-                >
-                  {/* 保存ボタン（ハート型） */}
+              {/* 保存リスト表示時のみ表示するアクションボタン */}
+              {showSavedOnly && savedIds.length > 0 && (
+                <div className="flex gap-2 no-print">
                   <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toggleSave(item.id);
-                    }}
-                    className="absolute top-6 right-6 z-10 transition-transform active:scale-90 print:hidden"
+                    onClick={() => setShowShareModal(true)}
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-[#1D3A52] bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                   >
-                    {savedIds.includes(item.id) ? (
-                      <Heart className="w-6 h-6 text-pink-500 fill-pink-500 drop-shadow-sm" />
-                    ) : (
-                      <Heart className="w-6 h-6 text-gray-300 hover:text-pink-400" />
-                    )}
+                    <Share2 className="w-4 h-4" />
+                    リストを共有
                   </button>
-
-                  {/* カードヘッダー */}
-                  <div className="flex items-center mb-4">
-                    <span className={`px-2 py-1 text-[10px] font-bold text-white rounded ${item.badgeColor}`}>
-                      {item.badge}
-                    </span>
-                    {/* 困りごとタグ */}
-                    {item.tag && (
-                      <span className="bg-gray-100 text-gray-500 text-[10px] px-2 py-1 rounded ml-2 font-bold border border-gray-200">
-                        {item.tag}
-                      </span>
-                    )}
-                  </div>
-                  
-                  {/* タイトルエリア */}
-                  <h3 className="text-2xl font-bold text-gray-800 mb-2 leading-tight font-sans min-h-[64px] flex items-end group-hover:text-slate-700 transition-colors whitespace-pre-line">
-                    {item.mainTitle}
-                  </h3>
-                  <p className="text-sm text-gray-500 mb-6 min-h-[40px] font-bold">
-                    {item.subTitle}
-                  </p>
-                  
-                  {/* 支援内容 */}
-                  <h4 className="text-xs font-bold text-gray-500 mb-2">支援内容</h4>
-                  <p className="text-sm text-gray-700 leading-relaxed mb-6 flex-grow line-clamp-3">
-                    {item.description}
-                  </p>
-
-                  {/* スペックBOX（生成りBOX） */}
-                  <div className="bg-[#FAF9F6] rounded-lg p-6 mb-8 space-y-5 border border-stone-100">
-                    {/* 金額・条件行 */}
-                    <div className="flex items-start">
-                      <div className="flex items-center w-24 shrink-0 mt-0.5 gap-2">
-                        <span className="text-[#B33E28] text-sm">💰</span>
-                        <span className="text-xs font-bold text-[#B33E28]">金額・条件</span>
-                      </div>
-                      <div className="text-[15px] font-bold text-[#1D3A52] flex-1">
-                        {item.specAmount}
-                        {item.specCondition && <span className="block text-xs font-normal mt-1">{item.specCondition}</span>}
-                      </div>
-                    </div>
-                    {/* 備考行（条件等を備考として表示） */}
-                    <div className="flex items-start">
-                      <div className="flex items-center w-24 shrink-0 mt-0.5 gap-2">
-                        <span className="text-[#1D3A52] text-sm">📄</span>
-                        <span className="text-xs font-bold text-[#1D3A52]">備考</span>
-                      </div>
-                      <div className="text-sm text-gray-700 flex-1 leading-snug">
-                        {item.specCondition}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* フッターボタン */}
-                  <Link href={`/support/${item.id}`} className="mt-auto w-full border border-gray-300 bg-white text-[#1D3A52] text-sm font-bold py-4 rounded hover:bg-gray-50 transition-colors flex justify-center items-center no-underline print:hidden group-hover:border-gray-400">
-                    詳細・相談先を見る ↗
-                  </Link>
+                  <button
+                    onClick={() => window.print()}
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-[#1D3A52] rounded-lg hover:bg-[#152a3d] transition-colors"
+                  >
+                    <Printer className="w-4 h-4" />
+                    リストを印刷
+                  </button>
                 </div>
-              ))}
+              )}
             </div>
-          )}
-        </div>
+
+            {/* -------------------------------------------------- */}
+            {/* リスト表示エリア */}
+            {/* -------------------------------------------------- */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredItems.length > 0 ? (
+                filteredItems.map((item) => {
+                  const isSaved = savedIds.includes(item.id);
+
+                  return (
+                    <div key={item.id} className="relative h-full">
+                      <Link href={`/support/${item.id}`} className="block group no-underline h-full">
+                        <article className={`
+                          h-full bg-white rounded-lg border overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col relative group-hover:-translate-y-1
+                          ${isSaved ? 'border-[#B33E28] shadow-md ring-1 ring-[#B33E28]/20' : 'border-gray-200 shadow-sm'}
+                        `}>
+                          
+                          {/* カード上部：バッジとタイトル */}
+                          <div className="p-6 flex-grow">
+                            <div className="flex items-start justify-between mb-4 pr-8">
+                              <span className={`inline-block px-3 py-1 text-xs font-bold text-white rounded-full ${item.badgeColor}`}>
+                                {item.badge}
+                              </span>
+                            </div>
+                            
+                            <h3 className="text-lg font-bold text-[#1D3A52] mb-2 line-clamp-2 group-hover:text-[#B33E28] transition-colors">
+                              {item.subTitle}
+                            </h3>
+                            <p className="text-sm font-medium text-gray-500 mb-4 line-clamp-2">
+                              {item.mainTitle}
+                            </p>
+                            <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed">
+                              {item.description}
+                            </p>
+                          </div>
+
+                          {/* カード下部：スペック情報（グレー背景） */}
+                          <div className="bg-gray-50 px-6 py-4 border-t border-gray-100 mt-auto">
+                            <div className="flex flex-col gap-1">
+                              <div className="flex items-baseline gap-2">
+                                <span className="text-xs font-bold text-gray-400 uppercase">支援金額</span>
+                                <span className="text-base font-bold text-[#1D3A52]">{item.specAmount}</span>
+                              </div>
+                              <div className="flex items-baseline gap-2">
+                                <span className="text-xs font-bold text-gray-400 uppercase">条件など</span>
+                                <span className="text-xs text-gray-600">{item.specCondition}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                        </article>
+                      </Link>
+
+                      {/* ★保存ボタン (ハート) - Linkの外に配置してイベント伝播を防ぐ */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleSave(item.id);
+                        }}
+                        className="absolute top-4 right-4 z-10 p-2 rounded-full hover:bg-gray-100 transition-colors focus:outline-none bg-white/80 backdrop-blur-sm shadow-sm"
+                        aria-label={isSaved ? "保存を解除" : "保存する"}
+                      >
+                        <Heart 
+                          className={`w-6 h-6 transition-colors ${isSaved ? 'fill-[#B33E28] text-[#B33E28]' : 'text-gray-400 hover:text-gray-600'}`} 
+                        />
+                      </button>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="col-span-full py-20 text-center bg-white rounded-lg border border-gray-200">
+                  <p className="text-gray-500 mb-4 text-lg">
+                    {showSavedOnly 
+                      ? '保存された支援制度はまだありません。気になる制度の「♡」を押して保存しましょう。' 
+                      : '条件に一致する支援制度が見つかりませんでした。'}
+                  </p>
+                  <button 
+                    onClick={() => {
+                      setFilterCategory('all'); 
+                      setFilterProvider('all'); 
+                      setSearchQuery('');
+                      setShowSavedOnly(false);
+                    }}
+                    className="mt-2 text-[#1D3A52] font-bold underline hover:text-[#B33E28] transition-colors"
+                  >
+                    条件をリセットする
+                  </button>
+                </div>
+              )}
+            </div>
+
+          </div>
+        </section>
+
+        <ConsultationCTA />
       </main>
 
       <Footer />
+
+      {/* 共有モーダル */}
+      {showShareModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 relative animate-fade-in-up">
+            <button 
+              onClick={() => setShowShareModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            
+            <h3 className="text-xl font-bold text-[#1D3A52] mb-4 flex items-center gap-2">
+              <Share2 className="w-5 h-5" />
+              保存リストを共有
+            </h3>
+            
+            <p className="text-sm text-gray-600 mb-4">
+              以下のURLをコピーして、メールやチャットで共有してください。<br/>
+              受け取った人がこのURLを開くと、現在の保存リストが反映されます。
+            </p>
+            
+            <div className="flex gap-2 mb-6">
+              <input 
+                type="text" 
+                readOnly 
+                value={generateShareUrl()} 
+                className="flex-1 bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 outline-none"
+              />
+              <button 
+                onClick={copyToClipboard}
+                className="bg-[#1D3A52] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#152a3d] transition-colors whitespace-nowrap"
+              >
+                コピー
+              </button>
+            </div>
+            
+            <div className="text-center">
+              <button 
+                onClick={() => setShowShareModal(false)}
+                className="text-gray-500 text-sm hover:text-gray-800 underline"
+              >
+                閉じる
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default SupportArchive;
