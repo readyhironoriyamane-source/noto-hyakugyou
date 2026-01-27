@@ -308,7 +308,7 @@ const SupportArchive = () => {
                               </span>
                             </div>
 
-                            <h3 className="text-xl font-bold text-[#1D3A52] mb-2 leading-snug group-hover:text-[#B33E28] transition-colors">
+                            <h3 className="text-xl font-bold text-[#1D3A52] mb-2 leading-snug group-hover:text-[#B33E28] transition-colors whitespace-pre-line">
                               {item.mainTitle}
                             </h3>
                             <p className="text-sm text-gray-500 mb-6">
