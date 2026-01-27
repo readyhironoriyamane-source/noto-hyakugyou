@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { GlossaryTerm } from "@/components/GlossaryTerm";
 import { industries } from "@/data/industries";
 import type { Industry } from "@/data/industries";
 import { 
@@ -291,7 +292,7 @@ export default function IndustryDetailPage({ params }: IndustryDetailPageProps) 
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-gray-600">
                       <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                      <span>補助率：最大3/4（国・県）</span>
+                      <span><GlossaryTerm term="補助率" />：最大3/4（国・県）</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-gray-600">
                       <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
