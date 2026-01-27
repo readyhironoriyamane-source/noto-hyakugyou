@@ -71,6 +71,26 @@ const SupportArchive = () => {
   // Hook
   const { savedIds, toggleSave } = useSavedItems();
   const [location] = useLocation();
+  // URLのクエリパラメータ変更を検知するためのステート
+  const [searchParams, setSearchParams] = useState(window.location.search);
+
+  // location変更時だけでなく、popstateイベントでもsearchParamsを更新
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setSearchParams(window.location.search);
+    };
+    
+    // wouterのlocation変更は検知されるが、同じパスでのクエリ変更は検知されない場合があるため
+    // popstateイベントも監視する
+    window.addEventListener('popstate', handleLocationChange);
+    
+    // locationが変わったときも更新
+    handleLocationChange();
+
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+    };
+  }, [location]);
 
   // URLパラメータからフィルタ状態を制御
   useEffect(() => {
@@ -93,7 +113,7 @@ const SupportArchive = () => {
       // カテゴリパラメータがない場合はリセット（明示的なリセットが必要な場合）
       // setFilterCategory('all'); // 必要に応じて有効化
     }
-  }, [location]); // locationが変わるたびに実行
+  }, [location, searchParams]); // locationまたはクエリパラメータが変わるたびに実行
 
   // 共有URL生成
   const generateShareUrl = () => {
@@ -166,7 +186,7 @@ const SupportArchive = () => {
                   placeholder="キーワードで探す（例：解体、冷蔵庫、車両、販路...）" 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-full shadow-sm focus:ring-2 focus:ring-[#1D3A52] focus:border-transparent outline-none text-base transition-shadow"
+                  className="w-full pl-12 pr-4 h-14 border border-gray-300 rounded-full shadow-sm focus:ring-2 focus:ring-[#1D3A52] focus:border-transparent outline-none text-base transition-shadow"
                 />
                 <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
               </div>
@@ -175,7 +195,7 @@ const SupportArchive = () => {
               <button
                 onClick={() => setShowSavedOnly(!showSavedOnly)}
                 className={`
-                  flex items-center justify-center px-8 py-4 rounded-full font-bold transition-all shadow-sm whitespace-nowrap
+                  flex items-center justify-center px-8 h-14 rounded-full font-bold transition-all shadow-sm whitespace-nowrap
                   ${showSavedOnly 
                     ? 'bg-[#B33E28] text-white border border-[#B33E28]' // Active (赤)
                     : 'bg-white text-[#1D3A52] border border-gray-300 hover:bg-gray-50' // Inactive
