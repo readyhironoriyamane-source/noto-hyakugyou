@@ -304,41 +304,44 @@ export default function IndustryDetailPage() {
 
           {/* W1. 一言コメント */}
           <div className="mb-10">
-            <h3 className="text-lg font-bold text-gray-300 mb-3">編集部より</h3>
-            <p className="text-lg leading-relaxed font-medium">
+            <h3 className="font-bold text-lg mb-3 opacity-90">編集部より</h3>
+            <p className="leading-relaxed text-white/90 text-lg">
               {industry.editorComment || "この事例は、多くの事業者にとって希望の光となるでしょう。"}
             </p>
           </div>
 
           {/* W3. 制度スペック */}
-          <div className="bg-gray-700/50 rounded-lg p-6 mb-12 border border-gray-600">
-            <h3 className="text-sm font-bold text-gray-400 mb-4 uppercase tracking-wider">今回活用した制度</h3>
+          <div className="bg-white text-[#1D3A52] rounded-lg p-6 md:p-8 shadow-sm mb-12">
+            <h4 className="text-sm font-bold text-gray-500 mb-6 border-b border-gray-200 pb-2">
+              今回活用した制度
+            </h4>
             {industry.supportSystem?.map((support, index) => (
-              <div key={index} className="mb-6 last:mb-0">
+              <div key={index} className={index !== (industry.supportSystem?.length || 0) - 1 ? "mb-8" : ""}>
                 <div className="flex justify-between items-start gap-4 mb-2">
-                  <h4 className="font-bold text-white text-lg">{support.name}</h4>
-                  <a 
-                    href={support.link} 
-                    className="text-accent hover:text-accent/80 text-sm font-bold flex items-center gap-1 no-underline"
-                  >
+                  <h5 className="text-xl font-bold">{support.name}</h5>
+                  <a href={support.link} className="text-[#B33E28] text-sm font-bold hover:underline shrink-0 flex items-center gap-1">
                     詳細 <ExternalLink className="w-3 h-3" />
                   </a>
                 </div>
-                <p className="text-gray-300 text-sm leading-relaxed mb-3">
+                <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                   {support.description}
                 </p>
-                {/* GlossaryTermの適用例（ここがポイント） */}
-                {support.name.includes("補助金") && (
-                  <div className="bg-gray-800 p-4 rounded border border-gray-600">
-                    <h5 className="text-xs font-bold text-gray-400 mb-2 flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3" /> ここがポイント
-                    </h5>
-                    <ul className="space-y-1">
-                      <li className="flex items-center gap-2 text-sm text-gray-300">
-                        <span><GlossaryTerm term="補助率" />：最大3/4（国・県）</span>
-                      </li>
-                    </ul>
+                
+                {/* ポイントBOX */}
+                {support.points && (
+                  <div className="bg-[#F9F8F4] p-4 rounded border border-gray-200">
+                    <div className="flex items-center text-xs font-bold text-gray-500 mb-1">
+                      <span className="mr-1">✓</span> {support.points.label}
+                    </div>
+                    <div className="font-bold text-[#1D3A52]">
+                      <GlossaryTerm term={support.points.term} /> {support.points.detail}
+                    </div>
                   </div>
+                )}
+                
+                {/* 区切り線 (最後の要素以外) */}
+                {index !== (industry.supportSystem?.length || 0) - 1 && (
+                  <hr className="border-gray-200 my-8 border-dashed" />
                 )}
               </div>
             ))}

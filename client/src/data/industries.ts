@@ -94,6 +94,11 @@ export interface Industry {
     name: string;
     description: string;
     link: string;
+    points?: { // 追加: ここがポイント
+      label: string;
+      term: string; // GlossaryTerm用
+      detail: string;
+    };
   }[];
   supportMenu?: { // 後方互換性のため追加
     name: string;
@@ -219,7 +224,12 @@ export const industries: Industry[] = [
       {
         name: "事業承継・引継ぎ補助金",
         description: "事業承継を契機とした新しい取り組み（設備投資や販路開拓など）にかかる費用の一部を補助する制度。",
-        link: "#"
+        link: "#",
+        points: {
+          label: "ここがポイント",
+          term: "補助率",
+          detail: ": 最大3/4（国・県）"
+        }
       },
       {
         name: "よろず支援拠点",
