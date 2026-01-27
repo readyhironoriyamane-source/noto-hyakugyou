@@ -296,6 +296,18 @@ const SupportArchive = () => {
                           
                           {/* カード上部：タイトル（メリット重視） */}
                           <div className="p-6 flex-grow">
+                            {/* タグエリア */}
+                            <div className="flex items-center gap-2 mb-3">
+                              {/* 実施主体タグ */}
+                              <span className={`${item.badgeColor} text-white text-xs font-bold px-2 py-1 rounded`}>
+                                {item.badge}
+                              </span>
+                              {/* 困りごとタグ */}
+                              <span className="bg-white text-gray-600 border border-gray-200 text-xs font-bold px-2 py-1 rounded">
+                                {item.tag}
+                              </span>
+                            </div>
+
                             <h3 className="text-xl font-bold text-[#1D3A52] mb-2 leading-snug group-hover:text-[#B33E28] transition-colors">
                               {item.mainTitle}
                             </h3>
