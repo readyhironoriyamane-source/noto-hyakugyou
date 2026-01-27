@@ -273,7 +273,7 @@ export const SUPPORT_ITEMS: SupportItem[] = [
       '特になし（初回相談時）'
     ],
     contactInfo: {
-      name: '北陸支本部 地域・連携支援課',
+      name: '中小企業基盤整備機構 北陸支本部 地域・連携支援課',
       phone: '076-223-6100',
       hours: '平日 9:00 - 17:45'
     },
