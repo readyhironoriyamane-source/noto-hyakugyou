@@ -14,7 +14,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
   if (!params || !params.id) return <NotFound />;
   
   const id = parseInt(params.id, 10);
-  const item = SUPPORT_ITEMS.find((i) => i.id === id);
+  const item = SUPPORT_ITEMS.find((i) => i.id === id) as any;
   
   if (!item) return <NotFound />;
 
@@ -113,13 +113,13 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                     <div className="absolute left-[15px] top-4 bottom-4 w-0.5 bg-slate-200"></div>
                     
                     <ul className="space-y-6 relative">
-                      {(item.flow || ['詳細はお問い合わせください']).map((step, index) => (
+                      {(item.flow || ['詳細はお問い合わせください']).map((step: any, index: number) => (
                         <li key={index} className="flex items-start gap-4">
                           <div className="shrink-0 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm font-bold z-10 ring-4 ring-white">
                             {index + 1}
                           </div>
                           <div className="pt-1">
-                            <p className="text-slate-800 font-medium">{step}</p>
+                            <p className="text-slate-800 font-medium">{typeof step === 'string' ? step : step.title}</p>
                           </div>
                         </li>
                       ))}
@@ -136,7 +136,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                 </h2>
                 <div className="bg-white p-5 rounded-lg border border-slate-100">
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {(item.requiredDocuments || ['詳細はお問い合わせください']).map((doc, index) => (
+                    {(item.requiredDocuments || ['詳細はお問い合わせください']).map((doc: string, index: number) => (
                       <li key={index} className="flex items-start gap-2 text-slate-700">
                         <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
                         <span>{doc}</span>
@@ -173,7 +173,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                 {/* アクションボタン */}
                 <div className="space-y-3">
                   <a 
-                    href={item.officialLink}
+                    href={item.officialLink || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white font-bold py-4 px-6 rounded-lg hover:bg-slate-800 transition-colors shadow-sm no-underline"
