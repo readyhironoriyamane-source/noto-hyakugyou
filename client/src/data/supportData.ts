@@ -2,8 +2,8 @@ export type SupportItem = {
   id: number;
   badge: string;
   badgeColor: string;
-  mainTitle: string;
-  subTitle: string;
+  mainTitle: string; // メリット（例：工場を直したい）
+  subTitle: string;  // 制度名（例：なりわい補助金）
   description: string;
   specAmount: string;
   specCondition: string;
@@ -23,7 +23,7 @@ export type SupportItem = {
 };
 
 export const SUPPORT_ITEMS: SupportItem[] = [
-  // --- カテゴリ：設備の復旧・再建 (reconstruction) ---
+  // --- カテゴリ：設備の復旧・再建 ---
   {
     id: 11,
     badge: '石川県',
@@ -73,7 +73,7 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     providerType: 'ishikawa',
   },
 
-  // --- カテゴリ：資金繰り (finance) ---
+  // --- カテゴリ：資金繰り ---
   {
     id: 17,
     badge: '公庫',
@@ -111,7 +111,7 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     providerType: 'noto',
   },
 
-  // --- カテゴリ：人材・承継 (hr) ---
+  // --- カテゴリ：人材・承継 ---
   {
     id: 1,
     badge: '中小機構',
@@ -123,6 +123,11 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     specCondition: '専門家派遣は一部負担あり',
     category: 'hr',
     providerType: 'national',
+    contactInfo: {
+      name: '中小企業基盤整備機構\n北陸支本部 地域・連携支援課',
+      phone: '076-223-6100',
+      hours: '平日 9:00-17:45'
+    }
   },
   {
     id: 2,
@@ -220,54 +225,102 @@ export const SUPPORT_ITEMS: SupportItem[] = [
     category: 'hr',
     providerType: 'other',
   },
-
-  // --- カテゴリ：販路開拓 (sales) ---
-  {
-    id: 13,
-    badge: '石川県',
-    badgeColor: 'bg-[#1D3A52]',
-    mainTitle: '新商品開発や\n販路開拓のチャレンジに',
-    subTitle: '地域産業資源活用支援事業',
-    description: '地域資源を活用した新商品開発や販路開拓を支援',
-    specAmount: '上限 500万円',
-    specCondition: '補助率 2/3',
-    category: 'sales',
-    providerType: 'ishikawa',
-  },
   {
     id: 10,
-    badge: '中小機構',
+    badge: 'ISICO',
+    badgeColor: 'bg-[#1D3A52]',
+    mainTitle: '求人票の書き方や、\n採用活動の助言',
+    subTitle: '人材アドバイザーによる相談',
+    description: '採用ターゲットの明確化や、面接ノウハウの提供',
+    specAmount: '相談無料',
+    specCondition: '専門家派遣',
+    category: 'hr',
+    providerType: 'ishikawa',
+  },
+
+  // --- カテゴリ：販路開拓 ---
+  {
+    id: 13,
+    badge: '国',
     badgeColor: 'bg-[#2B2B2B]',
-    mainTitle: 'ECサイト構築や\nITツールの導入支援',
-    subTitle: 'IT導入補助金',
-    description: '業務効率化や販路拡大のためのITツール導入を補助',
-    specAmount: '上限 450万円',
-    specCondition: '補助率 1/2〜3/4',
+    mainTitle: '販路開拓や、\n業務効率化の取り組みに',
+    subTitle: '小規模事業者持続化補助金（災害支援枠）',
+    description: '機械装置等費、広報費、ウェブサイト関連費など',
+    specAmount: '上限 200万円',
+    specCondition: '売上減少の間接被害は100万円',
     category: 'sales',
     providerType: 'national',
   },
   {
     id: 19,
-    badge: '商工会',
-    badgeColor: 'bg-[#555555]',
-    mainTitle: '販路開拓や\n業務効率化の取り組みに',
-    subTitle: '小規模事業者持続化補助金',
-    description: '小規模事業者が経営計画に基づいて行う販路開拓等を支援',
-    specAmount: '上限 200万円',
-    specCondition: '補助率 2/3（災害支援枠）',
+    badge: 'ISICO',
+    badgeColor: 'bg-[#1D3A52]',
+    mainTitle: '新しい取引先や、\n業務提携先の紹介',
+    subTitle: '受発注取引のあっせん',
+    description: '県内外の企業とのマッチング、商談機会の提供',
+    specAmount: '利用無料',
+    specCondition: '取引希望情報の登録が必要',
+    category: 'sales',
+    providerType: 'ishikawa',
+  },
+  {
+    id: 20,
+    badge: '中小機構',
+    badgeColor: 'bg-[#2B2B2B]',
+    mainTitle: '新製品の売り出しや、\n市場開拓の支援',
+    subTitle: '新商品等の販路開拓支援',
+    description: 'マーケティング調査や、テスト販売のサポート',
+    specAmount: '一部補助',
+    specCondition: '審査あり',
     category: 'sales',
     providerType: 'national',
   },
   {
-    id: 20,
-    badge: '石川県',
-    badgeColor: 'bg-[#1D3A52]',
-    mainTitle: '伝統的工芸品の\n振興・継承活動に',
-    subTitle: '伝統的工芸品産業振興補助金',
-    description: '後継者育成、原材料確保、需要開拓などの取り組みを支援',
-    specAmount: '要確認',
-    specCondition: '事業内容による',
+    id: 21,
+    badge: '中小機構',
+    badgeColor: 'bg-[#2B2B2B]',
+    mainTitle: '首都圏などの\n展示会への出展支援',
+    subTitle: '展示会への出展支援',
+    description: '大規模展示会への共同出展ブースの提供',
+    specAmount: '出展料補助',
+    specCondition: '旅費等は自己負担',
     category: 'sales',
-    providerType: 'ishikawa',
-  }
+    providerType: 'national',
+  },
+  {
+    id: 22,
+    badge: '中小機構',
+    badgeColor: 'bg-[#2B2B2B]',
+    mainTitle: 'オンラインショップの\n活用・運営相談',
+    subTitle: 'EC活用支援',
+    description: 'ECサイトの売上向上に向けた専門家アドバイス',
+    specAmount: '相談無料',
+    specCondition: 'オンライン対応可',
+    category: 'sales',
+    providerType: 'national',
+  },
+  {
+    id: 23,
+    badge: '商工会',
+    badgeColor: 'bg-[#555555]',
+    mainTitle: 'ネット通販の\n立ち上げセミナー',
+    subTitle: 'EC化支援',
+    description: '初めてECに取り組む事業者向けの講座・指導',
+    specAmount: '受講無料',
+    specCondition: '会員事業者向け',
+    category: 'sales',
+    providerType: 'other',
+  },
+  {
+    id: 24,
+    badge: '商工会',
+    badgeColor: 'bg-[#555555]',
+    mainTitle: '物産展やバイヤー\n商談会への参加支援',
+    subTitle: '物産展・商談会への出展支援',
+    description: 'デパート催事や商談会への出展枠を斡旋',
+    specAmount: '出展料補助',
+    specCondition: '商品審査あり',
+    category: 'sales',
+    providerType: 'other',
+  },
 ];
