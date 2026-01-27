@@ -43,7 +43,7 @@ function Router() {
         <Route path={"/industry/:id"}>
           {(params) => (
             <PageTransition>
-              <IndustryDetailPage params={params} />
+              <IndustryDetailPage params={params as any} />
             </PageTransition>
           )}
         </Route>
@@ -57,7 +57,7 @@ function Router() {
         <Route path={"/support/:id"}>
           {(params) => (
             <PageTransition>
-              <SupportDetailPage params={params} />
+              <SupportDetailPage params={params as any} />
             </PageTransition>
           )}
         </Route>

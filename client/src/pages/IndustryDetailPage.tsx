@@ -216,7 +216,7 @@ export default function IndustryDetailPage({ params }: IndustryDetailPageProps) 
                   悩んだ選択肢
                 </span>
                 <p className="text-lg font-bold text-gray-700 mt-2">
-                  「{industry.decisionProcess.worry || (industry.decisionProcess.options && industry.decisionProcess.options?.map((o: any) => typeof o === 'string' ? o : o.name).join(' / ')) || '選択肢'}」
+                  「{industry.decisionProcess.worry || (industry.decisionProcess.options?.map((o: any) => typeof o === 'string' ? o : o.name).join(' / ')) || '選択肢'}」
                 </p>
               </div>
 

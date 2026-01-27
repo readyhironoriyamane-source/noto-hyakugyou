@@ -294,36 +294,50 @@ const SupportArchive = () => {
                           ${isSaved ? 'border-[#B33E28] shadow-md ring-1 ring-[#B33E28]/20' : 'border-gray-200 shadow-sm'}
                         `}>
                           
-                          {/* カード上部：バッジとタイトル */}
+                          {/* カード上部：タイトル（メリット重視） */}
                           <div className="p-6 flex-grow">
-                            <div className="flex items-start justify-between mb-4 pr-8">
-                              <span className={`inline-block px-3 py-1 text-xs font-bold text-white rounded-full ${item.badgeColor}`}>
-                                {item.badge}
-                              </span>
-                            </div>
-                            
-                            <h3 className="text-lg font-bold text-[#1D3A52] mb-2 line-clamp-2 group-hover:text-[#B33E28] transition-colors">
-                              {item.subTitle}
-                            </h3>
-                            <p className="text-sm font-medium text-gray-500 mb-4 line-clamp-2">
+                            <h3 className="text-xl font-bold text-[#1D3A52] mb-2 leading-snug group-hover:text-[#B33E28] transition-colors">
                               {item.mainTitle}
+                            </h3>
+                            <p className="text-sm text-gray-500 mb-6">
+                              {item.subTitle}
                             </p>
-                            <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed">
-                              {item.description}
-                            </p>
+
+                            <div className="mb-4">
+                              <p className="text-xs font-bold text-gray-400 mb-1">支援内容</p>
+                              <p className="text-sm text-gray-700 leading-relaxed line-clamp-3">
+                                {item.description}
+                              </p>
+                            </div>
+
+                            {/* スペック情報（生成り背景） */}
+                            <div className="bg-[#FAF9F6] rounded-lg p-4 space-y-3">
+                              <div className="flex items-start gap-3">
+                                <div className="w-5 h-5 rounded-full bg-[#B33E28]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                  <span className="text-[#B33E28] text-xs font-bold">¥</span>
+                                </div>
+                                <div>
+                                  <span className="text-xs font-bold text-[#B33E28] block mb-0.5">金額</span>
+                                  <span className="text-sm font-bold text-[#1D3A52]">{item.specAmount}</span>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-3">
+                                <div className="w-5 h-5 rounded-full bg-[#1D3A52]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                  <span className="text-[#1D3A52] text-xs">📄</span>
+                                </div>
+                                <div>
+                                  <span className="text-xs font-bold text-[#1D3A52] block mb-0.5">条件など</span>
+                                  <span className="text-xs text-gray-600 leading-relaxed">{item.specCondition}</span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
 
-                          {/* カード下部：スペック情報（グレー背景） */}
-                          <div className="bg-gray-50 px-6 py-4 border-t border-gray-100 mt-auto">
-                            <div className="flex flex-col gap-1">
-                              <div className="flex items-baseline gap-2">
-                                <span className="text-xs font-bold text-gray-400 uppercase">支援金額</span>
-                                <span className="text-base font-bold text-[#1D3A52]">{item.specAmount}</span>
-                              </div>
-                              <div className="flex items-baseline gap-2">
-                                <span className="text-xs font-bold text-gray-400 uppercase">条件など</span>
-                                <span className="text-xs text-gray-600">{item.specCondition}</span>
-                              </div>
+                          {/* カード下部：アクションボタン */}
+                          <div className="px-6 pb-6 mt-auto">
+                            <div className="w-full py-3 border border-gray-200 rounded-lg text-center text-sm font-bold text-[#1D3A52] group-hover:bg-[#1D3A52] group-hover:text-white transition-all duration-300 flex items-center justify-center gap-2">
+                              詳細・相談先を見る
+                              <span className="text-xs">↗</span>
                             </div>
                           </div>
 

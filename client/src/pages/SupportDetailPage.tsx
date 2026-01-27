@@ -32,7 +32,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
               <ChevronRight className="w-3 h-3 mx-2 shrink-0" />
               <Link href="/supports" className="hover:text-slate-800 transition-colors no-underline">支援制度一覧</Link>
               <ChevronRight className="w-3 h-3 mx-2 shrink-0" />
-              <span className="text-slate-800 font-medium truncate">{item.subTitle}</span>
+              <span className="text-slate-800 font-medium truncate">{item.mainTitle}</span>
             </nav>
             
             {/* バッジ */}
@@ -40,14 +40,17 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
               {item.badge}
             </span>
             
-            {/* タイトル */}
-            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 leading-tight">
-              {item.subTitle}
+            {/* タイトル（メリット重視） */}
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2 leading-tight">
+              {item.mainTitle}
             </h1>
+            <p className="text-lg font-medium text-slate-500 mb-6">
+              {item.subTitle}
+            </p>
             
             {/* リード文 */}
-            <p className="text-lg text-slate-600 leading-relaxed">
-              {item.mainTitle}。{item.description}
+            <p className="text-base text-slate-600 leading-relaxed">
+              {item.description}
             </p>
           </div>
         </div>
