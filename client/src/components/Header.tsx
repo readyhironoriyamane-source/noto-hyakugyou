@@ -105,7 +105,7 @@ export default function Header() {
         {/* --- スマホ用ハンバーガーボタン (md以下で表示) --- */}
         <button 
           onClick={toggleMenu}
-          className="md:hidden z-50 p-2 text-[#1D3A52] focus:outline-none"
+          className="md:hidden z-[70] p-2 text-[#1D3A52] focus:outline-none relative"
           aria-label="メニューを開く"
         >
           {isOpen ? (
