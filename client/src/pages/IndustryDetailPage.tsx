@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
 export default function IndustryDetailPage() {
-  const [, params] = useRoute("/industry/:id");
+  const [match, params] = useRoute("/industry/:id");
   const id = params?.id ? parseInt(params.id) : 0;
   const industry = industries.find((i) => i.id === id);
   const [activeSection, setActiveSection] = useState(0);
@@ -135,188 +135,175 @@ export default function IndustryDetailPage() {
           </div>
         )}
 
-        {/* Phase 1: 現状と課題 (Before) */}
-        <section ref={el => sectionsRef.current[0] = el} className="mb-16">
-          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200">
-            <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded">Phase 1</span>
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary">
-              現状と課題
-            </h2>
-          </div>
-          
-          {/* Q1. 仕事の流儀 */}
-          <div className="mb-12">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 border-l-4 border-accent pl-4">
-              仕事の流儀
-            </h3>
-            <p className={`${baseTextSize} ${leadingRelaxed} text-gray-700 whitespace-pre-line`}>
-              {industry.description}
-            </p>
-          </div>
+        {/* タイムラインのコンテナ */}
+        <div className="relative border-l-2 border-[#1D3A52]/20 ml-3 md:ml-6 space-y-16 mb-16">
 
-          {/* Q2. 直面した壁 (Challenge Card) */}
-          {industry.challengeCard && (
-            <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-gray-100 text-gray-500 text-xs font-bold px-3 py-1 rounded-bl-lg">
-                直面した課題
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4 mt-2">
-                {industry.challengeCard.label}
-              </h3>
-              <p className={`${baseTextSize} ${leadingRelaxed} text-gray-700 mb-6`}>
-                {industry.challengeCard.description}
+          {/* =================================================================
+              Phase 1: 現状と課題 (Before)
+             ================================================================= */}
+          <div ref={el => sectionsRef.current[0] = el} className="relative pl-8 md:pl-12">
+            {/* タイムラインの点（マーカー） */}
+            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4]" />
+            
+            <div className="mb-2">
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">Phase 1</span>
+              <span className="text-gray-500 text-xs font-bold ml-2">発災直後〜1ヶ月</span>
+            </div>
+            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">現状と課題</h3>
+            
+            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+              <h4 className="font-bold text-lg mb-2">「{industry.challengeCard?.label}」</h4>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                {industry.challengeCard?.description}
               </p>
-            </div>
-          )}
-        </section>
 
-        {/* Phase 2: 選択と決断 (Decision Matrix) */}
-        <section ref={el => sectionsRef.current[1] = el} className="mb-16">
-          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200">
-            <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded">Phase 2</span>
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary">
-              当時の選択肢と、決断の理由
-            </h2>
-          </div>
-
-          {industry.decisionProcess && (
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* 却下した選択肢 */}
-              {industry.decisionProcess.rejectedOption && (
-                <div className="bg-gray-100 p-6 rounded-lg opacity-80 border border-gray-200">
-                  <div className="text-xs font-bold text-gray-500 mb-2">検討案 A</div>
-                  <h4 className="font-bold text-gray-700 text-lg mb-4">{industry.decisionProcess.rejectedOption.title}</h4>
-                  <ul className="list-disc list-inside text-sm text-gray-600 space-y-2">
-                    {industry.decisionProcess.rejectedOption.reasons.map((reason, idx) => (
-                      <li key={idx}>{reason}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* 選んだ選択肢（強調） */}
-              {industry.decisionProcess.adoptedOption && (
-                <div className="bg-white border-2 border-[#1D3A52] p-6 rounded-lg shadow-md relative transform md:-translate-y-2">
-                  <div className="absolute -top-3 left-6 bg-[#1D3A52] text-white px-3 py-1 text-xs font-bold rounded-full shadow-sm">
-                    採用
+              {/* ⚠️ 教訓アラート */}
+              {industry.regrets && (
+                <div className="bg-[#FFF4F2] border-l-4 border-[#B33E28] p-4 rounded-r">
+                  <div className="text-[#B33E28] font-bold text-sm mb-1 flex items-center gap-2">
+                    <span className="text-lg">⚠️</span> {industry.regrets.title}
                   </div>
-                  <div className="text-xs font-bold text-[#1D3A52] mb-2 mt-2">検討案 B</div>
-                  <h4 className="font-bold text-[#1D3A52] text-xl mb-4">{industry.decisionProcess.adoptedOption.title}</h4>
-                  <ul className="list-disc list-inside text-sm text-gray-800 space-y-2 mb-6">
-                    {industry.decisionProcess.adoptedOption.reasons.map((reason, idx) => (
-                      <li key={idx}>{reason}</li>
-                    ))}
-                  </ul>
-                  <div className="bg-[#F9F8F4] p-4 rounded text-sm text-[#B33E28] font-bold border border-[#B33E28]/20">
-                    決め手：{industry.decisionProcess.adoptedOption.decidingFactor}
-                  </div>
+                  <p className="font-bold text-[#4A1D1D] text-sm">
+                    {industry.regrets.content}
+                  </p>
                 </div>
               )}
             </div>
-          )}
-        </section>
-
-        {/* Phase 3: 行動と変化 (Action & Reality) */}
-        <section ref={el => sectionsRef.current[2] = el} className="mb-16">
-          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200">
-            <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded">Phase 3</span>
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary">
-              行動と変化
-            </h2>
           </div>
 
-          {/* Q5. 実行内容 (Action) */}
-          <div className="mb-12">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <CheckCircle2 className="w-6 h-6 text-accent" />
-              実行したこと
-            </h3>
-            <p className={`${baseTextSize} ${leadingRelaxed} text-gray-700`}>
-              {industry.decisionProcess?.action}
-            </p>
-          </div>
+          {/* =================================================================
+              Phase 2: 選択と決断 (Decision)
+             ================================================================= */}
+          <div ref={el => sectionsRef.current[1] = el} className="relative pl-8 md:pl-12">
+            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4]" />
+            
+            <div className="mb-2">
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">Phase 2</span>
+              <span className="text-gray-500 text-xs font-bold ml-2">3ヶ月後〜</span>
+            </div>
+            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">選択と決断</h3>
 
-          {/* Q5b. 実務の壁 (Barriers Checklist) */}
-          {industry.barriers && industry.barriers.checklist && (
-            <div className="mb-16">
-              <h3 className="text-xl font-bold text-[#1D3A52] mb-6 border-l-4 border-[#B33E28] pl-4">
-                これから申請する人が覚悟すべき「壁」
-              </h3>
-              <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-8 shadow-sm">
-                <ul className="space-y-6">
-                  {industry.barriers.checklist.map((item, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <span className="text-[#B33E28] mr-4 font-bold mt-1 text-lg">✕</span>
-                      <div>
-                        <h4 className="font-bold text-gray-800 text-base md:text-lg mb-2">{item.title}</h4>
-                        <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-                          {item.detail}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+            {/* 比較マトリクス（カードの中に配置） */}
+            {industry.decisionProcess && (
+              <div className="bg-[#F9F8F4] p-6 rounded-lg border border-gray-200">
+                <div className="text-center text-sm font-bold text-gray-500 mb-4">
+                  究極の二択：{industry.decisionProcess?.worry}
+                </div>
+                
+                {/* 分岐図 */}
+                <div className="flex flex-col md:flex-row gap-4 items-stretch">
+                  {/* 却下案 */}
+                  {industry.decisionProcess.rejectedOption && (
+                    <div className="flex-1 bg-white/50 p-4 rounded text-gray-500 text-sm border border-gray-200">
+                       <div className="font-bold mb-1">案A：{industry.decisionProcess.rejectedOption.title}</div>
+                       <ul className="list-disc list-inside space-y-1">
+                         {industry.decisionProcess.rejectedOption.reasons.map((reason, i) => (
+                           <li key={i}>{reason}</li>
+                         ))}
+                       </ul>
+                    </div>
+                  )}
+                  {/* 採用案 */}
+                  {industry.decisionProcess.adoptedOption && (
+                    <div className="flex-1 bg-white border-2 border-[#1D3A52] p-4 rounded shadow-md relative overflow-hidden">
+                       <div className="absolute top-0 right-0 bg-[#1D3A52] text-white text-[10px] px-2 py-0.5 font-bold">DECISION</div>
+                       <div className="font-bold text-[#1D3A52] mb-1">案B：{industry.decisionProcess.adoptedOption.title}</div>
+                       <div className="text-sm font-bold text-[#B33E28] mb-1">補助金活用</div>
+                       <p className="text-xs text-gray-700 mb-2">
+                         {industry.decisionProcess.adoptedOption.reasons[0]}
+                       </p>
+                       <div className="bg-[#E6F0FA] p-2 rounded text-xs font-bold text-[#1D3A52]">
+                         決め手：{industry.decisionProcess.adoptedOption.decidingFactor}
+                       </div>
+                    </div>
+                  )}
+                </div>
               </div>
+            )}
+          </div>
+
+          {/* =================================================================
+              Phase 3: 行動と変化 (Action)
+             ================================================================= */}
+          <div ref={el => sectionsRef.current[2] = el} className="relative pl-8 md:pl-12">
+            {/* 最後の点は白丸にして「現在進行形」感を出す */}
+            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-white border-4 border-[#1D3A52]" />
+            
+            <div className="mb-2">
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">Phase 3</span>
+              <span className="text-gray-500 text-xs font-bold ml-2">半年後〜現在</span>
             </div>
-          )}
+            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
 
-          {/* Q6. ビフォーアフター (Outcome) */}
-          <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <ArrowUpRight className="w-6 h-6 text-primary" />
-              活用後の変化
-            </h3>
-            <p className={`${baseTextSize} ${leadingRelaxed} text-gray-700`}>
-              {industry.decisionProcess?.outcome}
-            </p>
-          </div>
-        </section>
+            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 mb-6">
+              <h4 className="font-bold text-lg mb-3">実行したこと</h4>
+              <ul className="list-disc list-inside text-gray-700 space-y-2 mb-6">
+                {industry.challengeCard?.solutions.map((solution, i) => (
+                  <li key={i}>
+                    <span className="font-bold">{solution.title}</span>：{solution.detail}
+                  </li>
+                ))}
+              </ul>
 
-        {/* Phase 4: 未来 (Future) */}
-        <section ref={el => sectionsRef.current[3] = el} className="mb-16">
-          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200">
-            <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded">Phase 4</span>
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary">
-              未来への展望
-            </h2>
+              {/* 実務の壁チェックリスト */}
+              {industry.barriers && (
+                <div className="bg-gray-50 p-4 rounded border border-gray-200">
+                  <div className="font-bold text-gray-600 mb-2 flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4" />
+                    これから申請する人が覚悟すべき「実務の壁」
+                  </div>
+                  <div className="space-y-2">
+                    {industry.barriers.checklist?.map((item, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <input type="checkbox" className="mt-1" disabled checked />
+                        <div>
+                          <div className="font-bold text-sm">{item.title}</div>
+                          <div className="text-xs text-gray-500">{item.detail}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-          
-          <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl p-8 md:p-12 text-center border border-primary/10 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-primary"></div>
-            <MessageCircle className="w-12 h-12 text-primary/20 mx-auto mb-6" />
-            <h3 className="text-xl md:text-2xl font-serif font-bold text-gray-800 mb-6">
-              「{industry.details?.owner}」さんからのメッセージ
-            </h3>
-            <p className="text-lg md:text-xl font-serif leading-relaxed text-gray-700 italic">
-              「{industry.future || industry.timeline.future}」
-            </p>
-          </div>
-        </section>
+        </div>
 
-        {/* Phase 5: 編集者視点 (Writer's Eye) */}
-        <section ref={el => sectionsRef.current[4] = el} className="bg-[#1D3A52] text-white rounded-xl p-8 md:p-12 shadow-lg">
-          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-600">
-            <span className="bg-accent text-white text-xs font-bold px-2 py-1 rounded">Phase 5</span>
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-white">
-              編集者視点
-            </h2>
-          </div>
+        {/* =================================================================
+            Phase 4: 未来 (Future)
+           ================================================================= */}
+        <div ref={el => sectionsRef.current[3] = el} className="mb-16">
+          <h3 className="text-2xl font-bold text-[#1D3A52] mb-6 border-b-2 border-[#1D3A52] pb-2 inline-block">
+            Phase 4: 未来への展望
+          </h3>
+          <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
+            {industry.deepDive.future}
+          </p>
+        </div>
 
-          {/* W1. 一言コメント */}
+        {/* =================================================================
+            Phase 5: 編集者視点 (Editor's Eye) - 新デザイン
+           ================================================================= */}
+        <div ref={el => sectionsRef.current[4] = el} className="bg-[#1D3A52] text-white rounded-xl p-8 md:p-10 mt-16 shadow-lg">
+          {/* ヘッダー */}
+          <div className="flex items-center gap-4 mb-6">
+            <span className="bg-[#B33E28] text-white text-xs font-bold px-3 py-1 rounded">Phase 5</span>
+            <h2 className="text-2xl font-bold font-serif">編集者視点</h2>
+          </div>
+          {/* 編集部のコメント */}
           <div className="mb-10">
             <h3 className="font-bold text-lg mb-3 opacity-90">編集部より</h3>
             <p className="leading-relaxed text-white/90 text-lg">
-              {industry.editorComment || "この事例は、多くの事業者にとって希望の光となるでしょう。"}
+              {industry.editorComment}
             </p>
           </div>
-
-          {/* W3. 制度スペック */}
-          <div className="bg-white text-[#1D3A52] rounded-lg p-6 md:p-8 shadow-sm mb-12">
+          {/* 制度データエリア（白いカード） */}
+          <div className="bg-white text-[#1D3A52] rounded-lg p-6 md:p-8 shadow-sm">
             <h4 className="text-sm font-bold text-gray-500 mb-6 border-b border-gray-200 pb-2">
               今回活用した制度
             </h4>
-            {industry.supportSystem?.map((support, index) => (
-              <div key={index} className={index !== (industry.supportSystem?.length || 0) - 1 ? "mb-8" : ""}>
+            {industry.supportSystem?.map((support: any, index: number) => (
+              <div key={index} className={index > 0 ? "mt-8 pt-8 border-t border-gray-200 border-dashed" : ""}>
                 <div className="flex justify-between items-start gap-4 mb-2">
                   <h5 className="text-xl font-bold">{support.name}</h5>
                   <a href={support.link} className="text-[#B33E28] text-sm font-bold hover:underline shrink-0 flex items-center gap-1">
@@ -338,66 +325,50 @@ export default function IndustryDetailPage() {
                     </div>
                   </div>
                 )}
-                
-                {/* 区切り線 (最後の要素以外) */}
-                {index !== (industry.supportSystem?.length || 0) - 1 && (
-                  <hr className="border-gray-200 my-8 border-dashed" />
-                )}
               </div>
             ))}
           </div>
-
-          {/* W2. 他のおすすめ (Editor Recommendations) */}
-          {industry.recommendedSupports && (
-            <div>
-              <h3 className="font-serif text-xl mb-6 text-white border-l-4 border-accent pl-4">
-                この記事を読んだあなたへのおすすめ制度
-              </h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                {industry.recommendedSupports.map((rec, index) => (
-                  <a 
-                    key={index} 
-                    href={rec.link}
-                    className="block bg-white/10 hover:bg-white/20 p-5 rounded-lg transition-colors no-underline group border border-white/5"
-                  >
-                    <div className="text-xs text-gray-300 mb-2 font-bold">{rec.category}</div>
-                    <div className="font-bold text-white flex items-center justify-between">
-                      {rec.name}
-                      <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                    <p className="text-xs text-gray-400 mt-2 line-clamp-2">{rec.description}</p>
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-        </section>
-
-      </main>
-
-      {/* シェアボタン (Floating) */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <div className={`absolute bottom-full right-0 mb-4 flex flex-col gap-3 transition-all duration-300 ${showShareMenu ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
-          <button className="bg-[#1DA1F2] text-white p-3 rounded-full shadow-lg hover:bg-[#1a91da] transition-colors" aria-label="Twitterでシェア">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-          </button>
-          <button className="bg-[#06C755] text-white p-3 rounded-full shadow-lg hover:bg-[#05b34c] transition-colors" aria-label="LINEでシェア">
-            <MessageCircle className="w-5 h-5" />
-          </button>
-          <button className="bg-gray-800 text-white p-3 rounded-full shadow-lg hover:bg-gray-700 transition-colors" onClick={() => {
-            navigator.clipboard.writeText(window.location.href);
-            alert('URLをコピーしました');
-          }} aria-label="URLをコピー">
-            <ExternalLink className="w-5 h-5" />
-          </button>
         </div>
-        <button 
-          onClick={() => setShowShareMenu(!showShareMenu)}
-          className="bg-primary text-white p-4 rounded-full shadow-xl hover:bg-primary/90 transition-all hover:scale-105 active:scale-95"
-        >
-          {showShareMenu ? <X className="w-6 h-6" /> : <Share2 className="w-6 h-6" />}
-        </button>
-      </div>
+
+        {/* シェアボタン */}
+        <div className="mt-12 flex justify-center">
+          <Button 
+            variant="outline" 
+            className="gap-2 rounded-full px-8 py-6 text-lg border-[#1D3A52] text-[#1D3A52] hover:bg-[#1D3A52] hover:text-white transition-colors"
+            onClick={() => setShowShareMenu(!showShareMenu)}
+          >
+            <Share2 className="w-5 h-5" />
+            この記事をシェアする
+          </Button>
+        </div>
+
+        {/* 関連記事レコメンド */}
+        {industry.recommendedSupports && (
+          <div className="mt-20 pt-12 border-t border-gray-200">
+            <h3 className="text-xl font-bold text-[#1D3A52] mb-6 flex items-center gap-2">
+              <ArrowUpRight className="w-5 h-5" />
+              この記事を読んだあなたへのおすすめ
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              {industry.recommendedSupports.map((rec, index) => (
+                <a 
+                  key={index} 
+                  href={rec.link}
+                  className="block bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow no-underline group"
+                >
+                  <div className="text-xs font-bold text-[#B33E28] mb-2">{rec.category}</div>
+                  <h4 className="font-bold text-lg text-[#1D3A52] mb-2 group-hover:text-[#B33E28] transition-colors">
+                    {rec.name}
+                  </h4>
+                  <p className="text-sm text-gray-600 line-clamp-2">
+                    {rec.description}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </main>
 
       <Footer />
     </div>
