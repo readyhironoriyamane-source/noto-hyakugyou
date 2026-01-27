@@ -161,7 +161,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                     </h3>
                   </div>
                   <div className="p-6">
-                    <p className="font-bold text-slate-900 mb-2">{item.contactInfo.name}</p>
+                    <p className="font-bold text-slate-900 mb-2 whitespace-pre-line">{item.contactInfo.name}</p>
                     <p className="text-2xl font-bold text-slate-800 mb-4">{item.contactInfo.phone}</p>
                     <div className="flex items-center gap-2 text-sm text-slate-500 bg-slate-50 p-3 rounded">
                       <Clock className="w-4 h-4" />
