@@ -1,6 +1,7 @@
 'use client'; // useStateを使用するため必須
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'wouter';
 
 export default function Header() {
@@ -115,65 +116,69 @@ export default function Header() {
         </button>
 
         {/* --- スマホ用全画面メニュー (オーバーレイ) --- */}
-        <div className={`
-          fixed inset-0 bg-[#F9F8F4] z-[60] flex flex-col items-center justify-center transition-opacity duration-300
-          ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
-        `}>
-          {/* 閉じるボタン (オーバーレイ内・右上) */}
-          <button 
-            onClick={toggleMenu}
-            className="absolute top-6 right-6 p-2 text-[#1D3A52] focus:outline-none"
-            aria-label="メニューを閉じる"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-
-          <nav className="flex flex-col items-center gap-8 text-[#1D3A52]">
-            <a 
-              href="/#guidepost" 
-              onClick={() => setIsOpen(false)}
-              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline"
+        {/* Headerにtransformがかかっているとfixedが効かないため、Portalでbody直下に描画する */}
+        {createPortal(
+          <div className={`
+            fixed inset-0 bg-[#F9F8F4] z-[9999] flex flex-col items-center justify-center transition-opacity duration-300
+            ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
+          `}>
+            {/* 閉じるボタン (オーバーレイ内・右上) */}
+            <button 
+              onClick={toggleMenu}
+              className="absolute top-6 right-6 p-2 text-[#1D3A52] focus:outline-none"
+              aria-label="メニューを閉じる"
             >
-              商いの道しるべ
-            </a>
-            <a 
-              href="/supports" 
-              onClick={(e) => {
-                e.preventDefault();
-                setIsOpen(false);
-                window.history.pushState({}, '', '/supports');
-                window.dispatchEvent(new PopStateEvent('popstate'));
-              }}
-              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline"
-            >
-              支援制度一覧
-            </a>
-            <a 
-              href="/supports?filter=saved" 
-              onClick={(e) => {
-                e.preventDefault();
-                setIsOpen(false);
-                window.history.pushState({}, '', '/supports?filter=saved');
-                window.dispatchEvent(new PopStateEvent('popstate'));
-              }}
-              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline flex items-center gap-2"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
-              保存リスト
-            </a>
-            <Link 
-              href="/contact" 
-              onClick={() => setIsOpen(false)}
-              className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline"
-            >
-              お問い合わせ
-            </Link>
-          </nav>
-        </div>
+            </button>
+
+            <nav className="flex flex-col items-center gap-8 text-[#1D3A52]">
+              <a 
+                href="/#guidepost" 
+                onClick={() => setIsOpen(false)}
+                className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline"
+              >
+                商いの道しるべ
+              </a>
+              <a 
+                href="/supports" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsOpen(false);
+                  window.history.pushState({}, '', '/supports');
+                  window.dispatchEvent(new PopStateEvent('popstate'));
+                }}
+                className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline"
+              >
+                支援制度一覧
+              </a>
+              <a 
+                href="/supports?filter=saved" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsOpen(false);
+                  window.history.pushState({}, '', '/supports?filter=saved');
+                  window.dispatchEvent(new PopStateEvent('popstate'));
+                }}
+                className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline flex items-center gap-2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                保存リスト
+              </a>
+              <Link 
+                href="/contact" 
+                onClick={() => setIsOpen(false)}
+                className="text-2xl font-bold font-serif hover:text-[#B33E28] transition-colors cursor-pointer no-underline"
+              >
+                お問い合わせ
+              </Link>
+            </nav>
+          </div>,
+          document.body
+        )}
 
       </div>
     </header>
