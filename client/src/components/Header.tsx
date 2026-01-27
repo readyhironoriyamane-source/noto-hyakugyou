@@ -1,18 +1,56 @@
 'use client'; // useStateを使用するため必須
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
   const [location] = useLocation();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  // スクロール検知ロジック
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // メニューが開いているときは常に表示
+      if (isOpen) {
+        setIsVisible(true);
+        return;
+      }
+
+      // 最上部にいるときは常に表示
+      if (currentScrollY < 10) {
+        setIsVisible(true);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // 下にスクロールしたら隠す、上にスクロールしたら出す
+      if (currentScrollY > lastScrollY.current) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isOpen]);
+
   return (
-    <header className="bg-[#F9F8F4] border-b border-gray-200 sticky top-0 z-50">
+    <header 
+      className={`bg-[#F9F8F4] border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300 ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+    >
       <div className="max-w-[1140px] mx-auto px-6 h-20 flex items-center justify-between">
         
         {/* --- ロゴエリア (既存維持) --- */}
