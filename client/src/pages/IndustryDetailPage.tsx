@@ -61,7 +61,8 @@ export default function IndustryDetailPage() {
           alt={industry.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1D3A52]/90 via-[#1D3A52]/40 to-transparent"></div>
+        {/* Scrim Gradient: 下から上へのグラデーションのみを適用し、上部は写真の明るさを活かす */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1D3A52] via-[#1D3A52]/60 to-transparent opacity-90"></div>
         
         <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-20 text-white">
           <div className="max-w-4xl mx-auto">
@@ -108,6 +109,7 @@ export default function IndustryDetailPage() {
         </div>
       </div>
 
+      {/* 記事本文エリア: max-w-3xl (約768px) で幅を制限し、中央揃えで可読性を確保 */}
       <main className="max-w-3xl mx-auto px-6 py-12 md:py-20">
         
         {/* 0. 基礎情報 (Basic Info) - ヒーローセクションに統合済みだが、補足情報を表示 */}
@@ -121,12 +123,13 @@ export default function IndustryDetailPage() {
           <div className="bg-[#FFF4F2] border-l-4 border-[#B33E28] p-6 md:p-8 rounded-r-lg mb-16 shadow-sm">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl">⚠️</span>
+              {/* 色覚バリアフリー対応: 文字色を濃い赤茶色(#4A1D1D)に変更 */}
               <h3 className="text-[#B33E28] font-bold text-lg md:text-xl">震災前に戻れるなら、これをやる。</h3>
             </div>
-            <p className="font-bold text-[#1D3A52] text-lg md:text-xl mb-3">
+            <p className="font-bold text-[#4A1D1D] text-lg md:text-xl mb-3 leading-relaxed">
               「{industry.regrets.title}」
             </p>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-[#4A1D1D]/90 leading-relaxed">
               {industry.regrets.content}
             </p>
           </div>
