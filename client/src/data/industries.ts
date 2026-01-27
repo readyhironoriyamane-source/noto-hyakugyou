@@ -61,7 +61,7 @@ export interface Industry {
     content: string;
   };
   // 決断ロジック（Decision Logic）
-  decisionProcess?: {
+    decisionProcess?: {
     worry: string; // 悩んだ選択肢
     decider: string; // 選んだ決め手
     selectedSupport: string;
@@ -69,11 +69,26 @@ export interface Industry {
     outcome: string;
     reason?: string; // 後方互換性のため追加
     options?: string[]; // 後方互換性のため追加
+    // 新UI用フィールド
+    rejectedOption?: {
+      title: string;
+      reasons: string[];
+    };
+    adoptedOption?: {
+      title: string;
+      reasons: string[];
+      decidingFactor: string;
+    };
   };
   // 実務の壁（Barriers）
-  barriers?: {
+    barriers?: {
     title: string;
     content: string;
+    // 新UI用フィールド
+    checklist?: {
+      title: string;
+      detail: string;
+    }[];
   };
   supportSystem?: { // 名前変更: supportMenu -> supportSystem
     name: string;
@@ -266,15 +281,34 @@ export const industries: Industry[] = [
       content: "「断られたらどうしよう」という不安から、ギリギリまで相談を先延ばしにしてしまいました。早めに相談していれば、もっと有利な条件で融資を受けられたかもしれません。"
     },
     decisionProcess: {
-      worry: "現状維持で細々と続けるか、大きな投資をするか",
+      worry: "廃業するか、借金をしてでも続けるか",
       decider: "窓から見える七尾湾の景色と、補助金の存在",
       selectedSupport: "事業再構築補助金",
       action: "全館リノベーションとインバウンド対応",
-      outcome: "稼働率90%超え"
+      outcome: "稼働率90%超え",
+      rejectedOption: {
+        title: "現状維持（修繕のみ）",
+        reasons: ["借入は増えないが、売上も戻らない", "ジリ貧が見えていたため却下"]
+      },
+      adoptedOption: {
+        title: "補助金でフルリノベーション",
+        reasons: ["インバウンド需要という勝機があった", "「事業再構築補助金」で2/3が出ると分かった"],
+        decidingFactor: "補助率が高く、持ち出しが最小限で済むこと"
+      }
     },
     barriers: {
       title: "工事期間中の休業補償は出ない",
-      content: "リノベーション工事中は休業せざるを得ず、その間の売上はゼロになります。運転資金の確保は、工事費とは別に考えておく必要があります。"
+      content: "リノベーション工事中は休業せざるを得ず、その間の売上はゼロになります。運転資金の確保は、工事費とは別に考えておく必要があります。",
+      checklist: [
+        {
+          title: "工事期間中の休業補償は出ない",
+          detail: "リノベーション工事中は休業せざるを得ず、売上がゼロになります。運転資金の確保は、工事費とは別に考えておく必要がありました。"
+        },
+        {
+          title: "書類集めは2ヶ月かかると見込むべし",
+          detail: "罹災証明書だけでなく、過去3期分の決算書や見積もり（3社分）が必要です。"
+        }
+      ]
     },
     editorComment: "ピンチをチャンスに変える発想の転換。補助金を単なる「お金」としてではなく、「変わるためのきっかけ」として活用した点が素晴らしいです。",
     supportSystem: [
