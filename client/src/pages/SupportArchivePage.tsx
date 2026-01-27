@@ -285,7 +285,7 @@ export default function SupportArchivePage() {
               {filteredItems.map((item) => (
                 <div 
                   key={item.id} 
-                  className="group bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full relative overflow-hidden print:break-inside-avoid print:border-black"
+                  className="group bg-white border border-gray-200 rounded-lg p-6 flex flex-col h-full shadow-sm hover:shadow-md transition-shadow relative print:break-inside-avoid print:border-black"
                 >
                   {/* 保存ボタン */}
                   <button
@@ -293,65 +293,70 @@ export default function SupportArchivePage() {
                       e.preventDefault();
                       toggleSave(item.id);
                     }}
-                    className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 backdrop-blur hover:bg-slate-100 transition-colors print:hidden"
+                    className="absolute top-6 right-6 z-10 transition-colors print:hidden"
                   >
                     {savedIds.includes(item.id) ? (
-                      <BookmarkCheck className="w-5 h-5 text-yellow-500 fill-current" />
+                      <Bookmark className="w-6 h-6 text-[#1D3A52] fill-[#1D3A52]" />
                     ) : (
-                      <Bookmark className="w-5 h-5 text-slate-400" />
+                      <Bookmark className="w-6 h-6 text-gray-300 hover:text-gray-400" />
                     )}
                   </button>
 
                   {/* カードヘッダー */}
-                  <div className="p-6 pb-4 flex-grow">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className={`px-2 py-0.5 text-[10px] font-bold text-white rounded ${item.badgeColor}`}>
-                        {item.badge}
-                      </span>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider border border-slate-200 px-2 py-0.5 rounded">
-                        {item.category === 'reconstruction' && '再建'}
-                        {item.category === 'finance' && '資金'}
-                        {item.category === 'hr' && '人材'}
-                        {item.category === 'sales' && '販路'}
-                      </span>
-                    </div>
-                    
-                    {/* タイトルエリア：メリットを大きく、制度名を小さく */}
-                    <h3 className="text-2xl font-bold text-slate-900 mb-2 leading-tight whitespace-pre-line group-hover:text-slate-700 transition-colors">
-                      {item.mainTitle}
-                    </h3>
-                    <p className="text-sm font-bold text-slate-500 mb-4 pb-4 border-b border-slate-100">
-                      {item.subTitle}
-                    </p>
-                    
-                    <p className="text-sm text-slate-600 leading-relaxed line-clamp-3 mb-4">
-                      {item.description}
-                    </p>
+                  <div className="flex items-center mb-4">
+                    <span className={`px-2 py-1 text-[10px] font-bold text-white rounded ${item.badgeColor}`}>
+                      {item.badge}
+                    </span>
+                    <span className="bg-gray-100 text-gray-500 text-[10px] px-2 py-1 rounded ml-2 font-bold">
+                      {item.category === 'reconstruction' && '再建'}
+                      {item.category === 'finance' && '資金'}
+                      {item.category === 'hr' && '人材'}
+                      {item.category === 'sales' && '販路'}
+                    </span>
+                  </div>
+                  
+                  {/* タイトルエリア */}
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2 leading-tight font-sans min-h-[64px] flex items-end group-hover:text-slate-700 transition-colors whitespace-pre-line">
+                    {item.mainTitle}
+                  </h3>
+                  <p className="text-sm text-gray-500 mb-6 min-h-[40px] font-bold">
+                    {item.subTitle}
+                  </p>
+                  
+                  {/* 支援内容 */}
+                  <h4 className="text-xs font-bold text-gray-500 mb-2">支援内容</h4>
+                  <p className="text-sm text-gray-700 leading-relaxed mb-6 flex-grow line-clamp-3">
+                    {item.description}
+                  </p>
 
-                    {/* スペック情報 */}
-                    <div className="bg-slate-50 rounded-lg p-3 space-y-2">
-                      <div className="flex justify-between items-center text-xs">
-                        <span className="font-bold text-slate-500">支援金額</span>
-                        <span className="font-bold text-slate-900">{item.specAmount}</span>
+                  {/* スペックBOX（生成りBOX） */}
+                  <div className="bg-[#FAF9F6] rounded-lg p-6 mb-8 space-y-5">
+                    {/* 金額・条件行 */}
+                    <div className="flex items-start">
+                      <div className="flex items-center w-24 shrink-0 mt-0.5 gap-2">
+                        <span className="text-[#B33E28] text-sm">💰</span>
+                        <span className="text-xs font-bold text-[#B33E28]">金額・条件</span>
                       </div>
-                      <div className="flex justify-between items-center text-xs">
-                        <span className="font-bold text-slate-500">条件等</span>
-                        <span className="font-bold text-slate-900">{item.specCondition}</span>
+                      <div className="text-[15px] font-bold text-[#1D3A52] flex-1">
+                        {item.specAmount}
+                        {item.specCondition && <span className="block text-xs font-normal mt-1">{item.specCondition}</span>}
+                      </div>
+                    </div>
+                    {/* 備考行（条件等を備考として表示） */}
+                    <div className="flex items-start">
+                      <div className="flex items-center w-24 shrink-0 mt-0.5 gap-2">
+                        <span className="text-[#1D3A52] text-sm">📄</span>
+                        <span className="text-xs font-bold text-[#1D3A52]">備考</span>
+                      </div>
+                      <div className="text-sm text-gray-700 flex-1 leading-snug">
+                        {item.specCondition}
                       </div>
                     </div>
                   </div>
 
-                  {/* カードフッター */}
-                  <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center print:hidden">
-                    <span className="text-xs font-bold text-slate-400">詳細を見る</span>
-                    <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center group-hover:bg-slate-900 group-hover:border-slate-900 group-hover:text-white transition-all">
-                      <ArrowRight className="w-4 h-4" />
-                    </div>
-                  </div>
-
-                  {/* リンク（カード全体をクリック可能に） */}
-                  <Link href={`/support/${item.id}`} className="absolute inset-0 z-0 print:hidden">
-                    <span className="sr-only">{item.subTitle}の詳細を見る</span>
+                  {/* フッターボタン */}
+                  <Link href={`/support/${item.id}`} className="mt-auto w-full border border-gray-300 bg-white text-[#1D3A52] text-sm font-bold py-4 rounded hover:bg-gray-50 transition-colors flex justify-center items-center no-underline print:hidden">
+                    詳細・相談先を見る ↗
                   </Link>
                 </div>
               ))}
