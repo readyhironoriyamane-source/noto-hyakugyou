@@ -72,14 +72,28 @@ const SupportArchive = () => {
   const { savedIds, toggleSave } = useSavedItems();
   const [location] = useLocation();
 
-  // URLパラメータからカテゴリを初期設定
+  // URLパラメータからフィルタ状態を制御
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    
+    // 1. 保存リスト表示の制御
+    const filterParam = params.get('filter');
+    if (filterParam === 'saved') {
+      setShowSavedOnly(true);
+    } else {
+      // パラメータがない、またはsaved以外なら通常表示に戻す
+      setShowSavedOnly(false);
+    }
+
+    // 2. カテゴリフィルタの制御
     const categoryParam = params.get('category');
     if (categoryParam) {
       setFilterCategory(categoryParam);
+    } else {
+      // カテゴリパラメータがない場合はリセット（明示的なリセットが必要な場合）
+      // setFilterCategory('all'); // 必要に応じて有効化
     }
-  }, []);
+  }, [location]); // locationが変わるたびに実行
 
   // 共有URL生成
   const generateShareUrl = () => {
