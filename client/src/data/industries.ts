@@ -99,6 +99,8 @@ export interface Industry {
       term: string; // GlossaryTerm用
       detail: string;
     };
+    specAmount?: string;
+    specCondition?: string;
   }[];
   supportMenu?: { // 後方互換性のため追加
     name: string;
@@ -229,7 +231,9 @@ export const industries: Industry[] = [
           label: "ここがポイント",
           term: "補助率",
           detail: ": 最大3/4（国・県）"
-        }
+        },
+        specAmount: "最大6,000万円",
+        specCondition: "建物費、機械装置費、システム構築費など"
       },
       {
         name: "よろず支援拠点",
@@ -325,7 +329,9 @@ export const industries: Industry[] = [
       {
         name: "事業再構築補助金",
         description: "ポストコロナ・ウィズコロナ時代の経済社会の変化に対応するため、新分野展開や業態転換などを支援する制度。",
-        link: "#"
+        link: "#",
+        specAmount: "最大2,000万円",
+        specCondition: "無担保・無保証人、低金利（当初3年間）"
       },
       {
         name: "マル経融資（小規模事業者経営改善資金融資）",

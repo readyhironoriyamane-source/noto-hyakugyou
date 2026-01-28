@@ -141,7 +141,7 @@ export default function IndustryDetailPage() {
           {/* =================================================================
               Phase 1: 現状と課題 (Before)
              ================================================================= */}
-          <div ref={el => sectionsRef.current[0] = el} className="relative pl-8 md:pl-12">
+          <div ref={(el) => { sectionsRef.current[0] = el; }} className="relative pl-8 md:pl-12">
             {/* タイムラインの点（マーカー） */}
             <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4]" />
             
@@ -174,7 +174,7 @@ export default function IndustryDetailPage() {
           {/* =================================================================
               Phase 2: 選択と決断 (Decision)
              ================================================================= */}
-          <div ref={el => sectionsRef.current[1] = el} className="relative pl-8 md:pl-12">
+          <div ref={(el) => { sectionsRef.current[1] = el; }} className="relative pl-8 md:pl-12">
             <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4]" />
             
             <div className="mb-2">
@@ -225,7 +225,7 @@ export default function IndustryDetailPage() {
           {/* =================================================================
               Phase 3: 行動と変化 (Action)
              ================================================================= */}
-          <div ref={el => sectionsRef.current[2] = el} className="relative pl-8 md:pl-12">
+          <div ref={(el) => { sectionsRef.current[2] = el; }} className="relative pl-8 md:pl-12">
             {/* 最後の点は白丸にして「現在進行形」感を出す */}
             <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-white border-4 border-[#1D3A52]" />
             
@@ -272,7 +272,7 @@ export default function IndustryDetailPage() {
         {/* =================================================================
             Phase 4: 未来 (Future)
            ================================================================= */}
-        <div ref={el => sectionsRef.current[3] = el} className="mb-16">
+        <div ref={(el) => { sectionsRef.current[3] = el; }} className="mb-16">
           <h3 className="text-2xl font-bold text-[#1D3A52] mb-6 border-b-2 border-[#1D3A52] pb-2 inline-block">
             Phase 4: 未来への展望
           </h3>
@@ -284,7 +284,7 @@ export default function IndustryDetailPage() {
         {/* =================================================================
             Phase 5: 編集者視点 (Editor's Eye) - 新デザイン
            ================================================================= */}
-        <div ref={el => sectionsRef.current[4] = el} className="bg-[#1D3A52] text-white rounded-xl p-8 md:p-10 mt-16 shadow-lg">
+        <div ref={(el) => { sectionsRef.current[4] = el; }} className="bg-[#1D3A52] text-white rounded-xl p-8 md:p-10 mt-16 shadow-lg">
           {/* ヘッダー */}
           <div className="flex items-center gap-4 mb-6">
             <span className="bg-[#B33E28] text-white text-xs font-bold px-3 py-1 rounded">Phase 5</span>
@@ -313,8 +313,40 @@ export default function IndustryDetailPage() {
                 <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                   {support.description}
                 </p>
-                
-                {/* ポイントBOX */}
+           {/* スペックBOX（位置ズレ修正版） */}
+                {(support.specAmount || support.specCondition) && (
+                  <div className="bg-[#FAF9F6] rounded-lg p-6 mb-8 space-y-5">
+                    {/* 1. 金額行（修正：items-start → items-center に変更し、余計なマージンを削除） */}
+                    {/* これで左右の高さが違っても、ど真ん中で揃います */}
+                    {support.specAmount && (
+                      <div className="flex items-center">
+                        <div className="flex items-center w-28 shrink-0 gap-3"> 
+                          {/* アイコン（SVGに変更するとより綺麗ですが、一旦テキストで調整） */}
+                          <span className="text-[#B33E28] text-lg">💰</span>
+                          <span className="text-sm font-bold text-[#B33E28]">金額</span>
+                        </div>
+                        <div className="text-[15px] font-bold text-[#1D3A52] flex-1">
+                          {support.specAmount}
+                        </div>
+                      </div>
+                    )}
+                    {/* 2. 条件行（ここは2行になる可能性があるため、上揃え items-start のまま維持） */}
+                    {support.specCondition && (
+                      <div className="flex items-start">
+                        {/* 右の文字が大きいので、左のラベルを少し下げて(mt-0.5)視覚的な高さを合わせる */}
+                        <div className="flex items-center w-28 shrink-0 mt-0.5 gap-3">
+                          <span className="text-[#1D3A52] text-lg">📄</span>
+                          <span className="text-sm font-bold text-[#1D3A52]">条件など</span>
+                        </div>
+                        <div className="text-sm text-gray-700 flex-1 leading-snug">
+                          {support.specCondition}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* ポイントBOX（既存） */}
                 {support.points && (
                   <div className="bg-[#F9F8F4] p-4 rounded border border-gray-200">
                     <div className="flex items-center text-xs font-bold text-gray-500 mb-1">
