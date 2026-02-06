@@ -243,20 +243,20 @@ export default function IndustryDetailPage() {
                 ))}
               </ul>
 
-              {/* 実務の壁チェックリスト */}
+              {/* 実務の壁チェックリスト (UD対応: パディング拡大、フォントサイズ拡大) */}
               {industry.barriers && (
-                <div className="bg-gray-50 p-4 rounded border border-gray-200">
-                  <div className="font-bold text-gray-600 mb-2 flex items-center gap-2">
-                    <AlertTriangle className="w-4 h-4" />
+                <div className="bg-gray-50 p-6 md:p-8 rounded border border-gray-200">
+                  <div className="font-bold text-gray-600 text-lg md:text-xl mb-4 flex items-center gap-3">
+                    <AlertTriangle className="w-6 h-6" />
                     これから申請する人が覚悟すべき「実務の壁」
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-4">
                     {industry.barriers.checklist?.map((item, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <input type="checkbox" className="mt-1" disabled checked />
+                      <div key={i} className="flex items-start gap-3">
+                        <input type="checkbox" className="mt-1.5 w-5 h-5" disabled checked />
                         <div>
-                          <div className="font-bold text-sm">{item.title}</div>
-                          <div className="text-xs text-gray-500">{item.detail}</div>
+                          <div className="font-bold text-lg md:text-xl text-[#1D3A52] mb-1">{item.title}</div>
+                          <div className="text-base md:text-lg text-gray-600 leading-relaxed">{item.detail}</div>
                         </div>
                       </div>
                     ))}
