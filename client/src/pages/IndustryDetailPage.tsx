@@ -137,6 +137,127 @@ export default function IndustryDetailPage() {
         <div className="relative ml-3 md:ml-6 mb-16">
           {/* 縦線 (絶対配置で全高をカバー) */}
           <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-[#1D3A52]"></div>
+
+          {/* =================================================================
+              Phase 1: 現状 (Current)
+             ================================================================= */}
+          <div ref={(el) => { sectionsRef.current[0] = el; }} className="relative pl-8 md:pl-12 mb-16">
+            {/* 丸いマーカー */}
+            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
+            
+            <div className="mb-2">
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 1</span>
+              <span className="text-gray-500 text-xs font-bold ml-2">震災直後〜3ヶ月</span>
+            </div>
+            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">現状と課題</h3>
+            <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
+              {industry.timeline.phase1 || industry.timeline.present}
+            </p>
+            
+            {/* 課題リスト (Barriers) */}
+            {industry.barriers && industry.barriers.checklist && (
+              <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm mt-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <AlertTriangle className="w-6 h-6 text-[#B33E28]" />
+                  <h4 className="font-bold text-xl text-gray-800">これから申請する人が覚悟すべき「実務の壁」</h4>
+                </div>
+                <div className="space-y-6">
+                  {industry.barriers.checklist.map((item, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <div className="mt-1 bg-gray-100 p-1 rounded">
+                        <CheckCircle2 className="w-5 h-5 text-gray-400" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-lg text-gray-800 mb-1">{item.title}</div>
+                        <div className="text-gray-600 leading-relaxed text-base">{item.detail}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* =================================================================
+              Phase 2: 選択 (Decision)
+             ================================================================= */}
+          <div ref={(el) => { sectionsRef.current[1] = el; }} className="relative pl-8 md:pl-12 mb-16">
+            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
+            
+            <div className="mb-2">
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 2</span>
+              <span className="text-gray-500 text-xs font-bold ml-2">3ヶ月後〜半年</span>
+            </div>
+            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">選択と決断</h3>
+            <p className={`${baseTextSize} ${leadingRelaxed} mb-8`}>
+              {industry.timeline.phase2 || industry.timeline.present}
+            </p>
+
+            {/* 決断マトリクス (Decision Matrix) - 縦積みレイアウト & フォント最大化 */}
+            {industry.decisionMatrix && (
+              <div className="bg-[#FAF9F6] rounded-xl p-6 md:p-8 border border-gray-200 shadow-sm">
+                <h4 className="text-center font-bold text-xl md:text-2xl text-gray-700 mb-8">
+                  究極の二択：{industry.decisionMatrix.title}
+                </h4>
+                
+                <div className="flex flex-col gap-8">
+                  {/* Option A: 廃業 */}
+                  <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+                    <h5 className="font-bold text-2xl md:text-3xl text-gray-500 mb-6">
+                      案A：{industry.decisionMatrix.optionA.title}
+                    </h5>
+                    <ul className="space-y-4">
+                      {industry.decisionMatrix.optionA.pros.map((pro, i) => (
+                        <li key={i} className="flex items-start gap-3 text-lg md:text-xl text-gray-600 leading-relaxed">
+                          <span className="text-gray-400 mt-1">•</span>
+                          {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Option B: 再開 (Selected) */}
+                  <div className="bg-white p-8 rounded-lg border-4 border-[#1D3A52] shadow-lg relative overflow-hidden">
+                    <div className="absolute top-0 right-0 bg-[#1D3A52] text-white text-sm font-bold px-4 py-2 rounded-bl-lg">
+                      決断
+                    </div>
+                    <h5 className="font-bold text-2xl md:text-3xl text-[#1D3A52] mb-2">
+                      案B：{industry.decisionMatrix.optionB.title}
+                    </h5>
+                    <div className="text-[#B33E28] font-bold text-xl mb-6">
+                      {industry.decisionMatrix.optionB.subsidy}
+                    </div>
+                    <p className="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
+                      {industry.decisionMatrix.optionB.cost}
+                    </p>
+                    
+                    <div className="bg-[#E6F0FA] p-6 rounded-lg border-l-4 border-[#1D3A52]">
+                      <p className="font-bold text-[#1D3A52] text-lg md:text-xl leading-relaxed">
+                        決め手：「{industry.decisionMatrix.reason}」
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* =================================================================
+              Phase 3: 行動 (Action)
+             ================================================================= */}
+          <div ref={(el) => { sectionsRef.current[2] = el; }} className="relative pl-8 md:pl-12 mb-16">
+            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
+            
+            <div className="mb-2">
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 3</span>
+              <span className="text-gray-500 text-xs font-bold ml-2">半年後〜現在</span>
+            </div>
+            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
+            <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
+              {industry.timeline.phase3 || industry.timeline.future}
+            </p>
+          </div>
+
             {/* =================================================================
               Phase 4: 未来 (Future) - タイムラインに統合
              ================================================================= */}

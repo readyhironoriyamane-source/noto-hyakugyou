@@ -23,6 +23,11 @@ export interface Industry {
     past: string;
     present: string;
     future: string;
+    // 5フェーズ構成用の拡張フィールド
+    phase1?: string; // 現状と課題
+    phase2?: string; // 選択と決断
+    phase3?: string; // 行動と変化
+    phase4?: string; // 未来（futureと重複するが、明示的に分ける場合に使用）
   };
   deepDive: {
     past: string;
@@ -61,7 +66,20 @@ export interface Industry {
     content: string;
   };
   // 決断ロジック（Decision Logic）
-    decisionProcess?: {
+  decisionMatrix?: {
+    title: string;
+    optionA: {
+      title: string;
+      pros: string[];
+    };
+    optionB: {
+      title: string;
+      subsidy: string;
+      cost: string;
+    };
+    reason: string;
+  };
+  decisionProcess?: {
     worry: string; // 悩んだ選択肢
     decider: string; // 選んだ決め手
     selectedSupport: string;
@@ -183,7 +201,10 @@ export const industries: Industry[] = [
     timeline: {
       past: "昭和初期創業。地域密着のクリーニング店として親しまれる。",
       present: "震災で被災するも、補助金を活用して営業再開。",
-      future: "無理な拡大はせず、地域需要に応えながら「軟着陸」を目指す。"
+      future: "無理な拡大はせず、地域需要に応えながら「軟着陸」を目指す。",
+      phase1: "震災でメインのドライ機が故障。450万円の入れ替え費用が必要となり、廃業の危機に直面。父が倒れてからワンオペで、いつ辞めてもいいと考えていた中での被災だった。",
+      phase2: "「450万円もかけて再開する意味はあるのか？」と自問自答。しかし、避難所での「クリーニング店がないと困る」という声に背中を押される。補助金を活用すれば自己負担50万円で済むことが分かり、再開を決断。",
+      phase3: "専門用語の壁や複雑な申請手続きに苦戦しながらも、商工会の伴走支援を受けて乗り越える。3ヶ月というタイトなスケジュールで機械の入れ替えと冷却機の導入を完了。"
     },
     deepDive: {
       past: "昭和初期創業。地域密着のクリーニング店として親しまれる。",
@@ -212,6 +233,19 @@ export const industries: Industry[] = [
     regrets: {
       title: "震災前に戻れるなら、これだけはやる。",
       content: "「設備の更新は、だましだましではなく、計画的に行うべきだった」"
+    },
+    decisionMatrix: {
+      title: "450万円かけて再開するか、廃業するか",
+      optionA: {
+        title: "廃業する",
+        pros: ["借金を背負わなくて済む", "老朽化した設備の問題から解放される"]
+      },
+      optionB: {
+        title: "持続化補助金＋上乗せ",
+        subsidy: "小規模事業者持続化補助金",
+        cost: "自己負担を50万円程度に抑えられる"
+      },
+      reason: "「自己負担50万円なら借金せずに済む」という計算と、地域からの「なくなったら困る」という声"
     },
     decisionProcess: {
       worry: "450万円かけて再開するか、廃業するか",
