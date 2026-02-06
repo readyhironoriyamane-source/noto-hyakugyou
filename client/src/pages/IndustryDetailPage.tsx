@@ -133,15 +133,17 @@ export default function IndustryDetailPage() {
           </div>
         )}
 
-        {/* タイムラインのコンテナ */}
-        <div className="relative border-l-2 border-[#1D3A52]/20 ml-3 md:ml-6 space-y-16 mb-16">
+        {/* タイムラインのコンテナ (修正: ボーダーが途切れないよう、親要素で管理) */}
+        <div className="relative ml-3 md:ml-6 mb-16">
+          {/* 縦線 (絶対配置で全高をカバー) */}
+          <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-[#1D3A52]/20"></div>
 
           {/* =================================================================
               Phase 1: 現状と課題 (Before)
              ================================================================= */}
-          <div ref={(el) => { sectionsRef.current[0] = el; }} className="relative pl-8 md:pl-12">
+          <div ref={(el) => { sectionsRef.current[0] = el; }} className="relative pl-8 md:pl-12 mb-16">
             {/* タイムラインの点（マーカー） */}
-            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4]" />
+            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4] z-10" />
             
             <div className="mb-2">
               <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 1</span>
@@ -172,8 +174,8 @@ export default function IndustryDetailPage() {
           {/* =================================================================
               Phase 2: 選択と決断 (Decision)
              ================================================================= */}
-          <div ref={(el) => { sectionsRef.current[1] = el; }} className="relative pl-8 md:pl-12">
-            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4]" />
+          <div ref={(el) => { sectionsRef.current[1] = el; }} className="relative pl-8 md:pl-12 mb-16">
+            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4] z-10" />
             
             <div className="mb-2">
               <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 2</span>
@@ -225,9 +227,9 @@ export default function IndustryDetailPage() {
           {/* =================================================================
               Phase 3: 行動と変化 (Action)
              ================================================================= */}
-          <div ref={(el) => { sectionsRef.current[2] = el; }} className="relative pl-8 md:pl-12">
+          <div ref={(el) => { sectionsRef.current[2] = el; }} className="relative pl-8 md:pl-12 mb-16">
             {/* 最後の点は白丸にして「現在進行形」感を出す */}
-            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-white border-4 border-[#1D3A52]" />
+            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-white border-4 border-[#1D3A52] z-10" />
             
             <div className="mb-2">
               <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 3</span>
@@ -269,25 +271,31 @@ export default function IndustryDetailPage() {
           </div>
         </div>
 
-        {/* =================================================================
-            Phase 4: 未来 (Future)
-           ================================================================= */}
-        <div ref={(el) => { sectionsRef.current[3] = el; }} className="mb-16">
-          <h3 className="text-2xl font-bold text-[#1D3A52] mb-6 border-b-2 border-[#1D3A52] pb-2 inline-block">
-            フェーズ 4: 未来への展望
-          </h3>
-          <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
-            {industry.deepDive.future}
-          </p>
+          {/* =================================================================
+              Phase 4: 未来 (Future) - タイムラインに統合
+             ================================================================= */}
+          <div ref={(el) => { sectionsRef.current[3] = el; }} className="relative pl-8 md:pl-12">
+            {/* 未来を示す矢印アイコン */}
+            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4] z-10 flex items-center justify-center">
+            </div>
+            
+            <div className="mb-2">
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 4</span>
+              <span className="text-gray-500 text-xs font-bold ml-2">未来への展望</span>
+            </div>
+            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">未来</h3>
+            <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
+              {industry.deepDive.future}
+            </p>
+          </div>
         </div>
 
         {/* =================================================================
-            Phase 5: 編集者視点 (Editor's Eye) - 新デザイン
+            編集者視点 (Editor's Eye) - フェーズ表記削除
            ================================================================= */}
         <div ref={(el) => { sectionsRef.current[4] = el; }} className="bg-[#1D3A52] text-white rounded-xl p-8 md:p-10 mt-16 shadow-lg">
           {/* ヘッダー */}
           <div className="flex items-center gap-4 mb-6">
-            <span className="bg-[#B33E28] text-white text-xs font-bold px-3 py-1 rounded">フェーズ 5</span>
             <h2 className="text-2xl font-bold font-serif">編集者視点</h2>
           </div>
           {/* 編集部のコメント */}
@@ -400,7 +408,6 @@ export default function IndustryDetailPage() {
             </div>
           </div>
         )}
-        </div>
       </main>
 
       <Footer />
