@@ -127,7 +127,7 @@ export default function IndustryDetailPage() {
               <h3 className="text-[#B33E28] font-bold text-lg md:text-xl">震災前に戻れるなら、これをやる。</h3>
             </div>
             <p className="font-bold text-[#4A1D1D] text-lg md:text-xl mb-3 leading-relaxed">
-              「{industry.regrets.title}」
+              {industry.regrets.title}
             </p>
             <p className="text-[#4A1D1D]/90 leading-relaxed">
               {industry.regrets.content}
@@ -146,7 +146,7 @@ export default function IndustryDetailPage() {
             <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4]" />
             
             <div className="mb-2">
-              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">Phase 1</span>
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 1</span>
               <span className="text-gray-500 text-xs font-bold ml-2">発災直後〜1ヶ月</span>
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">現状と課題</h3>
@@ -178,7 +178,7 @@ export default function IndustryDetailPage() {
             <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4]" />
             
             <div className="mb-2">
-              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">Phase 2</span>
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 2</span>
               <span className="text-gray-500 text-xs font-bold ml-2">3ヶ月後〜</span>
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">選択と決断</h3>
@@ -206,7 +206,7 @@ export default function IndustryDetailPage() {
                   {/* 採用案 */}
                   {industry.decisionProcess.adoptedOption && (
                     <div className="flex-1 bg-white border-2 border-[#1D3A52] p-4 rounded shadow-md relative overflow-hidden">
-                       <div className="absolute top-0 right-0 bg-[#1D3A52] text-white text-[10px] px-2 py-0.5 font-bold">DECISION</div>
+                       <div className="absolute top-0 right-0 bg-[#1D3A52] text-white text-[10px] px-2 py-0.5 font-bold">決断</div>
                        <div className="font-bold text-[#1D3A52] mb-1">案B：{industry.decisionProcess.adoptedOption.title}</div>
                        <div className="text-sm font-bold text-[#B33E28] mb-1">補助金活用</div>
                        <p className="text-xs text-gray-700 mb-2">
@@ -230,7 +230,7 @@ export default function IndustryDetailPage() {
             <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-white border-4 border-[#1D3A52]" />
             
             <div className="mb-2">
-              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">Phase 3</span>
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 3</span>
               <span className="text-gray-500 text-xs font-bold ml-2">半年後〜現在</span>
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
@@ -274,7 +274,7 @@ export default function IndustryDetailPage() {
            ================================================================= */}
         <div ref={(el) => { sectionsRef.current[3] = el; }} className="mb-16">
           <h3 className="text-2xl font-bold text-[#1D3A52] mb-6 border-b-2 border-[#1D3A52] pb-2 inline-block">
-            Phase 4: 未来への展望
+            フェーズ 4: 未来への展望
           </h3>
           <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
             {industry.deepDive.future}
@@ -287,7 +287,7 @@ export default function IndustryDetailPage() {
         <div ref={(el) => { sectionsRef.current[4] = el; }} className="bg-[#1D3A52] text-white rounded-xl p-8 md:p-10 mt-16 shadow-lg">
           {/* ヘッダー */}
           <div className="flex items-center gap-4 mb-6">
-            <span className="bg-[#B33E28] text-white text-xs font-bold px-3 py-1 rounded">Phase 5</span>
+            <span className="bg-[#B33E28] text-white text-xs font-bold px-3 py-1 rounded">フェーズ 5</span>
             <h2 className="text-2xl font-bold font-serif">編集者視点</h2>
           </div>
           {/* 編集部のコメント */}
