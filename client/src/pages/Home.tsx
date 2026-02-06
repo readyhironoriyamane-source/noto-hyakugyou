@@ -28,7 +28,7 @@ export default function Home() {
               playsInline
               className="w-full h-full object-cover"
             >
-              <source src="/noto-sea.mp4" type="video/mp4" />
+              <source src="https://files.manuscdn.com/user_upload_by_module/session_file/92549119/QmMKrkutRCSNHeWW.mp4" type="video/mp4" />
             </video>
             {/* UD対応: コントラスト強化 (最重要) - #1D3A52 (深藍) の不透明度70%オーバーレイ */}
             <div className="absolute inset-0 bg-[#1D3A52]/70"></div>

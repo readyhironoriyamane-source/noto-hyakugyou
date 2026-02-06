@@ -58,7 +58,7 @@ export default function Header() {
         <Link href="/" className="flex items-center hover:opacity-80 transition-opacity z-50 relative cursor-pointer no-underline">
           <div className="relative h-10 w-10 mr-3 shrink-0"> 
             <img 
-              src="/images/logo.png" 
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/92549119/aOiuoTkXauHdceQd.png" 
               alt="ロゴ"
               className="w-full h-full object-contain"
             />
