@@ -214,7 +214,7 @@ export const industries: Industry[] = [
     actions: [
       { type: "visit", label: "店舗情報", link: "#" }
     ],
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/IkVRitvuXTTPWvug.jpg",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/cNMOpSHOPZMCZkRP.png",
     seasonalMonths: [],
     isCaseStudy: true,
     challengeCard: {
@@ -341,7 +341,7 @@ export const industries: Industry[] = [
     actions: [
       { type: "visit", label: "施設情報", link: "#" }
     ],
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/rKVZRyQZfQdapUrk.jpg",
     seasonalMonths: [],
     isCaseStudy: true,
     challengeCard: {
