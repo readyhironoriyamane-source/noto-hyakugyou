@@ -188,13 +188,13 @@ export default function IndustryDetailPage() {
                   究極の二択：{industry.decisionProcess?.worry}
                 </div>
                 
-                {/* 分岐図 */}
-                <div className="flex flex-col md:flex-row gap-4 items-stretch">
+                {/* 分岐図 (UD対応: 縦積みレイアウトに変更し、フォントサイズを最大化) */}
+                <div className="flex flex-col gap-8 items-stretch">
                   {/* 却下案 */}
                   {industry.decisionProcess.rejectedOption && (
-                    <div className="flex-1 bg-white/50 p-4 rounded text-gray-500 text-sm border border-gray-200">
-                       <div className="font-bold mb-1">案A：{industry.decisionProcess.rejectedOption.title}</div>
-                       <ul className="list-disc list-inside space-y-1">
+                    <div className="bg-white/60 p-6 md:p-8 rounded-lg text-gray-500 border border-gray-300">
+                       <div className="font-bold text-xl md:text-2xl mb-4">案A：{industry.decisionProcess.rejectedOption.title}</div>
+                       <ul className="list-disc list-inside space-y-3 text-lg md:text-xl leading-relaxed">
                          {industry.decisionProcess.rejectedOption.reasons.map((reason, i) => (
                            <li key={i}>{reason}</li>
                          ))}
@@ -203,22 +203,24 @@ export default function IndustryDetailPage() {
                   )}
                   {/* 採用案 */}
                   {industry.decisionProcess.adoptedOption && (
-                    <div className="flex-1 bg-white border-2 border-[#1D3A52] p-4 rounded shadow-md relative overflow-hidden">
-                       <div className="absolute top-0 right-0 bg-[#1D3A52] text-white text-[10px] px-2 py-0.5 font-bold">決断</div>
-                       <div className="font-bold text-[#1D3A52] mb-1">案B：{industry.decisionProcess.adoptedOption.title}</div>
-                       <div className="text-sm font-bold text-[#B33E28] mb-1">補助金活用</div>
-                       <p className="text-xs text-gray-700 mb-2">
+                    <div className="bg-white border-4 border-[#1D3A52] p-8 md:p-10 rounded-xl shadow-lg relative overflow-hidden">
+                       <div className="absolute top-0 right-0 bg-[#1D3A52] text-white text-sm md:text-base px-6 py-2 font-bold rounded-bl-lg">決断</div>
+                       <div className="font-bold text-[#1D3A52] text-2xl md:text-3xl mb-4">案B：{industry.decisionProcess.adoptedOption.title}</div>
+                       <div className="text-xl md:text-2xl font-bold text-[#B33E28] mb-4">補助金活用</div>
+                       <p className="text-lg md:text-xl text-gray-800 mb-6 leading-loose">
                          {industry.decisionProcess.adoptedOption.reasons[0]}
                        </p>
-                       <div className="bg-[#E6F0FA] p-2 rounded text-xs font-bold text-[#1D3A52]">
-                         決め手：{industry.decisionProcess.adoptedOption.decidingFactor}
+                       <div className="bg-[#E6F0FA] p-6 rounded-lg border border-[#1D3A52]/20">
+                         <p className="text-lg md:text-xl font-bold text-[#1D3A52] mb-2">決め手：</p>
+                         <p className="text-lg md:text-xl text-[#1D3A52] leading-loose font-medium">
+                           {industry.decisionProcess.adoptedOption.decidingFactor}
+                         </p>
                        </div>
                     </div>
                   )}
                 </div>
               </div>
             )}
-          </div>
 
           {/* =================================================================
               Phase 3: 行動と変化 (Action)
@@ -398,6 +400,7 @@ export default function IndustryDetailPage() {
             </div>
           </div>
         )}
+        </div>
       </main>
 
       <Footer />
