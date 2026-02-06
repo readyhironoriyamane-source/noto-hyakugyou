@@ -223,6 +223,7 @@ export default function IndustryDetailPage() {
                 </div>
               </div>
             )}
+          </div>
 
           {/* =================================================================
               Phase 3: 行動と変化 (Action)
@@ -269,7 +270,6 @@ export default function IndustryDetailPage() {
               )}
             </div>
           </div>
-        </div>
 
           {/* =================================================================
               Phase 4: 未来 (Future) - タイムラインに統合
