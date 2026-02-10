@@ -11,7 +11,7 @@ export default function Footer() {
             <div className="shrink-0">
               <div className="relative h-48 w-40 md:h-64 md:w-56 mx-auto md:mx-0">
                 <img 
-                  src="/images/logo.png" 
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/92549119/jjYcdPazomaxGPWg.png" 
                   alt="能登百業録ロゴ" 
                   className="w-full h-full object-contain object-top"
                 />
