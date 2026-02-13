@@ -129,6 +129,7 @@ export interface Industry {
     owner: string;
     founded: string;
     employees?: string;
+    writer?: string;
   };
   story?: {
     title: string;
@@ -248,7 +249,8 @@ export const industries: Industry[] = [
     details: {
       owner: "本合 浩明",
       founded: "昭和初期",
-      employees: "家族経営"
+      employees: "家族経営",
+      writer: "河野孝史"
     },
     story: {
       title: "再起の裏側：店主の独白",
@@ -380,9 +382,10 @@ export const industries: Industry[] = [
       }
     ],
     details: {
-      owner: "和平 氏",
-      founded: "2009年",
-      employees: "家族経営＋パート"
+      owner: "神子 氏",
+      founded: "昭和40年",
+      employees: "3名",
+      writer: "河野孝史"
     },
     story: {
       title: "再起の裏側：採用の常識が変わった日",
@@ -512,7 +515,8 @@ export const industries: Industry[] = [
     details: {
       owner: "多古島 氏",
       founded: "平成元年",
-      employees: "15名"
+      employees: "15名",
+      writer: "河野孝史"
     },
     story: {
       title: "再起の裏側：若き社長の決断",
@@ -638,9 +642,10 @@ export const industries: Industry[] = [
       }
     ],
     details: {
-      owner: "神子 氏",
-      founded: "昭和40年",
-      employees: "3名"
+      owner: "中田 氏",
+      founded: "昭和50年",
+      employees: "5名",
+      writer: "河野孝史"
     },
     story: {
       title: "再起の裏側：アナログ店主の挑戦",
@@ -775,7 +780,8 @@ export const industries: Industry[] = [
     details: {
       owner: "和平 氏",
       founded: "2009年",
-      employees: "家族経営＋パート"
+      employees: "家族経営＋パート",
+      writer: "河野孝史"
     },
     story: {
       title: "再起の裏側：専務の独白",
