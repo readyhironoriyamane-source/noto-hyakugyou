@@ -258,7 +258,7 @@ export default function Home() {
                               }
 
                               return (
-                                <li key={i} className="leading-[1.8] mb-[8px] last:mb-0">
+                                <li key={i} className="leading-[1.8] mb-[8px] last:mb-0 break-words">
                                   {linkTarget ? (
                                     // ネストされたaタグを避けるため、objectタグでラップするか、イベント伝播を止める
                                     <object>
