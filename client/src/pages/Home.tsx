@@ -314,6 +314,13 @@ export default function Home() {
               </div>
             )}
           </div>
+
+          {/* もっと見るボタン */}
+          <div className="text-center mt-12">
+            <Link href="/industries" className="inline-flex items-center gap-2 bg-[#1D3A52] text-white px-10 py-4 rounded-full font-bold hover:bg-[#152a3d] transition-colors no-underline shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
+              もっと見る <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
         </section>
 
         {/* 使える支援制度セクション (Support Section) - Moved DOWN and using new component */}

@@ -11,6 +11,7 @@ import PageTransition from "./components/PageTransition";
 import ContactPage from "./pages/ContactPage";
 import Home from "./pages/Home";
 import IndustryDetailPage from "./pages/IndustryDetailPage";
+import IndustriesPage from "./pages/IndustriesPage";
 import SupportArchivePage from "./pages/SupportArchivePage";
 import SupportDetailPage from "./pages/SupportDetailPage";
 
@@ -43,6 +44,12 @@ function Router() {
         <Route path={"/industry/:id"}>
           <PageTransition>
             <IndustryDetailPage />
+          </PageTransition>
+        </Route>
+
+        <Route path={"/industries"}>
+          <PageTransition>
+            <IndustriesPage />
           </PageTransition>
         </Route>
 
