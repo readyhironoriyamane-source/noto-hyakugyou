@@ -405,7 +405,7 @@ export const industries: Industry[] = [
   },
   {
     id: 103,
-    title: "株式会社和平商店",
+    title: "「ハローワークでも来ない」現場に若者が。老舗加工場が挑んだ採用革命",
     category: "人材確保・業務効率化",
     operator: "和平 氏",
     role: "代表",
