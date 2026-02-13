@@ -219,7 +219,7 @@ export default function Home() {
                     )}
 
                     {/* ② 属性データ（コントラスト改善） */}
-                    <div className="flex flex-col gap-3 mb-4">
+                    <div className="flex flex-col gap-4 mb-4">
                       <div className="flex items-center gap-3">
                         <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
                           {study.category}
@@ -230,7 +230,7 @@ export default function Home() {
                         </span>
                       </div>
                       {/* 事業者名を追加 */}
-                      <div className="text-xs font-bold text-[#555] px-0.5">
+                      <div className="text-xs font-bold text-[#555] border-l-[3px] border-[#B33E28] pl-2">
                         {study.operator}
                       </div>
                     </div>
