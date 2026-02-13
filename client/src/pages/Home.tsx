@@ -219,14 +219,20 @@ export default function Home() {
                     )}
 
                     {/* ② 属性データ（コントラスト改善） */}
-                    <div className="flex flex-wrap items-center gap-3 mb-4">
-                      <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
-                        {study.category}
-                      </span>
-                      <span className="text-xs font-bold text-[#666] flex items-center gap-1">
-                        <span className="w-1 h-1 bg-[#888] rounded-full"></span>
-                        {study.location}
-                      </span>
+                    <div className="flex flex-col gap-2 mb-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
+                          {study.category}
+                        </span>
+                        <span className="text-xs font-bold text-[#666] flex items-center gap-1">
+                          <span className="w-1 h-1 bg-[#888] rounded-full"></span>
+                          {study.location}
+                        </span>
+                      </div>
+                      {/* 事業者名を追加 */}
+                      <div className="text-xs font-bold text-[#555] px-0.5">
+                        {study.operator}
+                      </div>
                     </div>
 
                     {/* ③ タイトル（下線削除・ゴシック化） */}
