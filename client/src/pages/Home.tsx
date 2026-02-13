@@ -207,35 +207,38 @@ export default function Home() {
                 {/* 2. 情報エリア（白背景、余白広め） */}
                 <div className="p-6 md:p-8 flex flex-col flex-grow bg-white">
                   
-                  {/* ① 課題ラベル（最優先情報） */}
-                  {study.challengeCard && (
-                    <div className="mb-4">
-                      <span className="inline-block bg-[#E6F4EA] text-[#1D3A52] text-xs font-bold px-3 py-1 rounded-full tracking-wider border border-[#CDE8D6]">
-                        {study.challengeCard.label}
+                  {/* 上部コンテンツラッパー：flex-growで余白を埋めて、下部セクションを底に押しやる */}
+                  <div className="flex flex-col flex-grow">
+                    {/* ① 課題ラベル（最優先情報） */}
+                    {study.challengeCard && (
+                      <div className="mb-4">
+                        <span className="inline-block bg-[#E6F4EA] text-[#1D3A52] text-xs font-bold px-3 py-1 rounded-full tracking-wider border border-[#CDE8D6]">
+                          {study.challengeCard.label}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* ② 属性データ（コントラスト改善） */}
+                    <div className="flex flex-wrap items-center gap-3 mb-4">
+                      <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
+                        {study.category}
+                      </span>
+                      <span className="text-xs font-bold text-[#666] flex items-center gap-1">
+                        <span className="w-1 h-1 bg-[#888] rounded-full"></span>
+                        {study.location}
                       </span>
                     </div>
-                  )}
 
-                  {/* ② 属性データ（コントラスト改善） */}
-                  <div className="flex flex-wrap items-center gap-3 mb-4">
-                    <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
-                      {study.category}
-                    </span>
-                    <span className="text-xs text-[#444] font-medium tracking-widest flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#666]"></span>
-                      {study.location}
-                    </span>
+                    {/* ③ タイトル（下線削除・ゴシック化） */}
+                    <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors">
+                      {study.title}
+                    </h3>
+
+                    {/* ④ 本文リード文（下線削除・ゴシック化） */}
+                    <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3">
+                      {study.summary}
+                    </p>
                   </div>
-
-                  {/* ③ タイトル（下線削除・ゴシック化） */}
-                  <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors">
-                    {study.title}
-                  </h3>
-
-                  {/* ④ 本文リード文（下線削除・ゴシック化） */}
-                  <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3 flex-grow">
-                    {study.summary}
-                  </p>
 
                   {/* ⑤ 構造化データブロック（新設） */}
                   {study.challengeCard?.structuredBlock && (
@@ -289,7 +292,7 @@ export default function Home() {
                   )}
 
                   {/* ⑥ ボタン */}
-                  <div className="mt-auto pt-4 border-t border-gray-100">
+                  <div className="pt-4 border-t border-gray-100">
                     <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
                       詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
                     </div>
