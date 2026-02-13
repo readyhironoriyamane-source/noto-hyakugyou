@@ -224,9 +224,8 @@ export default function IndustryDetailPage() {
                     <h5 className="font-bold text-2xl md:text-3xl text-[#1D3A52] mb-2">
                       案B：{industry.decisionMatrix.optionB.title}
                     </h5>
-                    <ul className="list-none p-0 m-0 mb-6">
-                      <li className="text-[#B33E28] font-bold text-xl flex items-start gap-2">
-                        <span className="mt-2.5 w-2 h-2 rounded-full bg-[#B33E28] shrink-0 block"></span>
+                    <ul className="list-disc pl-6 mb-6 marker:text-[#B33E28]">
+                      <li className="text-[#B33E28] font-bold text-xl">
                         <span className="break-keep">{industry.decisionMatrix.optionB.subsidy}</span>
                       </li>
                     </ul>
