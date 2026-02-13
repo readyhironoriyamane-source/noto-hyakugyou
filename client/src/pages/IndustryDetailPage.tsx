@@ -226,7 +226,7 @@ export default function IndustryDetailPage() {
                     </h5>
                     <ul className="list-disc pl-6 mb-6 marker:text-[#B33E28]">
                       <li className="text-[#B33E28] font-bold text-xl">
-                        <span className="break-keep">{industry.decisionMatrix.optionB.subsidy}</span>
+                        <span>{industry.decisionMatrix.optionB.subsidy}</span>
                       </li>
                     </ul>
                     <p className="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
