@@ -687,7 +687,7 @@ export const industries: Industry[] = [
     actions: [
       { type: "buy", label: "オンラインショップ", link: "#" }
     ],
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/yvjWwJjQWjXQjWjQ.jpg",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/xBOfgkXBvQBNsdkY.jpg",
     seasonalMonths: [3, 12],
     isCaseStudy: true,
     challengeCard: {
