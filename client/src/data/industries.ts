@@ -148,8 +148,8 @@ export interface Industry {
 export const industries: Industry[] = [
   {
     id: 1,
-    title: "小木のイカ釣り漁師",
-    category: "漁業",
+    title: "廃業寸前からのV字回復。若手社長が挑んだ「伝統×革新」の酒造り",
+    category: "酒造業",
     operator: "山下 健一",
     role: "船団長",
     location: "能登町 小木港",
@@ -186,8 +186,8 @@ export const industries: Industry[] = [
   },
   {
     id: 101,
-    title: "本合クリーニング",
-    category: "設備投資・修繕",
+    title: "「野鍛冶」を「ネット鍛冶屋」へ。斜陽産業を救った逆転のDX",
+    category: "製造・小売",
     operator: "本合 浩明",
     role: "3代目店主",
     location: "能登町",
@@ -313,8 +313,8 @@ export const industries: Industry[] = [
   },
   {
     id: 102,
-    title: "セミナーハウス山びこ",
-    category: "人材確保・業務効率化",
+    title: "伝統産業に「タイミー」の衝撃。外部人材が変えた現場の景色",
+    category: "水産加工業",
     operator: "金屋 氏",
     role: "代表",
     location: "能登町",
