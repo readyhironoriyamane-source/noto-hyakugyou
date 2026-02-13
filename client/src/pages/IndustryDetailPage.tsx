@@ -329,8 +329,8 @@ export default function IndustryDetailPage() {
             </h4>
             {industry.supportSystem?.map((support: any, index: number) => (
               <div key={index} className={index > 0 ? "mt-8 pt-8 border-t border-gray-200 border-dashed" : ""}>
-                <div className="flex justify-between items-start gap-4 mb-2">
-                  <h5 className="text-xl font-bold">{support.name}</h5>
+                <div className="flex justify-between items-start flex-wrap gap-4 mb-2">
+                  <h5 className="text-xl font-bold leading-snug break-keep">{support.name}</h5>
                   <a href={support.link} className="text-[#B33E28] text-sm font-bold hover:underline shrink-0 flex items-center gap-1">
                     詳細 <ExternalLink className="w-3 h-3" />
                   </a>
