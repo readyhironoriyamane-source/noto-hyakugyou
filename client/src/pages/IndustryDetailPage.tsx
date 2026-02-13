@@ -147,7 +147,7 @@ export default function IndustryDetailPage() {
             
             <div className="mb-2">
               <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 1</span>
-              <span className="text-gray-500 text-xs font-bold ml-2">震災直後〜3ヶ月</span>
+              
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">現状と課題</h3>
             <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
@@ -186,7 +186,7 @@ export default function IndustryDetailPage() {
             
             <div className="mb-2">
               <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 2</span>
-              <span className="text-gray-500 text-xs font-bold ml-2">3ヶ月後〜半年</span>
+              
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">選択と決断</h3>
             <p className={`${baseTextSize} ${leadingRelaxed} mb-8`}>
@@ -250,7 +250,7 @@ export default function IndustryDetailPage() {
             
             <div className="mb-2">
               <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 3</span>
-              <span className="text-gray-500 text-xs font-bold ml-2">半年後〜現在</span>
+              
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
             <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
@@ -268,7 +268,7 @@ export default function IndustryDetailPage() {
             
             <div className="mb-2">
               <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 4</span>
-              <span className="text-gray-500 text-xs font-bold ml-2">未来への展望</span>
+              
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">未来</h3>
             <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
