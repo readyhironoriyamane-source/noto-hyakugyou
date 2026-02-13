@@ -184,16 +184,15 @@ export default function Home() {
             {/* Link moved to Hero section */}
           </div>
           
-          {/* 2カラム横長カードレイアウト */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {caseStudies.map((study) => (
               <a 
                 key={study.id}
                 href={`/industry/${study.id}`}
-                className="group cursor-pointer bg-white rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline flex flex-col md:flex-row h-auto md:h-[160px]"
+                className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline flex flex-col h-full"
               >
-                {/* 1. 左：サムネイル画像 (PC: 240px固定, SP: 高さ180px) */}
-                <div className="relative w-full md:w-[240px] h-[180px] md:h-full flex-shrink-0 overflow-hidden bg-muted">
+                {/* 1. ヘッダー画像エリア（リンク切れ修正済み） */}
+                <div className="relative aspect-[3/2] overflow-hidden bg-muted">
                   <img 
                     src={study.image} 
                     alt={`${study.title}のイメージ画像`} 
@@ -205,50 +204,103 @@ export default function Home() {
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
                 </div>
 
-                {/* 2. 右：テキストエリア (flex: 1) */}
-                <div className="p-5 flex flex-col flex-grow bg-white justify-between min-w-0">
+                {/* 2. 情報エリア（白背景、余白広め） */}
+                <div className="p-6 md:p-8 flex flex-col flex-grow bg-white">
                   
-                  {/* 上部コンテンツ */}
-                  <div className="flex flex-col gap-2">
-                    {/* ① カテゴリタグ & 事業者名 */}
-                    <div className="flex items-center gap-3 flex-wrap">
-                      <span className="inline-block bg-[#E6F4EA] text-[#1D3A52] text-xs font-bold px-2 py-0.5 rounded-full tracking-wider border border-[#CDE8D6]">
-                        {study.category}
-                      </span>
-                      <div className="text-xs font-bold text-[#555] border-l-[3px] border-[#B33E28] pl-2 truncate max-w-[150px]">
+                  {/* 上部コンテンツラッパー：flex-growで余白を埋めて、下部セクションを底に押しやる */}
+                  <div className="flex flex-col flex-grow">
+                    {/* ① 課題ラベル（最優先情報） */}
+                    {study.challengeCard && (
+                      <div className="mb-4">
+                        <span className="inline-block bg-[#E6F4EA] text-[#1D3A52] text-xs font-bold px-3 py-1 rounded-full tracking-wider border border-[#CDE8D6]">
+                          {study.challengeCard.label}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* ② 属性データ（コントラスト改善） */}
+                    <div className="flex flex-col gap-4 mb-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
+                          {study.category}
+                        </span>
+                        <span className="text-xs font-bold text-[#666] flex items-center gap-1">
+                          <span className="w-1 h-1 bg-[#888] rounded-full"></span>
+                          {study.location}
+                        </span>
+                      </div>
+                      {/* 事業者名を追加 */}
+                      <div className="text-xs font-bold text-[#555] border-l-[3px] border-[#B33E28] pl-2">
                         {study.operator}
                       </div>
                     </div>
 
-                    {/* ② タイトル (最大2行) */}
-                    <h3 className="text-[18px] font-bold text-[#333] leading-snug font-sans group-hover:text-[#B33E28] transition-colors line-clamp-2">
+                    {/* ③ タイトル（下線削除・ゴシック化） */}
+                    <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors">
                       {study.title}
                     </h3>
 
-                    {/* ③ 概要テキスト (最大2行) */}
-                    <p className="text-sm text-[#666] font-medium leading-relaxed line-clamp-2 hidden md:block">
+                    {/* ④ 本文リード文（下線削除・ゴシック化） */}
+                    <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3">
                       {study.summary}
                     </p>
                   </div>
 
-                  {/* 下部コンテンツ */}
-                  <div className="mt-3 flex items-end justify-between border-t border-gray-100 pt-2">
-                    {/* ④ インライン情報 (1行) */}
-                    <div className="text-xs text-gray-500 truncate flex-1 mr-2">
-                      {study.challengeCard?.structuredBlock ? (
-                        <>
-                          活用支援：{study.challengeCard.structuredBlock.find(b => b.label.includes("支援"))?.items[0].split('（')[0] || '各種支援'}
-                          <span className="mx-1">|</span>
-                          成果：{study.challengeCard.structuredBlock.find(b => b.label.includes("成果"))?.items[0] || '事業継続'}
-                        </>
-                      ) : (
-                        <span className="text-gray-400">詳細をご覧ください</span>
-                      )}
-                    </div>
+                  {/* ⑤ 構造化データブロック（新設） */}
+                  {study.challengeCard?.structuredBlock && (
+                    <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
+                      {study.challengeCard.structuredBlock.map((block, idx) => (
+                        <div key={idx} className="text-sm">
+                          <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
+                            {block.label}
+                          </span>
+                          <ul className="list-disc list-inside text-gray-600 pl-1">
+                            {block.items.map((item, i) => {
+                              // 支援制度へのリンクマッピング
+                              let linkTarget = "";
+                              if (item.includes("なりわい再建支援補助金") && !item.includes("能登町")) {
+                                linkTarget = "#support-nariwai";
+                              } else if (item.includes("小規模事業者持続化補助金")) {
+                                linkTarget = "#support-jizoku";
+                              } else if (item.includes("能登町なりわい再建支援補助金")) {
+                                linkTarget = "#support-noto-nariwai";
+                              }
 
-                    {/* ⑤ 詳しく見るリンク */}
-                    <div className="flex items-center text-[#B33E28] text-xs font-bold tracking-wider group-hover:text-[#8E2F1D] transition-colors whitespace-nowrap">
-                      詳しく見る <ArrowRight className="w-3 h-3 ml-1" />
+                              return (
+                                <li key={i} className="leading-[1.8] mb-[8px] last:mb-0 break-words">
+                                  {linkTarget ? (
+                                    // ネストされたaタグを避けるため、spanタグでラップし、イベント伝播を止める
+                                    <span
+                                      className="text-primary hover:text-accent hover:underline decoration-1 underline-offset-2 font-medium transition-colors cursor-pointer"
+                                      onClick={(e) => {
+                                        // 親のカードリンクへの遷移を防止
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        // スムーズスクロール
+                                        const target = document.querySelector(linkTarget);
+                                        if (target) {
+                                          target.scrollIntoView({ behavior: 'smooth' });
+                                        }
+                                      }}
+                                    >
+                                      {item}
+                                    </span>
+                                  ) : (
+                                    item
+                                  )}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* ⑥ ボタン */}
+                  <div className="pt-4 border-t border-gray-100">
+                    <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
+                      詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
                     </div>
                   </div>
                 </div>
