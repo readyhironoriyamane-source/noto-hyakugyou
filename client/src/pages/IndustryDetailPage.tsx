@@ -224,10 +224,12 @@ export default function IndustryDetailPage() {
                     <h5 className="font-bold text-2xl md:text-3xl text-[#1D3A52] mb-2">
                       案B：{industry.decisionMatrix.optionB.title}
                     </h5>
-                    <div className="text-[#B33E28] font-bold text-xl mb-6 flex items-start gap-2">
-                      <span className="mt-1.5 w-2 h-2 rounded-full bg-[#B33E28] shrink-0 block"></span>
-                      <span className="break-keep w-full">{industry.decisionMatrix.optionB.subsidy}</span>
-                    </div>
+                    <ul className="list-none p-0 m-0 mb-6">
+                      <li className="text-[#B33E28] font-bold text-xl flex items-start gap-2">
+                        <span className="mt-2.5 w-2 h-2 rounded-full bg-[#B33E28] shrink-0 block"></span>
+                        <span className="break-keep">{industry.decisionMatrix.optionB.subsidy}</span>
+                      </li>
+                    </ul>
                     <p className="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
                       {industry.decisionMatrix.optionB.cost}
                     </p>
@@ -330,8 +332,8 @@ export default function IndustryDetailPage() {
             </h4>
             {industry.supportSystem?.map((support: any, index: number) => (
               <div key={index} className={index > 0 ? "mt-8 pt-8 border-t border-gray-200 border-dashed" : ""}>
-                <div className="flex justify-between items-start flex-wrap gap-4 mb-2">
-                  <h5 className="text-xl font-bold leading-snug break-keep">{support.name}</h5>
+                <div className="flex justify-between items-start gap-4 mb-2">
+                  <h5 className="text-xl font-bold">{support.name}</h5>
                   <a href={support.link} className="text-[#B33E28] text-sm font-bold hover:underline shrink-0 flex items-center gap-1">
                     詳細 <ExternalLink className="w-3 h-3" />
                   </a>
