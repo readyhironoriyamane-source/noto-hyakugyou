@@ -260,25 +260,22 @@ export default function Home() {
                               return (
                                 <li key={i} className="leading-[1.8] mb-[8px] last:mb-0 break-words">
                                   {linkTarget ? (
-                                    // ネストされたaタグを避けるため、objectタグでラップするか、イベント伝播を止める
-                                    <object>
-                                      <a 
-                                        href={linkTarget} 
-                                        className="text-primary hover:text-accent hover:underline decoration-1 underline-offset-2 font-medium transition-colors cursor-pointer"
-                                        onClick={(e) => {
-                                          // 親のカードリンクへの遷移を防止
-                                          e.stopPropagation();
-                                          // スムーズスクロール
-                                          const target = document.querySelector(linkTarget);
-                                          if (target) {
-                                            e.preventDefault();
-                                            target.scrollIntoView({ behavior: 'smooth' });
-                                          }
-                                        }}
-                                      >
-                                        {item}
-                                      </a>
-                                    </object>
+                                    // ネストされたaタグを避けるため、spanタグでラップし、イベント伝播を止める
+                                    <span
+                                      className="text-primary hover:text-accent hover:underline decoration-1 underline-offset-2 font-medium transition-colors cursor-pointer"
+                                      onClick={(e) => {
+                                        // 親のカードリンクへの遷移を防止
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        // スムーズスクロール
+                                        const target = document.querySelector(linkTarget);
+                                        if (target) {
+                                          target.scrollIntoView({ behavior: 'smooth' });
+                                        }
+                                      }}
+                                    >
+                                      {item}
+                                    </span>
                                   ) : (
                                     item
                                   )}
