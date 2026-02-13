@@ -341,7 +341,7 @@ export const industries: Industry[] = [
     actions: [
       { type: "visit", label: "施設情報", link: "#" }
     ],
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/Y340928009.jpg",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/dfqTYNVZkNJAXDZL.jpg",
     seasonalMonths: [],
     isCaseStudy: true,
     challengeCard: {
@@ -471,7 +471,7 @@ export const industries: Industry[] = [
       { type: "buy", label: "いか煎餅を購入", link: "#" },
       { type: "visit", label: "店舗情報", link: "#" }
     ],
-    image: "/upload/search_images/TcxxTEjaCaCb.jpg",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/HuLzGRoJriJtBImr.jpg",
     seasonalMonths: [],
     isCaseStudy: true,
     challengeCard: {
@@ -608,7 +608,7 @@ export const industries: Industry[] = [
     actions: [
       { type: "visit", label: "会社情報", link: "#" }
     ],
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/IMG_2384.jpg",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/agpqPHGRAGndiJUg.jpg",
     seasonalMonths: [],
     isCaseStudy: true,
     challengeCard: {
@@ -736,7 +736,7 @@ export const industries: Industry[] = [
     actions: [
       { type: "buy", label: "オンラインショップ", link: "#" }
     ],
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/IMG_4567.jpg",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/euWgWTGZGEuQJaKK.jpeg",
     seasonalMonths: [],
     isCaseStudy: true,
     challengeCard: {
