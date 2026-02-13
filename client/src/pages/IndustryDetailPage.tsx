@@ -124,7 +124,7 @@ export default function IndustryDetailPage() {
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl">⚠️</span>
               {/* 色覚バリアフリー対応: 文字色を濃い赤茶色(#4A1D1D)に変更 */}
-              <h3 className="text-[#B33E28] font-bold text-lg md:text-xl">震災前に戻れるなら、これをやる。</h3>
+              <h3 className="text-[#B33E28] font-bold text-lg md:text-xl">「もっと早くやっておけば」と後悔しないために。</h3>
             </div>
             {/* タイトル重複削除: industry.regrets.title は表示せず、定型句のみ残す */}
             <p className="text-[#4A1D1D]/90 leading-relaxed">

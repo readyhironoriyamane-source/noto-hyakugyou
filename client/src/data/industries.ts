@@ -231,7 +231,7 @@ export const industries: Industry[] = [
       ]
     },
     regrets: {
-      title: "震災前に戻れるなら、これだけはやる。",
+      title: "「もっと早くやっておけば」と後悔しないために。",
       content: "「設備の更新は、だましだましではなく、計画的に行うべきだった」"
     },
     decisionMatrix: {
@@ -358,7 +358,7 @@ export const industries: Industry[] = [
       ]
     },
     regrets: {
-      title: "もっと早く導入すればよかった。",
+      title: "「もっと早くやっておけば」と後悔しないために。",
       content: "「震災前（審査前）からタイミーがあればよかったと思うほど、人手不足解消に役立っている」"
     },
     decisionMatrix: {
