@@ -115,7 +115,7 @@ export default function IndustryDetailPage() {
         {/* 0. 基礎情報 (Basic Info) - ヒーローセクションに統合済みだが、補足情報を表示 */}
         <div className="mb-12 text-gray-600 text-sm flex justify-end gap-4">
           <span>取材日: 2024.01.15</span>
-          <span>ライター: 能登 太郎</span>
+          <span>ライター: {industry.details?.writer || "能登 太郎"}</span>
         </div>
 
         {/* 1. 先人の教訓・後悔 (Regrets Alert) - 最優先表示 */}
