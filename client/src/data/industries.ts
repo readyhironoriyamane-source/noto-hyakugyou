@@ -132,6 +132,7 @@ export interface Industry {
     writer?: string;
     interviewDate?: string;
   };
+  heroSummary?: string;
   story?: {
     title: string;
     text: string[];
@@ -254,6 +255,7 @@ export const industries: Industry[] = [
       writer: "河野孝史",
       interviewDate: "2026.01.15"
     },
+    heroSummary: "能登町で昭和初期から続く老舗クリーニング店。祖父の代から3代にわたり家族で守り継いできた。ドライクリーニングを中心に、毛布類の天日干しにこだわるなど、地域の暮らしに寄り添った丁寧なサービスを提供している。",
     story: {
       title: "再起の裏側：店主の独白",
       text: [

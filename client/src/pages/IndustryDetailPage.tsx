@@ -105,6 +105,15 @@ export default function IndustryDetailPage() {
                 </div>
               </div>
             )}
+
+            {/* 概要テキスト (Hero Summary) */}
+            {industry.heroSummary && (
+              <div className="mt-4 max-w-[640px] text-left">
+                <p className="text-base md:text-lg leading-[1.8] text-white/85 font-medium drop-shadow-md">
+                  {industry.heroSummary}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
