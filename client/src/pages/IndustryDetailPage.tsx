@@ -55,24 +55,24 @@ export default function IndustryDetailPage() {
       <Header />
 
       {/* ヒーローセクション（新デザイン） */}
-      <div className="relative h-[60vh] md:h-[70vh] w-full overflow-hidden">
+      <div className="relative min-h-[80vh] md:h-[70vh] w-full overflow-hidden flex flex-col justify-end">
         <img
           src={industry.image}
           alt={industry.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
         {/* Scrim Gradient: 下から上へのグラデーションのみを適用し、上部は写真の明るさを活かす */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1D3A52] via-[#1D3A52]/60 to-transparent opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1D3A52] via-[#1D3A52]/80 to-transparent opacity-90"></div>
         
-        <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-20 text-white">
+        <div className="relative z-10 w-full p-6 pb-12 md:p-12 lg:p-20 text-white mt-auto">
           <div className="max-w-4xl mx-auto">
-            <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-6 transition-colors no-underline">
+            <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-4 md:mb-6 transition-colors no-underline">
               <ArrowLeft className="w-4 h-4 mr-2" />
               一覧に戻る
             </Link>
             
             {/* タグエリア */}
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-2 mb-3 md:mb-4">
               <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold border border-white/30">
                 #{industry.category}
               </span>
@@ -84,23 +84,23 @@ export default function IndustryDetailPage() {
             </div>
 
             {/* タイトル */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif leading-tight mb-6 drop-shadow-lg">
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold font-serif leading-snug md:leading-tight mb-4 md:mb-6 drop-shadow-lg break-words">
               {industry.title}
             </h1>
 
             {/* 取材対象者データ */}
             {industry.details && (
-              <div className="flex flex-wrap items-center text-sm md:text-base text-white/90 gap-4 md:gap-8 border-t border-white/20 py-4 mt-6">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" />
+              <div className="flex flex-wrap items-center text-xs md:text-base text-white/90 gap-x-4 gap-y-2 md:gap-8 border-t border-white/20 py-3 md:py-4 mt-4 md:mt-6">
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4" />
                   {industry.location}
                 </div>
-                <div className="flex items-center gap-2">
-                  <Building2 className="w-4 h-4" />
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <Building2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
                   {industry.details.founded}創業
                 </div>
-                <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4" />
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <Users className="w-3.5 h-3.5 md:w-4 md:h-4" />
                   従業員 {industry.details.employees}
                 </div>
               </div>
@@ -108,8 +108,8 @@ export default function IndustryDetailPage() {
 
             {/* 概要テキスト (Hero Summary) */}
             {industry.heroSummary && (
-              <div className="mt-4 max-w-[640px] text-left">
-                <p className="text-base md:text-lg leading-[1.8] text-white/85 font-medium drop-shadow-md">
+              <div className="mt-3 md:mt-4 max-w-[640px] text-left">
+                <p className="text-sm md:text-lg leading-relaxed md:leading-[1.8] text-white/90 font-medium drop-shadow-md">
                   {industry.heroSummary}
                 </p>
               </div>
