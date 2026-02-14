@@ -386,12 +386,13 @@ export const industries: Industry[] = [
       }
     ],
     details: {
-      owner: "神子 氏",
-      founded: "昭和40年",
+      owner: "山彦 氏",
+      founded: "昭和45年",
       employees: "3名",
       writer: "河野孝史",
       interviewDate: "2026.01.15"
     },
+    heroSummary: "能登町で営む老舗宿泊施設。長年にわたり地域の研修・合宿需要を支えてきた。少人数スタッフによる家庭的なもてなしを強みとし、地元に根ざした運営を続けている。",
     story: {
       title: "再起の裏側：採用の常識が変わった日",
       text: [
@@ -524,6 +525,7 @@ export const industries: Industry[] = [
       writer: "河野孝史",
       interviewDate: "2026.02.13"
     },
+    heroSummary: "能登町を拠点に建設・土木工事を手がける工務店。地域のインフラや住環境を支える存在として、長年にわたり地元の建設需要に応えてきた。若いリーダーのもと、機動力ある現場対応を強みとする。",
     story: {
       title: "再起の裏側：若き社長の決断",
       text: [
@@ -654,6 +656,7 @@ export const industries: Industry[] = [
       writer: "河野孝史",
       interviewDate: "2026.02.13"
     },
+    heroSummary: "能登町で新鮮な魚介類の販売を行う鮮魚店。地元漁港から直接仕入れた旬の魚を地域住民に届けてきた。アナログな商売を大切にしながら、変化を恐れず新しい販路に挑む姿勢を持つ。",
     story: {
       title: "再起の裏側：アナログ店主の挑戦",
       text: [
@@ -791,6 +794,7 @@ export const industries: Industry[] = [
       writer: "河野孝史",
       interviewDate: "2026.02.13"
     },
+    heroSummary: "能登町でイカ加工品の製造・販売を手がける老舗商店。地元の海の恵みを活かした商品づくりで知られ、製造から販売まで一貫して自社で担う。繁忙期には多くの地域住民が働く、町の産業を支える存在。",
     story: {
       title: "再起の裏側：専務の独白",
       text: [
