@@ -302,7 +302,7 @@ export default function IndustryDetailPage() {
             
             <div className="space-y-6 text-gray-800 leading-loose font-serif text-lg md:text-xl">
               {industry.story.text.map((paragraph, index) => (
-                <p key={index} className={index === 0 ? "font-bold text-xl md:text-2xl text-[#1D3A52] mb-8 text-center" : ""}>
+                <p key={index} className="">
                   {paragraph}
                 </p>
               ))}
