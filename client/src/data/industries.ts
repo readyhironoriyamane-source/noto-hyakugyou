@@ -183,7 +183,7 @@ export const industries: Industry[] = [
       ],
       structuredBlock: [
         { label: "活用した支援", items: ["小規模事業者持続化補助金（災害支援枠）"] },
-        { label: "成果", items: ["営業再開", "夏場の品質向上（冷却機導入）"] }
+        { label: "成果", items: ["営業再開"] }
       ]
     },
     regrets: {
@@ -509,13 +509,7 @@ export const industries: Industry[] = [
         specAmount: "上限数億円（定額・定率）",
         specCondition: "県への申請が必要"
       },
-      {
-        name: "小規模事業者持続化補助金（災害支援枠）",
-        description: "販路開拓や業務効率化の取り組みを支援。",
-        link: "#",
-        specAmount: "上限200万円（＋上乗せ）",
-        specCondition: "商工会の支援が必要"
-      }
+
     ],
     details: {
       owner: "多古島 氏",
