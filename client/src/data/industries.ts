@@ -201,11 +201,11 @@ export const industries: Industry[] = [
         subsidy: "小規模事業者持続化補助金",
         cost: "自己負担を50万円程度に抑えられる"
       },
-      reason: "「『自己負担50万円なら借金せずに済む』という計算と、地域からの『なくなったら困る』という声」"
+      reason: "『自己負担50万円なら借金せずに済む』という計算と、地域からの『なくなったら困る』という声"
     },
     decisionProcess: {
       worry: "450万円かけて再開するか、廃業するか",
-      decider: "「『自己負担50万円なら借金せずに済む』という計算と、地域の声」",
+      decider: "『自己負担50万円なら借金せずに済む』という計算と、地域の声",
       selectedSupport: "小規模事業者持続化補助金",
       action: "機械の入れ替えと冷却機の導入",
       outcome: "営業再開と品質向上",
@@ -216,7 +216,7 @@ export const industries: Industry[] = [
       adoptedOption: {
         title: "持続化補助金＋上乗せ",
         reasons: ["自己負担を50万円程度に抑えられる", "借金（融資）をせずに手持ち資金で対応可能"],
-        decidingFactor: "「『自己負担50万円なら借金せずに済む』という計算と、地域からの『なくなったら困る』という声」"
+        decidingFactor: "『自己負担50万円なら借金せずに済む』という計算と、地域からの『なくなったら困る』という声"
       }
     },
     barriers: {
@@ -318,7 +318,7 @@ export const industries: Industry[] = [
     },
     regrets: {
       title: "「もっと早くやっておけば」と後悔しないために。",
-      content: "「『知らない人は怖い』という食わず嫌いをせず、もっと早く試していれば、社員の負担を減らせた」"
+      content: "『知らない人は怖い』という食わず嫌いをせず、もっと早く試していれば、社員の負担を減らせた"
     },
     decisionMatrix: {
       title: "知らない人を雇うか、社員が倒れるか",
@@ -331,11 +331,11 @@ export const industries: Industry[] = [
         subsidy: "初期費用ゼロ",
         cost: "時給＋手数料のみ"
       },
-      reason: "「『既存社員の疲弊が限界に達していた』ことと、『お試し期間でリスクを検証できた』こと」"
+      reason: "『既存社員の疲弊が限界に達していた』ことと、『お試し期間でリスクを検証できた』こと"
     },
     decisionProcess: {
       worry: "見ず知らずの人を現場に入れるか、残業で凌ぐか",
-      decider: "「『既存社員の疲弊が限界』かつ『お試し期間でリスク検証可能』」",
+      decider: "『既存社員の疲弊が限界』かつ『お試し期間でリスク検証可能』",
       selectedSupport: "Timee（タイミー）",
       action: "梱包・発送業務の切り出しと外部化",
       outcome: "繁忙期の完遂と、若手人材の直接雇用",
@@ -468,11 +468,11 @@ export const industries: Industry[] = [
         subsidy: "なりわい再建・営業再開補助金",
         cost: "補助額約500万円を活用"
       },
-      reason: "「『使えるものは使って、少しでも負担を減らす』という判断」"
+      reason: "『使えるものは使って、少しでも負担を減らす』という判断"
     },
     decisionProcess: {
       worry: "複雑な手続きと、業者が見つからない現実",
-      decider: "「『人脈（稲葉製作所関連）』と『粘り強い交渉』」",
+      decider: "『人脈（稲葉製作所関連）』と『粘り強い交渉』",
       selectedSupport: "なりわい再建・営業再開補助金",
       action: "被災倉庫の再建（稲葉3連棟）",
       outcome: "倉庫の完成と、自己負担の軽減",
@@ -483,7 +483,7 @@ export const industries: Industry[] = [
       adoptedOption: {
         title: "補助金で再建",
         reasons: ["自己負担を減らせる", "権利として使えるものは使うべき"],
-        decidingFactor: "「『知っとった（人脈があった）』ことが突破口に」"
+        decidingFactor: "『知っとった（人脈があった）』ことが突破口に"
       }
     },
     barriers: {
@@ -732,7 +732,7 @@ export const industries: Industry[] = [
         subsidy: "なし",
         cost: "時給＋手数料"
       },
-      reason: "「『既存社員の疲弊が限界に達していた』ことと、『お試し期間でリスクを検証できた』こと」"
+      reason: "『既存社員の疲弊が限界に達していた』ことと、『お試し期間でリスクを検証できた』こと"
     },
     decisionProcess: {
       worry: "短期のバイトに、責任ある仕事を任せられるか？",
