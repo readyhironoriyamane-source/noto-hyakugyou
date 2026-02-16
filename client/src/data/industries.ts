@@ -201,7 +201,7 @@ export const industries: Industry[] = [
         subsidy: "小規模事業者持続化補助金",
         cost: "自己負担を50万円程度に抑えられる"
       },
-      reason: "「『自己負担50万円なら借金せずに済む』という計算と、地域からの『なくなったら困る』という声」"
+      reason: "「自己負担50万円なら借金せずに済む」という計算と、地域からの「なくなったら困る」という声"
     },
     decisionProcess: {
       worry: "450万円かけて再開するか、廃業するか",
@@ -331,7 +331,7 @@ export const industries: Industry[] = [
         subsidy: "初期費用ゼロ",
         cost: "時給＋手数料のみ"
       },
-      reason: "「『既存社員の疲弊が限界に達していた』ことと、『お試し期間でリスクを検証できた』こと」"
+      reason: "「既存社員の疲弊が限界に達していた」ことと、「お試し期間でリスクを検証できた」こと"
     },
     decisionProcess: {
       worry: "見ず知らずの人を現場に入れるか、残業で凌ぐか",
@@ -468,7 +468,7 @@ export const industries: Industry[] = [
         subsidy: "なりわい再建・営業再開補助金",
         cost: "補助額約500万円を活用"
       },
-      reason: "「『使えるものは使って、少しでも負担を減らす』という判断」"
+      reason: "「使えるものは使って、少しでも負担を減らす」という判断"
     },
     decisionProcess: {
       worry: "複雑な手続きと、業者が見つからない現実",
@@ -732,7 +732,7 @@ export const industries: Industry[] = [
         subsidy: "なし",
         cost: "時給＋手数料"
       },
-      reason: "「『既存社員の疲弊が限界に達していた』ことと、『お試し期間でリスクを検証できた』こと」"
+      reason: "「既存社員の疲弊が限界に達していた」ことと、「お試し期間でリスクを検証できた」こと"
     },
     decisionProcess: {
       worry: "短期のバイトに、責任ある仕事を任せられるか？",

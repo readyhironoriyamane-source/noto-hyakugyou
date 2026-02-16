@@ -244,7 +244,7 @@ export default function IndustryDetailPage() {
                     
                     <div className="bg-[#E6F0FA] p-6 rounded-lg border-l-4 border-[#1D3A52]">
                       <p className="font-bold text-[#1D3A52] text-lg md:text-xl leading-relaxed">
-                        決め手：「{industry.decisionMatrix.reason}」
+                        決め手：{industry.decisionMatrix.reason}
                       </p>
                     </div>
                   </div>
