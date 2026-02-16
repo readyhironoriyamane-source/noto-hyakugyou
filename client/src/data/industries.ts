@@ -1,5 +1,5 @@
 
-export interface Industry {
+export type Industry = {
   id: number;
   title: string;
   category: string;
