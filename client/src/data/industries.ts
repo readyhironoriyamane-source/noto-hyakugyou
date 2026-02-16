@@ -205,7 +205,7 @@ export const industries: Industry[] = [
     },
     decisionProcess: {
       worry: "450万円かけて再開するか、廃業するか",
-      decider: "「自己負担50万円なら借金せずに済む」という計算と、地域の声",
+      decider: "「自己負担50万円なら借金せずに済む」という計算と、地域からの「なくなったら困る」という声",
       selectedSupport: "小規模事業者持続化補助金",
       action: "機械の入れ替えと冷却機の導入",
       outcome: "営業再開と品質向上",
@@ -335,7 +335,7 @@ export const industries: Industry[] = [
     },
     decisionProcess: {
       worry: "見ず知らずの人を現場に入れるか、残業で凌ぐか",
-      decider: "「既存社員の疲弊が限界」かつ「お試し期間でリスク検証可能」",
+      decider: "「既存社員の疲弊が限界に達していた」ことと、「お試し期間でリスクを検証できた」こと",
       selectedSupport: "Timee（タイミー）",
       action: "梱包・発送業務の切り出しと外部化",
       outcome: "繁忙期の完遂と、若手人材の直接雇用",
@@ -472,7 +472,7 @@ export const industries: Industry[] = [
     },
     decisionProcess: {
       worry: "複雑な手続きと、業者が見つからない現実",
-      decider: "「人脈（稲葉製作所関連）」と「粘り強い交渉」",
+      decider: "「使えるものは使って、少しでも負担を減らす」という判断",
       selectedSupport: "なりわい再建・営業再開補助金",
       action: "被災倉庫の再建（稲葉3連棟）",
       outcome: "倉庫の完成と、自己負担の軽減",
@@ -608,7 +608,7 @@ export const industries: Industry[] = [
     },
     decisionProcess: {
       worry: "パソコンもできない自分に、ネット販売なんてできるのか？",
-      decider: "「副業人材がサポートしてくれる」という安心感",
+      decider: "「いつ直るか分からない店を待つより、今できることをやる」という決断",
       selectedSupport: "副業人材活用事業",
       action: "ECサイト構築とSNS発信",
       outcome: "全国への販路開拓に成功",
@@ -736,7 +736,7 @@ export const industries: Industry[] = [
     },
     decisionProcess: {
       worry: "短期のバイトに、責任ある仕事を任せられるか？",
-      decider: "「お試し期間」での手応えと、事務負担の軽さ",
+      decider: "「既存社員の疲弊が限界に達していた」ことと、「お試し期間でリスクを検証できた」こと",
       selectedSupport: "Timee（タイミー）",
       action: "発送・梱包業務への導入",
       outcome: "繁忙期の乗り切りと人材発掘",
