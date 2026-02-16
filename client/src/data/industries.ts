@@ -331,11 +331,11 @@ export const industries: Industry[] = [
         subsidy: "初期費用ゼロ",
         cost: "時給＋手数料のみ"
       },
-      reason: "「既存社員の疲弊が限界に達していた」ことと、「お試し期間でリスクを検証できた」こと"
+      reason: "「『既存社員の疲弊が限界に達していた』ことと、『お試し期間でリスクを検証できた』こと」"
     },
     decisionProcess: {
       worry: "見ず知らずの人を現場に入れるか、残業で凌ぐか",
-      decider: "「既存社員の疲弊が限界」かつ「お試し期間でリスク検証可能」",
+      decider: "「『既存社員の疲弊が限界』かつ『お試し期間でリスク検証可能』」",
       selectedSupport: "Timee（タイミー）",
       action: "梱包・発送業務の切り出しと外部化",
       outcome: "繁忙期の完遂と、若手人材の直接雇用",
@@ -468,11 +468,11 @@ export const industries: Industry[] = [
         subsidy: "なりわい再建・営業再開補助金",
         cost: "補助額約500万円を活用"
       },
-      reason: "「使えるものは使って、少しでも負担を減らす」という判断"
+      reason: "「『使えるものは使って、少しでも負担を減らす』という判断」"
     },
     decisionProcess: {
       worry: "複雑な手続きと、業者が見つからない現実",
-      decider: "「人脈（稲葉製作所関連）」と「粘り強い交渉」",
+      decider: "「『人脈（稲葉製作所関連）』と『粘り強い交渉』」",
       selectedSupport: "なりわい再建・営業再開補助金",
       action: "被災倉庫の再建（稲葉3連棟）",
       outcome: "倉庫の完成と、自己負担の軽減",
@@ -483,7 +483,7 @@ export const industries: Industry[] = [
       adoptedOption: {
         title: "補助金で再建",
         reasons: ["自己負担を減らせる", "権利として使えるものは使うべき"],
-        decidingFactor: "「知っとった（人脈があった）」ことが突破口に"
+        decidingFactor: "「『知っとった（人脈があった）』ことが突破口に」"
       }
     },
     barriers: {
@@ -732,7 +732,7 @@ export const industries: Industry[] = [
         subsidy: "なし",
         cost: "時給＋手数料"
       },
-      reason: "「既存社員の疲弊が限界に達していた」ことと、「お試し期間でリスクを検証できた」こと"
+      reason: "「『既存社員の疲弊が限界に達していた』ことと、『お試し期間でリスクを検証できた』こと」"
     },
     decisionProcess: {
       worry: "短期のバイトに、責任ある仕事を任せられるか？",
