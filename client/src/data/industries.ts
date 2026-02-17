@@ -972,7 +972,7 @@ export const industries: Industry[] = [
     ],
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/KmonxpOIxwuiZDoi.png",
     seasonalMonths: [],
-    isCaseStudy: true,
+    isCaseStudy: false,
     challengeCard: {
       label: "事務所・倉庫半壊",
       description: "震災で拠点が半壊。繁忙期を前に営業継続が危ぶまれた。",

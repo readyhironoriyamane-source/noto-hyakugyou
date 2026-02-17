@@ -11,12 +11,12 @@ export default function IndustriesPage() {
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [filterRegion, setFilterRegion] = useState<string>('all');
 
-  // 活用事例記事（isCaseStudyがtrue）のみを取得
-  const caseStudies = industries.filter(i => i.isCaseStudy);
+  // 全ての記事を取得
+  const allIndustries = industries;
 
   // Filtering Logic
   const filteredItems = useMemo(() => {
-    return caseStudies.filter((item) => {
+    return allIndustries.filter((item) => {
       // 1. カテゴリフィルター
       const matchCategory = filterCategory === 'all' || item.category === filterCategory;
       
@@ -27,7 +27,7 @@ export default function IndustriesPage() {
 
       return matchCategory && matchRegion;
     });
-  }, [filterCategory, filterRegion, caseStudies]);
+  }, [filterCategory, filterRegion, allIndustries]);
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
