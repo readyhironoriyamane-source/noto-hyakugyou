@@ -103,6 +103,12 @@ export default function IndustryDetailPage() {
                   <Users className="w-3.5 h-3.5 md:w-4 md:h-4" />
                   従業員 {industry.details.employees}
                 </div>
+                {industry.details.owner && (
+                  <div className="flex items-center gap-1.5 md:gap-2">
+                    <span className="text-white/80">👤</span>
+                    {industry.details.owner}
+                  </div>
+                )}
               </div>
             )}
 
