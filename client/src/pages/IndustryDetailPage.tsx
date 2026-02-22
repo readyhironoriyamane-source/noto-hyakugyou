@@ -76,7 +76,7 @@ export default function IndustryDetailPage() {
               <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold border border-white/30">
                 #{industry.category}
               </span>
-              {industry.tags?.map((tag: string, index: number) => (
+              {industry.tags.map((tag, index) => (
                 <span key={index} className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold border border-white/30">
                   #{tag}
                 </span>
@@ -166,7 +166,7 @@ export default function IndustryDetailPage() {
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">現状と課題</h3>
             <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
-              {industry.timeline?.phase1 || industry.timeline?.present}
+              {industry.timeline.phase1 || industry.timeline.present}
             </p>
             
             {/* 課題リスト (Barriers) */}
@@ -177,7 +177,7 @@ export default function IndustryDetailPage() {
                   <h4 className="font-bold text-xl text-gray-800">これから申請する人が覚悟すべき「実務の壁」</h4>
                 </div>
                 <div className="space-y-6">
-                  {industry.barriers.checklist.map((item: any, index: number) => (
+                  {industry.barriers.checklist.map((item, index) => (
                     <div key={index} className="flex items-start gap-4">
                       <div className="mt-1 bg-gray-100 p-1 rounded">
                         <CheckCircle2 className="w-5 h-5 text-gray-400" />
@@ -205,7 +205,7 @@ export default function IndustryDetailPage() {
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">選択と決断</h3>
             <p className={`${baseTextSize} ${leadingRelaxed} mb-8`}>
-              {industry.timeline?.phase2 || industry.timeline?.present}
+              {industry.timeline.phase2 || industry.timeline.present}
             </p>
 
             {/* 決断マトリクス (Decision Matrix) - 縦積みレイアウト & フォント最大化 */}
@@ -222,7 +222,7 @@ export default function IndustryDetailPage() {
                       案A：{industry.decisionMatrix.optionA.title}
                     </h5>
                     <ul className="space-y-4">
-                      {industry.decisionMatrix.optionA.pros.map((pro: string, i: number) => (
+                      {industry.decisionMatrix.optionA.pros.map((pro, i) => (
                         <li key={i} className="flex items-start gap-3 text-lg md:text-xl text-gray-600 leading-relaxed">
                           <span className="text-gray-400 mt-1">•</span>
                           {pro}
@@ -271,7 +271,7 @@ export default function IndustryDetailPage() {
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
             <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
-              {industry.timeline?.phase3 || industry.timeline?.future}
+              {industry.timeline.phase3 || industry.timeline.future}
             </p>
           </div>
 
@@ -289,7 +289,7 @@ export default function IndustryDetailPage() {
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">未来</h3>
             <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
-              {industry.timeline?.future}
+              {industry.timeline.future}
             </p>
           </div>
         </div>
@@ -307,7 +307,7 @@ export default function IndustryDetailPage() {
             </div>
             
             <div className="space-y-6 text-gray-800 leading-loose font-serif text-lg md:text-xl">
-              {industry.story.text.map((paragraph: string, index: number) => (
+              {industry.story.text.map((paragraph, index) => (
                 <p key={index} className="">
                   {paragraph}
                 </p>
@@ -424,7 +424,7 @@ export default function IndustryDetailPage() {
               この記事を読んだあなたへのおすすめ
             </h3>
             <div className="grid md:grid-cols-2 gap-6">
-              {industry.recommendedSupports.map((rec: any, index: number) => (
+              {industry.recommendedSupports.map((rec, index) => (
                 <a 
                   key={index} 
                   href={rec.link}

@@ -23,7 +23,7 @@ export default function IndustriesPage() {
       // 2. 地域フィルター (現状データには明確な地域IDがないため、location文字列で簡易判定)
       // ※ 将来的にデータ構造にregionIdなどを追加することを推奨
       const matchRegion = filterRegion === 'all' || 
-        (filterRegion === 'noto' && item.location?.includes('能登町'));
+        (filterRegion === 'noto' && item.location.includes('能登町'));
 
       return matchCategory && matchRegion;
     });
@@ -173,7 +173,7 @@ export default function IndustriesPage() {
                             </span>
                             <span className="text-xs font-bold text-[#666] flex items-center gap-1">
                               <span className="w-1 h-1 bg-[#888] rounded-full"></span>
-                              {study.location || "能登全域"}
+                              {study.location}
                             </span>
                           </div>
                           {/* 事業者名 */}
@@ -196,13 +196,13 @@ export default function IndustriesPage() {
                       {/* ⑤ 構造化データブロック */}
                       {study.challengeCard?.structuredBlock && (
                         <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
-                          {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
+                          {study.challengeCard.structuredBlock.map((block, idx) => (
                             <div key={idx} className="text-sm">
                               <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
                                 {block.label}
                               </span>
                               <ul className="list-disc list-inside text-gray-600 pl-1">
-                                {block.items.map((item: string, i: number) => (
+                                {block.items.map((item, i) => (
                                   <li key={i} className="leading-[1.8] mb-[8px] last:mb-0 break-words">
                                     {item}
                                   </li>
