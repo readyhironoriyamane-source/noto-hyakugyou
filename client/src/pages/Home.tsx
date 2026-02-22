@@ -9,7 +9,8 @@ import ConsultationCTA from '@/components/ConsultationCTA';
 
 export default function Home() {
   // 活用事例記事（isCaseStudyがtrue）のみを取得
-  const caseStudies = industries.filter(i => i.isCaseStudy);
+  // TOPページには最大6件まで表示
+  const caseStudies = industries.filter(i => i.isCaseStudy).slice(0, 6);
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
