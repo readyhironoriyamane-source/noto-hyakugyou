@@ -1075,7 +1075,7 @@ export const industries: Industry[] = [
     id: 108,
     title: "「わからないことは、人に聞く。」倒産寸前の昆布店が、商談会で見つけた再生の道",
     category: "販路開拓・事業再生",
-    operator: "昆布の大脇",
+    operator: "有限会社大脇昆布",
     role: "代表",
     location: "能登町",
     locationCoords: { lat: 37.30, lng: 137.15 },

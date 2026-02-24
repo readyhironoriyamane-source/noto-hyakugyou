@@ -66,7 +66,7 @@ export default function IndustryDetailPage() {
         
         <div className="relative z-10 w-full p-6 pb-12 md:p-12 lg:p-20 text-white mt-auto">
           <div className="max-w-4xl mx-auto">
-            <Link href="/" className="inline-flex items-center text-white/80 hover:text-white mb-4 md:mb-6 transition-colors no-underline">
+            <Link href="/industries" className="inline-flex items-center text-white/80 hover:text-white mb-4 md:mb-6 transition-colors no-underline">
               <ArrowLeft className="w-4 h-4 mr-2" />
               一覧に戻る
             </Link>
