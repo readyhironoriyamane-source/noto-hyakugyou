@@ -161,7 +161,7 @@ export default function IndustryDetailPage() {
             <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
             
             <div className="mb-2">
-              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 1</span>
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">課題</span>
               
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">現状と課題</h3>
@@ -169,28 +169,7 @@ export default function IndustryDetailPage() {
               {industry.timeline.phase1 || industry.timeline.present}
             </p>
             
-            {/* 課題リスト (Barriers) */}
-            {industry.barriers && industry.barriers.checklist && (
-              <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm mt-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <AlertTriangle className="w-6 h-6 text-[#B33E28]" />
-                  <h4 className="font-bold text-xl text-gray-800">これから申請する人が覚悟すべき「実務の壁」</h4>
-                </div>
-                <div className="space-y-6">
-                  {industry.barriers.checklist.map((item, index) => (
-                    <div key={index} className="flex items-start gap-4">
-                      <div className="mt-1 bg-gray-100 p-1 rounded">
-                        <CheckCircle2 className="w-5 h-5 text-gray-400" />
-                      </div>
-                      <div>
-                        <div className="font-bold text-lg text-gray-800 mb-1">{item.title}</div>
-                        <div className="text-gray-600 leading-relaxed text-base">{item.detail}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+
           </div>
 
           {/* =================================================================
@@ -273,6 +252,29 @@ export default function IndustryDetailPage() {
             <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
               {industry.timeline.phase3 || industry.timeline.future}
             </p>
+
+            {/* 課題リスト (Barriers) - フェーズ3へ移動 */}
+            {industry.barriers && industry.barriers.checklist && (
+              <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm mt-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <AlertTriangle className="w-6 h-6 text-[#B33E28]" />
+                  <h4 className="font-bold text-xl text-gray-800">これから申請する人が覚悟すべき「実務の壁」</h4>
+                </div>
+                <div className="space-y-6">
+                  {industry.barriers.checklist.map((item, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <div className="mt-1 bg-gray-100 p-1 rounded">
+                        <CheckCircle2 className="w-5 h-5 text-gray-400" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-lg text-gray-800 mb-1">{item.title}</div>
+                        <div className="text-gray-600 leading-relaxed text-base">{item.detail}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
             {/* =================================================================
@@ -284,7 +286,7 @@ export default function IndustryDetailPage() {
             </div>
             
             <div className="mb-2">
-              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 4</span>
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">現在・未来に向けた取り組み</span>
               
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">未来</h3>
