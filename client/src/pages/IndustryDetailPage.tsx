@@ -161,10 +161,10 @@ export default function IndustryDetailPage() {
             <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
             
             <div className="mb-2">
-              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">課題</span>
+              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 1</span>
               
             </div>
-            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">現状と課題</h3>
+            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">課題</h3>
             <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
               {industry.timeline.phase1 || industry.timeline.present}
             </p>
