@@ -149,7 +149,7 @@ export default function IndustryDetailPage() {
             <span>ライター: {industry.details?.writer}</span>
           </div>
 
-          {/* 【セクション8】💡セクション（グリッチ効果付きカード） */}
+          {/* 【セクション8】💡セクション（能登百業録カラー対応グリッチ効果付きカード） */}
           {industry.regrets && (
             <div className="relative mb-16 group">
               {/* SVGノイズフィルター定義 */}
@@ -163,22 +163,22 @@ export default function IndustryDetailPage() {
 
               {/* カード本体 */}
               <div 
-                className="relative overflow-hidden rounded-2xl p-12 transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(79,70,229,0.4)]"
+                className="relative overflow-hidden rounded-2xl p-12 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(30,58,95,0.5)] border-l-4 border-[#C8A882]"
                 style={{
-                  background: "linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%)",
+                  background: "linear-gradient(135deg, #1E3A5F 0%, #2D7F8F 100%)",
                 }}
               >
                 {/* ノイズオーバーレイ */}
                 <div 
-                  className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay"
+                  className="absolute inset-0 opacity-15 pointer-events-none mix-blend-overlay"
                   style={{ filter: "url(#noiseFilter)" }}
                 ></div>
                 
-                {/* アクセント図形（左上） */}
-                <div className="absolute -top-6 -left-6 w-[60px] h-[60px] bg-yellow-300/80 rounded-full blur-xl"></div>
+                {/* アクセント図形（左上：ゴールド円形） */}
+                <div className="absolute -top-5 -left-5 w-[80px] h-[80px] bg-[#C8A882]/70 rounded-full blur-xl"></div>
                 
-                {/* アクセント図形（右下） */}
-                <div className="absolute -bottom-6 -right-6 w-[60px] h-[60px] bg-pink-500/60 rounded-full blur-xl"></div>
+                {/* アクセント図形（右下：ライトティール波型） */}
+                <div className="absolute -bottom-6 -right-6 w-[100px] h-[60px] bg-[#4FA8B8]/50 rounded-full blur-xl transform rotate-12"></div>
 
                 {/* コンテンツ */}
                 <div className="relative z-10">
@@ -187,16 +187,16 @@ export default function IndustryDetailPage() {
                     <span className="text-3xl filter drop-shadow-md">💡</span>
                     <h3 
                       className="text-[28px] font-bold text-white"
-                      style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
+                      style={{ textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}
                     >
-                      {industry.regrets.title}
+                      支援がもたらした変化
                     </h3>
                   </div>
 
                   {/* 本文 */}
                   <div 
                     className="text-[20px] leading-[1.8] text-white font-medium"
-                    style={{ textShadow: "0 1px 4px rgba(0,0,0,0.2)" }}
+                    style={{ textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}
                   >
                     {industry.regrets.content}
                   </div>
