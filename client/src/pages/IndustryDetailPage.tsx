@@ -46,110 +46,106 @@ export default function IndustryDetailPage() {
     );
   }
 
-  // 記事ID: 101 の場合は、新デザインレイアウトを適用
+  // フォントサイズと行間の設定 (UD対応: ベースサイズを大きく、行間を広めに)
+  const baseTextSize = "text-lg md:text-xl";
+  const leadingRelaxed = "leading-9 md:leading-10";
+
+  // 記事ID: 101 の場合は、新デザインレイアウトを適用（ヘッダー・フッター・フォントは共通化）
   if (industry.id === 101) {
     return (
-      <div className="min-h-screen bg-white font-sans text-[#333]">
-        {/* 【セクション1】ヘッダー */}
-        <header className="h-[60px] bg-white border-b border-[#E0E0E0] flex items-center justify-between px-6 sticky top-0 z-50">
-          <div className="flex items-center">
-            {/* ロゴ（簡易表示） */}
-            <Link href="/" className="font-bold text-xl text-[#1D3A52]">能登百業録</Link>
-          </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-            <Link href="/about" className="hover:text-[#1D3A52]">能登百業録とは</Link>
-            <Link href="/supports" className="hover:text-[#1D3A52]">支援制度</Link>
-            <Link href="/industries" className="hover:text-[#1D3A52]">記事一覧</Link>
-            <Link href="/contact" className="hover:text-[#1D3A52]">お問い合わせ</Link>
-          </nav>
-        </header>
+      <div className="min-h-screen bg-[#F9F8F4] font-sans text-gray-800">
+        <Header />
 
-        {/* 【セクション2】ヒーローセクション */}
-        <div className="relative h-[500px] w-full overflow-hidden flex items-center justify-center">
+        {/* 【セクション2】ヒーローセクション（共通コンポーネントベース + 詳細情報） */}
+        <div className="relative min-h-[80vh] md:h-[70vh] w-full overflow-hidden flex flex-col justify-end">
           <img
             src={industry.image}
             alt={industry.title}
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover"
           />
-          {/* オーバーレイ：黒の半透明レイヤー */}
-          <div className="absolute inset-0 bg-black/50"></div>
+          {/* Scrim Gradient: 下から上へのグラデーションのみを適用し、上部は写真の明るさを活かす */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1D3A52] via-[#1D3A52]/80 to-transparent opacity-90"></div>
           
-          <div className="relative z-10 w-full max-w-[900px] px-6 text-white">
-            {/* タグ部分 */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              <span className="bg-[#3498DB] text-white px-3 py-[6px] rounded-[4px] text-[12px] font-bold mr-2">
-                #クリーニング・地域サービス
-              </span>
-              <span className="bg-[#27AE60] text-white px-3 py-[6px] rounded-[4px] text-[12px] font-bold mr-2">
-                #{industry.category}
-              </span>
-              <span className="bg-[#E67E22] text-white px-3 py-[6px] rounded-[4px] text-[12px] font-bold mr-2">
-                #小規模事業者持続化補助金
-              </span>
-              <span className="bg-[#9B59B6] text-white px-3 py-[6px] rounded-[4px] text-[12px] font-bold mr-2">
-                #地域貢献
-              </span>
-            </div>
-
-            {/* タイトル */}
-            <h1 className="text-[32px] md:text-[48px] font-bold leading-[1.4] drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-              {industry.title}
-            </h1>
-          </div>
-        </div>
-
-        {/* 【セクション3】パンくずリスト */}
-        <div className="bg-[#F5F5F5] py-3 px-6 text-[14px] text-[#666]">
-          <div className="max-w-[1000px] mx-auto">
-            <Link href="/" className="hover:underline">能登百業録</Link>
-            <span className="mx-2">&gt;</span>
-            <Link href="/industries" className="hover:underline">記事一覧</Link>
-            <span className="mx-2">&gt;</span>
-            <span>詳細</span>
-          </div>
-        </div>
-
-        {/* 【セクション4】メインコンテンツエリア */}
-        <main className="max-w-[1000px] mx-auto px-10 bg-white">
-          
-          {/* 【セクション5】基本情報カード */}
-          <div className="bg-[#F8F9FA] border border-[#E0E0E0] p-5 rounded-lg my-10">
-            <div className="space-y-2 text-[16px] leading-[1.8] text-[#333]">
-              <div className="flex items-center gap-2">
-                <span>📍</span> {industry.location}
-              </div>
-              <div className="flex items-center gap-2">
-                <span>📅</span> 創業：{industry.details?.founded}
-              </div>
-              <div className="flex items-center gap-2">
-                <span>👥</span> 従業員：{industry.details?.employees}
-              </div>
-              <div className="flex items-center gap-2">
-                <span>👤</span> {industry.details?.owner}
-              </div>
+          <div className="relative z-10 w-full p-6 pb-12 md:p-12 lg:p-20 text-white mt-auto">
+            <div className="max-w-4xl mx-auto">
+              <Link href="/industries" className="inline-flex items-center text-white/80 hover:text-white mb-4 md:mb-6 transition-colors no-underline">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                一覧に戻る
+              </Link>
               
-              {/* 事業者名（新規） */}
-              <div className="mt-5 pt-5 border-t border-[#E0E0E0] font-bold text-[20px]">
-                <div className="flex items-center gap-2">
-                  <span>🏢</span> {industry.operator}
+              {/* タグエリア */}
+              <div className="flex flex-wrap gap-2 mb-3 md:mb-4">
+                <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold border border-white/30">
+                  #{industry.category}
+                </span>
+                {industry.tags.map((tag: string, index: number) => (
+                  <span key={index} className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold border border-white/30">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+
+              {/* タイトル */}
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold font-serif leading-snug md:leading-tight mb-4 md:mb-6 drop-shadow-lg break-words">
+                {industry.title}
+              </h1>
+
+              {/* 取材対象者データ（詳細版） */}
+              <div className="flex flex-col gap-3 text-sm md:text-base text-white/90 border-t border-white/20 py-4 mt-4 md:mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 shrink-0" />
+                    <span>{industry.location}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg leading-none">📅</span>
+                    <span>創業：{industry.details?.founded}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Users className="w-4 h-4 shrink-0" />
+                    <span>従業員：{industry.details?.employees}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg leading-none">👤</span>
+                    <span>代表：{industry.details?.owner}</span>
+                  </div>
+                  <div className="flex items-center gap-2 md:col-span-2">
+                    <Building2 className="w-4 h-4 shrink-0" />
+                    <span className="font-bold text-lg">事業者名：{industry.operator}</span>
+                  </div>
+                </div>
+                
+                {/* 事業説明 */}
+                <div className="mt-2 pt-2 border-t border-white/10">
+                  <p className="text-sm md:text-base leading-relaxed">
+                    {industry.description ? industry.description.split('\n')[0] : "事業説明が入ります"}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* 【セクション6】事業概要テキスト */}
-          <div className="text-[16px] leading-[1.8] text-[#333] my-6 whitespace-pre-line">
-            {industry.description}
-          </div>
+        {/* 【セクション3】パンくずリスト（共通デザインに合わせるため削除、または共通スタイルで実装） */}
+        {/* 共通デザインではパンくずリストはヘッダー下にはないため、ここでは削除し、ヒーロー内の「一覧に戻る」で代用 */}
 
+        {/* 【セクション4】メインコンテンツエリア */}
+        <main className="max-w-3xl mx-auto px-6 py-12 md:py-20">
+          
+          {/* 【セクション5】基本情報カード（ヒーローに統合したため削除） */}
+
+          {/* 【セクション6】事業概要テキスト（ヒーローに統合したため削除、または詳細として表示） */}
+          {/* ここでは指示通り「事業説明が入ります」の部分をヒーローに入れたので、本文としての概要は一旦非表示にするか、詳細なストーリーとして扱う */}
+          
           {/* 【セクション7】取材情報 */}
-          <div className="text-[14px] text-[#666] my-4 text-right">
-            取材日: {industry.details?.interviewDate} / ライター: {industry.details?.writer}
+          <div className="mb-12 text-gray-600 text-sm flex justify-end gap-4">
+            <span>取材日: {industry.details?.interviewDate}</span>
+            <span>ライター: {industry.details?.writer}</span>
           </div>
 
           {/* 【セクション8】💡セクション（旧⚠️セクション） */}
           {industry.regrets && (
-            <div className="bg-[#FFF9E6] border-l-4 border-[#FFB74D] p-6 rounded-lg my-10">
+            <div className="bg-[#FFF9E6] border-l-4 border-[#FFB74D] p-6 rounded-lg mb-16 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-[18px]">💡</span>
                 <h3 className="text-[18px] font-bold text-[#333]">{industry.regrets.title}</h3>
@@ -161,189 +157,163 @@ export default function IndustryDetailPage() {
           )}
 
           {/* 【セクション9】フェーズ1-4（タイムライン） */}
-          <div className="relative ml-[60px] my-12">
+          <div className="relative ml-3 md:ml-6 mb-16">
             {/* 縦ライン */}
-            <div className="absolute left-[32px] top-0 bottom-0 w-[2px] bg-[#D0D0D0]"></div>
+            <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-[#1D3A52]"></div>
 
             {/* Phase 1 */}
-            <div className="relative mb-12">
+            <div className="relative pl-8 md:pl-12 mb-16">
               {/* マーカー */}
-              <div className="absolute left-[26px] top-[6px] w-[12px] h-[12px] rounded-full bg-white border-2 border-[#3498DB] z-10"></div>
+              <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
               
-              <div className="pl-[56px]">
-                <span className="inline-block bg-[#3498DB] text-white px-3 py-[6px] rounded-[4px] text-[14px] font-bold mb-2">
-                  フェーズ 1
-                </span>
-                <h3 className="text-[28px] font-bold text-[#333] mt-2 mb-5">課題</h3>
-                <p className="text-[16px] leading-[1.8] text-[#333] max-w-[800px]">
-                  {industry.timeline.phase1}
-                </p>
+              <div className="mb-2">
+                <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 1</span>
               </div>
+              <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">課題</h3>
+              <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
+                {industry.timeline.phase1}
+              </p>
             </div>
 
-            {/* フェーズ間区切り */}
-            <div className="pl-[32px] my-12 border-t border-dashed border-[#D0D0D0]"></div>
-
             {/* Phase 2 */}
-            <div className="relative mb-12">
-              <div className="absolute left-[26px] top-[6px] w-[12px] h-[12px] rounded-full bg-white border-2 border-[#3498DB] z-10"></div>
+            <div className="relative pl-8 md:pl-12 mb-16">
+              <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
               
-              <div className="pl-[56px]">
-                <span className="inline-block bg-[#3498DB] text-white px-3 py-[6px] rounded-[4px] text-[14px] font-bold mb-2">
-                  フェーズ 2
-                </span>
-                <h3 className="text-[28px] font-bold text-[#333] mt-2 mb-5">選択と決断</h3>
-                <p className="text-[16px] leading-[1.8] text-[#333] max-w-[800px]">
-                  {industry.timeline.phase2}
-                </p>
+              <div className="mb-2">
+                <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 2</span>
+              </div>
+              <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">選択と決断</h3>
+              <p className={`${baseTextSize} ${leadingRelaxed} mb-8`}>
+                {industry.timeline.phase2}
+              </p>
 
-                {/* 【セクション10】究極の二択 */}
-                {industry.decisionMatrix && (
-                  <div className="bg-[#F8F9FA] border-2 border-[#3498DB] p-8 rounded-lg my-8">
-                    <h4 className="text-[20px] font-bold text-[#333] mb-6">
-                      究極の二択：{industry.decisionMatrix.title}
-                    </h4>
-                    
-                    <div className="space-y-6">
-                      <div>
-                        <h5 className="text-[18px] font-bold text-[#333] mb-2">
-                          案A：{industry.decisionMatrix.optionA.title}
-                        </h5>
-                        <ul className="list-disc pl-5 space-y-2 text-[16px] leading-[1.6] text-[#333]">
-                          {industry.decisionMatrix.optionA.pros.map((pro, i) => (
-                            <li key={i}>{pro}</li>
-                          ))}
-                        </ul>
+              {/* 【セクション10】究極の二択 */}
+              {industry.decisionMatrix && (
+                <div className="bg-[#F8F9FA] border-2 border-[#3498DB] p-6 md:p-8 rounded-lg my-8">
+                  <h4 className="text-xl font-bold text-[#333] mb-6 text-center">
+                    究極の二択：{industry.decisionMatrix.title}
+                  </h4>
+                  
+                  <div className="flex flex-col gap-8">
+                    <div className="bg-white p-6 rounded border border-gray-200">
+                      <h5 className="text-lg font-bold text-gray-600 mb-4">
+                        案A：{industry.decisionMatrix.optionA.title}
+                      </h5>
+                      <ul className="space-y-2 text-base leading-relaxed text-gray-600">
+                        {industry.decisionMatrix.optionA.pros.map((pro, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <span className="text-gray-400">•</span>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="bg-white p-6 rounded border-2 border-[#3498DB] relative overflow-hidden">
+                      <div className="absolute top-0 right-0 bg-[#3498DB] text-white text-xs font-bold px-3 py-1 rounded-bl">
+                        決断
                       </div>
-
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-[#3498DB] font-bold">→ 決断</span>
-                          <h5 className="text-[18px] font-bold text-[#333]">
-                            案B：{industry.decisionMatrix.optionB.title}
-                          </h5>
-                        </div>
-                        <ul className="list-disc pl-5 space-y-2 text-[16px] leading-[1.6] text-[#333]">
-                          <li>{industry.decisionMatrix.optionB.subsidy}</li>
-                          <li>{industry.decisionMatrix.optionB.cost}</li>
-                        </ul>
-                      </div>
-
-                      <div className="pt-5 border-t border-[#D0D0D0]">
-                        <p className="font-bold text-[16px] text-[#333]">
+                      <h5 className="text-lg font-bold text-[#1D3A52] mb-4">
+                        案B：{industry.decisionMatrix.optionB.title}
+                      </h5>
+                      <ul className="space-y-2 text-base leading-relaxed text-[#333] mb-4">
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#3498DB]">•</span>
+                          {industry.decisionMatrix.optionB.subsidy}
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#3498DB]">•</span>
+                          {industry.decisionMatrix.optionB.cost}
+                        </li>
+                      </ul>
+                      
+                      <div className="bg-[#E6F0FA] p-4 rounded border-l-4 border-[#3498DB]">
+                        <p className="font-bold text-[#1D3A52] text-base">
                           決め手：{industry.decisionMatrix.reason}
                         </p>
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
 
-            {/* フェーズ間区切り */}
-            <div className="pl-[32px] my-12 border-t border-dashed border-[#D0D0D0]"></div>
-
             {/* Phase 3 */}
-            <div className="relative mb-12">
-              <div className="absolute left-[26px] top-[6px] w-[12px] h-[12px] rounded-full bg-white border-2 border-[#3498DB] z-10"></div>
+            <div className="relative pl-8 md:pl-12 mb-16">
+              <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
               
-              <div className="pl-[56px]">
-                <span className="inline-block bg-[#3498DB] text-white px-3 py-[6px] rounded-[4px] text-[14px] font-bold mb-2">
-                  フェーズ 3
-                </span>
-                <h3 className="text-[28px] font-bold text-[#333] mt-2 mb-5">行動と変化</h3>
-                
-                {/* 【セクション11】実務の壁（新規） */}
-                {industry.barriers && industry.barriers.checklist && (
-                  <div className="bg-[#FAF8F3] border-2 border-[#E67E22] p-8 rounded-lg my-8">
-                    <div className="flex items-center gap-2 mb-6">
-                      <span className="text-[20px]">⚠️</span>
-                      <h4 className="text-[20px] font-bold text-[#333]">
-                        {industry.barriers.title}
-                      </h4>
-                    </div>
-                    
-                    <div className="space-y-6">
-                      {industry.barriers.checklist.map((item: any, index: number) => (
-                        <div key={index}>
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-[18px]">✓</span>
-                            <h5 className="text-[18px] font-bold text-[#333]">{item.title}</h5>
-                          </div>
-                          <p className="text-[16px] leading-[1.8] text-[#333] pl-6">
-                            {item.detail}
-                          </p>
+              <div className="mb-2">
+                <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 3</span>
+              </div>
+              <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
+              
+              {/* 【セクション11】実務の壁（新規） */}
+              {industry.barriers && industry.barriers.checklist && (
+                <div className="bg-[#FAF8F3] border-2 border-[#E67E22] p-6 md:p-8 rounded-lg my-8">
+                  <div className="flex items-center gap-2 mb-6">
+                    <span className="text-xl">⚠️</span>
+                    <h4 className="text-xl font-bold text-[#333]">
+                      {industry.barriers.title}
+                    </h4>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    {industry.barriers.checklist.map((item: any, index: number) => (
+                      <div key={index}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-lg text-[#E67E22]">✓</span>
+                          <h5 className="text-lg font-bold text-[#333]">{item.title}</h5>
                         </div>
-                      ))}
-                    </div>
+                        <p className="text-base leading-relaxed text-[#333] pl-6">
+                          {item.detail}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                )}
+                </div>
+              )}
 
-                {/* 【セクション12】支援を受けて起きた変化（新規） */}
-                <div className="mt-10">
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="text-[20px] font-bold text-[#333]">▼</span>
-                    <h4 className="text-[20px] font-bold text-[#333]">支援を受けて起きた変化</h4>
-                  </div>
-                  <div className="text-[16px] leading-[1.8] text-[#333] space-y-4">
-                    {/* industry.timeline.phase3 の内容をパースして表示するか、固定テキストとして扱うか */}
-                    {/* ここでは industries.ts の phase3 の後半部分を表示する想定だが、データ構造上 phase3 は文字列なので、
-                        一旦 phase3 全体を表示する形にする（データ側ですでに分割されている前提であれば調整が必要）
-                        ※指示書には「支援を受けて起きた変化」として本文を表示とあるため、phase3の内容を表示 */}
-                     <div className="whitespace-pre-line">
-                        {/* データ構造上、phase3の前半は「実務の壁」なので、後半部分のみ抽出するのが理想だが、
-                            現状のデータ構造では混在しているため、phase3全体を表示しつつ、
-                            実務の壁部分は上のコンポーネントで表示済みなので、重複を避けるための処理が必要。
-                            ただし、今回は「完全再現」指示のため、データ構造の変更は最小限にし、
-                            表示側で調整する。
-                            
-                            現状の industries.ts の phase3 は Markdown形式で記述されているため、
-                            単純表示だとマークダウン記法がそのまま出てしまう。
-                            ここでは簡易的にテキストを表示する。
-                        */}
-                        {/* 注: データ側の phase3 はマークダウンを含んでいるため、
-                            実務の壁以外の部分（後半）を表示するようにしたいが、
-                            安全のため phase3 のテキストを表示する。
-                            （本来はデータ構造を分けるべきだが、指示書に従いレイアウト優先）
-                        */}
-                        {(industry.timeline.phase3 || "").split('---').length > 1 
-                          ? (industry.timeline.phase3 || "").split('---')[1].replace('### 支援を受けて起きた変化', '').trim()
-                          : industry.timeline.phase3}
-                     </div>
-                  </div>
+              {/* 【セクション12】支援を受けて起きた変化（新規） */}
+              <div className="mt-10">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-xl font-bold text-[#1D3A52]">▼</span>
+                  <h4 className="text-xl font-bold text-[#1D3A52]">支援を受けて起きた変化</h4>
+                </div>
+                <div className={`${baseTextSize} ${leadingRelaxed} text-[#333]`}>
+                   <div className="whitespace-pre-line">
+                      {(industry.timeline.phase3 || "").split('---').length > 1 
+                        ? (industry.timeline.phase3 || "").split('---')[1].replace('### 支援を受けて起きた変化', '').trim()
+                        : industry.timeline.phase3}
+                   </div>
                 </div>
               </div>
             </div>
 
-            {/* フェーズ間区切り */}
-            <div className="pl-[32px] my-12 border-t border-dashed border-[#D0D0D0]"></div>
-
             {/* Phase 4 */}
-            <div className="relative mb-12">
-              <div className="absolute left-[26px] top-[6px] w-[12px] h-[12px] rounded-full bg-white border-2 border-[#3498DB] z-10"></div>
-              
-              <div className="pl-[56px]">
-                <span className="inline-block bg-[#3498DB] text-white px-3 py-[6px] rounded-[4px] text-[14px] font-bold mb-2">
-                  フェーズ 4
-                </span>
-                <h3 className="text-[28px] font-bold text-[#333] mt-2 mb-5">現在・未来に向けた取り組み</h3>
-                <p className="text-[16px] leading-[1.8] text-[#333] max-w-[800px]">
-                  {industry.timeline.future}
-                </p>
+            <div className="relative pl-8 md:pl-12">
+              <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4] z-10 flex items-center justify-center">
               </div>
+              
+              <div className="mb-2">
+                <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 4</span>
+              </div>
+              <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">現在・未来に向けた取り組み</h3>
+              <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
+                {industry.timeline.future}
+              </p>
             </div>
           </div>
 
           {/* 【セクション13】コラム（📖 再起の裏側） */}
           {industry.story && (
-            <div className="bg-[#F5F5F0] p-10 rounded-lg my-16">
-              <div className="flex items-center gap-2 mb-6">
-                <span className="text-[24px]">📖</span>
-                <h3 className="text-[24px] font-bold text-[#333]">
+            <div className="bg-[#F5F5F0] p-8 md:p-10 rounded-lg my-16">
+              <div className="flex items-center gap-2 mb-6 justify-center">
+                <span className="text-2xl">📖</span>
+                <h3 className="text-2xl font-bold text-[#333] font-serif">
                   {industry.story.title}
                 </h3>
               </div>
-              <div className="space-y-5 text-[16px] leading-[1.8] text-[#333]">
+              <div className="space-y-5 text-lg leading-loose text-[#333] font-serif">
                 {industry.story.text.map((paragraph, index) => (
                   <p key={index} className={paragraph.startsWith("「") ? "font-bold" : ""}>
                     {paragraph}
@@ -354,35 +324,35 @@ export default function IndustryDetailPage() {
           )}
 
           {/* 【セクション14】編集者視点＋今回活用した制度 */}
-          <div className="bg-[#1E3A5F] p-12 rounded-lg my-16 text-white">
-            <h2 className="text-[24px] font-bold mb-5">編集者視点</h2>
-            <p className="text-[16px] leading-[1.8] mb-10">
+          <div className="bg-[#1E3A5F] p-8 md:p-12 rounded-lg my-16 text-white">
+            <h2 className="text-2xl font-bold mb-5 font-serif">編集者視点</h2>
+            <p className="text-lg leading-relaxed mb-10 opacity-90">
               {industry.editorComment}
             </p>
 
             {/* 今回活用した制度（白ボックス） */}
-            <div className="bg-white text-[#333] p-8 rounded-lg">
+            <div className="bg-white text-[#333] p-6 md:p-8 rounded-lg">
               {industry.supportSystem?.map((support, index) => (
                 <div key={index}>
-                  <h3 className="text-[20px] font-bold mb-4">{support.name}</h3>
-                  <p className="text-[14px] text-[#666] mb-5">{support.description}</p>
+                  <h3 className="text-xl font-bold mb-4">{support.name}</h3>
+                  <p className="text-sm text-gray-600 mb-5 leading-relaxed">{support.description}</p>
                   
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-2">
-                      <span className="text-[16px]">💰</span>
-                      <span className="text-[16px] leading-[1.8]">
+                  <div className="space-y-3 bg-[#F9F9F9] p-4 rounded">
+                    <div className="flex items-start gap-3">
+                      <span className="text-lg">💰</span>
+                      <span className="text-base leading-relaxed">
                         <strong>補助率</strong>: {support.points?.detail.replace(': ', '')}
                       </span>
                     </div>
-                    <div className="flex items-start gap-2">
-                      <span className="text-[16px]">📄</span>
-                      <span className="text-[16px] leading-[1.8]">
+                    <div className="flex items-start gap-3">
+                      <span className="text-lg">📄</span>
+                      <span className="text-base leading-relaxed">
                         <strong>上限</strong>: {support.specAmount?.replace('上限', '')}
                       </span>
                     </div>
-                    <div className="flex items-start gap-2">
-                      <span className="text-[16px]">✓</span>
-                      <span className="text-[16px] leading-[1.8]">
+                    <div className="flex items-start gap-3">
+                      <span className="text-lg text-[#E67E22]">✓</span>
+                      <span className="text-base leading-relaxed">
                         <strong>ここがポイント</strong>: {support.specCondition}
                       </span>
                     </div>
@@ -392,19 +362,24 @@ export default function IndustryDetailPage() {
             </div>
           </div>
 
+          {/* シェアボタン */}
+          <div className="mt-12 flex justify-center">
+            <Button 
+              variant="outline" 
+              className="gap-2 rounded-full px-8 py-6 text-lg border-[#1D3A52] text-[#1D3A52] hover:bg-[#1D3A52] hover:text-white transition-colors"
+              onClick={() => setShowShareMenu(!showShareMenu)}
+            >
+              <Share2 className="w-5 h-5" />
+              この記事をシェアする
+            </Button>
+          </div>
+
         </main>
 
-        {/* 【セクション15】フッター */}
-        <footer className="bg-[#2C3E50] text-white py-10 text-center">
-          <p className="text-[14px]">&copy; 2026 能登百業録 All Rights Reserved.</p>
-        </footer>
+        <Footer />
       </div>
     );
   }
-
-  // フォントサイズと行間の設定 (UD対応: ベースサイズを大きく、行間を広めに)
-  const baseTextSize = "text-lg md:text-xl";
-  const leadingRelaxed = "leading-9 md:leading-10";
 
   return (
     <div className="min-h-screen bg-[#F9F8F4] font-sans text-gray-800">
