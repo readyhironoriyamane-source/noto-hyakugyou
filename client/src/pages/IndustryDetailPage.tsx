@@ -296,25 +296,25 @@ export default function IndustryDetailPage() {
               </div>
               <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
               
-              {/* 【セクション11】実務の壁（新規） */}
+              {/* 【セクション11】実務の壁（能登百業録カラー対応） */}
               {industry.barriers && industry.barriers.checklist && (
-                <div className="bg-[#FAF8F3] border-2 border-[#E67E22] p-6 md:p-8 rounded-lg my-8">
-                  <div className="flex items-center gap-2 mb-6">
-                    <span className="text-xl">⚠️</span>
-                    <h4 className="text-xl font-bold text-[#333]">
-                      {industry.barriers.title}
+                <div className="bg-white border border-[#E0E0E0] border-l-[8px] border-l-[#C8A882] p-8 rounded-lg my-8">
+                  <div className="flex items-center gap-3 mb-8">
+                    <span className="text-2xl">⚠️</span>
+                    <h4 className="text-2xl font-bold text-[#1E3A5F]">
+                      申請する人が直面しやすい『実務の壁』
                     </h4>
                   </div>
                   
-                  <div className="space-y-6">
+                  <div className="space-y-5">
                     {industry.barriers.checklist.map((item: any, index: number) => (
-                      <div key={index}>
+                      <div key={index} className="bg-[#F8F9FA] p-5 rounded-lg">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="text-lg text-[#E67E22]">✓</span>
-                          <h5 className="text-lg font-bold text-[#333]">{item.title}</h5>
+                          <span className="text-lg text-[#2D7F8F]">✓</span>
+                          <h5 className="text-lg font-bold text-[#2D7F8F]">{item.title}</h5>
                         </div>
-                        <p className="text-base leading-relaxed text-[#333] pl-6">
-                          {item.detail}
+                        <p className="text-base leading-[1.8] text-[#333]">
+                          {item.description}
                         </p>
                       </div>
                     ))}
@@ -648,7 +648,7 @@ export default function IndustryDetailPage() {
                       </div>
                       <div>
                         <div className="font-bold text-lg text-gray-800 mb-1">{item.title}</div>
-                        <div className="text-gray-600 leading-relaxed text-base">{item.detail}</div>
+                        <div className="text-gray-600 leading-relaxed text-base">{item.description}</div>
                       </div>
                     </div>
                   ))}
