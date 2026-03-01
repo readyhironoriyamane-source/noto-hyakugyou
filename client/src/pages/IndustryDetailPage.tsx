@@ -369,16 +369,19 @@ export default function IndustryDetailPage() {
 
           {/* 【セクション13】コラム（📖 再起の裏側） */}
           {industry.story && (
-            <div className="bg-[#F5F5F0] p-8 md:p-10 rounded-lg my-16">
-              <div className="flex items-center gap-2 mb-6 justify-center">
-                <span className="text-2xl">📖</span>
-                <h3 className="text-2xl font-bold text-[#333] font-serif">
-                  {industry.story.title}
+            <div className="bg-white border-2 border-[#1E3A5F] rounded-2xl p-8 md:p-12 lg:px-12 lg:py-14 my-16">
+              <div className="flex items-center gap-2 mb-12 justify-center">
+                <span className="text-3xl">📖</span>
+                <h3 className="text-[28px] font-bold text-[#1E3A5F] font-serif">
+                  再起の裏側：{industry.story.title}
                 </h3>
               </div>
-              <div className="space-y-5 text-lg leading-loose text-[#333] font-serif">
+              <div className="space-y-8 text-lg leading-[2.0] text-[#333] font-serif">
                 {industry.story.text.map((paragraph, index) => (
-                  <p key={index} className={paragraph.startsWith("「") ? "font-bold" : ""}>
+                  <p 
+                    key={index} 
+                    className={paragraph.startsWith("「") ? "text-xl font-bold text-[#1E3A5F] py-6" : ""}
+                  >
                     {paragraph}
                   </p>
                 ))}
