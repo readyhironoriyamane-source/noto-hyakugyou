@@ -424,7 +424,7 @@ export default function IndustryDetailPage() {
                     </div>
                     
                     {/* 各制度の詳細ボタン */}
-                    <div className="mt-6 flex justify-end">
+                    <div className="mt-6 flex justify-center">
                       <a 
                         href={support.link || "#"} 
                         className="bg-[#2D7F8F] text-white font-bold text-[15px] py-[12px] px-[28px] rounded-lg hover:opacity-90 transition-opacity inline-block"
