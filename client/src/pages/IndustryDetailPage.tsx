@@ -391,15 +391,19 @@ export default function IndustryDetailPage() {
 
           {/* 【セクション14】編集者視点＋今回活用した制度 */}
           <div className="bg-[#1E3A5F] p-8 md:p-12 rounded-lg my-16 text-white">
-            <h2 className="text-2xl font-bold mb-5 font-serif">編集者視点</h2>
-            <p className="text-lg leading-relaxed mb-10 opacity-90">
+            {/* 編集者視点 */}
+            <h2 className="text-2xl font-bold mb-6 font-serif">編集者視点</h2>
+            <p className="text-base leading-relaxed mb-12 opacity-90">
               {industry.editorComment}
             </p>
 
-            {/* 今回活用した制度（白ボックス） */}
-            <div className="bg-white text-[#333] p-6 md:p-8 rounded-lg">
+            {/* 今回活用した制度見出し */}
+            <h2 className="text-2xl font-bold mb-6 mt-12 text-white">## 今回活用した制度</h2>
+
+            {/* 今回活用した制度（各制度ごとの白カード） */}
+            <div className="space-y-6">
               {industry.supportSystem?.map((support, index) => (
-                <div key={index}>
+                <div key={index} className="bg-white text-[#333] p-6 md:p-8 rounded-lg">
                   <h3 className="text-xl font-bold mb-4">{support.name}</h3>
                   <p className="text-sm text-gray-600 mb-5 leading-relaxed">{support.description}</p>
                   
@@ -435,16 +439,16 @@ export default function IndustryDetailPage() {
                   </div>
                 </div>
               ))}
+            </div>
               
-              {/* セクション末尾：制度一覧リンク */}
-              <div className="flex flex-col items-center mt-12">
-                <a 
-                  href="/support" 
-                  className="text-[#2D7F8F] text-sm hover:underline transition-all"
-                >
-                  他の支援制度も見る →
-                </a>
-              </div>
+            {/* セクション末尾：制度一覧リンク */}
+            <div className="flex flex-col items-center mt-12">
+              <a 
+                href="/support" 
+                className="text-[#2D7F8F] text-sm hover:underline transition-all bg-white py-2 px-4 rounded-full"
+              >
+                他の支援制度も見る →
+              </a>
             </div>
           </div>
 
