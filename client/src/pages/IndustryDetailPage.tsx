@@ -208,12 +208,12 @@ export default function IndustryDetailPage() {
           {/* 【セクション9】フェーズ1-4（タイムライン） */}
           <div className="relative ml-6 md:ml-6 mb-16">
             {/* 縦ライン */}
-            <div className="absolute left-4 md:left-0 top-2 bottom-0 w-0.5 bg-[#1D3A52]"></div>
+            <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-[#1D3A52]"></div>
 
             {/* Phase 1 */}
             <div className="relative pl-8 md:pl-12 mb-16">
               {/* マーカー */}
-              <div className="absolute -left-[5px] md:-left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
+              <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
               
               <div className="mb-2">
                 <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 1</span>
@@ -226,7 +226,7 @@ export default function IndustryDetailPage() {
 
             {/* Phase 2 */}
             <div className="relative pl-8 md:pl-12 mb-16">
-              <div className="absolute -left-[5px] md:-left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
+              <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
               
               <div className="mb-2">
                 <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 2</span>
@@ -298,7 +298,7 @@ export default function IndustryDetailPage() {
 
             {/* Phase 3 */}
             <div className="relative pl-8 md:pl-12 mb-16">
-              <div className="absolute -left-[5px] md:-left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
+              <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
               
               <div className="mb-2">
                 <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 3</span>
@@ -354,7 +354,7 @@ export default function IndustryDetailPage() {
 
             {/* Phase 4 */}
             <div className="relative pl-8 md:pl-12">
-              <div className="absolute -left-[5px] md:-left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4] z-10 flex items-center justify-center">
+              <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4] z-10 flex items-center justify-center">
               </div>
               
               <div className="mb-2">
