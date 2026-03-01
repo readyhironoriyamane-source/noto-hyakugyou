@@ -425,6 +425,25 @@ export default function IndustryDetailPage() {
                   </div>
                 </div>
               ))}
+              
+              {/* 導線追加（2段階） */}
+              <div className="flex flex-col items-center mt-8">
+                {/* 1次導線：制度詳細ボタン */}
+                <a 
+                  href="#" 
+                  className="bg-[#2D7F8F] text-white font-bold text-base py-[14px] px-[36px] rounded-lg hover:opacity-90 transition-opacity text-center inline-block"
+                >
+                  小規模事業者持続化補助金の詳細を見る →
+                </a>
+                
+                {/* 2次導線：制度一覧リンク */}
+                <a 
+                  href="#" 
+                  className="text-[#2D7F8F] text-sm mt-4 hover:underline transition-all"
+                >
+                  他の支援制度も見る →
+                </a>
+              </div>
             </div>
           </div>
 
