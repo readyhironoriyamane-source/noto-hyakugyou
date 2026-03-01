@@ -322,7 +322,7 @@ export default function IndustryDetailPage() {
                           <span className="text-lg text-[#2D7F8F]">✓</span>
                           <h5 className="text-lg font-bold text-[#2D7F8F]">{item.title}</h5>
                         </div>
-                        <p className="text-base leading-[1.8] text-[#333]">
+                        <p className="text-base leading-[1.8] text-[#1E3A5F]">
                           {item.description}
                         </p>
                       </div>
