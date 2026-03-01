@@ -266,8 +266,12 @@ export default function IndustryDetailPage() {
 
                     {/* 案B */}
                     <div className="bg-[#E6F3F5] p-8 rounded-lg border-2 border-[#2D7F8F] border-l-[5px] w-full max-w-[800px]">
+                      <div className="mb-4">
+                        <span className="bg-[#2D7F8F] text-white px-4 py-2 rounded text-base inline-block font-bold">
+                          決断
+                        </span>
+                      </div>
                       <h5 className="text-xl font-bold text-[#1E3A5F] mb-4">
-                        <span className="bg-[#2D7F8F] text-white px-3 py-1 rounded text-base mr-3 align-middle inline-block">決断</span>
                         案B：小規模事業者持続化補助金を活用して再開
                       </h5>
                       <ul className="space-y-2 text-base leading-[1.8] text-[#1E3A5F] mb-6">
