@@ -74,7 +74,7 @@ export interface Industry {
     content: string;
     checklist: {
       title: string;
-      detail: string;
+      description: string;
     }[];
   };
   editorComment?: string;
