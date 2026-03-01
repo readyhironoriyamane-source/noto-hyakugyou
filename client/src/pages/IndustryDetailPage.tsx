@@ -236,50 +236,50 @@ export default function IndustryDetailPage() {
                 {industry.timeline.phase2}
               </p>
 
-              {/* 【セクション10】究極の二択 */}
+              {/* 【セクション10】究極の二択（能登百業録カラー対応） */}
               {industry.decisionMatrix && (
-                <div className="bg-[#F8F9FA] border-2 border-[#3498DB] p-6 md:p-8 rounded-lg my-8">
-                  <h4 className="text-xl font-bold text-[#333] mb-6 text-center">
-                    究極の二択：{industry.decisionMatrix.title}
+                <div className="bg-[#F8F9FA] border-[3px] border-[#2D7F8F] p-10 rounded-xl my-12 ml-14">
+                  <h4 className="text-2xl font-bold text-[#1E3A5F] mb-8 pb-4 border-b-2 border-[#E0E0E0]">
+                    究極の二択：450万円かけて再開するか、廃業するか
                   </h4>
                   
-                  <div className="flex flex-col gap-8">
-                    <div className="bg-white p-6 rounded border border-gray-200">
-                      <h5 className="text-lg font-bold text-gray-600 mb-4">
-                        案A：{industry.decisionMatrix.optionA.title}
+                  <div className="flex flex-col gap-6">
+                    {/* 案A */}
+                    <div className="bg-white p-6 rounded-lg border border-[#E0E0E0] mb-6">
+                      <h5 className="text-xl font-bold text-[#3A4A5A] mb-4">
+                        案A：このまま廃業する
                       </h5>
-                      <ul className="space-y-2 text-base leading-relaxed text-gray-600">
+                      <ul className="space-y-2 text-base leading-[1.8] text-[#333]">
                         {industry.decisionMatrix.optionA.pros.map((pro, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="text-gray-400">•</span>
+                          <li key={i} className={`flex items-start gap-2 ${i === industry.decisionMatrix!.optionA.pros.length - 1 ? 'italic' : ''}`}>
+                            <span className="text-[#333]">•</span>
                             {pro}
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    <div className="bg-white p-6 rounded border-2 border-[#3498DB] relative overflow-hidden">
-                      <div className="absolute top-0 right-0 bg-[#3498DB] text-white text-xs font-bold px-3 py-1 rounded-bl">
-                        決断
-                      </div>
-                      <h5 className="text-lg font-bold text-[#1D3A52] mb-4">
-                        案B：{industry.decisionMatrix.optionB.title}
+                    {/* 案B */}
+                    <div className="bg-[#E6F3F5] p-8 rounded-lg border-2 border-[#2D7F8F] border-l-[5px]">
+                      <h5 className="text-xl font-bold text-[#1E3A5F] mb-4">
+                        <span className="bg-[#2D7F8F] text-white px-3 py-1 rounded text-base mr-3 align-middle inline-block">決断</span>
+                        案B：小規模事業者持続化補助金を活用して再開
                       </h5>
-                      <ul className="space-y-2 text-base leading-relaxed text-[#333] mb-4">
+                      <ul className="space-y-2 text-base leading-[1.8] text-[#1E3A5F] mb-6">
                         <li className="flex items-start gap-2">
-                          <span className="text-[#3498DB]">•</span>
+                          <span className="text-[#1E3A5F]">•</span>
                           {industry.decisionMatrix.optionB.subsidy}
                         </li>
                         <li className="flex items-start gap-2">
-                          <span className="text-[#3498DB]">•</span>
+                          <span className="text-[#1E3A5F]">•</span>
                           {industry.decisionMatrix.optionB.cost}
                         </li>
                       </ul>
                       
-                      <div className="bg-[#E6F0FA] p-4 rounded border-l-4 border-[#3498DB]">
-                        <p className="font-bold text-[#1D3A52] text-base">
-                          決め手：{industry.decisionMatrix.reason}
-                        </p>
+                      {/* 決め手セクション */}
+                      <div className="bg-[#F5F0E8] p-6 rounded-lg border-l-4 border-[#C8A882] mt-6">
+                        <p className="text-lg font-bold text-[#3A4A5A] mb-2">決め手：</p>
+                        <p className="text-base leading-[1.8] text-[#333]">{industry.decisionMatrix.reason}</p>
                       </div>
                     </div>
                   </div>
