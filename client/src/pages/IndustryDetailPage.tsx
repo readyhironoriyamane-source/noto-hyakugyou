@@ -279,18 +279,61 @@ export default function IndustryDetailPage() {
                 </div>
               )}
 
-              {/* 【セクション12】支援を受けて起きた変化（新規） */}
-              <div className="mt-10">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-xl font-bold text-[#1D3A52]">▼</span>
-                  <h4 className="text-xl font-bold text-[#1D3A52]">支援を受けて起きた変化</h4>
-                </div>
-                <div className={`${baseTextSize} ${leadingRelaxed} text-[#333]`}>
-                   <div className="whitespace-pre-line">
-                      {(industry.timeline.phase3 || "").split('---').length > 1 
-                        ? (industry.timeline.phase3 || "").split('---')[1].replace('### 支援を受けて起きた変化', '').trim()
-                        : industry.timeline.phase3}
-                   </div>
+              {/* 【セクション12】支援を受けて起きた変化（グリッチ効果付きカード） */}
+              <div className="relative mt-16 mb-16 group">
+                {/* SVGノイズフィルター定義 */}
+                <svg className="hidden">
+                  <filter id="noiseFilter">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" />
+                    <feColorMatrix type="saturate" values="0" />
+                    <feBlend mode="multiply" />
+                  </filter>
+                </svg>
+
+                {/* カード本体 */}
+                <div 
+                  className="relative overflow-hidden rounded-2xl p-12 transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(79,70,229,0.4)]"
+                  style={{
+                    background: "linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%)",
+                  }}
+                >
+                  {/* ノイズオーバーレイ */}
+                  <div 
+                    className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay"
+                    style={{ filter: "url(#noiseFilter)" }}
+                  ></div>
+                  
+                  {/* アクセント図形（左上） */}
+                  <div className="absolute -top-6 -left-6 w-[60px] h-[60px] bg-yellow-300/80 rounded-full blur-xl"></div>
+                  
+                  {/* アクセント図形（右下） */}
+                  <div className="absolute -bottom-6 -right-6 w-[60px] h-[60px] bg-pink-500/60 rounded-full blur-xl"></div>
+
+                  {/* コンテンツ */}
+                  <div className="relative z-10">
+                    {/* 見出し */}
+                    <div className="flex items-center gap-3 mb-6">
+                      <span className="text-3xl filter drop-shadow-md">💡</span>
+                      <h4 
+                        className="text-[28px] font-bold text-white"
+                        style={{ textShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
+                      >
+                        支援がもたらした変化
+                      </h4>
+                    </div>
+
+                    {/* 本文 */}
+                    <div 
+                      className="text-[20px] leading-[1.8] text-white font-medium"
+                      style={{ textShadow: "0 1px 4px rgba(0,0,0,0.2)" }}
+                    >
+                      <div className="whitespace-pre-line">
+                        {(industry.timeline.phase3 || "").split('---').length > 1 
+                          ? (industry.timeline.phase3 || "").split('---')[1].replace('### 支援を受けて起きた変化', '').trim()
+                          : industry.timeline.phase3}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
