@@ -46,15 +46,358 @@ export default function IndustryDetailPage() {
     );
   }
 
-  // 記事ID: 101 の場合は、デザインレイアウト刷新のためコンテンツを非表示にする
+  // 記事ID: 101 の場合は、新デザインレイアウトを適用
   if (industry.id === 101) {
     return (
-      <div className="min-h-screen bg-[#F9F8F4] font-sans text-gray-800 flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          {/* デザインレイアウト刷新のための空白エリア */}
+      <div className="min-h-screen bg-white font-sans text-[#333]">
+        {/* 【セクション1】ヘッダー */}
+        <header className="h-[60px] bg-white border-b border-[#E0E0E0] flex items-center justify-between px-6 sticky top-0 z-50">
+          <div className="flex items-center">
+            {/* ロゴ（簡易表示） */}
+            <Link href="/" className="font-bold text-xl text-[#1D3A52]">能登百業録</Link>
+          </div>
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+            <Link href="/about" className="hover:text-[#1D3A52]">能登百業録とは</Link>
+            <Link href="/supports" className="hover:text-[#1D3A52]">支援制度</Link>
+            <Link href="/industries" className="hover:text-[#1D3A52]">記事一覧</Link>
+            <Link href="/contact" className="hover:text-[#1D3A52]">お問い合わせ</Link>
+          </nav>
+        </header>
+
+        {/* 【セクション2】ヒーローセクション */}
+        <div className="relative h-[500px] w-full overflow-hidden flex items-center justify-center">
+          <img
+            src={industry.image}
+            alt={industry.title}
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
+          {/* オーバーレイ：黒の半透明レイヤー */}
+          <div className="absolute inset-0 bg-black/50"></div>
+          
+          <div className="relative z-10 w-full max-w-[900px] px-6 text-white">
+            {/* タグ部分 */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              <span className="bg-[#3498DB] text-white px-3 py-[6px] rounded-[4px] text-[12px] font-bold mr-2">
+                #クリーニング・地域サービス
+              </span>
+              <span className="bg-[#27AE60] text-white px-3 py-[6px] rounded-[4px] text-[12px] font-bold mr-2">
+                #{industry.category}
+              </span>
+              <span className="bg-[#E67E22] text-white px-3 py-[6px] rounded-[4px] text-[12px] font-bold mr-2">
+                #小規模事業者持続化補助金
+              </span>
+              <span className="bg-[#9B59B6] text-white px-3 py-[6px] rounded-[4px] text-[12px] font-bold mr-2">
+                #地域貢献
+              </span>
+            </div>
+
+            {/* タイトル */}
+            <h1 className="text-[32px] md:text-[48px] font-bold leading-[1.4] drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+              {industry.title}
+            </h1>
+          </div>
+        </div>
+
+        {/* 【セクション3】パンくずリスト */}
+        <div className="bg-[#F5F5F5] py-3 px-6 text-[14px] text-[#666]">
+          <div className="max-w-[1000px] mx-auto">
+            <Link href="/" className="hover:underline">能登百業録</Link>
+            <span className="mx-2">&gt;</span>
+            <Link href="/industries" className="hover:underline">記事一覧</Link>
+            <span className="mx-2">&gt;</span>
+            <span>詳細</span>
+          </div>
+        </div>
+
+        {/* 【セクション4】メインコンテンツエリア */}
+        <main className="max-w-[1000px] mx-auto px-10 bg-white">
+          
+          {/* 【セクション5】基本情報カード */}
+          <div className="bg-[#F8F9FA] border border-[#E0E0E0] p-5 rounded-lg my-10">
+            <div className="space-y-2 text-[16px] leading-[1.8] text-[#333]">
+              <div className="flex items-center gap-2">
+                <span>📍</span> {industry.location}
+              </div>
+              <div className="flex items-center gap-2">
+                <span>📅</span> 創業：{industry.details?.founded}
+              </div>
+              <div className="flex items-center gap-2">
+                <span>👥</span> 従業員：{industry.details?.employees}
+              </div>
+              <div className="flex items-center gap-2">
+                <span>👤</span> {industry.details?.owner}
+              </div>
+              
+              {/* 事業者名（新規） */}
+              <div className="mt-5 pt-5 border-t border-[#E0E0E0] font-bold text-[20px]">
+                <div className="flex items-center gap-2">
+                  <span>🏢</span> {industry.operator}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 【セクション6】事業概要テキスト */}
+          <div className="text-[16px] leading-[1.8] text-[#333] my-6 whitespace-pre-line">
+            {industry.description}
+          </div>
+
+          {/* 【セクション7】取材情報 */}
+          <div className="text-[14px] text-[#666] my-4 text-right">
+            取材日: {industry.details?.interviewDate} / ライター: {industry.details?.writer}
+          </div>
+
+          {/* 【セクション8】💡セクション（旧⚠️セクション） */}
+          {industry.regrets && (
+            <div className="bg-[#FFF9E6] border-l-4 border-[#FFB74D] p-6 rounded-lg my-10">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-[18px]">💡</span>
+                <h3 className="text-[18px] font-bold text-[#333]">{industry.regrets.title}</h3>
+              </div>
+              <p className="text-[16px] leading-[1.8] text-[#333]">
+                {industry.regrets.content}
+              </p>
+            </div>
+          )}
+
+          {/* 【セクション9】フェーズ1-4（タイムライン） */}
+          <div className="relative ml-[60px] my-12">
+            {/* 縦ライン */}
+            <div className="absolute left-[32px] top-0 bottom-0 w-[2px] bg-[#D0D0D0]"></div>
+
+            {/* Phase 1 */}
+            <div className="relative mb-12">
+              {/* マーカー */}
+              <div className="absolute left-[26px] top-[6px] w-[12px] h-[12px] rounded-full bg-white border-2 border-[#3498DB] z-10"></div>
+              
+              <div className="pl-[56px]">
+                <span className="inline-block bg-[#3498DB] text-white px-3 py-[6px] rounded-[4px] text-[14px] font-bold mb-2">
+                  フェーズ 1
+                </span>
+                <h3 className="text-[28px] font-bold text-[#333] mt-2 mb-5">課題</h3>
+                <p className="text-[16px] leading-[1.8] text-[#333] max-w-[800px]">
+                  {industry.timeline.phase1}
+                </p>
+              </div>
+            </div>
+
+            {/* フェーズ間区切り */}
+            <div className="pl-[32px] my-12 border-t border-dashed border-[#D0D0D0]"></div>
+
+            {/* Phase 2 */}
+            <div className="relative mb-12">
+              <div className="absolute left-[26px] top-[6px] w-[12px] h-[12px] rounded-full bg-white border-2 border-[#3498DB] z-10"></div>
+              
+              <div className="pl-[56px]">
+                <span className="inline-block bg-[#3498DB] text-white px-3 py-[6px] rounded-[4px] text-[14px] font-bold mb-2">
+                  フェーズ 2
+                </span>
+                <h3 className="text-[28px] font-bold text-[#333] mt-2 mb-5">選択と決断</h3>
+                <p className="text-[16px] leading-[1.8] text-[#333] max-w-[800px]">
+                  {industry.timeline.phase2}
+                </p>
+
+                {/* 【セクション10】究極の二択 */}
+                {industry.decisionMatrix && (
+                  <div className="bg-[#F8F9FA] border-2 border-[#3498DB] p-8 rounded-lg my-8">
+                    <h4 className="text-[20px] font-bold text-[#333] mb-6">
+                      究極の二択：{industry.decisionMatrix.title}
+                    </h4>
+                    
+                    <div className="space-y-6">
+                      <div>
+                        <h5 className="text-[18px] font-bold text-[#333] mb-2">
+                          案A：{industry.decisionMatrix.optionA.title}
+                        </h5>
+                        <ul className="list-disc pl-5 space-y-2 text-[16px] leading-[1.6] text-[#333]">
+                          {industry.decisionMatrix.optionA.pros.map((pro, i) => (
+                            <li key={i}>{pro}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-[#3498DB] font-bold">→ 決断</span>
+                          <h5 className="text-[18px] font-bold text-[#333]">
+                            案B：{industry.decisionMatrix.optionB.title}
+                          </h5>
+                        </div>
+                        <ul className="list-disc pl-5 space-y-2 text-[16px] leading-[1.6] text-[#333]">
+                          <li>{industry.decisionMatrix.optionB.subsidy}</li>
+                          <li>{industry.decisionMatrix.optionB.cost}</li>
+                        </ul>
+                      </div>
+
+                      <div className="pt-5 border-t border-[#D0D0D0]">
+                        <p className="font-bold text-[16px] text-[#333]">
+                          決め手：{industry.decisionMatrix.reason}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* フェーズ間区切り */}
+            <div className="pl-[32px] my-12 border-t border-dashed border-[#D0D0D0]"></div>
+
+            {/* Phase 3 */}
+            <div className="relative mb-12">
+              <div className="absolute left-[26px] top-[6px] w-[12px] h-[12px] rounded-full bg-white border-2 border-[#3498DB] z-10"></div>
+              
+              <div className="pl-[56px]">
+                <span className="inline-block bg-[#3498DB] text-white px-3 py-[6px] rounded-[4px] text-[14px] font-bold mb-2">
+                  フェーズ 3
+                </span>
+                <h3 className="text-[28px] font-bold text-[#333] mt-2 mb-5">行動と変化</h3>
+                
+                {/* 【セクション11】実務の壁（新規） */}
+                {industry.barriers && industry.barriers.checklist && (
+                  <div className="bg-[#FAF8F3] border-2 border-[#E67E22] p-8 rounded-lg my-8">
+                    <div className="flex items-center gap-2 mb-6">
+                      <span className="text-[20px]">⚠️</span>
+                      <h4 className="text-[20px] font-bold text-[#333]">
+                        {industry.barriers.title}
+                      </h4>
+                    </div>
+                    
+                    <div className="space-y-6">
+                      {industry.barriers.checklist.map((item: any, index: number) => (
+                        <div key={index}>
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-[18px]">✓</span>
+                            <h5 className="text-[18px] font-bold text-[#333]">{item.title}</h5>
+                          </div>
+                          <p className="text-[16px] leading-[1.8] text-[#333] pl-6">
+                            {item.detail}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 【セクション12】支援を受けて起きた変化（新規） */}
+                <div className="mt-10">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-[20px] font-bold text-[#333]">▼</span>
+                    <h4 className="text-[20px] font-bold text-[#333]">支援を受けて起きた変化</h4>
+                  </div>
+                  <div className="text-[16px] leading-[1.8] text-[#333] space-y-4">
+                    {/* industry.timeline.phase3 の内容をパースして表示するか、固定テキストとして扱うか */}
+                    {/* ここでは industries.ts の phase3 の後半部分を表示する想定だが、データ構造上 phase3 は文字列なので、
+                        一旦 phase3 全体を表示する形にする（データ側ですでに分割されている前提であれば調整が必要）
+                        ※指示書には「支援を受けて起きた変化」として本文を表示とあるため、phase3の内容を表示 */}
+                     <div className="whitespace-pre-line">
+                        {/* データ構造上、phase3の前半は「実務の壁」なので、後半部分のみ抽出するのが理想だが、
+                            現状のデータ構造では混在しているため、phase3全体を表示しつつ、
+                            実務の壁部分は上のコンポーネントで表示済みなので、重複を避けるための処理が必要。
+                            ただし、今回は「完全再現」指示のため、データ構造の変更は最小限にし、
+                            表示側で調整する。
+                            
+                            現状の industries.ts の phase3 は Markdown形式で記述されているため、
+                            単純表示だとマークダウン記法がそのまま出てしまう。
+                            ここでは簡易的にテキストを表示する。
+                        */}
+                        {/* 注: データ側の phase3 はマークダウンを含んでいるため、
+                            実務の壁以外の部分（後半）を表示するようにしたいが、
+                            安全のため phase3 のテキストを表示する。
+                            （本来はデータ構造を分けるべきだが、指示書に従いレイアウト優先）
+                        */}
+                        {(industry.timeline.phase3 || "").split('---').length > 1 
+                          ? (industry.timeline.phase3 || "").split('---')[1].replace('### 支援を受けて起きた変化', '').trim()
+                          : industry.timeline.phase3}
+                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* フェーズ間区切り */}
+            <div className="pl-[32px] my-12 border-t border-dashed border-[#D0D0D0]"></div>
+
+            {/* Phase 4 */}
+            <div className="relative mb-12">
+              <div className="absolute left-[26px] top-[6px] w-[12px] h-[12px] rounded-full bg-white border-2 border-[#3498DB] z-10"></div>
+              
+              <div className="pl-[56px]">
+                <span className="inline-block bg-[#3498DB] text-white px-3 py-[6px] rounded-[4px] text-[14px] font-bold mb-2">
+                  フェーズ 4
+                </span>
+                <h3 className="text-[28px] font-bold text-[#333] mt-2 mb-5">現在・未来に向けた取り組み</h3>
+                <p className="text-[16px] leading-[1.8] text-[#333] max-w-[800px]">
+                  {industry.timeline.future}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* 【セクション13】コラム（📖 再起の裏側） */}
+          {industry.story && (
+            <div className="bg-[#F5F5F0] p-10 rounded-lg my-16">
+              <div className="flex items-center gap-2 mb-6">
+                <span className="text-[24px]">📖</span>
+                <h3 className="text-[24px] font-bold text-[#333]">
+                  {industry.story.title}
+                </h3>
+              </div>
+              <div className="space-y-5 text-[16px] leading-[1.8] text-[#333]">
+                {industry.story.text.map((paragraph, index) => (
+                  <p key={index} className={paragraph.startsWith("「") ? "font-bold" : ""}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 【セクション14】編集者視点＋今回活用した制度 */}
+          <div className="bg-[#1E3A5F] p-12 rounded-lg my-16 text-white">
+            <h2 className="text-[24px] font-bold mb-5">編集者視点</h2>
+            <p className="text-[16px] leading-[1.8] mb-10">
+              {industry.editorComment}
+            </p>
+
+            {/* 今回活用した制度（白ボックス） */}
+            <div className="bg-white text-[#333] p-8 rounded-lg">
+              {industry.supportSystem?.map((support, index) => (
+                <div key={index}>
+                  <h3 className="text-[20px] font-bold mb-4">{support.name}</h3>
+                  <p className="text-[14px] text-[#666] mb-5">{support.description}</p>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-2">
+                      <span className="text-[16px]">💰</span>
+                      <span className="text-[16px] leading-[1.8]">
+                        <strong>補助率</strong>: {support.points?.detail.replace(': ', '')}
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[16px]">📄</span>
+                      <span className="text-[16px] leading-[1.8]">
+                        <strong>上限</strong>: {support.specAmount?.replace('上限', '')}
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[16px]">✓</span>
+                      <span className="text-[16px] leading-[1.8]">
+                        <strong>ここがポイント</strong>: {support.specCondition}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </main>
-        <Footer />
+
+        {/* 【セクション15】フッター */}
+        <footer className="bg-[#2C3E50] text-white py-10 text-center">
+          <p className="text-[14px]">&copy; 2026 能登百業録 All Rights Reserved.</p>
+        </footer>
       </div>
     );
   }
