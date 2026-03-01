@@ -91,8 +91,9 @@ export default function IndustryDetailPage() {
               </h1>
 
               {/* 取材対象者データ（詳細版） */}
-              <div className="flex flex-col gap-3 text-sm md:text-base text-white/90 border-t border-white/20 py-4 mt-4 md:mt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+              <div className="flex flex-col gap-4 text-sm md:text-base text-white/90 border-t border-white/20 py-4 mt-4 md:mt-6">
+                {/* 1行目: 場所・創業・従業員・代表 */}
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 shrink-0" />
                     <span>{industry.location}</span>
@@ -109,16 +110,21 @@ export default function IndustryDetailPage() {
                     <span className="text-lg leading-none">👤</span>
                     <span>代表：{industry.details?.owner}</span>
                   </div>
-                  <div className="flex items-center gap-2 md:col-span-2">
-                    <Building2 className="w-4 h-4 shrink-0" />
-                    <span className="font-bold text-lg">事業者名：{industry.operator}</span>
-                  </div>
+                </div>
+
+                {/* 区切り線 */}
+                <div className="border-t border-white/20 w-full"></div>
+
+                {/* 2行目: 事業者名 */}
+                <div className="flex items-center gap-2">
+                  <Building2 className="w-4 h-4 shrink-0" />
+                  <span className="font-bold text-lg">事業者名：{industry.operator}</span>
                 </div>
                 
-                {/* 事業説明 */}
-                <div className="mt-2 pt-2 border-t border-white/10">
+                {/* 3行目: 事業説明 */}
+                <div className="mt-1">
                   <p className="text-sm md:text-base leading-relaxed">
-                    {industry.description ? industry.description.split('\n')[0] : "事業説明が入ります"}
+                    能登町で昭和初期から続く老舗クリーニング店。祖父の代から3代にわたり家族で守り継いできた。ドライクリーニングを中心に、毛布類の天日干しにこだわるなど、地域の暮らしに寄り添った丁寧なサービスを提供している。震災で設備が故障したが、小規模事業者持続化補助金を活用し、自己負担を最小限に抑えて再開を果たした。
                   </p>
                 </div>
               </div>
