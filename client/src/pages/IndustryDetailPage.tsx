@@ -277,8 +277,8 @@ export default function IndustryDetailPage() {
                       </ul>
                       
                       {/* 決め手セクション */}
-                      <div className="bg-[#F5F0E8] p-6 rounded-lg border-l-4 border-[#C8A882] mt-6">
-                        <p className="text-lg font-bold text-[#3A4A5A] mb-2">決め手：</p>
+                      <div className="bg-white p-6 rounded-lg border border-[#E0E0E0] mt-6">
+                        <p className="text-lg font-bold text-[#1E3A5F] mb-3">決め手：</p>
                         <p className="text-base leading-[1.8] text-[#333]">{industry.decisionMatrix.reason}</p>
                       </div>
                     </div>
