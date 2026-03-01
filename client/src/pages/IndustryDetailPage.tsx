@@ -238,14 +238,14 @@ export default function IndustryDetailPage() {
 
               {/* 【セクション10】究極の二択（能登百業録カラー対応） */}
               {industry.decisionMatrix && (
-                <div className="bg-[#F8F9FA] border-[3px] border-[#2D7F8F] p-10 rounded-xl my-12 ml-14">
+                <div className="bg-[#F8F9FA] border-[3px] border-[#2D7F8F] p-10 rounded-xl my-12 w-full">
                   <h4 className="text-2xl font-bold text-[#1E3A5F] mb-8 pb-4 border-b-2 border-[#E0E0E0]">
                     究極の二択：450万円かけて再開するか、廃業するか
                   </h4>
                   
                   <div className="flex flex-col gap-6">
                     {/* 案A */}
-                    <div className="bg-white p-6 rounded-lg border border-[#E0E0E0] mb-6">
+                    <div className="bg-white p-6 rounded-lg border border-[#E0E0E0] mb-6 w-full">
                       <h5 className="text-xl font-bold text-[#3A4A5A] mb-4">
                         案A：このまま廃業する
                       </h5>
@@ -260,7 +260,7 @@ export default function IndustryDetailPage() {
                     </div>
 
                     {/* 案B */}
-                    <div className="bg-[#E6F3F5] p-8 rounded-lg border-2 border-[#2D7F8F] border-l-[5px]">
+                    <div className="bg-[#E6F3F5] p-8 rounded-lg border-2 border-[#2D7F8F] border-l-[5px] w-full max-w-[800px]">
                       <h5 className="text-xl font-bold text-[#1E3A5F] mb-4">
                         <span className="bg-[#2D7F8F] text-white px-3 py-1 rounded text-base mr-3 align-middle inline-block">決断</span>
                         案B：小規模事業者持続化補助金を活用して再開
