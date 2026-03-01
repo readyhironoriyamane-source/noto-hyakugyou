@@ -46,6 +46,19 @@ export default function IndustryDetailPage() {
     );
   }
 
+  // 記事ID: 101 の場合は、デザインレイアウト刷新のためコンテンツを非表示にする
+  if (industry.id === 101) {
+    return (
+      <div className="min-h-screen bg-[#F9F8F4] font-sans text-gray-800 flex flex-col">
+        <Header />
+        <main className="flex-grow">
+          {/* デザインレイアウト刷新のための空白エリア */}
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   // フォントサイズと行間の設定 (UD対応: ベースサイズを大きく、行間を広めに)
   const baseTextSize = "text-lg md:text-xl";
   const leadingRelaxed = "leading-9 md:leading-10";
@@ -76,7 +89,7 @@ export default function IndustryDetailPage() {
               <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold border border-white/30">
                 #{industry.category}
               </span>
-              {industry.tags.map((tag, index) => (
+              {industry.tags.map((tag: string, index: number) => (
                 <span key={index} className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold border border-white/30">
                   #{tag}
                 </span>
@@ -201,7 +214,7 @@ export default function IndustryDetailPage() {
                       案A：{industry.decisionMatrix.optionA.title}
                     </h5>
                     <ul className="space-y-4">
-                      {industry.decisionMatrix.optionA.pros.map((pro, i) => (
+                      {industry.decisionMatrix.optionA.pros.map((pro: string, i: number) => (
                         <li key={i} className="flex items-start gap-3 text-lg md:text-xl text-gray-600 leading-relaxed">
                           <span className="text-gray-400 mt-1">•</span>
                           {pro}
@@ -261,7 +274,7 @@ export default function IndustryDetailPage() {
                   <h4 className="font-bold text-xl text-gray-800">これから申請する人が覚悟すべき「実務の壁」</h4>
                 </div>
                 <div className="space-y-6">
-                  {industry.barriers.checklist.map((item, index) => (
+                  {industry.barriers.checklist.map((item: any, index: number) => (
                     <div key={index} className="flex items-start gap-4">
                       <div className="mt-1 bg-gray-100 p-1 rounded">
                         <CheckCircle2 className="w-5 h-5 text-gray-400" />
@@ -309,7 +322,7 @@ export default function IndustryDetailPage() {
             </div>
             
             <div className="space-y-6 text-gray-800 leading-loose font-serif text-lg md:text-xl">
-              {industry.story.text.map((paragraph, index) => (
+              {industry.story.text.map((paragraph: string, index: number) => (
                 <p key={index} className="">
                   {paragraph}
                 </p>
@@ -426,7 +439,7 @@ export default function IndustryDetailPage() {
               この記事を読んだあなたへのおすすめ
             </h3>
             <div className="grid md:grid-cols-2 gap-6">
-              {industry.recommendedSupports.map((rec, index) => (
+              {industry.recommendedSupports.map((rec: any, index: number) => (
                 <a 
                   key={index} 
                   href={rec.link}

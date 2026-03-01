@@ -250,13 +250,13 @@ export default function Home() {
                   {/* ⑤ 構造化データブロック（新設） */}
                   {study.challengeCard?.structuredBlock && (
                     <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
-                      {study.challengeCard.structuredBlock.map((block, idx) => (
+                      {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
                         <div key={idx} className="text-sm">
                           <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
                             {block.label}
                           </span>
                           <ul className="list-disc list-inside text-gray-600 pl-1">
-                            {block.items.map((item, i) => {
+                            {block.items.map((item: string, i: number) => {
                               // 支援制度へのリンクマッピング
                               let linkTarget = "";
                               if (item.includes("なりわい再建支援補助金") && !item.includes("能登町")) {

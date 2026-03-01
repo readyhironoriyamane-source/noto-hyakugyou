@@ -196,13 +196,13 @@ export default function IndustriesPage() {
                       {/* ⑤ 構造化データブロック */}
                       {study.challengeCard?.structuredBlock && (
                         <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
-                          {study.challengeCard.structuredBlock.map((block, idx) => (
+                          {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
                             <div key={idx} className="text-sm">
                               <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
                                 {block.label}
                               </span>
                               <ul className="list-disc list-inside text-gray-600 pl-1">
-                                {block.items.map((item, i) => (
+                                {block.items.map((item: string, i: number) => (
                                   <li key={i} className="leading-[1.8] mb-[8px] last:mb-0 break-words">
                                     {item}
                                   </li>
