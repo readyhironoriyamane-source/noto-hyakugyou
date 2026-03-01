@@ -332,19 +332,24 @@ export default function IndustryDetailPage() {
               )}
 
               {/* 【セクション12】支援を受けて起きた変化（新規） */}
-              <div className="mt-10">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-xl font-bold text-[#1D3A52]">▼</span>
-                  <h4 className="text-xl font-bold text-[#1D3A52]">支援を受けて起きた変化</h4>
+              {industry.changes && (
+                <div className="bg-white border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-8 rounded-lg mt-8">
+                  <div className="flex items-center gap-2 mb-5">
+                    <span className="text-[22px] font-bold text-[#1E3A5F]">▼</span>
+                    <h4 className="text-[22px] font-bold text-[#1E3A5F]">
+                      {industry.changes.title}
+                    </h4>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {industry.changes.content.map((text: string, index: number) => (
+                      <p key={index} className="text-base leading-[1.8] text-[#333]">
+                        {text}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-                <div className={`${baseTextSize} ${leadingRelaxed} text-[#333]`}>
-                   <div className="whitespace-pre-line">
-                      {(industry.timeline.phase3 || "").split('---').length > 1 
-                        ? (industry.timeline.phase3 || "").split('---')[1].replace('### 支援を受けて起きた変化', '').trim()
-                        : industry.timeline.phase3}
-                   </div>
-                </div>
-              </div>
+              )}
             </div>
 
             {/* Phase 4 */}

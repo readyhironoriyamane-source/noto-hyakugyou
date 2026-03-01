@@ -77,6 +77,10 @@ export interface Industry {
       description: string;
     }[];
   };
+  changes?: {
+    title: string;
+    content: string[];
+  };
   editorComment?: string;
   supportSystem?: {
     name: string;
