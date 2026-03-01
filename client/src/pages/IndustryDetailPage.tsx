@@ -239,8 +239,13 @@ export default function IndustryDetailPage() {
               {/* 【セクション10】究極の二択（能登百業録カラー対応） */}
               {industry.decisionMatrix && (
                 <div className="bg-[#F8F9FA] border-[3px] border-[#2D7F8F] p-10 rounded-xl my-12 w-full">
-                  <h4 className="text-2xl font-bold text-[#1E3A5F] mb-8 pb-4 border-b-2 border-[#E0E0E0]">
-                    究極の二択：450万円かけて再開するか、廃業するか
+                  <div className="mb-4">
+                    <span className="bg-[#2D7F8F] text-white px-3 py-1.5 rounded text-sm inline-block font-bold">
+                      究極の二択
+                    </span>
+                  </div>
+                  <h4 className="text-2xl font-bold text-[#1E3A5F] mt-0 mb-6 pb-4 border-b-2 border-[#E0E0E0]">
+                    450万円かけて再開するか、廃業するか
                   </h4>
                   
                   <div className="flex flex-col gap-6">
