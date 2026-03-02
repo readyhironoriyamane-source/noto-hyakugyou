@@ -667,33 +667,62 @@ export default function IndustryDetailPage() {
             
             <div className="mb-2">
               <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 3</span>
-              
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
-            <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
-              {industry.timeline.phase3 || industry.timeline.future}
-            </p>
+            
+            {/* 本文 */}
+            <div className={`${baseTextSize} ${leadingRelaxed} mb-12 whitespace-pre-wrap`}>
+              {industry.timeline.phase3}
+            </div>
 
-            {/* 課題リスト (Barriers) - フェーズ3へ移動 */}
+            {/* 実務の壁 (Practical Barriers) */}
             {industry.barriers && industry.barriers.checklist && (
-              <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm mt-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <AlertTriangle className="w-6 h-6 text-[#B33E28]" />
-                  <h4 className="font-bold text-xl text-gray-800">これから申請する人が覚悟すべき「実務の壁」</h4>
+              <div className="mt-12 md:ml-14">
+                <div className="flex items-center gap-2 mb-8">
+                  <span className="text-2xl">⚠️</span>
+                  <h3 className="text-2xl font-bold text-[#1E3A5F]">
+                    {industry.barriers.title}
+                  </h3>
                 </div>
-                <div className="space-y-6">
-                  {industry.barriers.checklist.map((item: any, index: number) => (
-                    <div key={index} className="flex items-start gap-4">
-                      <div className="mt-1 bg-gray-100 p-1 rounded">
-                        <CheckCircle2 className="w-5 h-5 text-gray-400" />
-                      </div>
-                      <div>
-                        <div className="font-bold text-lg text-gray-800 mb-1">{item.title}</div>
-                        <div className="text-gray-600 leading-relaxed text-base">{item.description}</div>
-                      </div>
+                
+                <div className="space-y-5">
+                  {industry.barriers.checklist.map((item, index) => (
+                    <div key={index} className="bg-white border border-[#E0E0E0] rounded-lg p-5 border-l-4 border-l-[#C8A882]">
+                      <h4 className="flex items-start gap-2 font-bold text-lg text-[#2D7F8F] mb-2">
+                        <span>✓</span>
+                        {item.title}
+                      </h4>
+                      <p className="text-base leading-[1.8] text-[#1E3A5F]">
+                        {item.description}
+                      </p>
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* 壁の乗り越え方 (Overcoming Barriers) */}
+            {industry.overcoming && (
+              <div className="mt-8 md:ml-14 bg-[#F0F7F8] border border-[#E0E0E0] border-l-4 border-l-[#2D7F8F] rounded-lg p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-xl">▼</span>
+                  <h3 className="text-[19px] font-bold text-[#1E3A5F]">
+                    {industry.overcoming.title}
+                  </h3>
+                </div>
+                
+                <h4 className="text-[17px] font-bold text-[#2D7F8F] mb-3">
+                  {industry.overcoming.subtitle}
+                </h4>
+                
+                <ul className="space-y-2">
+                  {industry.overcoming.points.map((point, index) => (
+                    <li key={index} className="flex items-start gap-2 text-base leading-[1.8] text-[#333] pl-5 relative">
+                      <span className="absolute left-0 top-2 w-1.5 h-1.5 bg-[#333] rounded-full"></span>
+                      {point}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>

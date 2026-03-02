@@ -77,6 +77,11 @@ export interface Industry {
       description: string;
     }[];
   };
+  overcoming?: {
+    title: string;
+    subtitle: string;
+    points: string[];
+  };
   changes?: {
     title: string;
     content: string[];
