@@ -117,7 +117,7 @@ export const industries: Industry[] = [
         points: {
           label: "ここがポイント",
           term: "補助率",
-          detail: ": 2/3（国）＋県上乗せ"
+          detail: ": 2/3（国）＋県上乗せ＋町の上乗せ"
         },
         specAmount: "上限200万円（災害枠）",
         specCondition: "設備投資にも活用可能。本事例では450万円の設備投資に対し自己負担50万円程度を実現。"
