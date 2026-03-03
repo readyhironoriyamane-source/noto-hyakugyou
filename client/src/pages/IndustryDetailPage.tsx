@@ -234,7 +234,7 @@ export default function IndustryDetailPage() {
 
               {/* 1. 究極の二択 */}
               {industry.decisionMatrix && (
-                <div className="-ml-8 md:ml-0 w-[calc(100%+2rem)] md:w-full md:max-w-[800px] relative z-10 bg-[#F8F9FA] border-[3px] border-[#2D7F8F] p-6 md:p-10 rounded-xl my-12">
+                <div className="-ml-14 md:ml-0 w-[calc(100%+3.5rem)] md:w-full md:max-w-[800px] relative z-10 bg-[#F8F9FA] border-[3px] border-[#2D7F8F] p-6 md:p-10 rounded-xl my-12">
                   <div className="mb-6">
                     <span className="bg-[#2D7F8F] text-white px-3 py-1.5 rounded text-sm inline-block font-bold">
                       究極の二択
@@ -326,7 +326,7 @@ export default function IndustryDetailPage() {
               
               {/* 2. 実務の壁 */}
               {industry.barriers && industry.barriers.checklist && (
-                <div className="-ml-8 md:ml-0 w-[calc(100%+2rem)] md:w-full md:max-w-[800px] relative z-10 bg-white border border-[#E0E0E0] border-l-[8px] border-l-[#C8A882] p-6 md:p-8 rounded-lg my-12 shadow-sm">
+                <div className="-ml-14 md:ml-0 w-[calc(100%+3.5rem)] md:w-full md:max-w-[800px] relative z-10 bg-white border border-[#E0E0E0] border-l-[8px] border-l-[#C8A882] p-6 md:p-8 rounded-lg my-12 shadow-sm">
                   <div className="flex items-center gap-3 mb-8">
                     <span className="text-2xl">⚠️</span>
                     <h4 className="text-[20px] md:text-2xl font-bold text-[#1E3A5F]">
@@ -383,7 +383,7 @@ export default function IndustryDetailPage() {
                   
                   if (items.length > 0) {
                     return (
-                      <div className="-ml-8 md:ml-0 w-[calc(100%+2rem)] md:w-full md:max-w-[800px] relative z-10 bg-[#F0F7F8] border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-6 md:p-8 rounded-lg mt-8 shadow-sm">
+                      <div className="-ml-14 md:ml-0 w-[calc(100%+3.5rem)] md:w-full md:max-w-[800px] relative z-10 bg-[#F0F7F8] border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-6 md:p-8 rounded-lg mt-8 shadow-sm">
                         <div className="mb-5">
                           <h4 className="text-[19px] md:text-[22px] font-bold text-[#1E3A5F] mb-3">
                             壁の乗り越え方（要点）
