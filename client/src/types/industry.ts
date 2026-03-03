@@ -105,6 +105,8 @@ export interface Industry {
   story?: {
     title: string;
     text: string[];
+    phase3_part1?: string;
+    phase3_part2?: string;
   };
   recommendedSupports?: {
     category: string;
