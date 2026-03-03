@@ -670,9 +670,9 @@ export default function IndustryDetailPage() {
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
             
-            {/* 本文 */}
+            {/* 本文 (前半: 実務の壁の前) */}
             <div className={`${baseTextSize} ${leadingRelaxed} mb-12 whitespace-pre-wrap`}>
-              {industry.timeline.phase3}
+              {(industry.timeline.phase3 || '').split('\n\n専門用語が伝わらない場面では')[0]}
             </div>
 
             {/* 実務の壁 (Practical Barriers) */}
@@ -703,7 +703,7 @@ export default function IndustryDetailPage() {
 
             {/* 壁の乗り越え方 (Overcoming Barriers) */}
             {industry.overcoming && (
-              <div className="mt-8 md:ml-14 bg-[#F0F7F8] border border-[#E0E0E0] border-l-4 border-l-[#2D7F8F] rounded-lg p-6">
+              <div className="mt-8 md:ml-14 bg-[#F0F7F8] border border-[#E0E0E0] border-l-4 border-l-[#2D7F8F] rounded-lg p-6 mb-12">
                 <div className="flex items-center gap-2 mb-4">
                   <span className="text-xl">▼</span>
                   <h3 className="text-[19px] font-bold text-[#1E3A5F]">
@@ -725,6 +725,13 @@ export default function IndustryDetailPage() {
                 </ul>
               </div>
             )}
+
+            {/* 本文 (後半: 壁の乗り越え方の後) */}
+            <div className={`${baseTextSize} ${leadingRelaxed} mb-12 whitespace-pre-wrap`}>
+              {(industry.timeline.phase3 || '').includes('\n\n専門用語が伝わらない場面では') ? 
+                '専門用語が伝わらない場面では' + (industry.timeline.phase3 || '').split('\n\n専門用語が伝わらない場面では')[1] : 
+                ''}
+            </div>
           </div>
 
             {/* =================================================================
