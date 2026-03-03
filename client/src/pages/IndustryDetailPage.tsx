@@ -230,10 +230,11 @@ export default function IndustryDetailPage() {
                 {industry.timeline.phase2}
               </p>
 
-              {/* 【セクション10】究極の二択（新デザイン） */}
+              {/* ========== 究極の二択 + 実務の壁 + 壁の乗り越え方（スマホで線の上に重ねる）開始 ========== */}
+
+              {/* 1. 究極の二択 */}
               {industry.decisionMatrix && (
-                <div className="bg-[#F8F9FA] border-[3px] border-[#2D7F8F] p-6 md:p-10 rounded-xl my-12 w-full">
-                  {/* 見出し部分（独立） */}
+                <div className="ml-0 md:ml-14 relative z-10 bg-[#F8F9FA] border-[3px] border-[#2D7F8F] p-6 md:p-10 rounded-xl my-12 w-full">
                   <div className="mb-6">
                     <span className="bg-[#2D7F8F] text-white px-3 py-1.5 rounded text-sm inline-block font-bold">
                       究極の二択
@@ -244,26 +245,19 @@ export default function IndustryDetailPage() {
                     {industry.decisionMatrix.title}
                   </h4>
                   
-                  {/* PC: 横並び2カラム / スマホ: 縦積み */}
                   <div className="flex flex-col md:flex-row gap-6">
-                    {/* 左カラム：案A */}
                     <div className="flex-1 bg-white p-5 md:p-6 rounded-lg border border-[#E0E0E0] shadow-sm">
                       <div className="mb-4">
                         <span className="bg-[#E0E0E0] text-[#3A4A5A] px-3 py-1.5 rounded text-xs inline-block font-bold">
                           選択肢 A
                         </span>
                       </div>
-                      
                       <h5 className="text-[16px] md:text-lg font-bold text-[#3A4A5A] mb-4">
                         {industry.decisionMatrix.optionA.title}
                       </h5>
-                      
                       <ul className="space-y-2 text-sm md:text-base leading-[1.8] text-[#333]">
                         {industry.decisionMatrix.optionA.pros.map((pro, i) => (
-                          <li 
-                            key={i} 
-                            className={`flex items-start gap-2 ${i === industry.decisionMatrix!.optionA.pros.length - 1 ? 'italic text-[#666]' : ''}`}
-                          >
+                          <li key={i} className={`flex items-start gap-2 ${i === industry.decisionMatrix!.optionA.pros.length - 1 ? 'italic text-[#666]' : ''}`}>
                             <span className="text-[#333] mt-1">•</span>
                             <span>{pro}</span>
                           </li>
@@ -271,28 +265,21 @@ export default function IndustryDetailPage() {
                       </ul>
                     </div>
 
-                    {/* 右カラム：案B */}
                     <div className="flex-1 bg-[#E6F3F5] p-5 md:p-8 rounded-lg border-2 border-[#2D7F8F] border-l-[5px] shadow-sm">
-                      {/* 決断バッジ（日本語） */}
                       <div className="mb-4">
                         <span className="bg-[#2D7F8F] text-white px-4 py-2 rounded text-sm md:text-base inline-block font-bold">
                           決断
                         </span>
                       </div>
-                      
                       <h5 className="text-[16px] md:text-lg font-bold text-[#1E3A5F] mb-4">
                         {industry.decisionMatrix.optionB.title}
                       </h5>
-                      
-                      {/* 補助金情報 */}
                       <div className="bg-white/60 p-4 rounded-lg mb-4 border border-[#2D7F8F]/20">
                         <p className="text-xs md:text-sm font-bold text-[#2D7F8F] mb-2">補助金</p>
                         <p className="text-sm md:text-base text-[#1E3A5F]">
                           {industry.decisionMatrix.optionB.subsidy}
                         </p>
                       </div>
-                      
-                      {/* コスト情報 */}
                       <div className="bg-white/60 p-4 rounded-lg border border-[#2D7F8F]/20">
                         <p className="text-xs md:text-sm font-bold text-[#2D7F8F] mb-2">コスト</p>
                         <p className="text-sm md:text-base font-bold text-[#E65100]">
@@ -302,7 +289,6 @@ export default function IndustryDetailPage() {
                     </div>
                   </div>
                   
-                  {/* 決め手セクション（全幅） */}
                   <div className="bg-white p-5 md:p-6 rounded-lg border border-[#E0E0E0] mt-6 shadow-sm">
                     <p className="text-base md:text-lg font-bold text-[#1E3A5F] mb-3">決め手：</p>
                     <p className="text-sm md:text-base leading-[1.8] text-[#333]">
@@ -338,9 +324,9 @@ export default function IndustryDetailPage() {
                 })()}
               </div>
               
-              {/* 実務の壁（白背景＋左ゴールドボーダー） */}
+              {/* 2. 実務の壁 */}
               {industry.barriers && industry.barriers.checklist && (
-                <div className="bg-white border border-[#E0E0E0] border-l-[8px] border-l-[#C8A882] p-6 md:p-8 rounded-lg my-12 shadow-sm">
+                <div className="ml-0 md:ml-14 relative z-10 bg-white border border-[#E0E0E0] border-l-[8px] border-l-[#C8A882] p-6 md:p-8 rounded-lg my-12 shadow-sm">
                   <div className="flex items-center gap-3 mb-8">
                     <span className="text-2xl">⚠️</span>
                     <h4 className="text-[20px] md:text-2xl font-bold text-[#1E3A5F]">
@@ -384,7 +370,7 @@ export default function IndustryDetailPage() {
                 </div>
               )}
 
-              {/* 壁の乗り越え方（要点）- phase3から抽出して表示 */}
+              {/* 3. 壁の乗り越え方 */}
               {(() => {
                 const fullText = industry.timeline.phase3;
                 const howToOvercomeMatch = fullText.match(/### 壁の乗り越え方（要点）[\s\S]*?▼ こうやって乗り越えた\n([\s\S]*?)(?:\n---|\n###|$)/);
@@ -397,7 +383,7 @@ export default function IndustryDetailPage() {
                   
                   if (items.length > 0) {
                     return (
-                      <div className="bg-[#F0F7F8] border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-6 md:p-8 rounded-lg mt-8 shadow-sm">
+                      <div className="ml-0 md:ml-14 relative z-10 bg-[#F0F7F8] border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-6 md:p-8 rounded-lg mt-8 shadow-sm">
                         <div className="mb-5">
                           <h4 className="text-[19px] md:text-[22px] font-bold text-[#1E3A5F] mb-3">
                             壁の乗り越え方（要点）
