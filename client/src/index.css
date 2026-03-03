@@ -27,6 +27,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-focus: var(--focus);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -43,83 +44,166 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
+  /* Noto Hyakugyo Theme Colors (UD Compliant) */
+  
+  /* 勝色 (Kachiiro) - Deep Indigo: #1D3A52 -> oklch(0.32 0.06 250) */
+  --primary: oklch(0.32 0.06 250);
+  --primary-foreground: oklch(0.98 0.01 85);
+
+  /* 弁柄色 (Bengara) - Reddish Brown: #B33E28 -> oklch(0.5 0.16 35) */
+  --accent: oklch(0.5 0.16 35);
+  --accent-foreground: oklch(0.98 0.01 85);
+
+  /* 生成り色 (Kinari) - Off White: #F9F8F4 -> oklch(0.98 0.01 85) */
+  --background: oklch(0.98 0.01 85);
+  /* 墨色 (Sumi) - Charcoal: #2B2B2B -> oklch(0.25 0 0) */
+  --foreground: oklch(0.25 0 0);
+
+  /* Focus Indicator (Digital Agency Spec): #FFD700 -> oklch(0.85 0.2 85) */
+  --focus: oklch(0.85 0.2 85);
+
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
+  --card-foreground: oklch(0.25 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
+  --popover-foreground: oklch(0.25 0 0);
+  
+  /* Light Indigo for secondary elements */
+  --secondary: oklch(0.95 0.02 250);
+  --secondary-foreground: oklch(0.32 0.06 250);
+  
+  --muted: oklch(0.96 0.01 85);
+  --muted-foreground: oklch(0.45 0 0);
+  
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  
+  --border: oklch(0.9 0.01 85);
+  --input: oklch(0.9 0.01 85);
+  --ring: oklch(0.32 0.06 250);
+  
+  --radius: 0.5rem;
+
+  --sidebar: oklch(0.98 0.01 85);
+  --sidebar-foreground: oklch(0.25 0 0);
+  --sidebar-accent: oklch(0.95 0.02 250);
+  --sidebar-accent-foreground: oklch(0.32 0.06 250);
+  --sidebar-border: oklch(0.9 0.01 85);
+  --sidebar-ring: oklch(0.32 0.06 250);
+
+  /* Chart colors derived from theme */
+  --chart-1: oklch(0.32 0.06 250); /* Primary */
+  --chart-2: oklch(0.5 0.16 35);  /* Accent */
+  --chart-3: oklch(0.45 0.05 250);
+  --chart-4: oklch(0.6 0.12 35);
+  --chart-5: oklch(0.25 0 0);
 }
 
 .dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  /* Dark mode adjustments if needed, though design spec focuses on light theme */
+  --background: oklch(0.2 0.02 250);
+  --foreground: oklch(0.98 0.01 85);
+  --card: oklch(0.25 0.02 250);
+  --card-foreground: oklch(0.98 0.01 85);
+  --popover: oklch(0.25 0.02 250);
+  --popover-foreground: oklch(0.98 0.01 85);
+  --primary: oklch(0.4 0.08 250);
+  --primary-foreground: oklch(0.98 0.01 85);
+  --secondary: oklch(0.3 0.04 250);
+  --secondary-foreground: oklch(0.98 0.01 85);
+  --muted: oklch(0.3 0.02 250);
+  --muted-foreground: oklch(0.7 0.01 85);
+  --accent: oklch(0.6 0.16 35);
+  --accent-foreground: oklch(0.98 0.01 85);
+  --destructive: oklch(0.6 0.2 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.3 0.02 250);
+  --input: oklch(0.3 0.02 250);
+  --ring: oklch(0.4 0.08 250);
+  --focus: oklch(0.85 0.2 85);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+  
+  /* UD基準: フォーカスインジケーター (Focus Indicator) */
+  /* キーボード操作やタップ時のアクセシビリティを確保 */
+  *:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  
+  html {
+    /* 
+      UD基準: 単位設定 (Unit)
+      pxを使用せず、ルート相対単位remを使用する。
+    */
+  }
+
   body {
     @apply bg-background text-foreground;
+    /* UD基準: 本文フォント Noto Sans JP */
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    
+    /* 
+      UD基準: 文字サイズ (Font-Size) & 行間 (line-height)
+      Mobile: 1rem (16px), line-height 1.8
+      Desktop: 1.125rem (18px), line-height 2.0
+    */
+    font-size: 1rem;
+    line-height: 1.8;
+    
+    /* UD基準: 文字色 #2B2B2B */
+    color: var(--foreground);
   }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 1.125rem; /* 18px */
+      line-height: 2.0;
+    }
+  }
+
+  /* 見出しフォント設定: Noto Serif JP (デフォルトはゴシック体とし、必要な箇所のみ serif クラスで適用) */
+  h1, h2, h3, h4, h5, h6 {
+    /* font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif; */
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  /* リンクの視認性強化 (Link Decoration) */
+  a {
+    text-decoration: none;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+  }
+  
+  a:hover {
+    opacity: 0.8;
+  }
+  
+  /* ナビゲーションやボタンなど、下線が不要な場合のクラス */
+  .no-underline-link {
+    text-decoration: none;
+  }
+
+  /* ユーティリティクラス */
+  .font-serif {
+    font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  }
+  
+  .font-sans {
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  }
+
+  .writing-vertical-rl {
+    writing-mode: vertical-rl;
+  }
+  
+  .text-orientation-upright {
+    text-orientation: upright;
+  }
+  
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -134,24 +218,16 @@
 }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    
+    /* 
+      UD基準: 行長 (Line Length)
+      スマホ表示時、左右に必ず padding: 1rem (16px) 以上の余白を設ける
+    */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -160,18 +236,111 @@
     min-width: 0;
   }
 
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
-      padding-right: 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
-      padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      padding-left: 3rem;
+      padding-right: 3rem;
+      max-width: 1280px;
     }
+  }
+  
+  /* UD対応ボタン: タップ領域確保 */
+  .btn-ud {
+    @apply py-3 px-6 min-h-[48px] min-w-[48px] flex items-center justify-center;
+  }
+}
+
+/* Scroll Animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+/* スマホ横持ちなど画面高さが低い場合のヘッダー固定解除 */
+@media (max-height: 400px) {
+  header.fixed {
+    position: absolute !important;
+    top: 0;
+  }
+}
+
+/* ----------------------------------------------------------------------
+   Print Styles
+   ---------------------------------------------------------------------- */
+@media print {
+  /* Hide non-essential elements */
+  header, footer, .no-print {
+    display: none !important;
+  }
+
+  /* Reset layout for print */
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt !important;
+    line-height: 1.5 !important;
+  }
+
+  main {
+    padding-top: 0 !important;
+  }
+
+  /* Ensure content fits on page */
+  .container, .max-w-\[1140px\] {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Improve readability */
+  a {
+    text-decoration: none !important;
+    color: black !important;
+  }
+
+  /* Show URLs for links (optional, but good for reference) */
+  /* a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  } */
+
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+  
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+
+  /* Card styling for print */
+  .print-card {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    margin-bottom: 1rem !important;
+    break-inside: avoid;
   }
 }
