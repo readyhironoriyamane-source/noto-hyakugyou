@@ -416,7 +416,7 @@ export default function IndustryDetailPage() {
               <div className="mb-2">
                 <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 4</span>
               </div>
-              <h3 className="text-[24px] md:text-2xl font-bold text-[#1D3A52] mb-4">未来へ</h3>
+              <h3 className="text-[24px] md:text-2xl font-bold text-[#1D3A52] mb-4">現在から未来へ</h3>
               <p className={`${baseTextSize} ${leadingRelaxed}`}>
                 {industry.timeline.phase4}
               </p>
