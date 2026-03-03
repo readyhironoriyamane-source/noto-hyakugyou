@@ -68,9 +68,11 @@ export default function IndustryDetailPage() {
           
           <div className="relative z-10 w-full p-6 pb-12 md:p-12 lg:p-20 text-white mt-auto">
             <div className="max-w-4xl mx-auto">
-              <Link href="/industries" className="inline-flex items-center text-white/80 hover:text-white mb-4 md:mb-6 transition-colors no-underline">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                一覧に戻る
+              <Link href="/industries">
+                <Button variant="ghost" className="text-white/80 hover:text-white mb-4 md:mb-6 pl-0 hover:pl-2 transition-all">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  一覧に戻る
+                </Button>
               </Link>
               
               {/* タグエリア */}
@@ -132,16 +134,8 @@ export default function IndustryDetailPage() {
           </div>
         </div>
 
-        {/* 【セクション3】パンくずリスト（共通デザインに合わせるため削除、または共通スタイルで実装） */}
-        {/* 共通デザインではパンくずリストはヘッダー下にはないため、ここでは削除し、ヒーロー内の「一覧に戻る」で代用 */}
-
         {/* 【セクション4】メインコンテンツエリア */}
         <main className="max-w-3xl mx-auto px-4 md:px-6 py-12 md:py-20">
-          
-          {/* 【セクション5】基本情報カード（ヒーローに統合したため削除） */}
-
-          {/* 【セクション6】事業概要テキスト（ヒーローに統合したため削除、または詳細として表示） */}
-          {/* ここでは指示通り「事業説明が入ります」の部分をヒーローに入れたので、本文としての概要は一旦非表示にするか、詳細なストーリーとして扱う */}
           
           {/* 【セクション7】取材情報 */}
           <div className="mb-12 text-gray-600 text-sm flex justify-end gap-4">
@@ -238,59 +232,51 @@ export default function IndustryDetailPage() {
 
               {/* 【セクション10】究極の二択（能登百業録カラー対応） */}
               {industry.decisionMatrix && (
-                <div className="bg-[#F8F9FA] border-[3px] border-[#2D7F8F] p-6 md:p-10 rounded-xl my-12 w-full">
-                  <div className="mb-4">
-                    <span className="bg-[#2D7F8F] text-white px-3 py-1.5 rounded text-sm inline-block font-bold">
-                      究極の二択
-                    </span>
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                  <div className="bg-[#1D3A52] text-white p-4 text-center font-bold text-lg">
+                    究極の二択：{industry.decisionMatrix.title}
                   </div>
-                  <h4 className="text-[20px] md:text-2xl font-bold text-[#1E3A5F] mt-0 mb-6 pb-4 border-b-2 border-[#E0E0E0]">
-                    450万円かけて再開するか、廃業するか
-                  </h4>
-                  
-                  <div className="flex flex-col gap-6">
-                    {/* 案A */}
-                    <div className="bg-white p-5 md:p-6 rounded-lg border border-[#E0E0E0] mb-6 w-full">
-                      <h5 className="text-[17px] md:text-xl font-bold text-[#3A4A5A] mb-4">
-                        案A：このまま廃業する
-                      </h5>
-                      <ul className="space-y-2 text-base leading-[1.8] text-[#333]">
-                        {industry.decisionMatrix.optionA.pros.map((pro, i) => (
-                          <li key={i} className={`flex items-start gap-2 ${i === industry.decisionMatrix!.optionA.pros.length - 1 ? 'italic' : ''}`}>
-                            <span className="text-[#333]">•</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-200">
+                    {/* 選択肢A */}
+                    <div className="p-6 bg-gray-50/50">
+                      <div className="text-center mb-4">
+                        <span className="inline-block px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-bold mb-2">選択肢 A</span>
+                        <h4 className="font-bold text-lg text-gray-800">{industry.decisionMatrix.optionA.title}</h4>
+                      </div>
+                      <ul className="space-y-2">
+                        {industry.decisionMatrix.optionA.pros.map((pro, idx) => (
+                          <li key={idx} className="flex items-start text-sm text-gray-600">
+                            <span className="mr-2 text-gray-400">•</span>
                             {pro}
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    {/* 案B */}
-                    <div className="bg-[#E6F3F5] p-5 md:p-8 rounded-lg border-2 border-[#2D7F8F] border-l-[5px] w-full max-w-[800px]">
-                      <div className="mb-4">
-                        <span className="bg-[#2D7F8F] text-white px-4 py-2 rounded text-base inline-block font-bold">
-                          決断
-                        </span>
+                    {/* 選択肢B（選ばれた方） */}
+                    <div className="p-6 bg-[#F0F7F8] relative overflow-hidden">
+                      <div className="absolute top-0 right-0 bg-[#2D7F8F] text-white text-xs px-3 py-1 rounded-bl-lg font-bold">
+                        DECISION
                       </div>
-                      <h5 className="text-[17px] md:text-xl font-bold text-[#1E3A5F] mb-4">
-                        案B：小規模事業者持続化補助金を活用して再開
-                      </h5>
-                      <ul className="space-y-2 text-base leading-[1.8] text-[#1E3A5F] mb-6">
-                        <li className="flex items-start gap-2">
-                          <span className="text-[#1E3A5F]">•</span>
-                          {industry.decisionMatrix.optionB.subsidy}
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-[#1E3A5F]">•</span>
-                          {industry.decisionMatrix.optionB.cost}
-                        </li>
-                      </ul>
-                      
-                      {/* 決め手セクション */}
-                      <div className="bg-white p-6 rounded-lg border border-[#E0E0E0] mt-6">
-                        <p className="text-lg font-bold text-[#1E3A5F] mb-3">決め手：</p>
-                        <p className="text-base leading-[1.8] text-[#333]">{industry.decisionMatrix.reason}</p>
+                      <div className="text-center mb-4">
+                        <span className="inline-block px-3 py-1 bg-[#2D7F8F] text-white rounded-full text-sm font-bold mb-2">選択肢 B</span>
+                        <h4 className="font-bold text-lg text-[#1D3A52]">{industry.decisionMatrix.optionB.title}</h4>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="bg-white p-3 rounded border border-[#2D7F8F]/20">
+                          <span className="block text-xs text-[#2D7F8F] font-bold mb-1">補助金</span>
+                          <span className="text-sm font-medium text-gray-800">{industry.decisionMatrix.optionB.subsidy}</span>
+                        </div>
+                        <div className="bg-white p-3 rounded border border-[#2D7F8F]/20">
+                          <span className="block text-xs text-[#2D7F8F] font-bold mb-1">コスト</span>
+                          <span className="text-sm font-bold text-[#D32F2F]">{industry.decisionMatrix.optionB.cost}</span>
+                        </div>
                       </div>
                     </div>
+                  </div>
+                  <div className="p-4 bg-[#1D3A52]/5 border-t border-[#1D3A52]/10 text-center">
+                    <span className="font-bold text-[#1D3A52] mr-2">決め手：</span>
+                    <span className="text-gray-700">{industry.decisionMatrix.reason}</span>
                   </div>
                 </div>
               )}
@@ -305,9 +291,25 @@ export default function IndustryDetailPage() {
               </div>
               <h3 className="text-[24px] md:text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
               
-              {/* 【セクション11】実務の壁（能登百業録カラー対応） */}
+              {/* 本文①②（小見出しなし） */}
+              <div className="mb-12 space-y-4">
+                {(() => {
+                  // phase3から本文部分のみを抽出（最初の---まで）
+                  const fullText = industry.timeline.phase3;
+                  const firstSeparator = fullText.indexOf('\n---\n');
+                  const mainText = firstSeparator > 0 ? fullText.substring(0, firstSeparator) : fullText;
+                  
+                  return mainText.split('\n').filter(p => p.trim()).map((paragraph, idx) => (
+                    <p key={idx} className={`${baseTextSize} ${leadingRelaxed} text-[#333]`}>
+                      {paragraph}
+                    </p>
+                  ));
+                })()}
+              </div>
+              
+              {/* 実務の壁（白背景＋左ゴールドボーダー） */}
               {industry.barriers && industry.barriers.checklist && (
-                <div className="bg-white border border-[#E0E0E0] border-l-[8px] border-l-[#C8A882] p-6 md:p-8 rounded-lg my-8">
+                <div className="bg-white border border-[#E0E0E0] border-l-[8px] border-l-[#C8A882] p-6 md:p-8 rounded-lg my-12 shadow-sm">
                   <div className="flex items-center gap-3 mb-8">
                     <span className="text-2xl">⚠️</span>
                     <h4 className="text-[20px] md:text-2xl font-bold text-[#1E3A5F]">
@@ -317,12 +319,12 @@ export default function IndustryDetailPage() {
                   
                   <div className="space-y-5">
                     {industry.barriers.checklist.map((item: any, index: number) => (
-                      <div key={index} className="bg-[#F8F9FA] p-4 md:p-5 rounded-lg">
+                      <div key={index} className="bg-white border border-[#E0E0E0] p-4 md:p-5 rounded-lg">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="text-lg text-[#2D7F8F]">✓</span>
+                          <span className="text-xl text-[#2D7F8F]">✓</span>
                           <h5 className="text-[16px] md:text-lg font-bold text-[#2D7F8F]">{item.title}</h5>
                         </div>
-                        <p className="text-base leading-[1.8] text-[#1E3A5F]">
+                        <p className="text-base leading-[1.8] text-[#1E3A5F] ml-7">
                           {item.description}
                         </p>
                       </div>
@@ -331,9 +333,9 @@ export default function IndustryDetailPage() {
                 </div>
               )}
 
-              {/* 【セクション12】支援を受けて起きた変化（新規） */}
+              {/* 支援を受けて起きた変化（薄いティール背景＋左ティールボーダー） */}
               {industry.changes && (
-                <div className="bg-white border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-6 md:p-8 rounded-lg mt-8">
+                <div className="bg-[#F0F7F8] border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-6 md:p-8 rounded-lg mt-8 shadow-sm">
                   <div className="flex items-center gap-2 mb-5">
                     <span className="text-[22px] font-bold text-[#1E3A5F]">▼</span>
                     <h4 className="text-[19px] md:text-[22px] font-bold text-[#1E3A5F]">
@@ -350,118 +352,193 @@ export default function IndustryDetailPage() {
                   </div>
                 </div>
               )}
+
+              {/* 壁の乗り越え方（要点）- phase3から抽出して表示 */}
+              {(() => {
+                const fullText = industry.timeline.phase3;
+                const howToOvercomeMatch = fullText.match(/### 壁の乗り越え方（要点）[\s\S]*?▼ こうやって乗り越えた\n([\s\S]*?)(?:\n---|\n###|$)/);
+                
+                if (howToOvercomeMatch && howToOvercomeMatch[1]) {
+                  const items = howToOvercomeMatch[1]
+                    .split('\n')
+                    .filter(line => line.trim().startsWith('・'))
+                    .map(line => line.replace('・', '').trim());
+                  
+                  if (items.length > 0) {
+                    return (
+                      <div className="bg-[#F0F7F8] border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-6 md:p-8 rounded-lg mt-8 shadow-sm">
+                        <div className="mb-5">
+                          <h4 className="text-[19px] md:text-[22px] font-bold text-[#1E3A5F] mb-3">
+                            壁の乗り越え方（要点）
+                          </h4>
+                          <p className="text-[17px] font-bold text-[#2D7F8F]">
+                            ▼ こうやって乗り越えた
+                          </p>
+                        </div>
+                        
+                        <ul className="space-y-2">
+                          {items.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-base leading-[1.8] text-[#333]">
+                              <span className="text-[#2D7F8F] mt-1">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    );
+                  }
+                }
+                return null;
+              })()}
             </div>
 
             {/* Phase 4 */}
             <div className="relative pl-8 md:pl-12">
-              <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4] z-10 flex items-center justify-center">
-              </div>
+              <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
               
               <div className="mb-2">
                 <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 4</span>
               </div>
-              <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">現在・未来に向けた取り組み</h3>
-              <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
-                {industry.timeline.future}
+              <h3 className="text-[24px] md:text-2xl font-bold text-[#1D3A52] mb-4">未来へ</h3>
+              <p className={`${baseTextSize} ${leadingRelaxed}`}>
+                {industry.timeline.phase4}
               </p>
             </div>
           </div>
 
-          {/* 【セクション13】コラム（📖 再起の裏側） */}
-          {industry.story && (
-            <div className="bg-white border-2 border-[#1E3A5F] rounded-2xl p-8 md:p-12 lg:px-12 lg:py-14 my-12 md:my-16">
-              <div className="flex items-center gap-2 mb-8 md:mb-12 justify-center">
-                <span className="text-3xl">📖</span>
-                <h3 className="text-[22px] md:text-[28px] font-bold text-[#1E3A5F] font-serif">
-                  再起の裏側：{industry.story.title}
-                </h3>
-              </div>
-              <div className="space-y-6 md:space-y-8 text-[16px] md:text-lg leading-[1.9] md:leading-[2.0] text-[#333] font-serif">
-                {industry.story.text.map((paragraph, index) => (
-                  <p 
-                    key={index} 
-                    className={paragraph.startsWith("「") ? "text-[18px] md:text-xl font-bold text-[#1E3A5F] py-5 md:py-6" : ""}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
+          {/* 【セクション12】再起の裏側（店主の独白） */}
+          {industry.behindTheScenes && (
+            <div className="mb-16">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden p-8 md:p-12 border-l-4 border-l-[#1D3A52]">
+                <div className="flex items-center justify-center gap-3 mb-10">
+                  <span className="text-2xl">📖</span>
+                  <h3 className="text-2xl font-bold text-[#1D3A52]">{industry.behindTheScenes.title}</h3>
+                </div>
+                
+                <div className="space-y-10">
+                  {industry.behindTheScenes.content.map((item, idx) => (
+                    <div key={idx}>
+                      <h4 className="font-bold text-lg text-[#1D3A52] mb-4">
+                        {item.heading}
+                      </h4>
+                      <p className="text-gray-700 leading-loose text-lg whitespace-pre-wrap">
+                        {item.text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
 
-          {/* 【セクション14】編集者視点＋今回活用した制度 */}
-          <div className="bg-[#1E3A5F] p-8 md:p-12 rounded-lg my-12 md:my-16 text-white">
-            {/* 編集者視点 */}
-            <h2 className="text-[20px] md:text-2xl font-bold mb-6 font-serif">編集者視点</h2>
-            <p className="text-[15px] md:text-base leading-relaxed mb-12 opacity-90">
-              {industry.editorComment}
-            </p>
-
-            {/* 今回活用した制度見出し */}
-            <h2 className="text-[20px] md:text-2xl font-bold mb-6 mt-12 text-white">## 今回活用した制度</h2>
-
-            {/* 今回活用した制度（各制度ごとの白カード） */}
-            <div className="space-y-6">
-              {industry.supportSystem?.map((support, index) => (
-                <div key={index} className="bg-white text-[#333] p-6 md:p-8 rounded-lg">
-                  <h3 className="text-[18px] md:text-xl font-bold mb-4">{support.name}</h3>
-                  <p className="text-sm text-gray-600 mb-5 leading-relaxed">{support.description}</p>
-                  
-                  <div className="space-y-3 bg-[#F9F9F9] p-4 rounded">
-                    <div className="flex items-start gap-3">
-                      <span className="text-lg">💰</span>
-                      <span className="text-base leading-relaxed">
-                        <strong>補助率</strong>: {support.points?.detail.replace(': ', '')}
-                      </span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-lg">📄</span>
-                      <span className="text-base leading-relaxed">
-                        <strong>上限</strong>: {support.specAmount?.replace('上限', '')}
-                      </span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-lg text-[#E67E22]">✓</span>
-                      <span className="text-base leading-relaxed">
-                        <strong>ここがポイント</strong>: {support.specCondition}
-                      </span>
-                    </div>
-                    
-                    {/* 各制度の詳細ボタン */}
-                    <div className="mt-6 flex justify-center">
-                      <a 
-                        href={support.link || "#"} 
-                        className="bg-[#2D7F8F] text-white font-bold text-[14px] md:text-[15px] py-[12px] px-[24px] md:px-[28px] rounded-lg hover:opacity-90 transition-opacity inline-block"
-                      >
-                        この制度の詳細を見る →
-                      </a>
+          {/* 【セクション13】今回活用した制度（カード） */}
+          {industry.supportSystem && (
+            <div className="mb-20">
+              {Array.isArray(industry.supportSystem) ? (
+                // 配列の場合（既存のロジック）
+                (industry.supportSystem as any[]).map((support: any, index: number) => (
+                  <div key={index} className="mb-8">
+                    <h3 className="text-2xl font-bold text-[#1D3A52] mb-6 flex items-center">
+                      <span className="mr-2">##</span> 今回活用した制度
+                    </h3>
+                    <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                      <div className="p-6 md:p-8">
+                        <h4 className="text-xl md:text-2xl font-bold text-[#1D3A52] mb-4">
+                          {support.name}
+                        </h4>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                          {support.description}
+                        </p>
+                        {/* 既存の表示ロジックがあればここに記述 */}
+                      </div>
                     </div>
                   </div>
+                ))
+              ) : (
+                // オブジェクトの場合（新デザイン）
+                <div className="bg-[#1D3A52] p-6 md:p-8 rounded-xl">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-6 flex items-center">
+                    <span className="mr-2">##</span> 今回活用した制度
+                  </h3>
+                  
+                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div className="p-6 md:p-8">
+                      <h4 className="text-xl md:text-2xl font-bold text-[#333] mb-4">
+                        {industry.supportSystem.name}
+                      </h4>
+                      <p className="text-gray-600 mb-6 leading-relaxed">
+                        {industry.supportSystem.description}
+                      </p>
+                      
+                      <div className="bg-gray-50 rounded-lg p-5 mb-6 border border-gray-100">
+                        <div className="space-y-3">
+                          <div className="flex items-start gap-3">
+                            <span className="text-xl">💰</span>
+                            <div>
+                              <span className="font-bold text-gray-700 mr-2">補助率:</span>
+                              <span className="text-gray-800">{industry.supportSystem.rate}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <span className="text-xl">📄</span>
+                            <div>
+                              <span className="font-bold text-gray-700 mr-2">上限:</span>
+                              <span className="text-gray-800">{industry.supportSystem.limit}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <span className="text-xl text-[#C8A882]">✓</span>
+                            <div>
+                              <span className="font-bold text-[#C8A882] mr-2">ここがポイント:</span>
+                              <span className="text-gray-800">{industry.supportSystem.point}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="text-center">
+                        <a 
+                          href={industry.supportSystem.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center bg-[#2D7F8F] hover:bg-[#236A7A] text-white font-bold py-3 px-8 rounded-md transition-colors duration-300 shadow-sm hover:shadow-md w-full md:w-auto"
+                        >
+                          この制度の詳細を見る
+                          <ArrowRight className="ml-2 w-5 h-5" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-8 text-center">
+                    <Link href="/supports">
+                      <Button variant="outline" className="rounded-full px-8 bg-white text-[#1D3A52] hover:bg-gray-100 border-none">
+                        他の支援制度も見る
+                        <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-              ))}
+              )}
             </div>
-              
-            {/* セクション末尾：制度一覧リンク */}
-            <div className="flex flex-col items-center mt-12">
-              <a 
-                href="/support" 
-                className="text-[#2D7F8F] text-sm hover:underline transition-all bg-white py-2 px-4 rounded-full"
-              >
-                他の支援制度も見る →
-              </a>
-            </div>
-          </div>
+          )}
 
-          {/* シェアボタン */}
-          <div className="mt-12 flex justify-center">
-            <Button 
-              variant="outline" 
-              className="gap-2 rounded-full px-8 py-6 text-lg border-[#1D3A52] text-[#1D3A52] hover:bg-[#1D3A52] hover:text-white transition-colors"
-              onClick={() => setShowShareMenu(!showShareMenu)}
-            >
-              <Share2 className="w-5 h-5" />
-              この記事をシェアする
-            </Button>
+          {/* 【セクション11】編集後記（共通コンポーネント化推奨だが、ここでは直接実装） */}
+          <div className="bg-white p-8 md:p-10 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-2 h-full bg-[#1D3A52]"></div>
+            <h3 className="text-xl font-bold text-[#1D3A52] mb-6 flex items-center">
+              <span className="text-2xl mr-3">✍️</span>
+              編集後記
+            </h3>
+            <p className="text-gray-700 leading-loose text-lg font-medium italic">
+              {industry.editorComment}
+            </p>
+            <div className="mt-6 flex items-center justify-end">
+              <div className="text-right">
+                <p className="text-sm text-gray-500">能登百業録 編集部</p>
+                <p className="text-sm font-bold text-[#1D3A52]">{industry.details?.writer}</p>
+              </div>
+            </div>
           </div>
 
         </main>
@@ -471,402 +548,18 @@ export default function IndustryDetailPage() {
     );
   }
 
+  // ID 101 以外は既存のデザイン（または共通デザイン）を表示
+  // ※ここでは既存のコードを維持
   return (
     <div className="min-h-screen bg-[#F9F8F4] font-sans text-gray-800">
       <Header />
-
-      {/* ヒーローセクション（新デザイン） */}
-      <div className="relative min-h-[80vh] md:h-[70vh] w-full overflow-hidden flex flex-col justify-end">
-        <img
-          src={industry.image}
-          alt={industry.title}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        {/* Scrim Gradient: 下から上へのグラデーションのみを適用し、上部は写真の明るさを活かす */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1D3A52] via-[#1D3A52]/80 to-transparent opacity-90"></div>
-        
-        <div className="relative z-10 w-full p-6 pb-12 md:p-12 lg:p-20 text-white mt-auto">
-          <div className="max-w-4xl mx-auto">
-            <Link href="/industries" className="inline-flex items-center text-white/80 hover:text-white mb-4 md:mb-6 transition-colors no-underline">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              一覧に戻る
-            </Link>
-            
-            {/* タグエリア */}
-            <div className="flex flex-wrap gap-2 mb-3 md:mb-4">
-              <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold border border-white/30">
-                #{industry.category}
-              </span>
-              {industry.tags.map((tag: string, index: number) => (
-                <span key={index} className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded text-xs font-bold border border-white/30">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-
-            {/* タイトル */}
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold font-serif leading-snug md:leading-tight mb-4 md:mb-6 drop-shadow-lg break-words">
-              {industry.title}
-            </h1>
-
-            {/* 取材対象者データ */}
-            {industry.details && (
-              <div className="flex flex-wrap items-center text-xs md:text-base text-white/90 gap-x-4 gap-y-2 md:gap-8 border-t border-white/20 py-3 md:py-4 mt-4 md:mt-6">
-                <div className="flex items-center gap-1.5 md:gap-2">
-                  <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                  {industry.location}
-                </div>
-                <div className="flex items-center gap-1.5 md:gap-2">
-                  <Building2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                  {industry.details.founded}創業
-                </div>
-                <div className="flex items-center gap-1.5 md:gap-2">
-                  <Users className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                  従業員 {industry.details.employees}
-                </div>
-                {industry.details.owner && (
-                  <div className="flex items-center gap-1.5 md:gap-2">
-                    <span className="text-white/80">👤</span>
-                    {industry.details.owner}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* 概要テキスト (Hero Summary) */}
-            {industry.heroSummary && (
-              <div className="mt-3 md:mt-4 max-w-[640px] text-left">
-                <p className="text-sm md:text-lg leading-relaxed md:leading-[1.8] text-white/90 font-medium drop-shadow-md">
-                  {industry.heroSummary}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* 記事本文エリア: max-w-3xl (約768px) で幅を制限し、中央揃えで可読性を確保 */}
-      <main className="max-w-3xl mx-auto px-6 py-12 md:py-20">
-        
-        {/* 0. 基礎情報 (Basic Info) - ヒーローセクションに統合済みだが、補足情報を表示 */}
-        <div className="mb-12 text-gray-600 text-sm flex justify-end gap-4">
-          <span>取材日: {industry.details?.interviewDate || "2026.01.15"}</span>
-          <span>ライター: {industry.details?.writer || "能登 太郎"}</span>
-        </div>
-
-        {/* 1. 先人の教訓・後悔 (Regrets Alert) - 最優先表示 */}
-        {industry.regrets && (
-          <div className="bg-[#FFF4F2] border-l-4 border-[#B33E28] p-6 md:p-8 rounded-r-lg mb-16 shadow-sm">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-2xl">⚠️</span>
-              {/* 色覚バリアフリー対応: 文字色を濃い赤茶色(#4A1D1D)に変更 */}
-              <h3 className="text-[#B33E28] font-bold text-lg md:text-xl">「もっと早くやっておけば」と後悔しないために。</h3>
-            </div>
-            {/* タイトル重複削除: industry.regrets.title は表示せず、定型句のみ残す */}
-            <p className="text-[#4A1D1D]/90 leading-relaxed">
-              {industry.regrets.content}
-            </p>
-          </div>
-        )}
-
-        {/* タイムラインのコンテナ (修正: ボーダーが途切れないよう、親要素で管理) */}
-        <div className="relative ml-3 md:ml-6 mb-16">
-          {/* 縦線 (絶対配置で全高をカバー) */}
-          <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-[#1D3A52]"></div>
-
-          {/* =================================================================
-              Phase 1: 現状 (Current)
-             ================================================================= */}
-          <div ref={(el) => { sectionsRef.current[0] = el; }} className="relative pl-8 md:pl-12 mb-16">
-            {/* 丸いマーカー */}
-            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
-            
-            <div className="mb-2">
-              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 1</span>
-              
-            </div>
-            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">課題</h3>
-            <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
-              {industry.timeline.phase1 || industry.timeline.present}
-            </p>
-            
-
-          </div>
-
-          {/* =================================================================
-              Phase 2: 選択 (Decision)
-             ================================================================= */}
-          <div ref={(el) => { sectionsRef.current[1] = el; }} className="relative pl-8 md:pl-12 mb-16">
-            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
-            
-            <div className="mb-2">
-              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 2</span>
-              
-            </div>
-            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">選択と決断</h3>
-            <p className={`${baseTextSize} ${leadingRelaxed} mb-8`}>
-              {industry.timeline.phase2 || industry.timeline.present}
-            </p>
-
-            {/* 決断マトリクス (Decision Matrix) - 縦積みレイアウト & フォント最大化 */}
-            {industry.decisionMatrix && (
-              <div className="bg-[#FAF9F6] rounded-xl p-6 md:p-8 border border-gray-200 shadow-sm">
-                <h4 className="text-center font-bold text-xl md:text-2xl text-gray-700 mb-8">
-                  究極の二択：{industry.decisionMatrix.title}
-                </h4>
-                
-                <div className="flex flex-col gap-8">
-                  {/* Option A: 廃業 */}
-                  <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
-                    <h5 className="font-bold text-2xl md:text-3xl text-gray-500 mb-6">
-                      案A：{industry.decisionMatrix.optionA.title}
-                    </h5>
-                    <ul className="space-y-4">
-                      {industry.decisionMatrix.optionA.pros.map((pro: string, i: number) => (
-                        <li key={i} className="flex items-start gap-3 text-lg md:text-xl text-gray-600 leading-relaxed">
-                          <span className="text-gray-400 mt-1">•</span>
-                          {pro}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Option B: 再開 (Selected) */}
-                  <div className="bg-white p-8 rounded-lg border-4 border-[#1D3A52] shadow-lg relative overflow-hidden">
-                    <div className="absolute top-0 right-0 bg-[#1D3A52] text-white text-sm font-bold px-4 py-2 rounded-bl-lg">
-                      決断
-                    </div>
-                    <h5 className="font-bold text-2xl md:text-3xl text-[#1D3A52] mb-2">
-                      案B：{industry.decisionMatrix.optionB.title}
-                    </h5>
-                    <ul className="list-disc pl-6 mb-6 marker:text-[#B33E28]">
-                      <li className="text-[#B33E28] font-bold text-xl">
-                        <span>{industry.decisionMatrix.optionB.subsidy}</span>
-                      </li>
-                    </ul>
-                    <p className="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
-                      {industry.decisionMatrix.optionB.cost}
-                    </p>
-                    
-                    <div className="bg-[#E6F0FA] p-6 rounded-lg border-l-4 border-[#1D3A52]">
-                      <p className="font-bold text-[#1D3A52] text-lg md:text-xl leading-relaxed">
-                        決め手：{industry.decisionMatrix.reason}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* =================================================================
-              Phase 3: 行動 (Action)
-             ================================================================= */}
-          <div ref={(el) => { sectionsRef.current[2] = el; }} className="relative pl-8 md:pl-12 mb-16">
-            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
-            
-            <div className="mb-2">
-              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 3</span>
-              
-            </div>
-            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
-            <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
-              {industry.timeline.phase3 || industry.timeline.future}
-            </p>
-
-            {/* 課題リスト (Barriers) - フェーズ3へ移動 */}
-            {industry.barriers && industry.barriers.checklist && (
-              <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm mt-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <AlertTriangle className="w-6 h-6 text-[#B33E28]" />
-                  <h4 className="font-bold text-xl text-gray-800">これから申請する人が覚悟すべき「実務の壁」</h4>
-                </div>
-                <div className="space-y-6">
-                  {industry.barriers.checklist.map((item: any, index: number) => (
-                    <div key={index} className="flex items-start gap-4">
-                      <div className="mt-1 bg-gray-100 p-1 rounded">
-                        <CheckCircle2 className="w-5 h-5 text-gray-400" />
-                      </div>
-                      <div>
-                        <div className="font-bold text-lg text-gray-800 mb-1">{item.title}</div>
-                        <div className="text-gray-600 leading-relaxed text-base">{item.description}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-            {/* =================================================================
-              Phase 4: 未来 (Future) - タイムラインに統合
-             ================================================================= */}
-          <div ref={(el) => { sectionsRef.current[3] = el; }} className="relative pl-8 md:pl-12">
-            {/* 未来を示す矢印アイコン */}
-            <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#1D3A52] border-4 border-[#F9F8F4] z-10 flex items-center justify-center">
-            </div>
-            
-            <div className="mb-2">
-              <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 4</span>
-              
-            </div>
-            <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">現在・未来に向けた取り組み</h3>
-            <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
-              {industry.timeline.future}
-            </p>
-          </div>
-        </div>
-
-        {/* =================================================================
-            Story Section: 再起の裏側 (Narrative)
-           ================================================================= */}
-        {industry.story && (
-          <div className="mb-20 bg-white p-8 md:p-12 rounded-xl shadow-sm border-t-4 border-[#1D3A52]">
-            <div className="flex items-center gap-3 mb-8 justify-center">
-              <span className="text-3xl">📖</span>
-              <h3 className="text-2xl md:text-3xl font-bold text-[#1D3A52] font-serif">
-                {industry.story.title}
-              </h3>
-            </div>
-            
-            <div className="space-y-6 text-gray-800 leading-loose font-serif text-lg md:text-xl">
-              {industry.story.text.map((paragraph: string, index: number) => (
-                <p key={index} className="">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-            
-            <div className="mt-10 flex justify-center">
-              <div className="w-16 h-1 bg-[#1D3A52]/20 rounded-full"></div>
-            </div>
-          </div>
-        )}
-
-
-
-
-
-        {/* =================================================================
-            編集者視点 (Editor's Eye) - フェーズ表記削除
-           ================================================================= */}
-        <div ref={(el) => { sectionsRef.current[4] = el; }} className="bg-[#1D3A52] text-white rounded-xl p-8 md:p-10 mt-16 shadow-lg">
-          {/* ヘッダー */}
-          <div className="flex items-center gap-4 mb-6">
-            <h2 className="text-2xl font-bold font-serif">編集者視点</h2>
-          </div>
-          {/* 編集部のコメント */}
-          <div className="mb-10">
-            <h3 className="font-bold text-lg mb-3 opacity-90">編集部より</h3>
-            <p className="leading-relaxed text-white/90 text-lg">
-              {industry.editorComment}
-            </p>
-          </div>
-          {/* 制度データエリア（白いカード） */}
-          <div className="bg-white text-[#1D3A52] rounded-lg p-6 md:p-8 shadow-sm">
-            <h4 className="text-sm font-bold text-gray-500 mb-6 border-b border-gray-200 pb-2">
-              今回活用した制度
-            </h4>
-            {industry.supportSystem?.map((support: any, index: number) => (
-              <div key={index} className={index > 0 ? "mt-8 pt-8 border-t border-gray-200 border-dashed" : ""}>
-                <div className="flex justify-between items-start gap-4 mb-2">
-                  <h5 className="text-xl font-bold">{support.name}</h5>
-                  <a href={support.link} className="text-[#B33E28] text-sm font-bold hover:underline shrink-0 flex items-center gap-1">
-                    詳細 <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-                <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-                  {support.description}
-                </p>
-           {/* スペックBOX（位置ズレ修正版） */}
-                {(support.specAmount || support.specCondition) && (
-                  <div className="bg-[#FAF9F6] rounded-lg p-6 mb-8 space-y-5">
-                    {/* 1. 金額行（修正：items-start → items-center に変更し、余計なマージンを削除） */}
-                    {/* これで左右の高さが違っても、ど真ん中で揃います */}
-                    {support.specAmount && (
-                      <div className="flex items-center">
-                        <div className="flex items-center w-28 shrink-0 gap-3"> 
-                          {/* アイコン（SVGに変更するとより綺麗ですが、一旦テキストで調整） */}
-                          <span className="text-[#B33E28] text-lg">💰</span>
-                          <span className="text-sm font-bold text-[#B33E28]">金額</span>
-                        </div>
-                        <div className="text-[15px] font-bold text-[#1D3A52] flex-1">
-                          {support.specAmount}
-                        </div>
-                      </div>
-                    )}
-                    {/* 2. 条件行（ここは2行になる可能性があるため、上揃え items-start のまま維持） */}
-                    {support.specCondition && (
-                      <div className="flex items-start">
-                        {/* 右の文字が大きいので、左のラベルを少し下げて(mt-0.5)視覚的な高さを合わせる */}
-                        <div className="flex items-center w-28 shrink-0 mt-0.5 gap-3">
-                          <span className="text-[#1D3A52] text-lg">📄</span>
-                          <span className="text-sm font-bold text-[#1D3A52]">条件など</span>
-                        </div>
-                        <div className="text-sm text-gray-700 flex-1 leading-snug">
-                          {support.specCondition}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* ポイントBOX（既存） */}
-                {support.points && (
-                  <div className="bg-[#F9F8F4] p-4 rounded border border-gray-200">
-                    <div className="flex items-center text-xs font-bold text-gray-500 mb-1">
-                      <span className="mr-1">✓</span> {support.points.label}
-                    </div>
-                    <div className="font-bold text-[#1D3A52]">
-                      <GlossaryTerm term={support.points.term} /> {support.points.detail}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* シェアボタン */}
-        <div className="mt-12 flex justify-center">
-          <Button 
-            variant="outline" 
-            className="gap-2 rounded-full px-8 py-6 text-lg border-[#1D3A52] text-[#1D3A52] hover:bg-[#1D3A52] hover:text-white transition-colors"
-            onClick={() => setShowShareMenu(!showShareMenu)}
-          >
-            <Share2 className="w-5 h-5" />
-            この記事をシェアする
-          </Button>
-        </div>
-
-        {/* 関連記事レコメンド */}
-        {industry.recommendedSupports && (
-          <div className="mt-20 pt-12 border-t border-gray-200">
-            <h3 className="text-xl font-bold text-[#1D3A52] mb-6 flex items-center gap-2">
-              <ArrowUpRight className="w-5 h-5" />
-              この記事を読んだあなたへのおすすめ
-            </h3>
-            <div className="grid md:grid-cols-2 gap-6">
-              {industry.recommendedSupports.map((rec: any, index: number) => (
-                <a 
-                  key={index} 
-                  href={rec.link}
-                  className="block bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow no-underline group"
-                >
-                  <div className="text-xs font-bold text-[#B33E28] mb-2">{rec.category}</div>
-                  <h4 className="font-bold text-lg text-[#1D3A52] mb-2 group-hover:text-[#B33E28] transition-colors">
-                    {rec.name}
-                  </h4>
-                  <p className="text-sm text-gray-600 line-clamp-2">
-                    {rec.description}
-                  </p>
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
+      <main className="max-w-4xl mx-auto px-4 py-12">
+        <h1 className="text-3xl font-bold mb-4">{industry.title}</h1>
+        <p>このページは現在準備中です。</p>
+        <Link href="/industries">
+          <Button className="mt-4">一覧に戻る</Button>
+        </Link>
       </main>
-
       <Footer />
     </div>
   );

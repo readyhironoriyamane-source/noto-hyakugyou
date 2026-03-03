@@ -85,6 +85,21 @@ export interface Industry {
   supportSystem?: {
     name: string;
     description: string;
+    link?: string;
+    url?: string;
+    points?: {
+      label: string;
+      term: string;
+      detail: string;
+    };
+    specAmount?: string;
+    specCondition?: string;
+    rate?: string;
+    limit?: string;
+    point?: string;
+  } | {
+    name: string;
+    description: string;
     link: string;
     points?: {
       label: string;
@@ -105,6 +120,13 @@ export interface Industry {
   story?: {
     title: string;
     text: string[];
+  };
+  behindTheScenes?: {
+    title: string;
+    content: {
+      heading: string;
+      text: string;
+    }[];
   };
   recommendedSupports?: {
     category: string;
