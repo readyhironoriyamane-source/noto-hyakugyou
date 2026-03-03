@@ -256,7 +256,7 @@ export default function IndustryDetailPage() {
                         {industry.decisionMatrix.optionA.title}
                       </h5>
                       <ul className="space-y-2 text-sm md:text-base leading-[1.8] text-[#333]">
-                        {industry.decisionMatrix.optionA.pros.map((pro, i) => (
+                        {industry.decisionMatrix.optionA.pros.map((pro: string, i: number) => (
                           <li key={i} className={`flex items-start gap-2 ${i === industry.decisionMatrix!.optionA.pros.length - 1 ? 'italic text-[#666]' : ''}`}>
                             <span className="text-[#333] mt-1">•</span>
                             <span>{pro}</span>
