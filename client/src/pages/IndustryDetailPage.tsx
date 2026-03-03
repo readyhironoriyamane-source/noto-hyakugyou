@@ -659,7 +659,7 @@ export default function IndustryDetailPage() {
             )}
           </div>
 
-            {/* =================================================================
+          {/* =================================================================
               Phase 3: 行動 (Action)
              ================================================================= */}
           <div ref={(el) => { sectionsRef.current[2] = el; }} className="relative pl-8 md:pl-12 mb-16">
@@ -667,26 +667,16 @@ export default function IndustryDetailPage() {
             
             <div className="mb-2">
               <span className="bg-[#1D3A52] text-white text-xs font-bold px-2 py-1 rounded">フェーズ 3</span>
+              
             </div>
             <h3 className="text-2xl font-bold text-[#1D3A52] mb-4">行動と変化</h3>
-            
-            {/* Phase 3 Part 1 (Before Barriers) */}
-            {industry.story?.phase3_part1 && (
-              <p className={`${baseTextSize} ${leadingRelaxed} mb-8`}>
-                {industry.story.phase3_part1}
-              </p>
-            )}
-
-            {/* Default Phase 3 content if split parts are not present */}
-            {!industry.story?.phase3_part1 && (
-              <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
-                {industry.timeline.phase3 || industry.timeline.future}
-              </p>
-            )}
+            <p className={`${baseTextSize} ${leadingRelaxed} mb-6`}>
+              {industry.timeline.phase3 || industry.timeline.future}
+            </p>
 
             {/* 課題リスト (Barriers) - フェーズ3へ移動 */}
             {industry.barriers && industry.barriers.checklist && (
-              <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm my-8">
+              <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm mt-6">
                 <div className="flex items-center gap-2 mb-4">
                   <AlertTriangle className="w-6 h-6 text-[#B33E28]" />
                   <h4 className="font-bold text-xl text-gray-800">これから申請する人が覚悟すべき「実務の壁」</h4>
@@ -704,17 +694,6 @@ export default function IndustryDetailPage() {
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
-
-            {/* Phase 3 Part 2 (After Barriers) */}
-            {industry.story?.phase3_part2 && (
-              <div className="mt-8 space-y-6">
-                {industry.story.phase3_part2.split('\n\n').map((paragraph: string, index: number) => (
-                  <p key={index} className={`${baseTextSize} ${leadingRelaxed}`}>
-                    {paragraph}
-                  </p>
-                ))}
               </div>
             )}
           </div>
