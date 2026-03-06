@@ -82,21 +82,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                   </div>
                 </section>
                 
-                {/* スケジュール */}
-                <section>
-                  <h2 className="flex items-center gap-2 text-xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200">
-                    <Calendar className="w-5 h-5 text-slate-500" />
-                    申請期限・スケジュール
-                  </h2>
-                  <div className="bg-white p-5 rounded-lg border border-slate-100">
-                    <p className="text-slate-700 font-medium mb-2">
-                      申請期限：<span className="text-red-600">{item.applicationDeadline || '随時'}</span>
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      ※予算の上限に達し次第、終了する場合があります。最新情報は公式サイトをご確認ください。
-                    </p>
-                  </div>
-                </section>
+
 
                 {/* お問い合わせ・相談先（強調表示） */}
                 <section>
@@ -119,6 +105,38 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                         <span>{item.contactInfo?.hours || '平日 8:30〜17:15'}</span>
                       </div>
                     </div>
+                  </div>
+                </section>
+
+                {/* 必要書類 */}
+                <section>
+                  <h2 className="flex items-center gap-2 text-xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200">
+                    <FileText className="w-5 h-5 text-slate-500" />
+                    必要書類
+                  </h2>
+                  <div className="bg-white p-5 rounded-lg border border-slate-100">
+                    <ul className="space-y-3">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-5 h-5 text-[#2D7F8F] shrink-0 mt-0.5" />
+                        <span className="text-slate-700">交付申請書（様式第1号）</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-5 h-5 text-[#2D7F8F] shrink-0 mt-0.5" />
+                        <span className="text-slate-700">事業計画書（復旧する施設・設備の詳細）</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-5 h-5 text-[#2D7F8F] shrink-0 mt-0.5" />
+                        <span className="text-slate-700">見積書（2社以上）</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-5 h-5 text-[#2D7F8F] shrink-0 mt-0.5" />
+                        <span className="text-slate-700">被災証明書または罹災証明書の写し</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-5 h-5 text-[#2D7F8F] shrink-0 mt-0.5" />
+                        <span className="text-slate-700">直近の決算書（1期分）</span>
+                      </li>
+                    </ul>
                   </div>
                 </section>
 
