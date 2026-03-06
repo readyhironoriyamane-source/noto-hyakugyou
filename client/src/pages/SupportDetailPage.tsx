@@ -158,7 +158,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                                 </div>
                                 <div>
                                   <p className="font-bold text-slate-900 group-hover:text-[#2D7F8F] transition-colors">
-                                    {study.operator}（{study.role}）
+                                    {study.operator}
                                   </p>
                                   <p className="text-sm text-slate-500 line-clamp-1">
                                     {study.title}
