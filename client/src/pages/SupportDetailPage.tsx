@@ -51,8 +51,8 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
               <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2 leading-tight">
                 {item.mainTitle}
               </h1>
-              <p className="text-lg font-medium text-slate-500 mb-6">
-                {item.subTitle}
+              <p className="text-2xl md:text-3xl font-bold text-slate-900 mb-6 leading-tight">
+                <span className="bg-gradient-to-t from-yellow-200/60 from-35% to-transparent to-35% px-1">{item.subTitle}</span>
               </p>
               
               {/* リード文 */}
@@ -188,7 +188,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 w-full bg-[#2D7F8F] text-white font-bold py-4 px-8 rounded-lg hover:bg-[#236875] transition-colors shadow-md no-underline text-lg"
                     >
-                      公式サイトで募集要領を見る
+                      公式サイトで詳細を見る
                       <ExternalLink className="w-5 h-5" />
                     </a>
                     
@@ -210,7 +210,7 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                   </div>
                   
                   {/* 免責事項 */}
-                  <p className="text-xs text-slate-400 leading-relaxed">
+                  <p className="text-slate-700 leading-relaxed">
                     ※本ページの情報は2026年3月時点のものです。最新の募集要領や様式は、必ず公式サイトにてご確認ください。
                   </p>
                   
