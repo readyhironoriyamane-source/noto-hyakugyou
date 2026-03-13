@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { GlossaryTerm } from "@/components/GlossaryTerm";
-import { industries } from "@/data/industries";
+import { trpc } from "@/lib/trpc";
+import { mapArticleToIndustry } from "@/lib/articleMapper";
 import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2, AlertTriangle, MessageCircle, Share2, X, ExternalLink, MapPin, Building2, Users } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -10,7 +11,19 @@ import Header from "@/components/Header";
 export default function IndustryDetailPage() {
   const [match, params] = useRoute("/industry/:id");
   const id = params?.id ? parseInt(params.id) : 0;
-  const industry = industries.find((i) => i.id === id);
+  
+  // APIから記事データを取得
+  const { data: rawArticle, isLoading, error } = trpc.articles.getById.useQuery(
+    { id },
+    { enabled: id > 0 }
+  );
+
+  // DB記事データをIndustry型に変換
+  const industry = useMemo(() => {
+    if (!rawArticle) return null;
+    return mapArticleToIndustry(rawArticle as any);
+  }, [rawArticle]);
+
   const [activeSection, setActiveSection] = useState(0);
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -32,6 +45,22 @@ export default function IndustryDetailPage() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // ローディング状態
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#F9F8F4] font-sans">
+        <Header />
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-[#1D3A52] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-500">記事を読み込み中...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!industry) {
     return (
@@ -63,7 +92,7 @@ export default function IndustryDetailPage() {
             alt={industry.title}
             className="absolute inset-0 w-full h-full object-cover"
           />
-          {/* Scrim Gradient: 下から上へのグラデーションのみを適用し、上部は写真の明るさを活かす */}
+          {/* Scrim Gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#1D3A52] via-[#1D3A52]/80 to-transparent opacity-90"></div>
           
           <div className="relative z-10 w-full p-6 pb-12 md:p-12 lg:p-20 text-white mt-auto">
@@ -124,11 +153,13 @@ export default function IndustryDetailPage() {
                 </div>
                 
                 {/* 3行目: 事業説明 */}
-                <div className="mt-1">
-                  <p className="text-sm md:text-base leading-relaxed">
-                    能登町で昭和初期から続く老舗クリーニング店。祖父の代から3代にわたり家族で守り継いできた。ドライクリーニングを中心に、毛布類の天日干しにこだわるなど、地域の暮らしに寄り添った丁寧なサービスを提供している。震災で設備が故障したが、小規模事業者持続化補助金を活用し、自己負担を最小限に抑えて再開を果たした。
-                  </p>
-                </div>
+                {industry.heroSummary && (
+                  <div className="mt-1">
+                    <p className="text-sm md:text-base leading-relaxed">
+                      {industry.heroSummary}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -151,7 +182,6 @@ export default function IndustryDetailPage() {
           {/* 【セクション8】💡セクション（能登百業録カラー対応グリッチ効果付きカード） */}
           {industry.regrets && (
             <div className="relative mb-8 md:mb-16 group">
-              {/* SVGノイズフィルター定義 */}
               <svg className="hidden">
                 <filter id="noiseFilter">
                   <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" />
@@ -160,28 +190,21 @@ export default function IndustryDetailPage() {
                 </filter>
               </svg>
 
-              {/* カード本体 */}
               <div 
                 className="relative overflow-hidden rounded-2xl p-5 md:p-12 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(30,58,95,0.5)] border-l-4 border-[#C8A882]"
                 style={{
                   background: "linear-gradient(135deg, #1E3A5F 0%, #2D7F8F 100%)",
                 }}
               >
-                {/* ノイズオーバーレイ */}
                 <div 
                   className="absolute inset-0 opacity-15 pointer-events-none mix-blend-overlay"
                   style={{ filter: "url(#noiseFilter)" }}
                 ></div>
                 
-                {/* アクセント図形（左上：ゴールド円形） */}
                 <div className="absolute -top-5 -left-5 w-[80px] h-[80px] bg-[#C8A882]/70 rounded-full blur-xl"></div>
-                
-                {/* アクセント図形（右下：ライトティール波型） */}
                 <div className="absolute -bottom-6 -right-6 w-[100px] h-[60px] bg-[#4FA8B8]/50 rounded-full blur-xl transform rotate-12"></div>
 
-                {/* コンテンツ */}
                 <div className="relative z-10">
-                  {/* 見出し */}
                   <div className="flex items-center gap-3 mb-6">
                     <span className="text-3xl filter drop-shadow-md">💡</span>
                     <h3 
@@ -192,7 +215,6 @@ export default function IndustryDetailPage() {
                     </h3>
                   </div>
 
-                  {/* 本文 */}
                   <div 
                     className="text-[16px] md:text-[20px] leading-[1.8] text-white font-medium"
                     style={{ textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}
@@ -211,7 +233,6 @@ export default function IndustryDetailPage() {
 
             {/* Phase 1 */}
             <div className="relative pl-8 md:pl-12 mb-16">
-              {/* マーカー */}
               <div className="absolute -left-[9px] top-0 w-5 h-5 rounded-full bg-[#F9F8F4] border-4 border-[#1D3A52] z-10"></div>
               
               <div className="mb-2">
@@ -234,8 +255,6 @@ export default function IndustryDetailPage() {
               <p className={`${baseTextSize} ${leadingRelaxed} mb-8`}>
                 {industry.timeline.phase2}
               </p>
-
-              {/* ========== 究極の二択 + 実務の壁 + 壁の乗り越え方（スマホで線の上に重ねる）開始 ========== */}
 
               {/* 1. 究極の二択 */}
               {industry.decisionMatrix && (
@@ -342,7 +361,6 @@ export default function IndustryDetailPage() {
               {/* 本文①②（小見出しなし） */}
               <div className="mb-12 space-y-4">
                 {(() => {
-                  // phase3から本文部分のみを抽出（最初の---まで）
                   const fullText = industry.timeline.phase3 || "";
                   const firstSeparator = fullText.indexOf('\n---\n');
                   const mainText = firstSeparator > 0 ? fullText.substring(0, firstSeparator) : fullText;
@@ -381,7 +399,7 @@ export default function IndustryDetailPage() {
                 </div>
               )}
 
-              {/* 支援を受けて起きた変化（薄いティール背景＋左ティールボーダー） */}
+              {/* 支援を受けて起きた変化 */}
               {industry.changes && (
                 <div className="bg-[#F0F7F8] border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-6 md:p-8 rounded-lg mt-8 shadow-sm">
                   <div className="flex items-center gap-2 mb-5">
@@ -479,11 +497,11 @@ export default function IndustryDetailPage() {
             </div>
           )}
 
-          {/* 【セクション13】今回活用した制度（カード） */}
+          {/* 【セクション13】今回活用した制度（カード）- 動的UI対応 */}
           {industry.supportSystem && (
             <div className="mb-20">
               {Array.isArray(industry.supportSystem) ? (
-                // 配列の場合（既存のロジック）
+                // 配列の場合（複数制度）
                 <div className="bg-[#1D3A52] p-6 md:p-8 rounded-xl">
                   <h3 className="text-xl md:text-2xl font-bold text-white mb-6 flex items-center">
                     <span className="mr-2">##</span> 今回活用した制度
@@ -502,41 +520,49 @@ export default function IndustryDetailPage() {
                           
                           <div className="bg-gray-50 rounded-lg p-5 mb-6 border border-gray-100">
                             <div className="space-y-3">
-                              <div className="flex items-start gap-3">
-                                <span className="text-xl">💰</span>
-                                <div>
-                                  <span className="font-bold text-gray-700 mr-2">補助率:</span>
-                                  <span className="text-gray-800">{support.rate}</span>
+                              {support.rate && (
+                                <div className="flex items-start gap-3">
+                                  <span className="text-xl">💰</span>
+                                  <div>
+                                    <span className="font-bold text-gray-700 mr-2">補助率:</span>
+                                    <span className="text-gray-800">{support.rate}</span>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <span className="text-xl">📄</span>
-                                <div>
-                                  <span className="font-bold text-gray-700 mr-2">上限:</span>
-                                  <span className="text-gray-800">{support.limit}</span>
+                              )}
+                              {support.limit && (
+                                <div className="flex items-start gap-3">
+                                  <span className="text-xl">📄</span>
+                                  <div>
+                                    <span className="font-bold text-gray-700 mr-2">上限:</span>
+                                    <span className="text-gray-800">{support.limit}</span>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <span className="text-xl text-[#C8A882]">✓</span>
-                                <div>
-                                  <span className="font-bold text-[#C8A882] mr-2">ここがポイント:</span>
-                                  <span className="text-gray-800">{support.point}</span>
+                              )}
+                              {support.point && (
+                                <div className="flex items-start gap-3">
+                                  <span className="text-xl text-[#C8A882]">✓</span>
+                                  <div>
+                                    <span className="font-bold text-[#C8A882] mr-2">ここがポイント:</span>
+                                    <span className="text-gray-800">{support.point}</span>
+                                  </div>
                                 </div>
-                              </div>
+                              )}
                             </div>
                           </div>
                           
-                          <div className="text-center">
-                            <a 
-                              href={support.url} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center justify-center bg-[#2D7F8F] hover:bg-[#236A7A] text-white font-bold py-3 px-8 rounded-md transition-colors duration-300 shadow-sm hover:shadow-md w-full md:w-auto"
-                            >
-                              この制度の詳細を見る
-                              <ArrowRight className="ml-2 w-5 h-5" />
-                            </a>
-                          </div>
+                          {(support.url || support.link) && (
+                            <div className="text-center">
+                              <a 
+                                href={support.url || support.link} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center bg-[#2D7F8F] hover:bg-[#236A7A] text-white font-bold py-3 px-8 rounded-md transition-colors duration-300 shadow-sm hover:shadow-md w-full md:w-auto"
+                              >
+                                この制度の詳細を見る
+                                <ArrowRight className="ml-2 w-5 h-5" />
+                              </a>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -552,7 +578,7 @@ export default function IndustryDetailPage() {
                   </div>
                 </div>
               ) : (
-                // オブジェクトの場合（新デザイン）
+                // オブジェクトの場合（単一制度）
                 <div className="bg-[#1D3A52] p-6 md:p-8 rounded-xl">
                   <h3 className="text-xl md:text-2xl font-bold text-white mb-6 flex items-center">
                     <span className="mr-2">##</span> 今回活用した制度
@@ -569,41 +595,49 @@ export default function IndustryDetailPage() {
                       
                       <div className="bg-gray-50 rounded-lg p-5 mb-6 border border-gray-100">
                         <div className="space-y-3">
-                          <div className="flex items-start gap-3">
-                            <span className="text-xl">💰</span>
-                            <div>
-                              <span className="font-bold text-gray-700 mr-2">補助率:</span>
-                              <span className="text-gray-800">{industry.supportSystem.rate}</span>
+                          {industry.supportSystem.rate && (
+                            <div className="flex items-start gap-3">
+                              <span className="text-xl">💰</span>
+                              <div>
+                                <span className="font-bold text-gray-700 mr-2">補助率:</span>
+                                <span className="text-gray-800">{industry.supportSystem.rate}</span>
+                              </div>
                             </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-xl">📄</span>
-                            <div>
-                              <span className="font-bold text-gray-700 mr-2">上限:</span>
-                              <span className="text-gray-800">{industry.supportSystem.limit}</span>
+                          )}
+                          {industry.supportSystem.limit && (
+                            <div className="flex items-start gap-3">
+                              <span className="text-xl">📄</span>
+                              <div>
+                                <span className="font-bold text-gray-700 mr-2">上限:</span>
+                                <span className="text-gray-800">{industry.supportSystem.limit}</span>
+                              </div>
                             </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <span className="text-xl text-[#C8A882]">✓</span>
-                            <div>
-                              <span className="font-bold text-[#C8A882] mr-2">ここがポイント:</span>
-                              <span className="text-gray-800">{industry.supportSystem.point}</span>
+                          )}
+                          {industry.supportSystem.point && (
+                            <div className="flex items-start gap-3">
+                              <span className="text-xl text-[#C8A882]">✓</span>
+                              <div>
+                                <span className="font-bold text-[#C8A882] mr-2">ここがポイント:</span>
+                                <span className="text-gray-800">{industry.supportSystem.point}</span>
+                              </div>
                             </div>
-                          </div>
+                          )}
                         </div>
                       </div>
                       
-                      <div className="text-center">
-                        <a 
-                          href={industry.supportSystem.url} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center bg-[#2D7F8F] hover:bg-[#236A7A] text-white font-bold py-3 px-8 rounded-md transition-colors duration-300 shadow-sm hover:shadow-md w-full md:w-auto"
-                        >
-                          この制度の詳細を見る
-                          <ArrowRight className="ml-2 w-5 h-5" />
-                        </a>
-                      </div>
+                      {(industry.supportSystem.url || industry.supportSystem.link) && (
+                        <div className="text-center">
+                          <a 
+                            href={industry.supportSystem.url || industry.supportSystem.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center bg-[#2D7F8F] hover:bg-[#236A7A] text-white font-bold py-3 px-8 rounded-md transition-colors duration-300 shadow-sm hover:shadow-md w-full md:w-auto"
+                          >
+                            この制度の詳細を見る
+                            <ArrowRight className="ml-2 w-5 h-5" />
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </div>
                   
@@ -620,7 +654,7 @@ export default function IndustryDetailPage() {
             </div>
           )}
 
-          {/* 【セクション11】編集後記（共通コンポーネント化推奨だが、ここでは直接実装） */}
+          {/* 【セクション11】編集後記 */}
           <div className="bg-white p-8 md:p-10 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-2 h-full bg-[#1D3A52]"></div>
             <h3 className="text-xl font-bold text-[#1D3A52] mb-6 flex items-center">
@@ -646,7 +680,6 @@ export default function IndustryDetailPage() {
   }
 
   // ID 101 以外は既存のデザイン（または共通デザイン）を表示
-  // ※ここでは既存のコードを維持
   return (
     <div className="min-h-screen bg-[#F9F8F4] font-sans text-gray-800">
       <Header />

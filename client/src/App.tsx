@@ -14,9 +14,10 @@ import IndustryDetailPage from "./pages/IndustryDetailPage";
 import IndustriesPage from "./pages/IndustriesPage";
 import SupportArchivePage from "./pages/SupportArchivePage";
 import SupportDetailPage from "./pages/SupportDetailPage";
+import ArticleListPage from "./pages/admin/ArticleListPage";
+import ArticleEditorPage from "./pages/admin/ArticleEditorPage";
 
 import PrivacyPage from "./pages/PrivacyPage";
-
 function Router() {
   const [location] = useLocation();
 
@@ -65,6 +66,19 @@ function Router() {
               <SupportDetailPage params={params as any} />
             </PageTransition>
           )}
+        </Route>
+
+        {/* Admin Routes - No page transition for better UX */}
+        <Route path={"/admin"}>
+          <ArticleListPage />
+        </Route>
+
+        <Route path={"/admin/articles/new"}>
+          <ArticleEditorPage />
+        </Route>
+
+        <Route path={"/admin/articles/:id"}>
+          <ArticleEditorPage />
         </Route>
 
         <Route path={"/404"}>

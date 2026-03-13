@@ -1,0 +1,28 @@
+{
+  "query": "SELECT id, title, category, operator FROM articles ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2u86XNAjatgfDVL.57a134884d8c --database 3nqHQM6GxJ7ULoRQP5ahB4 --execute SELECT id, title, category, operator FROM articles ORDER BY id;",
+  "rows": [
+    {
+      "id": "101",
+      "title": "「450万円もかけて再開する意味はあるのか？」老舗クリーニング店が選んだ\"軟着陸\"という道",
+      "category": "設備投資・修繕",
+      "operator": "本合クリーニング"
+    },
+    {
+      "id": "102",
+      "title": "「この場所を、もう一度みんなが集まれる場所に」セミナーハウスやまびこの挑戦",
+      "category": "再建・コミュニティ",
+      "operator": "セミナーハウスやまびこ"
+    },
+    {
+      "id": "104",
+      "title": "「3/4補助の裏にある価格変動リスク」蛸島工務店が直面した補助金の落とし穴",
+      "category": "設備投資・事業再建",
+      "operator": "蛸島工務店"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tcategory\toperator\n101\t「450万円もかけて再開する意味はあるのか？」老舗クリーニング店が選んだ\"軟着陸\"という道\t設備投資・修繕\t本合クリーニング\n102\t「この場所を、もう一度みんなが集まれる場所に」セミナーハウスやまびこの挑戦\t再建・コミュニティ\tセミナーハウスやまびこ\n104\t「3/4補助の裏にある価格変動リスク」蛸島工務店が直面した補助金の落とし穴\t設備投資・事業再建\t蛸島工務店\n",
+  "stderr": "",
+  "execution_time_ms": 2401
+}

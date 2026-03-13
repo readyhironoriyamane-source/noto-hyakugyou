@@ -218,3 +218,16 @@
 ## フッターの微調整
 - [x] フッターの左カラムに能登百業録の説明を残しつつ能登町役場情報を追加
 - [x] コピーライトの年を2026に修正
+
+## CMS化（データベース管理への移行）
+- [x] web-db-user アップグレード後のコンフリクト解消（App.tsx, Home.tsx, NotFound.tsx, ManusDialog.tsx, package.json）
+- [x] TypeScriptエラー解消
+- [x] データベーススキーマ設計（articles, support_systems, decision_matrices, barriers, changes, timelines）
+- [x] 既存データ（industries.ts）からDBへのマイグレーション
+- [x] API（tRPCルーター）の構築：記事CRUD
+- [x] 管理画面（Admin Dashboard）の構築：記事一覧・編集・新規作成
+- [x] 究極の二択セクション：項目数に応じた動的UI対応
+- [x] 今回活用した制度：1件/複数件に応じた動的UI対応
+- [x] フロントエンド表示をAPI経由に切り替え
+- [x] Vitest テスト作成
+- [ ] 最終確認・デリバリー（進行中）

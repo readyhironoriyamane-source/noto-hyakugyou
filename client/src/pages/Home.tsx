@@ -1,16 +1,22 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
-import { Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, ArrowUpRight, FileText } from 'lucide-react';
-import { industries } from '@/data/industries';
+import { Users, Handshake, Construction, Coins, TrendingUp, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { trpc } from '@/lib/trpc';
+import { mapArticlesToIndustries } from '@/lib/articleMapper';
 import SupportSection from '@/components/SupportSection';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import ConsultationCTA from '@/components/ConsultationCTA';
+import { useMemo } from 'react';
 
 export default function Home() {
-  // 活用事例記事（isCaseStudyがtrue）のみを取得
-  // TOPページには最大6件まで表示
-  const caseStudies = industries.filter(i => i.isCaseStudy).slice(0, 6);
+  // APIから活用事例（isCaseStudy=true）を取得
+  const { data: rawArticles, isLoading } = trpc.articles.caseStudies.useQuery();
+
+  // DB記事データをIndustry型に変換し、最大6件に制限
+  const caseStudies = useMemo(() => {
+    if (!rawArticles) return [];
+    return mapArticlesToIndustries(rawArticles as any).slice(0, 6);
+  }, [rawArticles]);
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -172,7 +178,7 @@ export default function Home() {
 
       <main className="container py-16 md:py-32">
         
-        {/* 活用事例セクション (Guidepost Section) - Moved UP */}
+        {/* 活用事例セクション (Guidepost Section) */}
         <section className="mb-32">
           <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
@@ -182,139 +188,153 @@ export default function Home() {
                 困難を乗り越えた、決断の記録です。
               </p>
             </div>
-            {/* Link moved to Hero section */}
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {caseStudies.map((study) => (
-              <a 
-                key={study.id}
-                href={`/industry/${study.id}`}
-                className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline flex flex-col h-full"
-              >
-                {/* 1. ヘッダー画像エリア（リンク切れ修正済み） */}
-                <div className="relative aspect-[3/2] overflow-hidden bg-muted">
-                  <img 
-                    src={study.image} 
-                    alt={`${study.title}のイメージ画像`} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://placehold.co/600x400/e2e8f0/1e293b?text=No+Image";
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
+          {/* ローディング状態 */}
+          {isLoading && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white rounded-lg overflow-hidden shadow-sm border border-border/50 animate-pulse">
+                  <div className="aspect-[3/2] bg-gray-200" />
+                  <div className="p-6 md:p-8 space-y-4">
+                    <div className="h-4 bg-gray-200 rounded w-1/3" />
+                    <div className="h-6 bg-gray-200 rounded w-2/3" />
+                    <div className="h-4 bg-gray-200 rounded w-full" />
+                    <div className="h-4 bg-gray-200 rounded w-4/5" />
+                  </div>
                 </div>
+              ))}
+            </div>
+          )}
 
-                {/* 2. 情報エリア（白背景、余白広め） */}
-                <div className="p-6 md:p-8 flex flex-col flex-grow bg-white">
-                  
-                  {/* 上部コンテンツラッパー：flex-growで余白を埋めて、下部セクションを底に押しやる */}
-                  <div className="flex flex-col flex-grow">
-                    {/* ① 課題ラベル（最優先情報） */}
-                    {study.challengeCard && (
-                      <div className="mb-4">
-                        <span className="inline-block bg-[#E6F4EA] text-[#1D3A52] text-xs font-bold px-3 py-1 rounded-full tracking-wider border border-[#CDE8D6]">
-                          {study.challengeCard.label}
-                        </span>
+          {!isLoading && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {caseStudies.map((study) => (
+                <a 
+                  key={study.id}
+                  href={`/industry/${study.id}`}
+                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline flex flex-col h-full"
+                >
+                  {/* 1. ヘッダー画像エリア */}
+                  <div className="relative aspect-[3/2] overflow-hidden bg-muted">
+                    <img 
+                      src={study.image} 
+                      alt={`${study.title}のイメージ画像`} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.src = "https://placehold.co/600x400/e2e8f0/1e293b?text=No+Image";
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
+                  </div>
+
+                  {/* 2. 情報エリア（白背景、余白広め） */}
+                  <div className="p-6 md:p-8 flex flex-col flex-grow bg-white">
+                    
+                    {/* 上部コンテンツラッパー */}
+                    <div className="flex flex-col flex-grow">
+                      {/* ① 課題ラベル（最優先情報） */}
+                      {study.challengeCard && (
+                        <div className="mb-4">
+                          <span className="inline-block bg-[#E6F4EA] text-[#1D3A52] text-xs font-bold px-3 py-1 rounded-full tracking-wider border border-[#CDE8D6]">
+                            {study.challengeCard.label}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* ② 属性データ（コントラスト改善） */}
+                      <div className="flex flex-col gap-4 mb-4">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
+                            {study.category}
+                          </span>
+                          <span className="text-xs font-bold text-[#666] flex items-center gap-1">
+                            <span className="w-1 h-1 bg-[#888] rounded-full"></span>
+                            {study.location}
+                          </span>
+                        </div>
+                        {/* 事業者名を追加 */}
+                        <div className="text-xs font-bold text-[#555] border-l-[3px] border-[#B33E28] pl-2">
+                          {study.operator}
+                        </div>
+                      </div>
+
+                      {/* ③ タイトル */}
+                      <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors">
+                        {study.title}
+                      </h3>
+
+                      {/* ④ 本文リード文 */}
+                      <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3">
+                        {study.summary}
+                      </p>
+                    </div>
+
+                    {/* ⑤ 構造化データブロック */}
+                    {study.challengeCard?.structuredBlock && (
+                      <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
+                        {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
+                          <div key={idx} className="text-sm">
+                            <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
+                              {block.label}
+                            </span>
+                            <ul className="list-disc list-inside text-gray-600 pl-1">
+                              {block.items.map((item: string, i: number) => {
+                                let linkTarget = "";
+                                if (item.includes("なりわい再建支援補助金") && !item.includes("能登町")) {
+                                  linkTarget = "#support-nariwai";
+                                } else if (item.includes("小規模事業者持続化補助金")) {
+                                  linkTarget = "#support-jizoku";
+                                } else if (item.includes("能登町なりわい再建支援補助金")) {
+                                  linkTarget = "#support-noto-nariwai";
+                                }
+
+                                return (
+                                  <li key={i} className="leading-[1.8] mb-[8px] last:mb-0 break-words">
+                                    {linkTarget ? (
+                                      <span
+                                        className="text-primary hover:text-accent hover:underline decoration-1 underline-offset-2 font-medium transition-colors cursor-pointer"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          e.preventDefault();
+                                          const target = document.querySelector(linkTarget);
+                                          if (target) {
+                                            target.scrollIntoView({ behavior: 'smooth' });
+                                          }
+                                        }}
+                                      >
+                                        {item}
+                                      </span>
+                                    ) : (
+                                      item
+                                    )}
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
+                        ))}
                       </div>
                     )}
 
-                    {/* ② 属性データ（コントラスト改善） */}
-                    <div className="flex flex-col gap-4 mb-4">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
-                          {study.category}
-                        </span>
-                        <span className="text-xs font-bold text-[#666] flex items-center gap-1">
-                          <span className="w-1 h-1 bg-[#888] rounded-full"></span>
-                          {study.location}
-                        </span>
-                      </div>
-                      {/* 事業者名を追加 */}
-                      <div className="text-xs font-bold text-[#555] border-l-[3px] border-[#B33E28] pl-2">
-                        {study.operator}
+                    {/* ⑥ ボタン */}
+                    <div className="pt-4 border-t border-gray-100">
+                      <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
+                        詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
                       </div>
                     </div>
-
-                    {/* ③ タイトル（下線削除・ゴシック化） */}
-                    <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors">
-                      {study.title}
-                    </h3>
-
-                    {/* ④ 本文リード文（下線削除・ゴシック化） */}
-                    <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3">
-                      {study.summary}
-                    </p>
                   </div>
-
-                  {/* ⑤ 構造化データブロック（新設） */}
-                  {study.challengeCard?.structuredBlock && (
-                    <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
-                      {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
-                        <div key={idx} className="text-sm">
-                          <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
-                            {block.label}
-                          </span>
-                          <ul className="list-disc list-inside text-gray-600 pl-1">
-                            {block.items.map((item: string, i: number) => {
-                              // 支援制度へのリンクマッピング
-                              let linkTarget = "";
-                              if (item.includes("なりわい再建支援補助金") && !item.includes("能登町")) {
-                                linkTarget = "#support-nariwai";
-                              } else if (item.includes("小規模事業者持続化補助金")) {
-                                linkTarget = "#support-jizoku";
-                              } else if (item.includes("能登町なりわい再建支援補助金")) {
-                                linkTarget = "#support-noto-nariwai";
-                              }
-
-                              return (
-                                <li key={i} className="leading-[1.8] mb-[8px] last:mb-0 break-words">
-                                  {linkTarget ? (
-                                    // ネストされたaタグを避けるため、spanタグでラップし、イベント伝播を止める
-                                    <span
-                                      className="text-primary hover:text-accent hover:underline decoration-1 underline-offset-2 font-medium transition-colors cursor-pointer"
-                                      onClick={(e) => {
-                                        // 親のカードリンクへの遷移を防止
-                                        e.stopPropagation();
-                                        e.preventDefault();
-                                        // スムーズスクロール
-                                        const target = document.querySelector(linkTarget);
-                                        if (target) {
-                                          target.scrollIntoView({ behavior: 'smooth' });
-                                        }
-                                      }}
-                                    >
-                                      {item}
-                                    </span>
-                                  ) : (
-                                    item
-                                  )}
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* ⑥ ボタン */}
-                  <div className="pt-4 border-t border-gray-100">
-                    <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
-                      詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
-                    </div>
-                  </div>
+                </a>
+              ))}
+              
+              {/* 事例が少ない場合のプレースホルダー */}
+              {caseStudies.length === 0 && (
+                <div className="col-span-full text-center py-20 bg-muted/30 rounded-xl border-2 border-dashed border-muted-foreground/30">
+                  <p className="text-lg md:text-xl text-muted-foreground font-bold">現在、公開準備中の事例があります。</p>
                 </div>
-              </a>
-            ))}
-            
-            {/* 事例が少ない場合のプレースホルダー */}
-            {caseStudies.length === 0 && (
-              <div className="col-span-full text-center py-20 bg-muted/30 rounded-xl border-2 border-dashed border-muted-foreground/30">
-                <p className="text-lg md:text-xl text-muted-foreground font-bold">現在、公開準備中の事例があります。</p>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           {/* もっと見るボタン */}
           <div className="text-center mt-12">
@@ -324,7 +344,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 使える支援制度セクション (Support Section) - Moved DOWN and using new component */}
+        {/* 使える支援制度セクション */}
         <SupportSection />
 
         <div className="mt-32">
