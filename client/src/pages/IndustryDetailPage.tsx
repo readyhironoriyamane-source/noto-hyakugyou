@@ -138,12 +138,12 @@ export default function IndustryDetailPage() {
         <main className="max-w-3xl mx-auto px-4 md:px-6 py-12 md:py-20">
           
           {/* 【セクション7】取材情報 */}
-          <div className="mb-12 flex flex-col items-end gap-2">
-            <div className="text-gray-600 text-sm flex justify-end gap-4">
+          <div className="mb-12 flex flex-col items-start gap-2">
+            <div className="text-gray-600 text-sm flex justify-start gap-4">
               <span>取材日: {industry.details?.interviewDate}</span>
               <span>ライター: {industry.details?.writer}</span>
             </div>
-            <p className="text-xs text-gray-400 text-right">
+            <p className="text-xs text-gray-400 text-left">
               ※掲載情報は執筆時点のものであり、制度内容は変更される場合があります。申請をご検討の際は、窓口にて最新情報をご確認いただくことを推奨します。
             </p>
           </div>
