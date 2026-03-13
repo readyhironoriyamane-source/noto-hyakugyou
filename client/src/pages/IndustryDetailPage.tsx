@@ -50,8 +50,8 @@ export default function IndustryDetailPage() {
   const baseTextSize = "text-lg md:text-xl";
   const leadingRelaxed = "leading-9 md:leading-10";
 
-  // 記事ID: 101 の場合は、新デザインレイアウトを適用（ヘッダー・フッター・フォントは共通化）
-  if (industry.id === 101) {
+  // 記事ID: 101, 104 の場合は、新デザインレイアウトを適用（ヘッダー・フッター・フォントは共通化）
+  if (industry.id === 101 || industry.id === 104) {
     return (
       <div className="min-h-screen bg-[#F9F8F4] font-sans text-gray-800">
         <Header />
