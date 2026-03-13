@@ -45,11 +45,14 @@ export interface Industry {
     optionA: {
       title: string;
       pros: string[];
+      cons?: string[];
     };
     optionB: {
       title: string;
-      subsidy: string;
-      cost: string;
+      subsidy?: string;
+      cost?: string;
+      pros?: string[];
+      cons?: string[];
     };
     reason: string;
   };

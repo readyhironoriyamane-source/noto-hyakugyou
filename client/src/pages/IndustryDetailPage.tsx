@@ -279,18 +279,22 @@ export default function IndustryDetailPage() {
                       <h5 className="text-[16px] md:text-lg font-bold text-[#1E3A5F] mb-4">
                         {industry.decisionMatrix.optionB.title}
                       </h5>
-                      <div className="bg-white/60 p-4 rounded-lg mb-4 border border-[#2D7F8F]/20">
-                        <p className="text-xs md:text-sm font-bold text-[#2D7F8F] mb-2">補助金</p>
-                        <p className="text-sm md:text-base text-[#1E3A5F]">
-                          {industry.decisionMatrix.optionB.subsidy}
-                        </p>
-                      </div>
-                      <div className="bg-white/60 p-4 rounded-lg border border-[#2D7F8F]/20">
-                        <p className="text-xs md:text-sm font-bold text-[#2D7F8F] mb-2">コスト</p>
-                        <p className="text-sm md:text-base font-bold text-[#E65100]">
-                          {industry.decisionMatrix.optionB.cost}
-                        </p>
-                      </div>
+                      {industry.decisionMatrix.optionB.subsidy && (
+                        <div className="bg-white/60 p-4 rounded-lg mb-4 border border-[#2D7F8F]/20">
+                          <p className="text-xs md:text-sm font-bold text-[#2D7F8F] mb-2">補助金</p>
+                          <p className="text-sm md:text-base text-[#1E3A5F]">
+                            {industry.decisionMatrix.optionB.subsidy}
+                          </p>
+                        </div>
+                      )}
+                      {industry.decisionMatrix.optionB.cost && (
+                        <div className="bg-white/60 p-4 rounded-lg border border-[#2D7F8F]/20">
+                          <p className="text-xs md:text-sm font-bold text-[#2D7F8F] mb-2">コスト</p>
+                          <p className="text-sm md:text-base font-bold text-[#E65100]">
+                            {industry.decisionMatrix.optionB.cost}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                   

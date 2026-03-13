@@ -191,7 +191,7 @@ export const industries: Industry[] = [
       optionA: {
         title: "申請を取り下げる",
         pros: ["わずらわしい事務作業から解放される"],
-        cons: ["再建が遅れる"]
+        cons: ["ただし再建が遅れる"]
       },
       optionB: {
         title: "このまま申請を進めて、値上がり分は自己負担する",
