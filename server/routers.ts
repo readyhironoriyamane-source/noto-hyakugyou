@@ -46,6 +46,7 @@ const articleInputSchema = z.object({
   decisionMatrix: z.any().nullable().optional(),
   decisionProcess: z.any().nullable().optional(),
   barriers: z.any().nullable().optional(),
+  overcomeWall: z.any().nullable().optional(),
   supportSystem: z.any().nullable().optional(),
   details: z.any().nullable().optional(),
   story: z.any().nullable().optional(),
@@ -262,6 +263,11 @@ ${rawText.substring(0, 12000)}
     "structuredBlock": [
       { "label": "ブロックラベル", "items": ["項目1"] }
     ]
+  },
+  "overcomeWall": {
+    "title": "壁の乗り越え方（要点）",
+    "subtitle": "▼ こうやって乗り越えた",
+    "items": ["乗り越えた方法の項目1", "項目2"]
   }
 }`,
             },

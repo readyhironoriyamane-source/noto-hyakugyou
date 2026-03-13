@@ -421,38 +421,50 @@ export default function IndustryDetailPage() {
 
               {/* 3. 壁の乗り越え方 */}
               {(() => {
-                const fullText = industry.timeline.phase3 || "";
-                const howToOvercomeMatch = fullText.match(/### 壁の乗り越え方（要点）[\s\S]*?▼ こうやって乗り越えた\n([\s\S]*?)(?:\n---|\n###|$)/);
-                
-                if (howToOvercomeMatch && howToOvercomeMatch[1]) {
-                  const items = howToOvercomeMatch[1]
-                    .split('\n')
-                    .filter(line => line.trim().startsWith('・'))
-                    .map(line => line.replace('・', '').trim());
-                  
-                  if (items.length > 0) {
-                    return (
-                      <div className="-ml-14 md:ml-0 w-[calc(100%+3.5rem)] md:w-full md:max-w-[800px] relative z-10 bg-[#F0F7F8] border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-6 md:p-8 rounded-lg mt-8 shadow-sm">
-                        <div className="mb-5">
-                          <h4 className="text-[19px] md:text-[22px] font-bold text-[#1E3A5F] mb-3">
-                            壁の乗り越え方（要点）
-                          </h4>
-                          <p className="text-[17px] font-bold text-[#2D7F8F]">
-                            ▼ こうやって乗り越えた
-                          </p>
-                        </div>
-                        
-                        <ul className="space-y-2">
-                          {items.map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-2 text-base leading-[1.8] text-[#333]">
-                              <span className="text-[#2D7F8F] mt-1">•</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    );
+                // 新DBフィールド優先、旧フォーマットにフォールバック
+                const ow = (rawArticle as any)?.overcomeWall;
+                let overcomeTitle = "壁の乗り越え方（要点）";
+                let overcomeSubtitle = "▼ こうやって乗り越えた";
+                let overcomeItems: string[] = [];
+
+                if (ow && ow.items && ow.items.length > 0) {
+                  overcomeTitle = ow.title || overcomeTitle;
+                  overcomeSubtitle = ow.subtitle || overcomeSubtitle;
+                  overcomeItems = ow.items.filter((s: string) => s.trim());
+                } else {
+                  // 旧フォーマット: timelinePhase3から正規表現でパース
+                  const fullText = industry.timeline.phase3 || "";
+                  const howToOvercomeMatch = fullText.match(/### 壁の乗り越え方（要点）[\s\S]*?▼ こうやって乗り越えた\n([\s\S]*?)(?:\n---|\n###|$)/);
+                  if (howToOvercomeMatch && howToOvercomeMatch[1]) {
+                    overcomeItems = howToOvercomeMatch[1]
+                      .split('\n')
+                      .filter(line => line.trim().startsWith('・'))
+                      .map(line => line.replace('・', '').trim());
                   }
+                }
+
+                if (overcomeItems.length > 0) {
+                  return (
+                    <div className="-ml-14 md:ml-0 w-[calc(100%+3.5rem)] md:w-full md:max-w-[800px] relative z-10 bg-[#F0F7F8] border border-[#E0E0E0] border-l-[4px] border-l-[#2D7F8F] p-6 md:p-8 rounded-lg mt-8 shadow-sm">
+                      <div className="mb-5">
+                        <h4 className="text-[19px] md:text-[22px] font-bold text-[#1E3A5F] mb-3">
+                          {overcomeTitle}
+                        </h4>
+                        <p className="text-[17px] font-bold text-[#2D7F8F]">
+                          {overcomeSubtitle}
+                        </p>
+                      </div>
+                      
+                      <ul className="space-y-2">
+                        {overcomeItems.map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-base leading-[1.8] text-[#333]">
+                            <span className="text-[#2D7F8F] mt-1">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
                 }
                 return null;
               })()}

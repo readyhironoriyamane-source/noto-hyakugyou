@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/accordion";
 import {
   ArrowLeft, Save, Plus, Trash2, Eye, Upload, GripVertical,
-  FileText, MapPin, Clock, Shield, Scale, BookOpen, MessageCircle, Heart, Info, FileUp, Loader2
+  FileText, MapPin, Clock, Shield, Scale, BookOpen, MessageCircle, Heart, Info, FileUp, Loader2, Lightbulb
 } from "lucide-react";
 import { useLocation, useRoute } from "wouter";
 import { toast } from "sonner";
@@ -70,6 +70,12 @@ interface ChallengeCard {
   description: string;
   solutions: { title: string; detail: string }[];
   structuredBlock?: { label: string; items: string[] }[];
+}
+
+interface OvercomeWall {
+  title: string;
+  subtitle: string;
+  items: string[];
 }
 
 // ===== Helper: Annotation =====
@@ -201,6 +207,9 @@ export default function ArticleEditorPage() {
   // Challenge Card
   const [challengeCard, setChallengeCard] = useState<ChallengeCard | null>(null);
 
+  // Overcome Wall (壁の乗り越え方)
+  const [overcomeWall, setOvercomeWall] = useState<OvercomeWall | null>(null);
+
   // Populate form when editing
   useEffect(() => {
     if (existingArticle) {
@@ -226,6 +235,7 @@ export default function ArticleEditorPage() {
       setBarriers((existingArticle.barriers as Barriers) || null);
       setBehindTheScenes((existingArticle.behindTheScenes as BehindTheScenes) || null);
       setChallengeCard((existingArticle.challengeCard as ChallengeCard) || null);
+      setOvercomeWall((existingArticle as any).overcomeWall as OvercomeWall || null);
 
       // Decision Matrix: migrate old pros/cons format to new items format
       const dm = existingArticle.decisionMatrix as any;
@@ -327,6 +337,7 @@ export default function ArticleEditorPage() {
         if (f.barriers) setBarriers(f.barriers);
         if (f.behindTheScenes) setBehindTheScenes(f.behindTheScenes);
         if (f.challengeCard) setChallengeCard(f.challengeCard);
+        if (f.overcomeWall) setOvercomeWall(f.overcomeWall);
 
         // Decision Matrix
         if (f.decisionMatrix) {
@@ -442,6 +453,7 @@ export default function ArticleEditorPage() {
       regrets: regrets || null,
       decisionMatrix: dmForSave,
       barriers: barriers || null,
+      overcomeWall: overcomeWall || null,
       changes: null,
       behindTheScenes: behindTheScenes || null,
       challengeCard: challengeCard || null,
@@ -693,7 +705,73 @@ export default function ArticleEditorPage() {
           </CardContent>
         </Card>
 
-        {/* ===== 2. 取材情報 ===== */}
+        {/* ===== 2. 課題カード（Challenge Card） ===== */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <SectionHeader icon={FileText} title="課題カード" description="一覧ページに表示される課題ラベルと構造化ブロック" />
+              {!challengeCard ? (
+                <Button variant="outline" size="sm" onClick={() => setChallengeCard({ label: "", description: "", solutions: [], structuredBlock: [{ label: "活用した支援", items: [""] }, { label: "成果", items: [""] }] })}>
+                  <Plus className="w-4 h-4 mr-2" />セクションを追加
+                </Button>
+              ) : (
+                <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setChallengeCard(null)}>
+                  <Trash2 className="w-4 h-4 mr-2" />削除
+                </Button>
+              )}
+            </div>
+          </CardHeader>
+          {challengeCard && (
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label className="font-bold">ラベル</Label>
+                  <Input value={challengeCard.label} onChange={(e) => setChallengeCard({ ...challengeCard, label: e.target.value })} placeholder="例: 設備復旧" className="mt-1" />
+                </div>
+                <div>
+                  <Label className="font-bold">説明</Label>
+                  <Input value={challengeCard.description} onChange={(e) => setChallengeCard({ ...challengeCard, description: e.target.value })} placeholder="課題の概要" className="mt-1" />
+                </div>
+              </div>
+              <div>
+                <Label className="font-bold">構造化ブロック</Label>
+                <Annotation>TOPページ・記事一覧のカードに表示されます。「活用した支援」「成果」の2ブロック構成が標準です。</Annotation>
+                <DynamicListField
+                  items={challengeCard.structuredBlock || []}
+                  onAdd={() => setChallengeCard({ ...challengeCard, structuredBlock: [...(challengeCard.structuredBlock || []), { label: "", items: [""] }] })}
+                  onRemove={(i) => setChallengeCard({ ...challengeCard, structuredBlock: (challengeCard.structuredBlock || []).filter((_, idx) => idx !== i) })}
+                  onUpdate={(i, val) => {
+                    const newBlocks = [...(challengeCard.structuredBlock || [])];
+                    newBlocks[i] = val;
+                    setChallengeCard({ ...challengeCard, structuredBlock: newBlocks });
+                  }}
+                  renderItem={(item, index, onChange) => (
+                    <div className="bg-gray-50 p-3 rounded-lg border space-y-2">
+                      <Input value={item.label} onChange={(e) => onChange({ ...item, label: e.target.value })} placeholder={`ブロックラベル ${index + 1}`} />
+                      <DynamicListField
+                        items={item.items}
+                        onAdd={() => onChange({ ...item, items: [...item.items, ""] })}
+                        onRemove={(j) => onChange({ ...item, items: item.items.filter((_: any, idx: number) => idx !== j) })}
+                        onUpdate={(j, val) => {
+                          const newItems = [...item.items];
+                          newItems[j] = val;
+                          onChange({ ...item, items: newItems });
+                        }}
+                        renderItem={(subItem: string, subIndex: number, subOnChange: (val: string) => void) => (
+                          <Input value={subItem} onChange={(e) => subOnChange(e.target.value)} placeholder={`項目 ${subIndex + 1}`} />
+                        )}
+                        addLabel="項目を追加"
+                      />
+                    </div>
+                  )}
+                  addLabel="ブロックを追加"
+                />
+              </div>
+            </CardContent>
+          )}
+        </Card>
+
+        {/* ===== 3. 取材情報 ===== */}
         <Card>
           <CardHeader>
             <SectionHeader icon={BookOpen} title="取材情報" description="取材日、ライター、代表者、創業年等" />
@@ -724,7 +802,7 @@ export default function ArticleEditorPage() {
           </CardContent>
         </Card>
 
-        {/* ===== 3. 支援がもたらした変化（Regrets/Insight） ===== */}
+        {/* ===== 4. 支援がもたらした変化（Regrets/Insight） ===== */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -750,7 +828,7 @@ export default function ArticleEditorPage() {
           )}
         </Card>
 
-        {/* ===== 4. タイムライン（フェーズ1-4） ===== */}
+        {/* ===== 5. タイムライン（フェーズ1-4） ===== */}
         <Card>
           <CardHeader>
             <SectionHeader icon={Clock} title="タイムライン（フェーズ1-4）" description="課題→選択と決断→行動と変化→現在から未来へ" />
@@ -778,7 +856,7 @@ export default function ArticleEditorPage() {
           </CardContent>
         </Card>
 
-        {/* ===== 5. 究極の二択（Decision Matrix） ===== */}
+        {/* ===== 6. 究極の二択（Decision Matrix） ===== */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -897,7 +975,7 @@ export default function ArticleEditorPage() {
           )}
         </Card>
 
-        {/* ===== 6. 実務の壁（Barriers） ===== */}
+        {/* ===== 7. 実務の壁（Barriers） ===== */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -939,10 +1017,106 @@ export default function ArticleEditorPage() {
           )}
         </Card>
 
-        {/* ===== 7. 活用した支援制度 ===== */}
+        {/* ===== 8. 壁の乗り越え方（要点） ===== */}
         <Card>
           <CardHeader>
-            <SectionHeader icon={Shield} title="活用した支援制度" description="利用した補助金・支援制度の情報" />
+            <div className="flex items-center justify-between">
+              <SectionHeader icon={Lightbulb} title="壁の乗り越え方（要点）" description="実務の壁の直下に表示される、乗り越えた方法の箇条書き" />
+              {!overcomeWall ? (
+                <Button variant="outline" size="sm" onClick={() => setOvercomeWall({ title: "壁の乗り越え方（要点）", subtitle: "▼ こうやって乗り越えた", items: [""] })}>
+                  <Plus className="w-4 h-4 mr-2" />セクションを追加
+                </Button>
+              ) : (
+                <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setOvercomeWall(null)}>
+                  <Trash2 className="w-4 h-4 mr-2" />削除
+                </Button>
+              )}
+            </div>
+          </CardHeader>
+          {overcomeWall && (
+            <CardContent className="space-y-4">
+              <Annotation>記事詳細ページの「実務の壁」セクションの直下に表示されます。事業者が実際に壁を乗り越えた具体的な方法を箇条書きで入力してください。</Annotation>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label className="font-bold">タイトル</Label>
+                  <Input value={overcomeWall.title} onChange={(e) => setOvercomeWall({ ...overcomeWall, title: e.target.value })} placeholder="例: 壁の乗り越え方（要点）" className="mt-1" />
+                </div>
+                <div>
+                  <Label className="font-bold">サブタイトル</Label>
+                  <Input value={overcomeWall.subtitle} onChange={(e) => setOvercomeWall({ ...overcomeWall, subtitle: e.target.value })} placeholder="例: ▼ こうやって乗り越えた" className="mt-1" />
+                </div>
+              </div>
+              <div>
+                <Label className="font-bold">乗り越えた方法（箇条書き）</Label>
+                <DynamicListField
+                  items={overcomeWall.items}
+                  onAdd={() => setOvercomeWall({ ...overcomeWall, items: [...overcomeWall.items, ""] })}
+                  onRemove={(i) => setOvercomeWall({ ...overcomeWall, items: overcomeWall.items.filter((_, idx) => idx !== i) })}
+                  onUpdate={(i, val) => {
+                    const newItems = [...overcomeWall.items];
+                    newItems[i] = val;
+                    setOvercomeWall({ ...overcomeWall, items: newItems });
+                  }}
+                  renderItem={(item, index, onChange) => (
+                    <Input value={item} onChange={(e) => onChange(e.target.value)} placeholder={`例: 県から電話で細かい修正指示があるたびに、パソコンで修正して再提出した`} />
+                  )}
+                  addLabel="項目を追加"
+                />
+              </div>
+            </CardContent>
+          )}
+        </Card>
+
+        {/* ===== 9. 再起の裏側（Behind the Scenes） ===== */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <SectionHeader icon={MessageCircle} title="再起の裏側" description="店主の独白・インタビュー内容" />
+              {!behindTheScenes ? (
+                <Button variant="outline" size="sm" onClick={() => setBehindTheScenes({ title: "再起の裏側", content: [{ heading: "", text: "" }] })}>
+                  <Plus className="w-4 h-4 mr-2" />セクションを追加
+                </Button>
+              ) : (
+                <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setBehindTheScenes(null)}>
+                  <Trash2 className="w-4 h-4 mr-2" />削除
+                </Button>
+              )}
+            </div>
+          </CardHeader>
+          {behindTheScenes && (
+            <CardContent className="space-y-4">
+              <div>
+                <Label className="font-bold">セクションタイトル</Label>
+                <Input value={behindTheScenes.title} onChange={(e) => setBehindTheScenes({ ...behindTheScenes, title: e.target.value })} className="mt-1" />
+              </div>
+              <div>
+                <Label className="font-bold">内容</Label>
+                <DynamicListField
+                  items={behindTheScenes.content}
+                  onAdd={() => setBehindTheScenes({ ...behindTheScenes, content: [...behindTheScenes.content, { heading: "", text: "" }] })}
+                  onRemove={(i) => setBehindTheScenes({ ...behindTheScenes, content: behindTheScenes.content.filter((_, idx) => idx !== i) })}
+                  onUpdate={(i, val) => {
+                    const newContent = [...behindTheScenes.content];
+                    newContent[i] = val;
+                    setBehindTheScenes({ ...behindTheScenes, content: newContent });
+                  }}
+                  renderItem={(item, index, onChange) => (
+                    <div className="bg-gray-50 p-3 rounded-lg border space-y-2">
+                      <Input value={item.heading} onChange={(e) => onChange({ ...item, heading: e.target.value })} placeholder={`見出し ${index + 1}`} />
+                      <Textarea value={item.text} onChange={(e) => onChange({ ...item, text: e.target.value })} placeholder="本文" rows={4} />
+                    </div>
+                  )}
+                  addLabel="段落を追加"
+                />
+              </div>
+            </CardContent>
+          )}
+        </Card>
+
+        {/* ===== 10. 今回活用した制度 ===== */}
+        <Card>
+          <CardHeader>
+            <SectionHeader icon={Shield} title="今回活用した制度" description="利用した補助金・支援制度の情報" />
           </CardHeader>
           <CardContent>
             <DynamicListField
@@ -992,119 +1166,7 @@ export default function ArticleEditorPage() {
           </CardContent>
         </Card>
 
-        {/* ===== 8. 再起の裏側（Behind the Scenes） ===== */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <SectionHeader icon={MessageCircle} title="再起の裏側" description="店主の独白・インタビュー内容" />
-              {!behindTheScenes ? (
-                <Button variant="outline" size="sm" onClick={() => setBehindTheScenes({ title: "再起の裏側", content: [{ heading: "", text: "" }] })}>
-                  <Plus className="w-4 h-4 mr-2" />セクションを追加
-                </Button>
-              ) : (
-                <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setBehindTheScenes(null)}>
-                  <Trash2 className="w-4 h-4 mr-2" />削除
-                </Button>
-              )}
-            </div>
-          </CardHeader>
-          {behindTheScenes && (
-            <CardContent className="space-y-4">
-              <div>
-                <Label className="font-bold">セクションタイトル</Label>
-                <Input value={behindTheScenes.title} onChange={(e) => setBehindTheScenes({ ...behindTheScenes, title: e.target.value })} className="mt-1" />
-              </div>
-              <div>
-                <Label className="font-bold">内容</Label>
-                <DynamicListField
-                  items={behindTheScenes.content}
-                  onAdd={() => setBehindTheScenes({ ...behindTheScenes, content: [...behindTheScenes.content, { heading: "", text: "" }] })}
-                  onRemove={(i) => setBehindTheScenes({ ...behindTheScenes, content: behindTheScenes.content.filter((_, idx) => idx !== i) })}
-                  onUpdate={(i, val) => {
-                    const newContent = [...behindTheScenes.content];
-                    newContent[i] = val;
-                    setBehindTheScenes({ ...behindTheScenes, content: newContent });
-                  }}
-                  renderItem={(item, index, onChange) => (
-                    <div className="bg-gray-50 p-3 rounded-lg border space-y-2">
-                      <Input value={item.heading} onChange={(e) => onChange({ ...item, heading: e.target.value })} placeholder={`見出し ${index + 1}`} />
-                      <Textarea value={item.text} onChange={(e) => onChange({ ...item, text: e.target.value })} placeholder="本文" rows={4} />
-                    </div>
-                  )}
-                  addLabel="段落を追加"
-                />
-              </div>
-            </CardContent>
-          )}
-        </Card>
-
-        {/* ===== 9. 課題カード（Challenge Card） ===== */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <SectionHeader icon={FileText} title="課題カード" description="一覧ページに表示される課題ラベルと構造化ブロック" />
-              {!challengeCard ? (
-                <Button variant="outline" size="sm" onClick={() => setChallengeCard({ label: "", description: "", solutions: [], structuredBlock: [{ label: "活用した支援", items: [""] }, { label: "成果", items: [""] }] })}>
-                  <Plus className="w-4 h-4 mr-2" />セクションを追加
-                </Button>
-              ) : (
-                <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setChallengeCard(null)}>
-                  <Trash2 className="w-4 h-4 mr-2" />削除
-                </Button>
-              )}
-            </div>
-          </CardHeader>
-          {challengeCard && (
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label className="font-bold">ラベル</Label>
-                  <Input value={challengeCard.label} onChange={(e) => setChallengeCard({ ...challengeCard, label: e.target.value })} placeholder="例: 設備復旧" className="mt-1" />
-                </div>
-                <div>
-                  <Label className="font-bold">説明</Label>
-                  <Input value={challengeCard.description} onChange={(e) => setChallengeCard({ ...challengeCard, description: e.target.value })} placeholder="課題の概要" className="mt-1" />
-                </div>
-              </div>
-              <div>
-                <Label className="font-bold">構造化ブロック</Label>
-                <Annotation>TOPページ・記事一覧のカードに表示されます。「活用した支援」「成果」の2ブロック構成が標準です。</Annotation>
-                <DynamicListField
-                  items={challengeCard.structuredBlock || []}
-                  onAdd={() => setChallengeCard({ ...challengeCard, structuredBlock: [...(challengeCard.structuredBlock || []), { label: "", items: [""] }] })}
-                  onRemove={(i) => setChallengeCard({ ...challengeCard, structuredBlock: (challengeCard.structuredBlock || []).filter((_, idx) => idx !== i) })}
-                  onUpdate={(i, val) => {
-                    const newBlocks = [...(challengeCard.structuredBlock || [])];
-                    newBlocks[i] = val;
-                    setChallengeCard({ ...challengeCard, structuredBlock: newBlocks });
-                  }}
-                  renderItem={(item, index, onChange) => (
-                    <div className="bg-gray-50 p-3 rounded-lg border space-y-2">
-                      <Input value={item.label} onChange={(e) => onChange({ ...item, label: e.target.value })} placeholder={`ブロックラベル ${index + 1}`} />
-                      <DynamicListField
-                        items={item.items}
-                        onAdd={() => onChange({ ...item, items: [...item.items, ""] })}
-                        onRemove={(j) => onChange({ ...item, items: item.items.filter((_: any, idx: number) => idx !== j) })}
-                        onUpdate={(j, val) => {
-                          const newItems = [...item.items];
-                          newItems[j] = val;
-                          onChange({ ...item, items: newItems });
-                        }}
-                        renderItem={(subItem: string, subIndex: number, subOnChange: (val: string) => void) => (
-                          <Input value={subItem} onChange={(e) => subOnChange(e.target.value)} placeholder={`項目 ${subIndex + 1}`} />
-                        )}
-                        addLabel="項目を追加"
-                      />
-                    </div>
-                  )}
-                  addLabel="ブロックを追加"
-                />
-              </div>
-            </CardContent>
-          )}
-        </Card>
-
-        {/* ===== 10. 編集後記 ===== */}
+        {/* ===== 11. 編集後記 ===== */}
         <Card>
           <CardHeader>
             <SectionHeader icon={MessageCircle} title="編集後記" description="記事末尾のライターコメント" />

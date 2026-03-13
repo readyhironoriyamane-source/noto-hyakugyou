@@ -60,6 +60,11 @@ const mockArticle = {
     content: "テスト内容",
     checklist: [{ title: "専門用語の壁", description: "テスト説明" }],
   },
+  overcomeWall: {
+    title: "壁の乗り越え方（要点）",
+    subtitle: "▼ こうやって乗り越えた",
+    items: ["県から電話で細かい修正指示があるたびに、パソコンで修正して再提出した"],
+  },
   supportSystem: {
     name: "小規模事業者持続化補助金",
     description: "テスト説明",
@@ -336,6 +341,11 @@ describe("articles.upsert", () => {
         content: "壁の内容",
         checklist: [{ title: "壁1", description: "説明1" }],
       },
+      overcomeWall: {
+        title: "壁の乗り越え方（要点）",
+        subtitle: "▼ こうやって乗り越えた",
+        items: ["県に電話で確認した", "書類を修正して再提出した"],
+      },
     });
 
     expect(result).toEqual({ id: 201 });
@@ -343,6 +353,8 @@ describe("articles.upsert", () => {
     expect(callArg.challengeCard).toBeDefined();
     expect(callArg.decisionMatrix).toBeDefined();
     expect(callArg.barriers).toBeDefined();
+    expect(callArg.overcomeWall).toBeDefined();
+    expect(callArg.overcomeWall.items).toHaveLength(2);
   });
 });
 

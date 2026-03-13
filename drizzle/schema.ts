@@ -147,6 +147,13 @@ export const articles = mysqlTable("articles", {
     }[];
   }>(),
   
+  // === 壁の乗り越え方（要点） ===
+  overcomeWall: json("overcomeWall").$type<{
+    title: string;
+    subtitle: string;
+    items: string[];
+  }>(),
+  
   // === 活用した支援制度（単一 or 複数対応） ===
   supportSystem: json("supportSystem").$type<{
     name: string;
