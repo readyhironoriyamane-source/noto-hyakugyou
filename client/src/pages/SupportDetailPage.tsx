@@ -82,30 +82,6 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                   </div>
                 </section>
 
-                {/* スマホビュー用：お問い合わせエリア（PCでは非表示） */}
-                <section className="lg:hidden">
-                  <div className="bg-[#1D3A52] rounded-lg shadow-md overflow-hidden text-white p-8">
-                    <h2 className="flex items-center gap-2 text-xl font-bold mb-6 border-b border-slate-600 pb-4">
-                      <Phone className="w-6 h-6" />
-                      お問い合わせ・相談先
-                    </h2>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm text-slate-300 mb-1">お問い合わせ先</p>
-                        <p className="text-xl font-bold">{item.contactInfo?.name || '能登町商工会'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-slate-300 mb-1">電話番号</p>
-                        <p className="text-3xl font-bold tracking-wider">{item.contactInfo?.phone || '076-204-6856'}</p>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-slate-300 bg-[#2a4d6b] p-3 rounded inline-block">
-                        <Clock className="w-4 h-4" />
-                        <span>{item.contactInfo?.hours || '平日 8:30〜17:15'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
                 {/* 必要書類 */}
                 <section>
                   <h2 className="flex items-center gap-2 text-xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200">
@@ -135,6 +111,30 @@ export default function SupportDetailPage({ params }: SupportDetailPageProps) {
                         <span className="text-slate-700">直近の決算書（1期分）</span>
                       </li>
                     </ul>
+                  </div>
+                </section>
+
+                {/* スマホビュー用：お問い合わせエリア（PCでは非表示） */}
+                <section className="lg:hidden mb-10">
+                  <div className="bg-[#1D3A52] rounded-lg shadow-md overflow-hidden text-white p-8">
+                    <h2 className="flex items-center gap-2 text-xl font-bold mb-6 border-b border-slate-600 pb-4">
+                      <Phone className="w-6 h-6" />
+                      お問い合わせ・相談先
+                    </h2>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-sm text-slate-300 mb-1">お問い合わせ先</p>
+                        <p className="text-xl font-bold">{item.contactInfo?.name || '能登町商工会'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-slate-300 mb-1">電話番号</p>
+                        <p className="text-3xl font-bold tracking-wider">{item.contactInfo?.phone || '076-204-6856'}</p>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-slate-300 bg-[#2a4d6b] p-3 rounded inline-block">
+                        <Clock className="w-4 h-4" />
+                        <span>{item.contactInfo?.hours || '平日 8:30〜17:15'}</span>
+                      </div>
+                    </div>
                   </div>
                 </section>
 
