@@ -262,9 +262,15 @@ export default function IndustryDetailPage() {
                       </h5>
                       <ul className="space-y-2 text-sm md:text-base leading-[1.8] text-[#333]">
                         {industry.decisionMatrix.optionA.pros.map((pro: string, i: number) => (
-                          <li key={i} className={`flex items-start gap-2 ${i === industry.decisionMatrix!.optionA.pros.length - 1 ? 'italic text-[#666]' : ''}`}>
+                          <li key={i} className="flex items-start gap-2">
                             <span className="text-[#333] mt-1">•</span>
                             <span>{pro}</span>
+                          </li>
+                        ))}
+                        {industry.decisionMatrix.optionA.cons && industry.decisionMatrix.optionA.cons.map((con: string, i: number) => (
+                          <li key={`con-${i}`} className="flex items-start gap-2 italic text-[#666]">
+                            <span className="text-[#666] mt-1">•</span>
+                            <span>{con}</span>
                           </li>
                         ))}
                       </ul>
@@ -294,6 +300,22 @@ export default function IndustryDetailPage() {
                             {industry.decisionMatrix.optionB.cost}
                           </p>
                         </div>
+                      )}
+                      {(industry.decisionMatrix.optionB.pros || industry.decisionMatrix.optionB.cons) && (
+                        <ul className="space-y-2 text-sm md:text-base leading-[1.8] text-[#333] mt-4">
+                          {industry.decisionMatrix.optionB.pros && industry.decisionMatrix.optionB.pros.map((pro: string, i: number) => (
+                            <li key={`pro-${i}`} className="flex items-start gap-2">
+                              <span className="text-[#2D7F8F] mt-1">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                          {industry.decisionMatrix.optionB.cons && industry.decisionMatrix.optionB.cons.map((con: string, i: number) => (
+                            <li key={`con-${i}`} className="flex items-start gap-2 italic text-[#666]">
+                              <span className="text-[#666] mt-1">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
                       )}
                     </div>
                   </div>
