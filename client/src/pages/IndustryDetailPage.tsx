@@ -343,7 +343,7 @@ export default function IndustryDetailPage() {
               <div className="mb-12 space-y-4">
                 {(() => {
                   // phase3から本文部分のみを抽出（最初の---まで）
-                  const fullText = industry.timeline.phase3;
+                  const fullText = industry.timeline.phase3 || "";
                   const firstSeparator = fullText.indexOf('\n---\n');
                   const mainText = firstSeparator > 0 ? fullText.substring(0, firstSeparator) : fullText;
                   
@@ -403,7 +403,7 @@ export default function IndustryDetailPage() {
 
               {/* 3. 壁の乗り越え方 */}
               {(() => {
-                const fullText = industry.timeline.phase3;
+                const fullText = industry.timeline.phase3 || "";
                 const howToOvercomeMatch = fullText.match(/### 壁の乗り越え方（要点）[\s\S]*?▼ こうやって乗り越えた\n([\s\S]*?)(?:\n---|\n###|$)/);
                 
                 if (howToOvercomeMatch && howToOvercomeMatch[1]) {
