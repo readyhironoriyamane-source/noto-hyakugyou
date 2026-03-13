@@ -114,6 +114,32 @@ export const appRouter = router({
         await updateSortOrders(input.items);
         return { success: true };
       }),
+
+    // Admin: 記事複製
+    duplicate: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        newId: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const original = await getArticleById(input.id);
+        if (!original) {
+          throw new Error("複製元の記事が見つかりません");
+        }
+
+        // 複製データを作成（id, createdAt, updatedAtを除外）
+        const { id: _id, createdAt: _c, updatedAt: _u, ...rest } = original as any;
+        const duplicateData = {
+          ...rest,
+          id: input.newId || undefined,
+          title: `${original.title}（コピー）`,
+          isCaseStudy: false, // 複製直後は非公開
+          sortOrder: 9999, // 末尾に配置
+        };
+
+        const newId = await upsertArticle(duplicateData);
+        return { id: newId };
+      }),
   }),
 
   // === Upload Route ===

@@ -446,6 +446,58 @@ describe("articles.upsert with custom ID", () => {
   });
 });
 
+describe("articles.duplicate", () => {
+  it("duplicates an article as admin", async () => {
+    vi.mocked(getArticleById).mockResolvedValue(mockArticle as any);
+    vi.mocked(upsertArticle).mockResolvedValue(200);
+
+    const caller = appRouter.createCaller(createAdminContext());
+    const result = await caller.articles.duplicate({ id: 101 });
+
+    expect(result).toEqual({ id: 200 });
+    expect(getArticleById).toHaveBeenCalledWith(101);
+    expect(upsertArticle).toHaveBeenCalledOnce();
+
+    // Verify the duplicated data
+    const callArg = vi.mocked(upsertArticle).mock.calls[0][0];
+    expect(callArg.title).toBe("テスト記事タイトル（コピー）");
+    expect(callArg.isCaseStudy).toBe(false); // 複製直後は非公開
+    expect(callArg.sortOrder).toBe(9999); // 末尾に配置
+  });
+
+  it("duplicates with custom new ID", async () => {
+    vi.mocked(getArticleById).mockResolvedValue(mockArticle as any);
+    vi.mocked(upsertArticle).mockResolvedValue(150);
+
+    const caller = appRouter.createCaller(createAdminContext());
+    const result = await caller.articles.duplicate({ id: 101, newId: 150 });
+
+    expect(result).toEqual({ id: 150 });
+    const callArg = vi.mocked(upsertArticle).mock.calls[0][0];
+    expect(callArg.id).toBe(150);
+  });
+
+  it("throws when source article not found", async () => {
+    vi.mocked(getArticleById).mockResolvedValue(undefined);
+
+    const caller = appRouter.createCaller(createAdminContext());
+
+    await expect(caller.articles.duplicate({ id: 999 })).rejects.toThrow("複製元の記事が見つかりません");
+  });
+
+  it("rejects unauthenticated users", async () => {
+    const caller = appRouter.createCaller(createPublicContext());
+
+    await expect(caller.articles.duplicate({ id: 101 })).rejects.toThrow();
+  });
+
+  it("rejects non-admin users", async () => {
+    const caller = appRouter.createCaller(createUserContext());
+
+    await expect(caller.articles.duplicate({ id: 101 })).rejects.toThrow();
+  });
+});
+
 describe("upload.parseWord", () => {
   it("parses Word file and returns structured fields as admin", async () => {
     const caller = appRouter.createCaller(createAdminContext());

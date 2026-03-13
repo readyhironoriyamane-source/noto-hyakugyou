@@ -15,7 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, ArrowLeft, Eye, GripVertical, Save } from "lucide-react";
+import { Plus, Pencil, Trash2, ArrowLeft, Eye, GripVertical, Save, Copy } from "lucide-react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 import { useState, useRef, useCallback, useEffect } from "react";
@@ -60,6 +60,17 @@ export default function ArticleListPage() {
     },
     onError: (error) => {
       toast.error(`並び順の保存に失敗しました: ${error.message}`);
+    },
+  });
+
+  const duplicateMutation = trpc.articles.duplicate.useMutation({
+    onSuccess: (data) => {
+      utils.articles.list.invalidate();
+      toast.success(`記事を複製しました（ID: ${data.id}）`);
+      setLocation(`/admin/articles/${data.id}`);
+    },
+    onError: (error) => {
+      toast.error(`複製に失敗しました: ${error.message}`);
     },
   });
 
@@ -286,6 +297,15 @@ export default function ArticleListPage() {
                         >
                           <Pencil className="w-3.5 h-3.5 mr-1" />
                           編集
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => duplicateMutation.mutate({ id: article.id })}
+                          disabled={duplicateMutation.isPending}
+                        >
+                          <Copy className="w-3.5 h-3.5 mr-1" />
+                          {duplicateMutation.isPending ? "複製中..." : "複製"}
                         </Button>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
