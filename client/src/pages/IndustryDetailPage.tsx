@@ -550,11 +550,14 @@ export default function IndustryDetailPage() {
             <p className="text-gray-700 leading-loose text-lg font-medium italic">
               {industry.editorComment}
             </p>
-            <div className="mt-6 flex items-center justify-end">
-              <div className="text-right">
+            <div className="mt-6 flex flex-col items-end">
+              <div className="text-right mb-2">
                 <p className="text-sm text-gray-500">能登百業録 編集部</p>
                 <p className="text-sm font-bold text-[#1D3A52]">{industry.details?.writer}</p>
               </div>
+              <p className="text-xs text-gray-400 text-right max-w-md">
+                ※掲載情報は執筆時点のものであり、制度内容は変更される場合があります。申請をご検討の際は、窓口にて最新情報をご確認いただくことを推奨します。
+              </p>
             </div>
           </div>
 
