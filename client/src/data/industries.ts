@@ -249,7 +249,11 @@ export const industries: Industry[] = [
         },
         {
           heading: "「またあそこで集まりたい」",
-          text: "しかし、多くの人から励ましの声をいただき、もう一度頑張ろうと思えました。"
+          text: "しかし、多くの人から励ましの声が届き、再建を決意しました。"
+        },
+        {
+          heading: "「この場所を、もう一度みんなが集まれる場所に」",
+          text: "それが私たちの願いであり、使命です。"
         }
       ]
     }
@@ -281,7 +285,7 @@ export const industries: Industry[] = [
     actions: [
       { type: "visit", label: "会社情報", link: "#" }
     ],
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/27181052/1742005602.jpg",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/1742005602.jpg",
     seasonalMonths: [],
     isCaseStudy: true,
     challengeCard: {
