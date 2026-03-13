@@ -259,13 +259,13 @@ export default function Home() {
                         </div>
                       </div>
 
-                      {/* ③ タイトル */}
-                      <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors">
-                        {study.title}
+                      {/* ③ タイトル（min-heightで高さを揃える） */}
+                      <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors md:min-h-[120px] flex items-start">
+                        <span>{study.title}</span>
                       </h3>
 
-                      {/* ④ 本文リード文 */}
-                      <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3">
+                      {/* ④ 本文リード文（全文表示） */}
+                      <p className="text-base text-[#555] font-medium leading-relaxed mb-6">
                         {study.summary}
                       </p>
                     </div>
