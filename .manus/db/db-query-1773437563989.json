@@ -1,0 +1,26 @@
+{
+  "query": "SELECT id, title, summary, isCaseStudy, JSON_EXTRACT(challengeCard, '$.label') as challengeLabel, JSON_EXTRACT(challengeCard, '$.description') as challengeDesc FROM articles WHERE id IN (102, 104) OR title LIKE '%やまびこ%' ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2u86XNAjatgfDVL.57a134884d8c --database 3nqHQM6GxJ7ULoRQP5ahB4 --execute SELECT id, title, summary, isCaseStudy, JSON_EXTRACT(challengeCard, '$.label') as challengeLabel, JSON_EXTRACT(challengeCard, '$.description') as challengeDesc FROM articles WHERE id IN (102, 104) OR title LIKE '%やまびこ%' ORDER BY id;",
+  "rows": [
+    {
+      "id": "102",
+      "title": "「人が来ない、ハローワークも全滅」高齢化する職場に若者が来た理由",
+      "summary": "18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始め、人材不足が解消。若い世代が加わったことで職場の雰囲気が明るくなり、既存スタッフにも活気が戻った。",
+      "isCaseStudy": "1",
+      "challengeLabel": "\"若者採用\"",
+      "challengeDesc": "\"18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始め、人材不足が解消。若い世代が加わったことで職場の雰囲気が明るくなり、既存スタッフにも活気が戻った。\""
+    },
+    {
+      "id": "104",
+      "title": "「支援機関に自分で電話した」なりわい補助金の壁を、ネットワークと行動力で乗り越えた経営者",
+      "summary": "建築業を営む蛸島工務店。震災で工房が一部損壊、パソコンや機械が破損。持続化補助金とな りわい再建補助金を活用したが、「3/4補助のはずが実際は半分だった」という価格高騰の落とし穴に直面した。",
+      "isCaseStudy": "1",
+      "challengeLabel": "\"設備損壊・価格高騰\"",
+      "challengeDesc": "\"震災で工房が損壊し、機械やパソコンが破損。補助金申請中にパソコン価格が高騰し、自己負担が増加した。\""
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tsummary\tisCaseStudy\tchallengeLabel\tchallengeDesc\n102\t「人が来ない、ハローワークも全滅」高齢化する職場に若者が来た理由\t18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始め、人材不足が解消。若い世代が加わったことで職場の雰囲気が明るくなり、既存スタッフにも活気が戻った。\t1\t\"若者採用\"\t\"18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始め、人材不足が解消。若い世代が加わったことで職場の雰囲気が明るくなり、既存スタッフにも活気が戻った。\"\n104\t「支援機関に自分で電話した」なりわい補助金の壁を、ネットワークと行動力で乗り越えた経営者\t建築業を営む蛸島工務店。震災で工房が一部損壊、パソコンや機械が破損。持続化補助金とな りわい再建補助金を活用したが、「3/4補助のはずが実際は半分だった」という価格高騰の落とし穴に直面した。\t1\t\"設備損壊・価格高騰\"\t\"震災で工房が損壊し、機械やパソコンが破損。補助金申請中にパソコン価格が高騰し、自己負担が増加した。\"\n",
+  "stderr": "",
+  "execution_time_ms": 1632
+}

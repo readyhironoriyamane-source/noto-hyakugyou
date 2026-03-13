@@ -187,8 +187,8 @@ export default function IndustriesPage() {
 
                           {/* ② 属性データ */}
                           <div className="flex flex-col gap-4 mb-4">
-                            <div className="flex items-center gap-3 text-xs font-bold tracking-wider text-[#888]">
-                              <span className="uppercase bg-gray-100 px-2 py-0.5 rounded text-[#555]">
+                            <div className="flex items-center gap-3">
+                              <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
                                 {study.category}
                               </span>
                               <span className="text-xs font-bold text-[#666] flex items-center gap-1">
@@ -202,14 +202,14 @@ export default function IndustriesPage() {
                             </div>
                           </div>
 
-                          {/* ③ タイトル */}
-                          <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors">
-                            {study.title}
+                          {/* ③ タイトル（min-heightで高さを揃える） */}
+                          <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors md:min-h-[120px] flex items-start">
+                            <span>{study.title}</span>
                           </h3>
 
-                          {/* ④ 本文リード文 */}
+                          {/* ④ 本文リード文（課題カード説明 → summaryフォールバック） */}
                           <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3">
-                            {study.summary}
+                            {study.challengeCard?.description || study.summary}
                           </p>
                         </div>
 

@@ -1,0 +1,13 @@
+DB Query Results:
+- Article 101: challengeDesc = "震災によるメイン設備の故障..." (different from summary)
+- Article 102: challengeDesc = same as summary (18年続く指定管理施設...) -- BUG: challengeDesc should be a short description, not the full summary
+- Article 104: challengeDesc = "震災で工房が損壊し..." (different from summary) -- seems OK
+
+Key finding: Article 102's challengeCard.description is identical to its summary field.
+This means the card display logic may be using summary for 101/104 but challengeDesc for 102.
+
+Need to check:
+1. articleMapper - how it maps challengeCard.description to the card display
+2. Home.tsx - what field is used for the card summary text
+3. IndustriesPage.tsx - what field is used for the card summary text
+4. IndustryDetailPage.tsx - why yamabiko (102) detail doesn't render

@@ -264,9 +264,9 @@ export default function Home() {
                         <span>{study.title}</span>
                       </h3>
 
-                      {/* ④ 本文リード文（全文表示） */}
-                      <p className="text-base text-[#555] font-medium leading-relaxed mb-6">
-                        {study.summary}
+                      {/* ④ 本文リード文（課題カード説明 → summaryフォールバック） */}
+                      <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3">
+                        {study.challengeCard?.description || study.summary}
                       </p>
                     </div>
 
