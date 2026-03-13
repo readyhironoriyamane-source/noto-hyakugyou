@@ -2,10 +2,12 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, adminProcedure } from "./_core/trpc";
-import { getAllArticles, getCaseStudyArticles, getArticleById, upsertArticle, deleteArticle } from "./db";
+import { getAllArticles, getCaseStudyArticles, getArticleById, upsertArticle, deleteArticle, updateSortOrders } from "./db";
 import { storagePut } from "./storage";
 import { z } from "zod";
 import { nanoid } from "nanoid";
+import mammoth from "mammoth";
+import { invokeLLM } from "./_core/llm";
 
 // Zod schema for article input validation
 const articleInputSchema = z.object({
@@ -25,6 +27,7 @@ const articleInputSchema = z.object({
   editorComment: z.string().nullable().optional(),
   heroSummary: z.string().nullable().optional(),
   isCaseStudy: z.boolean().default(false),
+  sortOrder: z.number().default(0).optional(),
   tags: z.array(z.string()).nullable().optional(),
   seasonalMonths: z.array(z.number()).nullable().optional(),
   relatedIndustries: z.array(z.number()).nullable().optional(),
@@ -101,6 +104,16 @@ export const appRouter = router({
         await deleteArticle(input.id);
         return { success: true };
       }),
+
+    // Admin: 並び順一括更新
+    reorder: adminProcedure
+      .input(z.object({
+        items: z.array(z.object({ id: z.number(), sortOrder: z.number() })),
+      }))
+      .mutation(async ({ input }) => {
+        await updateSortOrders(input.items);
+        return { success: true };
+      }),
   }),
 
   // === Upload Route ===
@@ -117,6 +130,132 @@ export const appRouter = router({
         const key = `articles/${nanoid()}.${ext}`;
         const { url } = await storagePut(key, buffer, input.contentType);
         return { url };
+      }),
+
+    // Word (.docx) ファイルをパースして記事フィールドに自動マッピング
+    parseWord: adminProcedure
+      .input(z.object({
+        base64: z.string(),
+        filename: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const buffer = Buffer.from(input.base64, "base64");
+
+        // mammoth.js でテキスト抽出
+        const result = await mammoth.extractRawText({ buffer });
+        const rawText = result.value;
+
+        if (!rawText || rawText.trim().length === 0) {
+          throw new Error("Wordファイルからテキストを抽出できませんでした");
+        }
+
+        // LLMで構造化データに変換
+        const llmResult = await invokeLLM({
+          messages: [
+            {
+              role: "system",
+              content: `あなたは能登百業録の記事データ構造化アシスタントです。
+Wordファイルから抽出されたテキストを、以下のJSON構造にマッピングしてください。
+テキストに該当する情報がない場合はnullを設定してください。
+必ず有効なJSONのみを返してください。説明文は不要です。`,
+            },
+            {
+              role: "user",
+              content: `以下のテキストを記事データに構造化してください。
+
+---
+${rawText.substring(0, 12000)}
+---
+
+以下のJSON構造で返してください:
+{
+  "title": "記事タイトル",
+  "category": "業種カテゴリ（例: クリーニング業、建築業）",
+  "operator": "事業者名",
+  "location": "所在地（例: 石川県鳳珠郡能登町）",
+  "summary": "TOPページカードに表示する概要（2-3文）",
+  "description": "事業説明（ヒーロー下部に表示される詳細説明）",
+  "editorComment": "編集後記（あれば）",
+  "tags": ["タグ1", "タグ2"],
+  "timelinePhase1": "フェーズ1: 課題（震災直後の困難な状況）",
+  "timelinePhase2": "フェーズ2: 選択と決断",
+  "timelinePhase3": "フェーズ3: 行動と変化",
+  "timelinePhase4": "フェーズ4: 現在から未来へ",
+  "details": {
+    "owner": "代表者名",
+    "founded": "創業年",
+    "employees": "従業員数",
+    "writer": "ライター名",
+    "interviewDate": "取材日"
+  },
+  "regrets": {
+    "title": "支援がもたらした変化",
+    "content": "変化の内容"
+  },
+  "decisionMatrix": {
+    "title": "究極の二択のタイトル",
+    "optionA": {
+      "title": "選択肢Aのタイトル",
+      "pros": ["項目1", "項目2"]
+    },
+    "optionB": {
+      "title": "決断（選択肢B）のタイトル",
+      "pros": ["項目1", "項目2"],
+      "subsidy": "補助金名（あれば）",
+      "cost": "コスト（あれば）"
+    },
+    "reason": "決め手"
+  },
+  "barriers": {
+    "title": "実務の壁",
+    "content": "",
+    "checklist": [
+      { "title": "壁のタイトル", "description": "詳細説明" }
+    ]
+  },
+  "supportSystem": [
+    {
+      "name": "制度名",
+      "description": "制度の説明",
+      "rate": "補助率",
+      "limit": "上限額",
+      "point": "ポイント",
+      "url": "詳細URL"
+    }
+  ],
+  "behindTheScenes": {
+    "title": "再起の裏側",
+    "content": [
+      { "heading": "見出し", "text": "本文" }
+    ]
+  },
+  "challengeCard": {
+    "label": "課題ラベル",
+    "description": "課題の概要",
+    "solutions": [],
+    "structuredBlock": [
+      { "label": "ブロックラベル", "items": ["項目1"] }
+    ]
+  }
+}`,
+            },
+          ],
+          response_format: {
+            type: "json_object",
+          },
+        });
+
+        const content = llmResult.choices[0]?.message?.content;
+        if (!content || typeof content !== "string") {
+          throw new Error("LLMからの応答を解析できませんでした");
+        }
+
+        try {
+          const parsed = JSON.parse(content);
+          return { fields: parsed, rawText: rawText.substring(0, 2000) };
+        } catch {
+          throw new Error("LLMの応答をJSONとしてパースできませんでした");
+        }
       }),
   }),
 });

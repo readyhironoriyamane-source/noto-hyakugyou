@@ -49,6 +49,9 @@ export const articles = mysqlTable("articles", {
   // === フラグ・分類 ===
   isCaseStudy: boolean("isCaseStudy").default(false).notNull(),
   
+  // === 表示順（小さい数字ほど先頭に表示） ===
+  sortOrder: int("sortOrder").default(0).notNull(),
+  
   // === JSON配列（単純なリスト） ===
   tags: json("tags").$type<string[]>(),
   seasonalMonths: json("seasonalMonths").$type<number[]>(),

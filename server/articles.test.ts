@@ -94,6 +94,7 @@ vi.mock("./db", () => ({
   getArticleById: vi.fn(),
   upsertArticle: vi.fn(),
   deleteArticle: vi.fn(),
+  updateSortOrders: vi.fn(),
   upsertUser: vi.fn(),
   getUserByOpenId: vi.fn(),
   getDb: vi.fn(),
@@ -103,7 +104,30 @@ vi.mock("./storage", () => ({
   storagePut: vi.fn().mockResolvedValue({ url: "https://cdn.example.com/uploaded.jpg", key: "test-key" }),
 }));
 
-import { getAllArticles, getCaseStudyArticles, getArticleById, upsertArticle, deleteArticle } from "./db";
+vi.mock("mammoth", () => ({
+  default: {
+    extractRawText: vi.fn().mockResolvedValue({ value: "テスト記事\nタイトル: テスト\n業種: 建築業" }),
+  },
+}));
+
+vi.mock("./_core/llm", () => ({
+  invokeLLM: vi.fn().mockResolvedValue({
+    choices: [{
+      message: {
+        content: JSON.stringify({
+          title: "Wordからのタイトル",
+          category: "建築業",
+          operator: "テスト工務店",
+          location: "能登町",
+          summary: "テスト概要",
+          description: "テスト説明",
+        }),
+      },
+    }],
+  }),
+}));
+
+import { getAllArticles, getCaseStudyArticles, getArticleById, upsertArticle, deleteArticle, updateSortOrders } from "./db";
 
 // ── Context helpers ────────────────────────────────────────
 
@@ -343,6 +367,114 @@ describe("articles.delete", () => {
     const caller = appRouter.createCaller(createUserContext());
 
     await expect(caller.articles.delete({ id: 101 })).rejects.toThrow();
+  });
+});
+
+describe("articles.reorder", () => {
+  it("reorders articles as admin", async () => {
+    vi.mocked(updateSortOrders).mockResolvedValue(undefined);
+
+    const caller = appRouter.createCaller(createAdminContext());
+    const result = await caller.articles.reorder({
+      items: [
+        { id: 101, sortOrder: 0 },
+        { id: 102, sortOrder: 1 },
+      ],
+    });
+
+    expect(result).toEqual({ success: true });
+    expect(updateSortOrders).toHaveBeenCalledWith([
+      { id: 101, sortOrder: 0 },
+      { id: 102, sortOrder: 1 },
+    ]);
+  });
+
+  it("rejects unauthenticated users", async () => {
+    const caller = appRouter.createCaller(createPublicContext());
+
+    await expect(
+      caller.articles.reorder({ items: [{ id: 101, sortOrder: 0 }] })
+    ).rejects.toThrow();
+  });
+
+  it("rejects non-admin users", async () => {
+    const caller = appRouter.createCaller(createUserContext());
+
+    await expect(
+      caller.articles.reorder({ items: [{ id: 101, sortOrder: 0 }] })
+    ).rejects.toThrow();
+  });
+});
+
+describe("articles.upsert with custom ID", () => {
+  it("creates article with custom ID", async () => {
+    vi.mocked(upsertArticle).mockResolvedValue(105);
+
+    const caller = appRouter.createCaller(createAdminContext());
+    const result = await caller.articles.upsert({
+      id: 105,
+      title: "カスタムID記事",
+      category: "建築業",
+      location: "能登町",
+      image: "https://example.com/img.jpg",
+      summary: "テスト",
+      isCaseStudy: true,
+    });
+
+    expect(result).toEqual({ id: 105 });
+    const callArg = vi.mocked(upsertArticle).mock.calls[0][0];
+    expect(callArg.id).toBe(105);
+  });
+
+  it("creates article with sortOrder", async () => {
+    vi.mocked(upsertArticle).mockResolvedValue(106);
+
+    const caller = appRouter.createCaller(createAdminContext());
+    const result = await caller.articles.upsert({
+      title: "並び替えテスト",
+      category: "建築業",
+      location: "能登町",
+      image: "https://example.com/img.jpg",
+      summary: "テスト",
+      isCaseStudy: true,
+      sortOrder: 5,
+    });
+
+    expect(result).toEqual({ id: 106 });
+    const callArg = vi.mocked(upsertArticle).mock.calls[0][0];
+    expect(callArg.sortOrder).toBe(5);
+  });
+});
+
+describe("upload.parseWord", () => {
+  it("parses Word file and returns structured fields as admin", async () => {
+    const caller = appRouter.createCaller(createAdminContext());
+    const result = await caller.upload.parseWord({
+      base64: "dGVzdA==",
+      filename: "test.docx",
+    });
+
+    expect(result).toHaveProperty("fields");
+    expect(result.fields.title).toBe("Wordからのタイトル");
+    expect(result.fields.category).toBe("建築業");
+    expect(result.fields.operator).toBe("テスト工務店");
+    expect(result).toHaveProperty("rawText");
+  });
+
+  it("rejects unauthenticated users", async () => {
+    const caller = appRouter.createCaller(createPublicContext());
+
+    await expect(
+      caller.upload.parseWord({ base64: "dGVzdA==", filename: "test.docx" })
+    ).rejects.toThrow();
+  });
+
+  it("rejects non-admin users", async () => {
+    const caller = appRouter.createCaller(createUserContext());
+
+    await expect(
+      caller.upload.parseWord({ base64: "dGVzdA==", filename: "test.docx" })
+    ).rejects.toThrow();
   });
 });
 

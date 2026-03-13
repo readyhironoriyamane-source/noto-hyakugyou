@@ -152,11 +152,11 @@ export default function IndustryDetailPage() {
                   <span className="font-bold text-lg">事業者名：{industry.operator}</span>
                 </div>
                 
-                {/* 3行目: 事業説明 */}
-                {industry.heroSummary && (
+                {/* 3行目: 事業説明（管理画面の「事業説明」フィールドを優先表示） */}
+                {(industry.description || industry.heroSummary) && (
                   <div className="mt-1">
                     <p className="text-sm md:text-base leading-relaxed">
-                      {industry.heroSummary}
+                      {industry.description || industry.heroSummary}
                     </p>
                   </div>
                 )}

@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/accordion";
 import {
   ArrowLeft, Save, Plus, Trash2, Eye, Upload, GripVertical,
-  FileText, MapPin, Clock, Shield, Scale, BookOpen, MessageCircle, Heart
+  FileText, MapPin, Clock, Shield, Scale, BookOpen, MessageCircle, Heart, Info, FileUp, Loader2
 } from "lucide-react";
 import { useLocation, useRoute } from "wouter";
 import { toast } from "sonner";
@@ -26,8 +26,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 // ===== Type definitions =====
 interface DecisionMatrix {
   title: string;
-  optionA: { title: string; pros: string[]; cons: string[] };
-  optionB: { title: string; pros: string[]; cons: string[]; subsidy: string; cost: string };
+  optionA: { title: string; items: string[] };
+  optionB: { title: string; items: string[]; subsidy?: string; cost?: string };
   reason: string;
 }
 
@@ -35,11 +35,6 @@ interface Barriers {
   title: string;
   content: string;
   checklist: { title: string; description: string }[];
-}
-
-interface Changes {
-  title: string;
-  content: string[];
 }
 
 interface Regrets {
@@ -75,6 +70,16 @@ interface ChallengeCard {
   description: string;
   solutions: { title: string; detail: string }[];
   structuredBlock?: { label: string; items: string[] }[];
+}
+
+// ===== Helper: Annotation =====
+function Annotation({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-start gap-2 mt-1.5 px-2 py-1.5 bg-amber-50 border border-amber-200 rounded text-xs text-amber-800">
+      <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+      <span>{children}</span>
+    </div>
+  );
 }
 
 // ===== Helper Components =====
@@ -153,6 +158,7 @@ export default function ArticleEditorPage() {
   );
 
   // === Form State ===
+  const [customId, setCustomId] = useState<string>("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [operator, setOperator] = useState("");
@@ -164,6 +170,7 @@ export default function ArticleEditorPage() {
   const [editorComment, setEditorComment] = useState("");
   const [heroSummary, setHeroSummary] = useState("");
   const [isCaseStudy, setIsCaseStudy] = useState(false);
+  const [sortOrder, setSortOrder] = useState(0);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
 
@@ -185,9 +192,6 @@ export default function ArticleEditorPage() {
   // Barriers (実務の壁)
   const [barriers, setBarriers] = useState<Barriers | null>(null);
 
-  // Changes (変化と成果)
-  const [changes, setChanges] = useState<Changes | null>(null);
-
   // Support System (活用した支援制度)
   const [supportSystems, setSupportSystems] = useState<SupportSystemItem[]>([]);
 
@@ -196,9 +200,6 @@ export default function ArticleEditorPage() {
 
   // Challenge Card
   const [challengeCard, setChallengeCard] = useState<ChallengeCard | null>(null);
-
-  // Description text for hero area
-  const [descriptionText, setDescriptionText] = useState("");
 
   // Populate form when editing
   useEffect(() => {
@@ -214,6 +215,7 @@ export default function ArticleEditorPage() {
       setEditorComment(existingArticle.editorComment || "");
       setHeroSummary(existingArticle.heroSummary || "");
       setIsCaseStudy(existingArticle.isCaseStudy || false);
+      setSortOrder(existingArticle.sortOrder || 0);
       setTags((existingArticle.tags as string[]) || []);
       setTimelinePhase1(existingArticle.timelinePhase1 || "");
       setTimelinePhase2(existingArticle.timelinePhase2 || "");
@@ -221,11 +223,28 @@ export default function ArticleEditorPage() {
       setTimelinePhase4(existingArticle.timelinePhase4 || "");
       setDetails((existingArticle.details as Details) || {});
       setRegrets((existingArticle.regrets as Regrets) || null);
-      setDecisionMatrix((existingArticle.decisionMatrix as DecisionMatrix) || null);
       setBarriers((existingArticle.barriers as Barriers) || null);
-      setChanges((existingArticle.changes as Changes) || null);
       setBehindTheScenes((existingArticle.behindTheScenes as BehindTheScenes) || null);
       setChallengeCard((existingArticle.challengeCard as ChallengeCard) || null);
+
+      // Decision Matrix: migrate old pros/cons format to new items format
+      const dm = existingArticle.decisionMatrix as any;
+      if (dm) {
+        setDecisionMatrix({
+          title: dm.title || "",
+          optionA: {
+            title: dm.optionA?.title || "",
+            items: dm.optionA?.items || dm.optionA?.pros || [""],
+          },
+          optionB: {
+            title: dm.optionB?.title || "",
+            items: dm.optionB?.items || dm.optionB?.pros || [""],
+            subsidy: dm.optionB?.subsidy || "",
+            cost: dm.optionB?.cost || "",
+          },
+          reason: dm.reason || "",
+        });
+      }
 
       // Support system can be single object or array
       const ss = existingArticle.supportSystem;
@@ -257,6 +276,95 @@ export default function ArticleEditorPage() {
       toast.error(`画像アップロードに失敗しました: ${error.message}`);
     },
   });
+
+  const wordParseMutation = trpc.upload.parseWord.useMutation({
+    onError: (error) => {
+      toast.error(`Wordファイルの解析に失敗しました: ${error.message}`);
+    },
+  });
+
+  // Word file upload handler
+  const handleWordUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.name.endsWith(".docx")) {
+      toast.error(".docx形式のファイルを選択してください");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("ファイルサイズは10MB以下にしてください");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64 = (reader.result as string).split(",")[1];
+      try {
+        const result = await wordParseMutation.mutateAsync({
+          base64,
+          filename: file.name,
+        });
+
+        const f = result.fields;
+
+        // Auto-fill form fields from parsed Word data
+        if (f.title) setTitle(f.title);
+        if (f.category) setCategory(f.category);
+        if (f.operator) setOperator(f.operator);
+        if (f.location) setLocationField(f.location);
+        if (f.summary) setSummary(f.summary);
+        if (f.description) setDescription(f.description);
+        if (f.editorComment) setEditorComment(f.editorComment);
+        if (f.tags && Array.isArray(f.tags)) setTags(f.tags);
+        if (f.timelinePhase1) setTimelinePhase1(f.timelinePhase1);
+        if (f.timelinePhase2) setTimelinePhase2(f.timelinePhase2);
+        if (f.timelinePhase3) setTimelinePhase3(f.timelinePhase3);
+        if (f.timelinePhase4) setTimelinePhase4(f.timelinePhase4);
+        if (f.details) setDetails(f.details);
+        if (f.regrets) setRegrets(f.regrets);
+        if (f.barriers) setBarriers(f.barriers);
+        if (f.behindTheScenes) setBehindTheScenes(f.behindTheScenes);
+        if (f.challengeCard) setChallengeCard(f.challengeCard);
+
+        // Decision Matrix
+        if (f.decisionMatrix) {
+          const dm = f.decisionMatrix;
+          setDecisionMatrix({
+            title: dm.title || "",
+            optionA: {
+              title: dm.optionA?.title || "",
+              items: dm.optionA?.pros || dm.optionA?.items || [""],
+            },
+            optionB: {
+              title: dm.optionB?.title || "",
+              items: dm.optionB?.pros || dm.optionB?.items || [""],
+              subsidy: dm.optionB?.subsidy || "",
+              cost: dm.optionB?.cost || "",
+            },
+            reason: dm.reason || "",
+          });
+        }
+
+        // Support System
+        if (f.supportSystem) {
+          if (Array.isArray(f.supportSystem)) {
+            setSupportSystems(f.supportSystem);
+          } else {
+            setSupportSystems([f.supportSystem]);
+          }
+        }
+
+        toast.success("Wordファイルの内容をフォームに反映しました。内容を確認して保存してください。");
+      } catch (err) {
+        // error handled by mutation onError
+      }
+    };
+    reader.readAsDataURL(file);
+    // Reset the input so the same file can be re-uploaded
+    e.target.value = "";
+  }, [wordParseMutation]);
 
   // Image upload handler
   const handleImageUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -293,6 +401,25 @@ export default function ArticleEditorPage() {
       return;
     }
 
+    // Convert decision matrix items back to pros format for DB compatibility
+    let dmForSave: any = null;
+    if (decisionMatrix) {
+      dmForSave = {
+        title: decisionMatrix.title,
+        optionA: {
+          title: decisionMatrix.optionA.title,
+          pros: decisionMatrix.optionA.items.filter(Boolean),
+        },
+        optionB: {
+          title: decisionMatrix.optionB.title,
+          pros: decisionMatrix.optionB.items.filter(Boolean),
+          subsidy: decisionMatrix.optionB.subsidy || undefined,
+          cost: decisionMatrix.optionB.cost || undefined,
+        },
+        reason: decisionMatrix.reason,
+      };
+    }
+
     const articleData: any = {
       title,
       category,
@@ -305,6 +432,7 @@ export default function ArticleEditorPage() {
       editorComment: editorComment || null,
       heroSummary: heroSummary || null,
       isCaseStudy,
+      sortOrder,
       tags: tags.length > 0 ? tags : null,
       timelinePhase1: timelinePhase1 || null,
       timelinePhase2: timelinePhase2 || null,
@@ -312,9 +440,9 @@ export default function ArticleEditorPage() {
       timelinePhase4: timelinePhase4 || null,
       details: Object.keys(details).length > 0 ? details : null,
       regrets: regrets || null,
-      decisionMatrix: decisionMatrix || null,
+      decisionMatrix: dmForSave,
       barriers: barriers || null,
-      changes: changes || null,
+      changes: null,
       behindTheScenes: behindTheScenes || null,
       challengeCard: challengeCard || null,
       supportSystem: supportSystems.length > 1 ? supportSystems : supportSystems.length === 1 ? supportSystems[0] : null,
@@ -322,6 +450,8 @@ export default function ArticleEditorPage() {
 
     if (articleId) {
       articleData.id = articleId;
+    } else if (customId && !isNaN(parseInt(customId))) {
+      articleData.id = parseInt(customId);
     }
 
     upsertMutation.mutate(articleData);
@@ -386,6 +516,26 @@ export default function ArticleEditorPage() {
               </h1>
             </div>
             <div className="flex items-center gap-3">
+              {/* Wordファイルアップロード */}
+              <label className="cursor-pointer">
+                <input type="file" accept=".docx" className="hidden" onChange={handleWordUpload} />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="text-white/80 hover:text-white hover:bg-white/10"
+                  asChild
+                  disabled={wordParseMutation.isPending}
+                >
+                  <span>
+                    {wordParseMutation.isPending ? (
+                      <><Loader2 className="w-4 h-4 mr-2 animate-spin" />解析中...</>
+                    ) : (
+                      <><FileUp className="w-4 h-4 mr-2" />Word取り込み</>
+                    )}
+                  </span>
+                </Button>
+              </label>
               {articleId && (
                 <Button
                   variant="ghost"
@@ -420,6 +570,42 @@ export default function ArticleEditorPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Custom ID (new articles only) */}
+              {isNew && (
+                <div>
+                  <Label htmlFor="customId" className="font-bold">記事ID</Label>
+                  <Input
+                    id="customId"
+                    type="number"
+                    value={customId}
+                    onChange={(e) => setCustomId(e.target.value)}
+                    placeholder="例: 105（空欄で自動採番）"
+                    className="mt-1"
+                  />
+                  <Annotation>記事のURLに使われます（例: /industry/105）。空欄の場合は自動で採番されます。</Annotation>
+                </div>
+              )}
+              {!isNew && (
+                <div>
+                  <Label className="font-bold">記事ID</Label>
+                  <div className="mt-1 px-3 py-2 bg-gray-100 rounded text-gray-700 font-mono">
+                    {articleId}
+                  </div>
+                  <Annotation>記事IDは変更できません。URL: /industry/{articleId}</Annotation>
+                </div>
+              )}
+              <div>
+                <Label htmlFor="sortOrder" className="font-bold">表示順</Label>
+                <Input
+                  id="sortOrder"
+                  type="number"
+                  value={sortOrder}
+                  onChange={(e) => setSortOrder(parseInt(e.target.value) || 0)}
+                  placeholder="0"
+                  className="mt-1"
+                />
+                <Annotation>小さい数字ほど先頭に表示されます。一覧画面でドラッグ&ドロップでも変更可能です。</Annotation>
+              </div>
               <div className="md:col-span-2">
                 <Label htmlFor="title" className="font-bold">タイトル <span className="text-red-500">*</span></Label>
                 <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="例: 震災を越えて、洗い続ける" className="mt-1" />
@@ -494,12 +680,14 @@ export default function ArticleEditorPage() {
             {/* Summary */}
             <div>
               <Label htmlFor="summary" className="font-bold">概要 <span className="text-red-500">*</span></Label>
-              <Textarea id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="記事の概要（カード表示用）" rows={3} className="mt-1" />
+              <Textarea id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="記事の概要" rows={3} className="mt-1" />
+              <Annotation>TOPページの記事カードに表示されるテキストです。簡潔に記事の要点をまとめてください。</Annotation>
             </div>
 
             <div>
               <Label htmlFor="description" className="font-bold">事業説明（ヒーロー下部表示）</Label>
               <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="事業の詳細説明" rows={4} className="mt-1" />
+              <Annotation>記事詳細ページのヒーロー画像下部に表示される事業説明文です。管理画面で入力した内容がそのまま反映されます。</Annotation>
             </div>
           </CardContent>
         </Card>
@@ -539,7 +727,7 @@ export default function ArticleEditorPage() {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <SectionHeader icon={Heart} title="支援がもたらした変化" description="💡セクション（記事冒頭のハイライトカード）" />
+              <SectionHeader icon={Heart} title="支援がもたらした変化" description="記事冒頭のハイライトカード" />
               {!regrets ? (
                 <Button variant="outline" size="sm" onClick={() => setRegrets({ title: "支援がもたらした変化", content: "" })}>
                   <Plus className="w-4 h-4 mr-2" />セクションを追加
@@ -596,8 +784,8 @@ export default function ArticleEditorPage() {
               <SectionHeader icon={Scale} title="究極の二択" description="事業者が直面した重要な選択肢の比較" />
               {!decisionMatrix ? (
                 <Button variant="outline" size="sm" onClick={() => setDecisionMatrix({
-                  title: "", optionA: { title: "", pros: [""], cons: [""] },
-                  optionB: { title: "", pros: [""], cons: [""], subsidy: "", cost: "" }, reason: ""
+                  title: "", optionA: { title: "", items: [""] },
+                  optionB: { title: "", items: [""], subsidy: "", cost: "" }, reason: ""
                 })}>
                   <Plus className="w-4 h-4 mr-2" />セクションを追加
                 </Button>
@@ -626,45 +814,24 @@ export default function ArticleEditorPage() {
                     })} className="mt-1" />
                   </div>
                   <div>
-                    <Label>メリット・ポイント</Label>
+                    <Label>項目（箇条書き）</Label>
                     <DynamicListField
-                      items={decisionMatrix.optionA.pros}
+                      items={decisionMatrix.optionA.items}
                       onAdd={() => setDecisionMatrix({
-                        ...decisionMatrix, optionA: { ...decisionMatrix.optionA, pros: [...decisionMatrix.optionA.pros, ""] }
+                        ...decisionMatrix, optionA: { ...decisionMatrix.optionA, items: [...decisionMatrix.optionA.items, ""] }
                       })}
                       onRemove={(i) => setDecisionMatrix({
-                        ...decisionMatrix, optionA: { ...decisionMatrix.optionA, pros: decisionMatrix.optionA.pros.filter((_, idx) => idx !== i) }
+                        ...decisionMatrix, optionA: { ...decisionMatrix.optionA, items: decisionMatrix.optionA.items.filter((_, idx) => idx !== i) }
                       })}
                       onUpdate={(i, val) => {
-                        const newPros = [...decisionMatrix.optionA.pros];
-                        newPros[i] = val;
-                        setDecisionMatrix({ ...decisionMatrix, optionA: { ...decisionMatrix.optionA, pros: newPros } });
+                        const newItems = [...decisionMatrix.optionA.items];
+                        newItems[i] = val;
+                        setDecisionMatrix({ ...decisionMatrix, optionA: { ...decisionMatrix.optionA, items: newItems } });
                       }}
                       renderItem={(item, index, onChange) => (
-                        <Input value={item} onChange={(e) => onChange(e.target.value)} placeholder={`ポイント ${index + 1}`} />
+                        <Input value={item} onChange={(e) => onChange(e.target.value)} placeholder={`項目 ${index + 1}`} />
                       )}
-                      addLabel="ポイントを追加"
-                    />
-                  </div>
-                  <div>
-                    <Label>デメリット</Label>
-                    <DynamicListField
-                      items={decisionMatrix.optionA.cons}
-                      onAdd={() => setDecisionMatrix({
-                        ...decisionMatrix, optionA: { ...decisionMatrix.optionA, cons: [...decisionMatrix.optionA.cons, ""] }
-                      })}
-                      onRemove={(i) => setDecisionMatrix({
-                        ...decisionMatrix, optionA: { ...decisionMatrix.optionA, cons: decisionMatrix.optionA.cons.filter((_, idx) => idx !== i) }
-                      })}
-                      onUpdate={(i, val) => {
-                        const newCons = [...decisionMatrix.optionA.cons];
-                        newCons[i] = val;
-                        setDecisionMatrix({ ...decisionMatrix, optionA: { ...decisionMatrix.optionA, cons: newCons } });
-                      }}
-                      renderItem={(item, index, onChange) => (
-                        <Input value={item} onChange={(e) => onChange(e.target.value)} placeholder={`デメリット ${index + 1}`} />
-                      )}
-                      addLabel="デメリットを追加"
+                      addLabel="項目を追加"
                     />
                   </div>
                 </div>
@@ -673,7 +840,10 @@ export default function ArticleEditorPage() {
               {/* Option B (Decision) */}
               <div className="bg-[#E6F3F5] p-4 rounded-lg border-2 border-[#2D7F8F]">
                 <h4 className="font-bold text-[#1E3A5F] mb-3">決断（選択肢 B）</h4>
-                <div className="space-y-3">
+                <Annotation>
+                  「補助金」「コスト」は任意入力です。未入力の場合、選択肢Aと同様に箇条書きのみで表示されます。
+                </Annotation>
+                <div className="space-y-3 mt-3">
                   <div>
                     <Label>タイトル</Label>
                     <Input value={decisionMatrix.optionB.title} onChange={(e) => setDecisionMatrix({
@@ -682,58 +852,37 @@ export default function ArticleEditorPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <Label>補助金</Label>
+                      <Label>補助金 <span className="text-gray-400 text-xs">（任意）</span></Label>
                       <Input value={decisionMatrix.optionB.subsidy || ""} onChange={(e) => setDecisionMatrix({
                         ...decisionMatrix, optionB: { ...decisionMatrix.optionB, subsidy: e.target.value }
                       })} placeholder="例: 小規模事業者持続化補助金" className="mt-1" />
                     </div>
                     <div>
-                      <Label>コスト</Label>
+                      <Label>コスト <span className="text-gray-400 text-xs">（任意）</span></Label>
                       <Input value={decisionMatrix.optionB.cost || ""} onChange={(e) => setDecisionMatrix({
                         ...decisionMatrix, optionB: { ...decisionMatrix.optionB, cost: e.target.value }
                       })} placeholder="例: 自己負担 約5万円" className="mt-1" />
                     </div>
                   </div>
                   <div>
-                    <Label>メリット・ポイント</Label>
+                    <Label>項目（箇条書き）</Label>
                     <DynamicListField
-                      items={decisionMatrix.optionB.pros || []}
+                      items={decisionMatrix.optionB.items}
                       onAdd={() => setDecisionMatrix({
-                        ...decisionMatrix, optionB: { ...decisionMatrix.optionB, pros: [...(decisionMatrix.optionB.pros || []), ""] }
+                        ...decisionMatrix, optionB: { ...decisionMatrix.optionB, items: [...decisionMatrix.optionB.items, ""] }
                       })}
                       onRemove={(i) => setDecisionMatrix({
-                        ...decisionMatrix, optionB: { ...decisionMatrix.optionB, pros: (decisionMatrix.optionB.pros || []).filter((_, idx) => idx !== i) }
+                        ...decisionMatrix, optionB: { ...decisionMatrix.optionB, items: decisionMatrix.optionB.items.filter((_, idx) => idx !== i) }
                       })}
                       onUpdate={(i, val) => {
-                        const newPros = [...(decisionMatrix.optionB.pros || [])];
-                        newPros[i] = val;
-                        setDecisionMatrix({ ...decisionMatrix, optionB: { ...decisionMatrix.optionB, pros: newPros } });
+                        const newItems = [...decisionMatrix.optionB.items];
+                        newItems[i] = val;
+                        setDecisionMatrix({ ...decisionMatrix, optionB: { ...decisionMatrix.optionB, items: newItems } });
                       }}
                       renderItem={(item, index, onChange) => (
-                        <Input value={item} onChange={(e) => onChange(e.target.value)} placeholder={`ポイント ${index + 1}`} />
+                        <Input value={item} onChange={(e) => onChange(e.target.value)} placeholder={`項目 ${index + 1}`} />
                       )}
-                      addLabel="ポイントを追加"
-                    />
-                  </div>
-                  <div>
-                    <Label>デメリット</Label>
-                    <DynamicListField
-                      items={decisionMatrix.optionB.cons || []}
-                      onAdd={() => setDecisionMatrix({
-                        ...decisionMatrix, optionB: { ...decisionMatrix.optionB, cons: [...(decisionMatrix.optionB.cons || []), ""] }
-                      })}
-                      onRemove={(i) => setDecisionMatrix({
-                        ...decisionMatrix, optionB: { ...decisionMatrix.optionB, cons: (decisionMatrix.optionB.cons || []).filter((_, idx) => idx !== i) }
-                      })}
-                      onUpdate={(i, val) => {
-                        const newCons = [...(decisionMatrix.optionB.cons || [])];
-                        newCons[i] = val;
-                        setDecisionMatrix({ ...decisionMatrix, optionB: { ...decisionMatrix.optionB, cons: newCons } });
-                      }}
-                      renderItem={(item, index, onChange) => (
-                        <Input value={item} onChange={(e) => onChange(e.target.value)} placeholder={`デメリット ${index + 1}`} />
-                      )}
-                      addLabel="デメリットを追加"
+                      addLabel="項目を追加"
                     />
                   </div>
                 </div>
@@ -789,50 +938,7 @@ export default function ArticleEditorPage() {
           )}
         </Card>
 
-        {/* ===== 7. 変化と成果（Changes） ===== */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <SectionHeader icon={Heart} title="変化と成果" description="支援を受けて起きた変化" />
-              {!changes ? (
-                <Button variant="outline" size="sm" onClick={() => setChanges({ title: "支援を受けて起きた変化", content: [""] })}>
-                  <Plus className="w-4 h-4 mr-2" />セクションを追加
-                </Button>
-              ) : (
-                <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setChanges(null)}>
-                  <Trash2 className="w-4 h-4 mr-2" />削除
-                </Button>
-              )}
-            </div>
-          </CardHeader>
-          {changes && (
-            <CardContent className="space-y-4">
-              <div>
-                <Label className="font-bold">タイトル</Label>
-                <Input value={changes.title} onChange={(e) => setChanges({ ...changes, title: e.target.value })} className="mt-1" />
-              </div>
-              <div>
-                <Label className="font-bold">内容（段落ごとに入力）</Label>
-                <DynamicListField
-                  items={changes.content}
-                  onAdd={() => setChanges({ ...changes, content: [...changes.content, ""] })}
-                  onRemove={(i) => setChanges({ ...changes, content: changes.content.filter((_, idx) => idx !== i) })}
-                  onUpdate={(i, val) => {
-                    const newContent = [...changes.content];
-                    newContent[i] = val;
-                    setChanges({ ...changes, content: newContent });
-                  }}
-                  renderItem={(item, index, onChange) => (
-                    <Textarea value={item} onChange={(e) => onChange(e.target.value)} placeholder={`段落 ${index + 1}`} rows={3} />
-                  )}
-                  addLabel="段落を追加"
-                />
-              </div>
-            </CardContent>
-          )}
-        </Card>
-
-        {/* ===== 8. 活用した支援制度 ===== */}
+        {/* ===== 7. 活用した支援制度 ===== */}
         <Card>
           <CardHeader>
             <SectionHeader icon={Shield} title="活用した支援制度" description="利用した補助金・支援制度の情報" />
@@ -885,7 +991,7 @@ export default function ArticleEditorPage() {
           </CardContent>
         </Card>
 
-        {/* ===== 9. 再起の裏側（Behind the Scenes） ===== */}
+        {/* ===== 8. 再起の裏側（Behind the Scenes） ===== */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -931,7 +1037,7 @@ export default function ArticleEditorPage() {
           )}
         </Card>
 
-        {/* ===== 10. 課題カード（Challenge Card） ===== */}
+        {/* ===== 9. 課題カード（Challenge Card） ===== */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -996,7 +1102,7 @@ export default function ArticleEditorPage() {
           )}
         </Card>
 
-        {/* ===== 11. 編集後記 ===== */}
+        {/* ===== 10. 編集後記 ===== */}
         <Card>
           <CardHeader>
             <SectionHeader icon={MessageCircle} title="編集後記" description="記事末尾のライターコメント" />

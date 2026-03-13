@@ -1,0 +1,12 @@
+{
+  "query": "SELECT id, heroSummary, LEFT(description, 200) as desc_preview FROM articles WHERE id = 104;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2u86XNAjatgfDVL.57a134884d8c --database 3nqHQM6GxJ7ULoRQP5ahB4 --execute SELECT id, heroSummary, LEFT(description, 200) as desc_preview FROM articles WHERE id = 104;",
+  "rows": [],
+  "messages": [
+    "104\t**蛸島工務店**",
+    "能登町で建築業を営む工務店。震災で工房が損壊し、機械やパソコンも被害を受けた。持続化補助金となりわい再建補助金を活用して復旧を果たしたが、申請手続きの煩雑さや価格変動による自己負担増など、多くの「実務の壁」に直面した。\t能登町で建築業を営む。地震で工房が一部損壊（柱が12cm傾斜）、シャッターが破損、機械がひっくり返るなどの被害を受けた。持続化補助金となりわい再建補助金を活用し、シャッター修理（持続化）とパソコン購入（なりわい）を実施。"
+  ],
+  "stdout": "id\theroSummary\tdesc_preview\n104\t**蛸島工務店**\n\n能登町で建築業を営む工務店。震災で工房が損壊し、機械やパソコンも被害を受けた。持続化補助金となりわい再建補助金を活用して復旧を果たしたが、申請手続きの煩雑さや価格変動による自己負担増など、多くの「実務の壁」に直面した。\t能登町で建築業を営む。地震で工房が一部損壊（柱が12cm傾斜）、シャッターが破損、機械がひっくり返るなどの被害を受けた。持続化補助金となりわい再建補助金を活用し、シャッター修理（持続化）とパソコン購入（なりわい）を実施。\n",
+  "stderr": "",
+  "execution_time_ms": 1602
+}

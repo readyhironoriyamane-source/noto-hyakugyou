@@ -1,4 +1,4 @@
-import { eq, desc, sql } from "drizzle-orm";
+import { eq, desc, asc, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, InsertArticle, users, articles } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -94,13 +94,13 @@ export async function getUserByOpenId(openId: string) {
 export async function getAllArticles() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(articles).orderBy(desc(articles.id));
+  return db.select().from(articles).orderBy(asc(articles.sortOrder), asc(articles.id));
 }
 
 export async function getCaseStudyArticles() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(articles).where(eq(articles.isCaseStudy, true)).orderBy(desc(articles.id));
+  return db.select().from(articles).where(eq(articles.isCaseStudy, true)).orderBy(asc(articles.sortOrder), asc(articles.id));
 }
 
 export async function getArticleById(id: number) {
@@ -115,12 +115,21 @@ export async function upsertArticle(article: InsertArticle): Promise<number> {
   if (!db) throw new Error("Database not available");
 
   if (article.id) {
-    // Update existing
-    const { id, ...updateData } = article;
-    await db.update(articles).set(updateData).where(eq(articles.id, id));
-    return id;
+    // Check if article with this ID exists
+    const existing = await db.select({ id: articles.id }).from(articles).where(eq(articles.id, article.id)).limit(1);
+    
+    if (existing.length > 0) {
+      // Update existing
+      const { id, ...updateData } = article;
+      await db.update(articles).set(updateData).where(eq(articles.id, id));
+      return id;
+    } else {
+      // Insert new with specified ID
+      await db.insert(articles).values(article);
+      return article.id;
+    }
   } else {
-    // Insert new
+    // Insert new with auto-generated ID
     const result = await db.insert(articles).values(article);
     return result[0].insertId;
   }
@@ -130,4 +139,14 @@ export async function deleteArticle(id: number): Promise<void> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(articles).where(eq(articles.id, id));
+}
+
+export async function updateSortOrders(items: { id: number; sortOrder: number }[]): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Update each article's sortOrder in a transaction-like batch
+  for (const item of items) {
+    await db.update(articles).set({ sortOrder: item.sortOrder }).where(eq(articles.id, item.id));
+  }
 }

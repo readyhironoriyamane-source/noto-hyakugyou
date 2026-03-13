@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "295c6d1e-d4f8-4fce-a50f-829db7a40dc0",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "69c244a5-887a-4b21-ad3e-bfc0c3142665",
+  "prevId": "295c6d1e-d4f8-4fce-a50f-829db7a40dc0",
   "tables": {
     "articles": {
       "name": "articles",
@@ -119,6 +119,14 @@
           "notNull": true,
           "autoincrement": false,
           "default": false
+        },
+        "sortOrder": {
+          "name": "sortOrder",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
         },
         "tags": {
           "name": "tags",
