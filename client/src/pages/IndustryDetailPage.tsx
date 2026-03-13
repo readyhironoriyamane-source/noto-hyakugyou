@@ -484,24 +484,73 @@ export default function IndustryDetailPage() {
             <div className="mb-20">
               {Array.isArray(industry.supportSystem) ? (
                 // 配列の場合（既存のロジック）
-                (industry.supportSystem as any[]).map((support: any, index: number) => (
-                  <div key={index} className="mb-8">
-                    <h3 className="text-2xl font-bold text-[#1D3A52] mb-6 flex items-center">
-                      <span className="mr-2">##</span> 今回活用した制度
-                    </h3>
-                    <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                      <div className="p-6 md:p-8">
-                        <h4 className="text-xl md:text-2xl font-bold text-[#1D3A52] mb-4">
-                          {support.name}
-                        </h4>
-                        <p className="text-gray-600 mb-6 leading-relaxed">
-                          {support.description}
-                        </p>
-                        {/* 既存の表示ロジックがあればここに記述 */}
+                <div className="bg-[#1D3A52] p-6 md:p-8 rounded-xl">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-6 flex items-center">
+                    <span className="mr-2">##</span> 今回活用した制度
+                  </h3>
+                  
+                  <div className="space-y-6">
+                    {(industry.supportSystem as any[]).map((support: any, index: number) => (
+                      <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div className="p-6 md:p-8">
+                          <h4 className="text-xl md:text-2xl font-bold text-[#333] mb-4">
+                            {support.name}
+                          </h4>
+                          <p className="text-gray-600 mb-6 leading-relaxed">
+                            {support.description}
+                          </p>
+                          
+                          <div className="bg-gray-50 rounded-lg p-5 mb-6 border border-gray-100">
+                            <div className="space-y-3">
+                              <div className="flex items-start gap-3">
+                                <span className="text-xl">💰</span>
+                                <div>
+                                  <span className="font-bold text-gray-700 mr-2">補助率:</span>
+                                  <span className="text-gray-800">{support.rate}</span>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-3">
+                                <span className="text-xl">📄</span>
+                                <div>
+                                  <span className="font-bold text-gray-700 mr-2">上限:</span>
+                                  <span className="text-gray-800">{support.limit}</span>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-3">
+                                <span className="text-xl text-[#C8A882]">✓</span>
+                                <div>
+                                  <span className="font-bold text-[#C8A882] mr-2">ここがポイント:</span>
+                                  <span className="text-gray-800">{support.point}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="text-center">
+                            <a 
+                              href={support.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center bg-[#2D7F8F] hover:bg-[#236A7A] text-white font-bold py-3 px-8 rounded-md transition-colors duration-300 shadow-sm hover:shadow-md w-full md:w-auto"
+                            >
+                              この制度の詳細を見る
+                              <ArrowRight className="ml-2 w-5 h-5" />
+                            </a>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    ))}
                   </div>
-                ))
+                  
+                  <div className="mt-8 text-center">
+                    <Link href="/supports">
+                      <Button variant="outline" className="rounded-full px-8 bg-white text-[#1D3A52] hover:bg-gray-100 border-none">
+                        他の支援制度も見る
+                        <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
               ) : (
                 // オブジェクトの場合（新デザイン）
                 <div className="bg-[#1D3A52] p-6 md:p-8 rounded-xl">
