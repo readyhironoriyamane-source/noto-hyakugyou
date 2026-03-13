@@ -268,7 +268,7 @@ export default function IndustryDetailPage() {
                           </li>
                         ))}
                         {industry.decisionMatrix.optionA.cons && industry.decisionMatrix.optionA.cons.map((con: string, i: number) => (
-                          <li key={`con-${i}`} className="flex items-start gap-2 italic text-[#666]">
+                          <li key={`con-${i}`} className="flex items-start gap-2 text-[#666]">
                             <span className="text-[#666] mt-1">•</span>
                             <span>{con}</span>
                           </li>
@@ -310,7 +310,7 @@ export default function IndustryDetailPage() {
                             </li>
                           ))}
                           {industry.decisionMatrix.optionB.cons && industry.decisionMatrix.optionB.cons.map((con: string, i: number) => (
-                            <li key={`con-${i}`} className="flex items-start gap-2 italic text-[#666]">
+                            <li key={`con-${i}`} className="flex items-start gap-2 text-[#666]">
                               <span className="text-[#666] mt-1">•</span>
                               <span>{con}</span>
                             </li>
