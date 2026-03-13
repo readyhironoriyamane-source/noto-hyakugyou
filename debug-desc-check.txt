@@ -1,0 +1,24 @@
+DB Data Analysis:
+
+ID 101: 
+  card_desc: "震災によるメイン設備の故障。450万円の投資が必要となり、廃業か再開かの決断を迫られた。"
+  summary: "昭和初期創業のクリーニング店。震災による設備故障と廃業の危機を乗り越え..."
+  → Screen shows: "震災によるメイン設備の故障。450万円の投資が必要となり、廃業か再開かの決断を迫られた。" ← MATCHES card_desc ✓
+
+ID 102:
+  card_desc: "18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始め、人材不足が解消。若い世代が加わったことで職場の雰囲気が明るくなり、既存スタッフにも活気が戻った。"
+  summary: same text (first 80 chars match)
+  → Screen shows: "18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で..." with "..." truncation
+  → Problem: card_desc and summary are the SAME text for 102. The user set a long description in challengeCard, and it's being truncated by line-clamp-3.
+
+ID 104:
+  card_desc: "震災で工房が損壊し、機械やパソコンが破損。補助金申請中にパソコン価格が高騰し、自己負担が増加した。"
+  summary: "建築業を営む蛸島工務店。震災で工房が一部損壊..."
+  → Screen shows: "震災で工房が損壊し、機械やパソコンが破損。補助金申請中にパソコン価格が高騰し、自己負担が増加し..." with "..." truncation
+  → MATCHES card_desc ✓ but truncated by line-clamp-3
+
+Conclusion:
+1. challengeCard.description IS being used correctly (code is working)
+2. The issue is line-clamp-3 is truncating the text. User wants full text displayed.
+3. For 102, card_desc equals summary - this is a data issue, not code issue.
+4. Grey box height: need flex-grow approach instead of just min-height.

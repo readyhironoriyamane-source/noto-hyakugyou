@@ -1,0 +1,18 @@
+Visual check after flex-grow fix:
+
+TOP page cards - grey box area:
+- Card 1 (101): Grey box shows 活用した支援(1 item) + 成果(1 item: 営業再開) - SHORTER content
+- Card 2 (102): Grey box shows 活用した支援(1 item) + 成果(2 items) - MEDIUM content  
+- Card 3 (104): Grey box shows 活用した支援(2 items) + 成果(2 items) - MOST content
+
+With flex-grow applied:
+- The grey boxes now stretch to fill available space
+- Card bottoms (詳しく見る) are aligned at the same height ✓
+- Grey box bottom edges appear aligned ✓
+
+Summary text:
+- Card 1: "震災によるメイン設備の故障。450万円の投資が必要となり、廃業か再開かの決断を迫られた。" - FULL TEXT, no truncation ✓
+- Card 2: "18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始め、人材不足が解消。若い世代が加わったことで職場の雰囲気が明るくなり、既存スタッフにも活気が戻った。" - FULL TEXT ✓
+- Card 3: "震災で工房が損壊し、機械やパソコンが破損。補助金申請中にパソコン価格が高騰し、自己負担が増加した。" - FULL TEXT ✓
+
+Both issues appear fixed.

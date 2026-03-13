@@ -207,15 +207,15 @@ export default function IndustriesPage() {
                             <span>{study.title}</span>
                           </h3>
 
-                          {/* ④ 本文リード文（課題カード説明 → summaryフォールバック） */}
-                          <p className="text-base text-[#555] font-medium leading-relaxed mb-6 line-clamp-3">
+                          {/* ④ 本文リード文（課題カード説明 → summaryフォールバック・全文表示） */}
+                          <p className="text-base text-[#555] font-medium leading-relaxed mb-6">
                             {study.challengeCard?.description || study.summary}
                           </p>
                         </div>
 
-                        {/* ⑤ 構造化データブロック（高さ揃え） */}
+                        {/* ⑤ 構造化データブロック（flex-growで高さ揃え） */}
                         {study.challengeCard?.structuredBlock && (
-                          <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100 md:min-h-[200px]">
+                          <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100 flex-grow">
                             {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
                               <div key={idx} className="text-sm">
                                 <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
