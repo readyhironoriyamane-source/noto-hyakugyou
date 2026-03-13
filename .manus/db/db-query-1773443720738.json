@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE articles SET summary = '18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始めた。', challengeCard = JSON_SET(challengeCard, '$.description', '18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始めた。') WHERE id = 102;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2u86XNAjatgfDVL.57a134884d8c --database 3nqHQM6GxJ7ULoRQP5ahB4 --execute UPDATE articles SET summary = '18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始めた。', challengeCard = JSON_SET(challengeCard, '$.description', '18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始めた。') WHERE id = 102;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1634
+}

@@ -1,0 +1,15 @@
+{
+  "query": "SELECT id, summary, JSON_EXTRACT(challengeCard, '$.description') as card_desc FROM articles WHERE id = 102;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2u86XNAjatgfDVL.57a134884d8c --database 3nqHQM6GxJ7ULoRQP5ahB4 --execute SELECT id, summary, JSON_EXTRACT(challengeCard, '$.description') as card_desc FROM articles WHERE id = 102;",
+  "rows": [
+    {
+      "id": "102",
+      "summary": "18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始め、人材不足が解消。若い世代が加わったことで職場の雰囲気が明るくなり、既存スタッフにも活気が戻った。",
+      "card_desc": "\"18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始め、人材不足が解消。若い世代が加わったことで職場の雰囲気が明るくなり、既存スタッフにも活気が戻った。\""
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tsummary\tcard_desc\n102\t18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始め、人材不足が解消。若い世代が加わったことで職場の雰囲気が明るくなり、既存スタッフにも活気が戻った。\t\"18年続く指定管理施設。震災後の宿泊需要急増と人手不足に悩む中、スポット雇用サービス「タイミー」で若者が集まり始め、人材不足が解消。若い世代が加わったことで職場の雰囲気が明るくなり、既存スタッフにも活気が戻った。\"\n",
+  "stderr": "",
+  "execution_time_ms": 1619
+}
