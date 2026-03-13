@@ -1,0 +1,8 @@
+{
+  "query": "SELECT id, title, is_case_study, sort_order, JSON_EXTRACT(challenge_card, '$.label') as challenge_label, JSON_EXTRACT(challenge_card, '$.structuredBlock') as structured_block FROM articles WHERE id = 102;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2u86XNAjatgfDVL.57a134884d8c --database 3nqHQM6GxJ7ULoRQP5ahB4 --execute SELECT id, title, is_case_study, sort_order, JSON_EXTRACT(challenge_card, '$.label') as challenge_label, JSON_EXTRACT(challenge_card, '$.structuredBlock') as structured_block FROM articles WHERE id = 102;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'is_case_study' in 'field list'"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "query": "SELECT id, title, isCaseStudy, sortOrder, challengeCard, supportSystem FROM articles WHERE id = 102;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2u86XNAjatgfDVL.57a134884d8c --database 3nqHQM6GxJ7ULoRQP5ahB4 --execute SELECT id, title, isCaseStudy, sortOrder, challengeCard, supportSystem FROM articles WHERE id = 102;",
+  "rows": [
+    {
+      "id": "102",
+      "title": "「人が来ない、ハローワークも全滅」高齢化する職場に若者が来た理由",
+      "isCaseStudy": "0",
+      "sortOrder": "1",
+      "challengeCard": "{\"description\": \"こうやって乗り越えた\", \"label\": \"壁の乗り越え方\", \"solutions\": [], \"structuredBlock\": [{\"items\": [\"担当者が現場の仕事内容を細かくヒアリングし、実態に合った求人票を作成してくれた\", \"来る人が仕事内容を理解しており、ミスマッチやトラブルがなかった\", \"相互評価（レビュー）でお互いに選べる仕組みで安心できた\", \"「ぼーっとしてたら導入できていた」ほどスムーズだった\"], \"label\": \"▼ こうやって乗り越えた\"}]}",
+      "supportSystem": "{\"description\": \"スキマ時間で働きたい人と、人手が必要な事業者をマッチングするサービス。\", \"limit\": null, \"name\": \"タイミー（スポット雇用サービス）\", \"point\": \"1回3時間程度のスポット勤務。求人票作成サポート、相互評価システム、福利厚生不要。タイミー経由で2名が直接雇用のパートに転換。結果、タイミーを使わなくてもよくなった。\", \"rate\": \"手数料制\", \"url\": \"#\"}"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tisCaseStudy\tsortOrder\tchallengeCard\tsupportSystem\n102\t「人が来ない、ハローワークも全滅」高齢化する職場に若者が来た理由\t0\t1\t{\"description\": \"こうやって乗り越えた\", \"label\": \"壁の乗り越え方\", \"solutions\": [], \"structuredBlock\": [{\"items\": [\"担当者が現場の仕事内容を細かくヒアリングし、実態に合った求人票を作成してくれた\", \"来る人が仕事内容を理解しており、ミスマッチやトラブルがなかった\", \"相互評価（レビュー）でお互いに選べる仕組みで安心できた\", \"「ぼーっとしてたら導入できていた」ほどスムーズだった\"], \"label\": \"▼ こうやって乗り越えた\"}]}\t{\"description\": \"スキマ時間で働きたい人と、人手が必要な事業者をマッチングするサービス。\", \"limit\": null, \"name\": \"タイミー（スポット雇用サービス）\", \"point\": \"1回3時間程度のスポット勤務。求人票作成サポート、相互評価システム、福利厚生不要。タイミー経由で2名が直接雇用のパートに転換。結果、タイミーを使わなくてもよくなった。\", \"rate\": \"手数料制\", \"url\": \"#\"}\n",
+  "stderr": "",
+  "execution_time_ms": 1508
+}

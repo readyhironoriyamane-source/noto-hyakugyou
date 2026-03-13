@@ -169,7 +169,7 @@ export default function ArticleEditorPage() {
   const [description, setDescription] = useState("");
   const [editorComment, setEditorComment] = useState("");
   const [heroSummary, setHeroSummary] = useState("");
-  const [isCaseStudy, setIsCaseStudy] = useState(false);
+  const [isCaseStudy, setIsCaseStudy] = useState(true);
   const [sortOrder, setSortOrder] = useState(0);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
@@ -628,6 +628,7 @@ export default function ArticleEditorPage() {
                   <Switch checked={isCaseStudy} onCheckedChange={setIsCaseStudy} />
                   <span className="text-sm text-gray-600">{isCaseStudy ? "表示する" : "表示しない"}</span>
                 </div>
+                <Annotation>ONにするとTOPページの「商いの道しるべ」セクションに表示されます</Annotation>
               </div>
             </div>
 
@@ -1043,7 +1044,7 @@ export default function ArticleEditorPage() {
             <div className="flex items-center justify-between">
               <SectionHeader icon={FileText} title="課題カード" description="一覧ページに表示される課題ラベルと構造化ブロック" />
               {!challengeCard ? (
-                <Button variant="outline" size="sm" onClick={() => setChallengeCard({ label: "", description: "", solutions: [], structuredBlock: [] })}>
+                <Button variant="outline" size="sm" onClick={() => setChallengeCard({ label: "", description: "", solutions: [], structuredBlock: [{ label: "活用した支援", items: [""] }, { label: "成果", items: [""] }] })}>
                   <Plus className="w-4 h-4 mr-2" />セクションを追加
                 </Button>
               ) : (
@@ -1067,6 +1068,7 @@ export default function ArticleEditorPage() {
               </div>
               <div>
                 <Label className="font-bold">構造化ブロック</Label>
+                <Annotation>TOPページ・記事一覧のカードに表示されます。「活用した支援」「成果」の2ブロック構成が標準です。</Annotation>
                 <DynamicListField
                   items={challengeCard.structuredBlock || []}
                   onAdd={() => setChallengeCard({ ...challengeCard, structuredBlock: [...(challengeCard.structuredBlock || []), { label: "", items: [""] }] })}
