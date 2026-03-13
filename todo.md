@@ -279,3 +279,4 @@
 - [x] 記事102の概要文がchallengeCard.descriptionと異なるテキストで表示される問題を修正（DB上のsummary/card_descが古い長文のままだったためDB直接更新で修正）
 - [x] 記事102のカード概要テキストが管理画面のchallengeCard.descriptionと異なる内容で表示される問題を修正
 - [x] グレーボックスの上辺を揃える（CSS subgridでカード間の行位置を完全同期）
+- [x] 記事106のグレーボックス（活用した支援・成果）が空で表示される問題を修正（structuredBlockが空配列の場合はボックス自体を非表示に）

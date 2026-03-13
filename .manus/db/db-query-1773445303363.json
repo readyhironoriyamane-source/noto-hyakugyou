@@ -1,0 +1,15 @@
+{
+  "query": "SELECT id, title, challengeCard FROM articles WHERE id = 106;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2u86XNAjatgfDVL.57a134884d8c --database 3nqHQM6GxJ7ULoRQP5ahB4 --execute SELECT id, title, challengeCard FROM articles WHERE id = 106;",
+  "rows": [
+    {
+      "id": "106",
+      "title": "「地元の高校生が減る」地域の自動車学校が、合宿免許に活路を見出した理由",
+      "challengeCard": "{\"description\": null, \"label\": \"地域インフラの責任感\", \"solutions\": [], \"structuredBlock\": []}"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tchallengeCard\n106\t「地元の高校生が減る」地域の自動車学校が、合宿免許に活路を見出した理由\t{\"description\": null, \"label\": \"地域インフラの責任感\", \"solutions\": [], \"structuredBlock\": []}\n",
+  "stderr": "",
+  "execution_time_ms": 1567
+}
