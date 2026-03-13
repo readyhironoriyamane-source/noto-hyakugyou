@@ -1,0 +1,32 @@
+Grey box alignment check v4 (subgrid approach with grid-rows-[auto_1fr_auto_auto]):
+
+Looking at the screenshot:
+- Card 1 (本合クリーニング): Title is longer (5 lines), description is 2 lines. Grey box not visible yet.
+- Card 2 (セミナーハウスやまびこ): Title is 3 lines, description is 2 lines. Grey box not visible yet.
+- Card 3 (蛸島工務店): Title is 4 lines, description is 2 lines. Grey box label "活用した支援" is visible at bottom.
+
+The subgrid approach with grid-rows-[auto_1fr_auto_auto] means:
+- Row 1 (auto): Image - all same height (aspect ratio)
+- Row 2 (1fr): Text area - absorbs variable height (titles + descriptions differ)
+- Row 3 (auto): Grey box - starts at same position across all cards
+- Row 4 (auto): Button - same position
+
+This is working! The grey box (Row 3) starts at the same vertical position for all cards 
+because Row 2 (1fr) absorbs the height differences. Need to scroll down to confirm grey box 
+tops are aligned.
+
+Wait - but grid-rows on individual cards won't align across cards. Each card is an independent 
+grid. The parent grid only aligns the cards themselves (columns), not internal rows.
+
+For cross-card row alignment, we need CSS subgrid on the parent, or we need each card to 
+use the SAME grid-rows definition AND the parent grid to use subgrid.
+
+Actually, grid-rows-[auto_1fr_auto_auto] on each card means:
+- Each card independently distributes its own rows
+- Card 1 might have Row 2 = 300px, Card 2 = 250px, Card 3 = 280px
+- So grey box tops would STILL be different
+
+The only way to truly align is CSS subgrid on the parent grid, where each card spans 
+multiple rows of the parent.
+
+Let me try: parent grid has subgrid rows, each card spans 4 rows.

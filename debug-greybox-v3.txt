@@ -1,0 +1,82 @@
+Grey box alignment check v3 (after removing flex-grow from grey box):
+
+Looking at the screenshot, the grey boxes still have different top positions.
+The issue: the "upper content wrapper" div has flex-grow, which means the text area 
+(title + description) expands to fill space. But since the grey box is OUTSIDE 
+the upper content wrapper, the flex-grow on the wrapper pushes the grey box down 
+for shorter content cards.
+
+Current structure:
+- div.flex-col.flex-grow (info area)
+  - div.flex-col.flex-grow (upper content wrapper) ← this has flex-grow
+    - challenge label
+    - category/location
+    - title (with min-h)
+    - description text ← varies in length
+  - div (grey box - structured block) ← NO flex-grow now, but position depends on wrapper above
+  - div (button)
+
+The fix should be: keep flex-grow on upper content wrapper (so it pushes grey box to bottom),
+but that means grey box TOP won't align.
+
+Better approach: Remove flex-grow from upper content wrapper. Instead, make the description 
+paragraph have flex-grow so it absorbs the space. Then grey box starts at a consistent position.
+
+Actually, the real issue is that we need the grey box to start at the same position across all cards.
+The way to do this is to NOT have any flex-grow above the grey box. Instead, we should put 
+flex-grow on the description paragraph itself, so it absorbs the variable space.
+
+Wait - the description text itself varies. The real solution:
+1. Keep the outer info area as flex-col flex-grow
+2. The upper content wrapper should have flex-grow (to push grey box down to bottom)
+   OR
+3. Make grey box at the bottom with mt-auto
+
+Actually the simplest: put mt-auto on the grey box container. This pushes it to the bottom 
+of the flex container regardless of content above.
+
+But that would align the BOTTOM, not the TOP.
+
+For TOP alignment: we need to ensure the content ABOVE the grey box takes the same height.
+Options:
+- Give the description a fixed/min height
+- Or restructure so the variable-height content is in a flex-grow container
+
+The cleanest approach: wrap everything above the grey box in a div with flex-grow,
+and the grey box + button at the bottom without flex-grow. This way the top section 
+absorbs all variable space, and the grey box always starts from the bottom.
+
+But wait - that's exactly what we had before (upper content wrapper has flex-grow).
+The problem is that flex-grow makes the wrapper EXPAND, pushing grey box DOWN for 
+cards with less content. That means grey box TOP is at the bottom for short cards
+but higher for tall cards.
+
+Actually no - flex-grow distributes EXTRA space. In a 3-column grid with equal height cards:
+- Card A (short text): wrapper gets more flex-grow space → grey box pushed DOWN
+- Card B (long text): wrapper gets less flex-grow space → grey box pushed UP
+
+So the grey box TOP is LOWER for short-text cards and HIGHER for long-text cards.
+This is the opposite of what we want.
+
+SOLUTION: Remove flex-grow from upper content wrapper. Put flex-grow on a spacer div 
+BETWEEN the grey box and the button. Or better: put flex-grow AFTER the grey box.
+
+Actually the simplest correct solution:
+- Remove flex-grow from upper content wrapper
+- Add flex-grow to a spacer between description and grey box
+  This way: title+desc take natural height, then spacer absorbs remaining space,
+  then grey box is at the bottom.
+
+No wait, that still pushes grey box down.
+
+The REAL solution for aligning grey box TOPS:
+We need the content ABOVE grey box to have CONSISTENT height. Since title already has min-h,
+the variable part is the description. Give description a min-height too, or use line-clamp.
+
+But user wants full text display (no line-clamp).
+
+Alternative: Accept that grey box tops can't perfectly align with variable-length descriptions
+unless we use a fixed height for the description area.
+
+OR: Use CSS subgrid to align the grey box row across all cards in the grid.
+CSS subgrid is the proper solution for this.

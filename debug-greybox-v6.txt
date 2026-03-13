@@ -1,0 +1,39 @@
+Grey box alignment check v6 (CSS subgrid with dynamic repeat):
+
+Screenshot analysis - Row 1 (first 3 cards):
+- Grey boxes: "活用した支援" labels and "成果" labels are at the SAME vertical position across all 3 cards ✓
+- "詳しく見る" buttons are at the SAME vertical position across all 3 cards ✓
+- The subgrid is working correctly for cross-card alignment!
+
+Issues noticed:
+1. gap-y-0 means there's no vertical gap between card rows. The 4th card (能登自動車学校) 
+   starts immediately after the first row's "詳しく見る" button. Need to add some vertical 
+   gap between card rows, but gap-y applies to ALL rows including subgrid rows.
+   
+   Solution: Add margin/padding to the card element itself, or use a wrapper div for row spacing.
+   Better: add margin-bottom to each card's last row (Row 4 button area), or add gap-y 
+   and accept it applies between all rows.
+
+2. The card border/shadow/rounded-lg might not work well with subgrid since the card 
+   is now a grid item spanning 4 rows. Need to verify visually.
+
+Looking at the screenshot more carefully:
+- Cards DO have proper borders and rounded corners ✓
+- The vertical spacing between Row 1 cards and Row 2 cards needs a gap
+
+Let me add a small gap-y and see if it looks acceptable, or use a different approach 
+for inter-row spacing.
+
+Actually, the gap-y would add space between EVERY row (image-text, text-greybox, greybox-button).
+That's not what we want. We want space only between card groups.
+
+Better approach: Add padding-bottom to the button row (Row 4) of each card, which creates 
+visual spacing before the next card row starts.
+
+Wait - actually looking at the screenshot again, the cards DO have proper spacing. The issue 
+is just that gap-y-0 removes all vertical gaps. But the cards themselves have padding.
+
+The real visual issue: there's no margin between the first row of 3 cards and the second row.
+The 4th card's image starts right after the 1st row's buttons.
+
+Fix: Add mb-10 to each card element to create spacing between rows.

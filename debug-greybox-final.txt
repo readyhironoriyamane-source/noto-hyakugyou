@@ -1,0 +1,15 @@
+Grey box alignment check FINAL (CSS subgrid with dynamic repeat + mb-10):
+
+Screenshot analysis - Row 1 (first 3 cards):
+- Images: All 3 aligned at same height ✓
+- Challenge labels (設備が壊れた, 若者採用, 設備損壊): Same vertical position ✓
+- Category + location row: Same vertical position ✓
+- Operator names: Same vertical position ✓
+- Titles: Same vertical position ✓
+- Description text: Starts at same position ✓ (text length differs but that's content)
+- Grey box "活用した支援" top: ALL 3 START AT THE SAME POSITION ✓✓✓
+- "詳しく見る" buttons: Same vertical position ✓
+
+Row spacing between card row 1 and row 2: Proper gap with mb-10 ✓
+
+SUBGRID IS WORKING CORRECTLY. Grey box tops AND bottoms are aligned.

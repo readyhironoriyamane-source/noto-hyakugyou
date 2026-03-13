@@ -151,15 +151,15 @@ export default function IndustriesPage() {
 
             {/* 事例カードグリッド */}
             {!isLoading && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-0" style={{ gridTemplateRows: `repeat(${Math.ceil(filteredItems.length / 3)}, auto 1fr auto auto)` }}>
                 {filteredItems.length > 0 ? (
                   filteredItems.map((study) => (
                     <a 
                       key={study.id}
                       href={`/industry/${study.id}`}
-                      className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline flex flex-col h-full"
+                      className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline grid" style={{ gridRow: 'span 4', gridTemplateRows: 'subgrid' }}
                     >
-                      {/* 1. ヘッダー画像エリア */}
+                      {/* Row 1: ヘッダー画像エリア */}
                       <div className="relative aspect-[3/2] overflow-hidden bg-muted">
                         <img 
                           src={study.image} 
@@ -172,50 +172,48 @@ export default function IndustriesPage() {
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
                       </div>
 
-                      {/* 2. 情報エリア */}
-                      <div className="p-6 md:p-8 flex flex-col flex-grow bg-white">
-                        
-                        <div className="flex flex-col flex-grow">
-                          {/* ① 課題ラベル */}
-                          {study.challengeCard && (
-                            <div className="mb-4">
-                              <span className="inline-block bg-[#E6F4EA] text-[#1D3A52] text-xs font-bold px-3 py-1 rounded-full tracking-wider border border-[#CDE8D6]">
-                                {study.challengeCard.label}
-                              </span>
-                            </div>
-                          )}
-
-                          {/* ② 属性データ */}
-                          <div className="flex flex-col gap-4 mb-4">
-                            <div className="flex items-center gap-3">
-                              <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
-                                {study.category}
-                              </span>
-                              <span className="text-xs font-bold text-[#666] flex items-center gap-1">
-                                <span className="w-1 h-1 bg-[#888] rounded-full"></span>
-                                {study.location}
-                              </span>
-                            </div>
-                            {/* 事業者名 */}
-                            <div className="text-xs font-bold text-[#555] border-l-[3px] border-[#B33E28] pl-2">
-                              {study.operator}
-                            </div>
+                      {/* Row 2: テキスト情報エリア */}
+                      <div className="p-6 md:p-8 pb-0 bg-white">
+                        {/* ① 課題ラベル */}
+                        {study.challengeCard && (
+                          <div className="mb-4">
+                            <span className="inline-block bg-[#E6F4EA] text-[#1D3A52] text-xs font-bold px-3 py-1 rounded-full tracking-wider border border-[#CDE8D6]">
+                              {study.challengeCard.label}
+                            </span>
                           </div>
+                        )}
 
-                          {/* ③ タイトル（min-heightで高さを揃える） */}
-                          <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors md:min-h-[120px] flex items-start">
-                            <span>{study.title}</span>
-                          </h3>
-
-                          {/* ④ 本文リード文（課題カード説明 → summaryフォールバック・全文表示） */}
-                          <p className="text-base text-[#555] font-medium leading-relaxed mb-6">
-                            {study.challengeCard?.description || study.summary}
-                          </p>
+                        {/* ② 属性データ */}
+                        <div className="flex flex-col gap-4 mb-4">
+                          <div className="flex items-center gap-3">
+                            <span className="text-xs font-bold text-[#333] bg-[#E0E0E0] px-2 py-1 rounded tracking-wider">
+                              {study.category}
+                            </span>
+                            <span className="text-xs font-bold text-[#666] flex items-center gap-1">
+                              <span className="w-1 h-1 bg-[#888] rounded-full"></span>
+                              {study.location}
+                            </span>
+                          </div>
+                          <div className="text-xs font-bold text-[#555] border-l-[3px] border-[#B33E28] pl-2">
+                            {study.operator}
+                          </div>
                         </div>
 
-                        {/* ⑤ 構造化データブロック（flex-growで高さ揃え） */}
+                        {/* ③ タイトル */}
+                        <h3 className="text-[22px] font-bold text-[#333] mb-3 leading-snug font-sans group-hover:text-[#B33E28] transition-colors">
+                          <span>{study.title}</span>
+                        </h3>
+
+                        {/* ④ 本文リード文 */}
+                        <p className="text-base text-[#555] font-medium leading-relaxed mb-6">
+                          {study.challengeCard?.description || study.summary}
+                        </p>
+                      </div>
+
+                      {/* Row 3: 構造化データブロック（グレーボックス） */}
+                      <div className="px-6 md:px-8 bg-white">
                         {study.challengeCard?.structuredBlock && (
-                          <div className="mb-6 space-y-8 bg-gray-50 p-6 rounded border border-gray-100 flex-grow">
+                          <div className="space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
                             {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
                               <div key={idx} className="text-sm">
                                 <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
@@ -232,8 +230,10 @@ export default function IndustriesPage() {
                             ))}
                           </div>
                         )}
+                      </div>
 
-                        {/* ⑥ ボタン */}
+                      {/* Row 4: ボタン */}
+                      <div className="px-6 md:px-8 pb-6 md:pb-8 pt-4 mb-10 bg-white">
                         <div className="pt-4 border-t border-gray-100">
                           <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
                             詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />

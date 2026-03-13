@@ -1,0 +1,38 @@
+Grey box alignment check v5 (CSS subgrid approach):
+
+Screenshot analysis:
+- All 3 cards: Images are aligned (Row 1 - same height via aspect ratio) ✓
+- All 3 cards: Labels (設備が壊れた, 若者採用, 設備損壊) are at the same vertical position ✓
+- All 3 cards: Titles start at approximately the same position ✓
+- All 3 cards: Description text starts at approximately the same position ✓
+- All 3 cards: "活用した支援" grey box labels are visible at the bottom, all at the SAME position ✓
+
+The subgrid is working! The grey box tops are now aligned across all 3 cards.
+
+However, there's a problem: the 4th card (能登自動車学校) is appearing below the first 3 cards
+in a new row, but it's alone in column 1 while columns 2 and 3 are empty. This is because 
+the parent grid has gridTemplateRows: 'auto 1fr auto auto' which only defines 4 rows total.
+With 4 cards each spanning 4 rows, we need 4*4=16 rows for 4 cards (but only 4 in first row of 3).
+
+Actually wait - the parent grid should auto-generate rows. The issue is that gridTemplateRows 
+is set to 'auto 1fr auto auto' explicitly, which only creates 4 rows. Cards 1-3 each span 4 rows
+= 12 rows needed for first visual row, but we only defined 4.
+
+Actually, CSS subgrid works differently. Each card spans 4 rows of the parent. So:
+- Cards 1-3 occupy parent rows 1-4
+- Card 4 should occupy parent rows 5-8
+The parent needs to repeat the row pattern. We should use:
+gridTemplateRows: 'repeat(auto-fill, auto 1fr auto auto)'
+
+But auto-fill doesn't work with subgrid row patterns. Better approach:
+Remove explicit gridTemplateRows from parent, and let the subgrid cards define their own rows.
+
+Wait - that's not how subgrid works. Subgrid requires the parent to define the rows.
+The child with subgrid inherits the parent's row tracks.
+
+Correct approach for repeating card rows:
+gridTemplateRows should repeat for each visual row of cards.
+If we have 4 cards in a 3-column grid, we need 2 visual rows = 8 parent rows.
+gridTemplateRows: 'repeat(2, auto 1fr auto auto)'
+
+But we don't know the number of cards at CSS time. We need JS to calculate.

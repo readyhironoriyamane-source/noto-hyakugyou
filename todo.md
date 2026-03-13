@@ -278,3 +278,4 @@
 - [x] 概要文の全文表示設定を確認・修正（line-clamp除去が必要か）
 - [x] 記事102の概要文がchallengeCard.descriptionと異なるテキストで表示される問題を修正（DB上のsummary/card_descが古い長文のままだったためDB直接更新で修正）
 - [x] 記事102のカード概要テキストが管理画面のchallengeCard.descriptionと異なる内容で表示される問題を修正
+- [x] グレーボックスの上辺を揃える（CSS subgridでカード間の行位置を完全同期）
