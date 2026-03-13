@@ -1,0 +1,15 @@
+Visual comparison - TOP vs Industries page cards:
+
+TOP page cards:
+- Grey boxes have min-h-[200px] applied
+- Card bottoms (詳しく見る) are aligned at same height
+- Styling matches: same badge colors, same fonts, same structure
+
+Industries page cards:
+- Grey boxes have min-h-[200px] applied
+- Card bottoms (詳しく見る) are aligned at same height
+- Styling matches TOP page exactly
+
+Both pages now show identical card structure and styling.
+Grey box heights are aligned across cards on both pages.
+The min-h-[200px] ensures consistent grey box height even when content varies.

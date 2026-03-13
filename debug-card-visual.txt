@@ -1,0 +1,8 @@
+Card visual check - TOP page:
+- 3 cards visible: 本合クリーニング(101), セミナーハウスやまびこ(102), 蛸島工務店(104)
+- Grey boxes visible at bottom of each card with "活用した支援" and "成果" labels
+- Card 1 (101): Grey box has 1 item in 活用した支援, 1 item in 成果 (営業再開)
+- Card 2 (102): Grey box has 1 item in 活用した支援, 2 items in 成果 (タイミー経由2名が直接雇用に転換, 若者の参加で職場の雰囲気が改善)
+- Card 3 (104): Grey box has 2 items in 活用した支援, 2 items in 成果 (設備復旧, 事業再開)
+- Grey boxes appear to have consistent min-height now, bottom edges of cards (詳しく見る) are aligned
+- Cards look consistent in structure and styling
