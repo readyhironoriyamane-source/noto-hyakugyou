@@ -166,7 +166,7 @@ export const industries: Industry[] = [
     actions: [
       { type: "visit", label: "店舗情報", link: "#" }
     ],
-    image: "https://notohyaku-3nqhqm6g.manus.space/upload/1742005602.jpg",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/92549119/FyLnldNphVZsiiJc.jpg",
     seasonalMonths: [],
     isCaseStudy: true,
     challengeCard: {
