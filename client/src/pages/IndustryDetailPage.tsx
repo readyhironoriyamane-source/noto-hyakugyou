@@ -175,7 +175,7 @@ export default function IndustryDetailPage() {
               <span>ライター: {industry.details?.writer}</span>
             </div>
             <p className="text-xs text-gray-400 text-left">
-              ※掲載情報は執筆時点のものであり、制度内容は変更される場合があります。申請をご検討の際は、窓口にて最新情報をご確認いただくことを推奨します。
+              ※掲載情報は執筆時点のものであり、制度内容は変更される場合があります。また、本事例は事業者の体験に基づくものであり、申請結果や補助金額を保証するものではありません。申請をご検討の際は、窓口で最新情報をご確認いただく事を推奨します。
             </p>
           </div>
 

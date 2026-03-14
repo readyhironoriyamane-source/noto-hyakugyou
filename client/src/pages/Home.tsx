@@ -208,7 +208,7 @@ export default function Home() {
           )}
 
           {!isLoading && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-0" style={{ gridTemplateRows: `repeat(${Math.ceil(caseStudies.length / 3)}, auto 1fr auto auto)` }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-0" style={{ gridTemplateRows: `repeat(${Math.ceil(caseStudies.length / 3)}, auto 1fr 1fr auto)` }}>
               {caseStudies.map((study) => (
                 <a 
                   key={study.id}
@@ -268,8 +268,8 @@ export default function Home() {
 
                   {/* Row 3: 構造化データブロック（グレーボックス） */}
                   <div className="px-6 md:px-8 bg-white">
-                    {study.challengeCard?.structuredBlock && study.challengeCard.structuredBlock.length > 0 && (
-                      <div className="space-y-8 bg-gray-50 p-6 rounded border border-gray-100">
+                    {study.challengeCard?.structuredBlock && study.challengeCard.structuredBlock.length > 0 ? (
+                      <div className="space-y-8 bg-gray-50 p-6 rounded border border-gray-100 h-full">
                         {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
                           <div key={idx} className="text-sm">
                             <span className="inline-block bg-gray-200 text-gray-700 text-xs font-bold px-2 py-0.5 rounded mb-3">
@@ -312,11 +312,13 @@ export default function Home() {
                           </div>
                         ))}
                       </div>
+                    ) : (
+                      <div className="h-full" />
                     )}
                   </div>
 
                   {/* Row 4: ボタン */}
-                  <div className="px-6 md:px-8 pb-6 md:pb-8 pt-4 mb-10 bg-white">
+                  <div className="px-6 md:px-8 pb-6 md:pb-8 pt-4 mb-10 bg-white rounded-b-lg">
                     <div className="pt-4 border-t border-gray-100">
                       <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
                         詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />

@@ -407,8 +407,8 @@ export default function ArticleEditorPage() {
 
   // Save handler
   const handleSave = () => {
-    if (!title || !category || !location || !image || !summary) {
-      toast.error("必須項目を入力してください（タイトル、カテゴリ、場所、画像、概要）");
+    if (!title || !category || !location || !image) {
+      toast.error("必須項目を入力してください（タイトル、カテゴリ、場所、画像）");
       return;
     }
 
@@ -438,7 +438,7 @@ export default function ArticleEditorPage() {
       role: role || null,
       location,
       image,
-      summary,
+      summary: challengeCard?.description || summary || title,
       description: description || null,
       editorComment: editorComment || null,
       heroSummary: heroSummary || null,
@@ -690,12 +690,6 @@ export default function ArticleEditorPage() {
               </div>
             </div>
 
-            {/* Summary */}
-            <div>
-              <Label htmlFor="summary" className="font-bold">概要 <span className="text-red-500">*</span></Label>
-              <Textarea id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="記事の概要" rows={3} className="mt-1" />
-              <Annotation>TOPページの記事カードに表示されるテキストです。簡潔に記事の要点をまとめてください。</Annotation>
-            </div>
 
             <div>
               <Label htmlFor="description" className="font-bold">事業説明（ヒーロー下部表示）</Label>
@@ -705,11 +699,11 @@ export default function ArticleEditorPage() {
           </CardContent>
         </Card>
 
-        {/* ===== 2. 課題カード（Challenge Card） ===== */}
+        {/* ===== 2. 記事カード ===== */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <SectionHeader icon={FileText} title="課題カード" description="一覧ページに表示される課題ラベルと構造化ブロック" />
+              <SectionHeader icon={FileText} title="記事カード" description="TOP・一覧ページのカードに表示される情報" />
               {!challengeCard ? (
                 <Button variant="outline" size="sm" onClick={() => setChallengeCard({ label: "", description: "", solutions: [], structuredBlock: [{ label: "活用した支援", items: [""] }, { label: "成果", items: [""] }] })}>
                   <Plus className="w-4 h-4 mr-2" />セクションを追加
@@ -729,8 +723,9 @@ export default function ArticleEditorPage() {
                   <Input value={challengeCard.label} onChange={(e) => setChallengeCard({ ...challengeCard, label: e.target.value })} placeholder="例: 設備復旧" className="mt-1" />
                 </div>
                 <div>
-                  <Label className="font-bold">説明</Label>
-                  <Input value={challengeCard.description} onChange={(e) => setChallengeCard({ ...challengeCard, description: e.target.value })} placeholder="課題の概要" className="mt-1" />
+                  <Label className="font-bold">説明 <span className="text-red-500">*</span></Label>
+                  <Input value={challengeCard.description} onChange={(e) => setChallengeCard({ ...challengeCard, description: e.target.value })} placeholder="TOP・一覧ページのカードに表示される概要文" className="mt-1" />
+                  <Annotation>TOPページ・一覧ページの記事カードに表示される概要文です。簡潔に記事の要点をまとめてください。</Annotation>
                 </div>
               </div>
               <div>
