@@ -151,13 +151,13 @@ export default function IndustriesPage() {
 
             {/* 事例カードグリッド */}
             {!isLoading && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10" style={{ gridTemplateRows: `repeat(${Math.ceil(filteredItems.length / 3)}, auto 1fr auto)` }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10" style={{ gridTemplateRows: `repeat(${Math.ceil(filteredItems.length / 3)}, auto auto)` }}>
                 {filteredItems.length > 0 ? (
                   filteredItems.map((study) => (
                     <a 
                       key={study.id}
                       href={`/industry/${study.id}`}
-                      className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline grid" style={{ gridRow: 'span 3', gridTemplateRows: 'subgrid' }}
+                      className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline grid" style={{ gridRow: 'span 2', gridTemplateRows: 'subgrid' }}
                     >
                       {/* Row 1: 画像 + テキスト情報エリア */}
                       <div className="bg-white">
@@ -204,12 +204,12 @@ export default function IndustriesPage() {
                         </h3>
 
                         {/* ④ 本文リード文 */}
-                        <p className="text-base text-[#555] font-medium leading-relaxed mb-3">
+                        <p className="text-base text-[#555] font-medium leading-relaxed">
                           {study.challengeCard?.description || study.summary}
                         </p>
 
                         {/* 構造化データブロック（グレーボックス） */}
-                        <div className="">
+                        <div className="mt-3">
                         {study.challengeCard?.structuredBlock && study.challengeCard.structuredBlock.length > 0 ? (
                           <div className="space-y-4 bg-gray-50 p-6 rounded border border-gray-100">
                             {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
@@ -232,12 +232,9 @@ export default function IndustriesPage() {
                         </div>
                       </div>
 
-                      {/* Row 2: スペーサー（テキスト量の差を吸収） */}
-                      <div className="bg-white"></div>
-
-                      {/* Row 3: ボタン */}
-                      <div className="px-6 md:px-8 pb-6 md:pb-8 pt-3 bg-white rounded-b-lg">
-                        <div className="pt-3 border-t border-gray-100">
+                      {/* Row 2: ボタン */}
+                      <div className="px-6 md:px-8 pb-6 md:pb-8 bg-white rounded-b-lg">
+                        <div className="mt-3 pt-3 border-t border-gray-100">
                           <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
                             詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
                           </div>
