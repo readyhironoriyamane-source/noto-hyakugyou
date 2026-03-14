@@ -260,7 +260,7 @@ export default function Home() {
                     </h3>
 
                     {/* ④ 本文リード文 */}
-                    <p className="text-base text-[#555] font-medium leading-relaxed mb-6">
+                    <p className="text-base text-[#555] font-medium leading-relaxed">
                       {study.challengeCard?.description || study.summary}
                     </p>
                     </div>
@@ -270,7 +270,7 @@ export default function Home() {
                   <div className="bg-white"></div>
 
                   {/* Row 3: 構造化データブロック（グレーボックス） */}
-                  <div className="px-6 md:px-8 bg-white">
+                  <div className="px-6 md:px-8 pt-4 bg-white">
                     {study.challengeCard?.structuredBlock && study.challengeCard.structuredBlock.length > 0 ? (
                       <div className="space-y-4 bg-gray-50 p-6 rounded border border-gray-100">
                         {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
