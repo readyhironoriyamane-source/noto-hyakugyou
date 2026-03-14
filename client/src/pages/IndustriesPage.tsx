@@ -172,7 +172,7 @@ export default function IndustriesPage() {
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
                         </div>
-                        <div className="p-6 md:p-8 pb-6 md:pb-8">
+                        <div className="p-6 md:p-8 pb-3">
                         {/* ① 課題ラベル */}
                         {study.challengeCard && (
                           <div className="mb-4">
