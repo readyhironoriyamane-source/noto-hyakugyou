@@ -208,12 +208,12 @@ export default function Home() {
           )}
 
           {!isLoading && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10" style={{ gridTemplateRows: `repeat(${Math.ceil(caseStudies.length / 3)}, auto 1fr auto auto)` }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10" style={{ gridTemplateRows: `repeat(${Math.ceil(caseStudies.length / 3)}, auto 1fr auto)` }}>
               {caseStudies.map((study) => (
                 <a 
                   key={study.id}
                   href={`/industry/${study.id}`}
-                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline grid" style={{ gridRow: 'span 4', gridTemplateRows: 'subgrid' }}
+                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline grid" style={{ gridRow: 'span 3', gridTemplateRows: 'subgrid' }}
                 >
                   {/* Row 1: 画像 + テキスト情報エリア */}
                   <div className="bg-white">
@@ -228,7 +228,7 @@ export default function Home() {
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
                     </div>
-                    <div className="p-6 md:p-8 pb-0">
+                    <div className="p-6 md:p-8 pb-6 md:pb-8">
                     {/* ① 課題ラベル */}
                     {study.challengeCard && (
                       <div className="mb-4">
@@ -260,17 +260,12 @@ export default function Home() {
                     </h3>
 
                     {/* ④ 本文リード文 */}
-                    <p className="text-base text-[#555] font-medium leading-relaxed">
+                    <p className="text-base text-[#555] font-medium leading-relaxed mb-3">
                       {study.challengeCard?.description || study.summary}
                     </p>
-                    </div>
-                  </div>
 
-                  {/* Row 2: スペーサー（テキスト量の差を吸収） */}
-                  <div className="bg-white"></div>
-
-                  {/* Row 3: 構造化データブロック（グレーボックス） */}
-                  <div className="px-6 md:px-8 pt-4 bg-white">
+                    {/* 構造化データブロック（グレーボックス） */}
+                    <div className="">
                     {study.challengeCard?.structuredBlock && study.challengeCard.structuredBlock.length > 0 ? (
                       <div className="space-y-4 bg-gray-50 p-6 rounded border border-gray-100">
                         {study.challengeCard.structuredBlock.map((block: any, idx: number) => (
@@ -316,9 +311,14 @@ export default function Home() {
                         ))}
                       </div>
                     ) : null}
+                    </div>
+                    </div>
                   </div>
 
-                  {/* Row 4: ボタン */}
+                  {/* Row 2: スペーサー（テキスト量の差を吸収） */}
+                  <div className="bg-white"></div>
+
+                  {/* Row 3: ボタン */}
                   <div className="px-6 md:px-8 pb-6 md:pb-8 pt-4 bg-white rounded-b-lg">
                     <div className="pt-4 border-t border-gray-100">
                       <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
