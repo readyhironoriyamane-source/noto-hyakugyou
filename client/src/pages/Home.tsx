@@ -208,28 +208,27 @@ export default function Home() {
           )}
 
           {!isLoading && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10" style={{ gridTemplateRows: `repeat(${Math.ceil(caseStudies.length / 3)}, auto 1fr auto)` }}>
               {caseStudies.map((study) => (
                 <a 
                   key={study.id}
                   href={`/industry/${study.id}`}
-                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline flex flex-col"
+                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 focus:outline-none focus:ring-4 focus:ring-primary/30 no-underline grid" style={{ gridRow: 'span 3', gridTemplateRows: 'subgrid' }}
                 >
-                  {/* Row 1: ヘッダー画像エリア */}
-                  <div className="relative aspect-[3/2] overflow-hidden bg-muted">
-                    <img 
-                      src={study.image} 
-                      alt={`${study.title}のイメージ画像`} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      onError={(e) => {
-                        e.currentTarget.src = "https://placehold.co/600x400/e2e8f0/1e293b?text=No+Image";
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
-                  </div>
-
-                  {/* Row 2: テキスト情報エリア（flex-growで可変高さを吸収） */}
-                  <div className="p-6 md:p-8 pb-0 bg-white">
+                  {/* Row 1: 画像 + テキスト情報エリア */}
+                  <div className="bg-white">
+                    <div className="relative aspect-[3/2] overflow-hidden bg-muted">
+                      <img 
+                        src={study.image} 
+                        alt={`${study.title}のイメージ画像`} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        onError={(e) => {
+                          e.currentTarget.src = "https://placehold.co/600x400/e2e8f0/1e293b?text=No+Image";
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
+                    </div>
+                    <div className="p-6 md:p-8 pb-0">
                     {/* ① 課題ラベル */}
                     {study.challengeCard && (
                       <div className="mb-4">
@@ -264,9 +263,10 @@ export default function Home() {
                     <p className="text-base text-[#555] font-medium leading-relaxed mb-6">
                       {study.challengeCard?.description || study.summary}
                     </p>
+                    </div>
                   </div>
 
-                  {/* Row 3: 構造化データブロック（グレーボックス） */}
+                  {/* Row 2: 構造化データブロック（グレーボックス） */}
                   <div className="px-6 md:px-8 bg-white">
                     {study.challengeCard?.structuredBlock && study.challengeCard.structuredBlock.length > 0 ? (
                       <div className="space-y-4 bg-gray-50 p-6 rounded border border-gray-100">
@@ -315,8 +315,8 @@ export default function Home() {
                     ) : null}
                   </div>
 
-                  {/* Row 4: ボタン */}
-                  <div className="px-6 md:px-8 pb-6 md:pb-8 pt-4 mt-auto bg-white rounded-b-lg">
+                  {/* Row 3: ボタン */}
+                  <div className="px-6 md:px-8 pb-6 md:pb-8 pt-4 bg-white rounded-b-lg">
                     <div className="pt-4 border-t border-gray-100">
                       <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
                         詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
