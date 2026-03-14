@@ -319,8 +319,8 @@ export default function Home() {
                   <div className="bg-white"></div>
 
                   {/* Row 3: ボタン */}
-                  <div className="px-6 md:px-8 pb-6 md:pb-8 pt-4 bg-white rounded-b-lg">
-                    <div className="pt-4 border-t border-gray-100">
+                  <div className="px-6 md:px-8 pb-6 md:pb-8 pt-3 bg-white rounded-b-lg">
+                    <div className="pt-3 border-t border-gray-100">
                       <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
                         詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
                       </div>
