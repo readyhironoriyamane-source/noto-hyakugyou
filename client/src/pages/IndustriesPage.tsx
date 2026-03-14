@@ -172,7 +172,7 @@ export default function IndustriesPage() {
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
                         </div>
-                        <div className="p-6 md:p-8 pb-3">
+                        <div className="p-6 md:p-8 pb-0">
                         {/* ① 課題ラベル */}
                         {study.challengeCard && (
                           <div className="mb-4">
@@ -234,7 +234,7 @@ export default function IndustriesPage() {
 
                       {/* Row 2: ボタン */}
                       <div className="px-6 md:px-8 pb-6 md:pb-8 bg-white rounded-b-lg">
-                        <div className="mt-3 pt-3 border-t border-gray-100">
+                        <div className="pt-3 border-t border-gray-100">
                           <div className="flex items-center text-[#B33E28] text-sm font-bold tracking-widest group-hover:text-[#8E2F1D] transition-colors uppercase w-fit">
                             詳しく見る <ArrowUpRight className="w-4 h-4 ml-1" />
                           </div>
